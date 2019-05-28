@@ -12,34 +12,40 @@ import javax.swing.ImageIcon;
  *
  * @author dma@logossmartcard.com
  */
-public class MainUI extends javax.swing.JFrame {
-
+public class MainUI extends javax.swing.JFrame 
+{    
     /**
      * Creates new form MainUI
      */
-    public MainUI() {
+    public MainUI() 
+    {
         initComponents();        
-        resizeIcons();
+        setupToolbar();
     }
 
-    private void resizeIcons() {
+    /**
+     * Sets up the toolbar buttons.
+     */
+    private void setupToolbar() 
+    {
         Image img;
-        try {
+        try 
+        {
             img = ImageIO.read(this.getClass().getResource(Constants.RESOURCES_PATH + Constants.NEW_TEST_ICON));
-            img = img.getScaledInstance(Constants.ICON_WIDTH, Constants.ICON_HEIGHT, java.awt.Image.SCALE_SMOOTH);
+            img = img.getScaledInstance(38, 38, java.awt.Image.SCALE_SMOOTH);
             mAddButton.setIcon(new ImageIcon(img));
-            
+
             img = ImageIO.read(this.getClass().getResource(Constants.RESOURCES_PATH + Constants.COMPILE_ICON));
-            img = img.getScaledInstance(Constants.ICON_WIDTH, Constants.ICON_HEIGHT, java.awt.Image.SCALE_SMOOTH);
+            img = img.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
             mCompileButton.setIcon(new ImageIcon(img));
-            
+
             img = ImageIO.read(this.getClass().getResource(Constants.RESOURCES_PATH + Constants.RUN_ICON));
             img = img.getScaledInstance(Constants.ICON_WIDTH, Constants.ICON_HEIGHT, java.awt.Image.SCALE_SMOOTH);
             mRunButton.setIcon(new ImageIcon(img));
-            
+
         } catch (IOException ex) {
             Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
-        }      
+        }
     }
     
     /**
@@ -51,130 +57,138 @@ public class MainUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        mSplitPane = new javax.swing.JSplitPane();
+        mRightPanel = new javax.swing.JPanel();
+        mLeftPanel = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         mCompileButton = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
-        mRunButton = new javax.swing.JButton();
         mAddButton = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        mRunButton = new javax.swing.JButton();
+        jMenuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(153, 153, 153));
+        setTitle("CTester");
+        setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setFont(new java.awt.Font("Candara Light", 0, 12)); // NOI18N
-        setLocation(new java.awt.Point(200, 200));
+        setLocation(new java.awt.Point(100, 100));
         setName("mainFrame"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1256, 622));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        mCompileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/code-download.png"))); // NOI18N
-        mCompileButton.setToolTipText("Compile tests");
+        mSplitPane.setBorder(null);
+        mSplitPane.setDividerLocation(500);
+        mSplitPane.setForeground(new java.awt.Color(60, 63, 65));
+
+        mRightPanel.setBackground(new java.awt.Color(58, 58, 79));
+
+        javax.swing.GroupLayout mRightPanelLayout = new javax.swing.GroupLayout(mRightPanel);
+        mRightPanel.setLayout(mRightPanelLayout);
+        mRightPanelLayout.setHorizontalGroup(
+            mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 860, Short.MAX_VALUE)
+        );
+        mRightPanelLayout.setVerticalGroup(
+            mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 710, Short.MAX_VALUE)
+        );
+
+        mSplitPane.setRightComponent(mRightPanel);
+
+        mLeftPanel.setBackground(new java.awt.Color(30, 40, 57));
+
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+
+        mCompileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/code-download-white.png"))); // NOI18N
+        mCompileButton.setBorderPainted(false);
+        mCompileButton.setContentAreaFilled(false);
+        mCompileButton.setFocusPainted(false);
         mCompileButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        mCompileButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mCompileButtonActionPerformed(evt);
-            }
-        });
 
-        mRunButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/arrow-right.png"))); // NOI18N
-        mRunButton.setToolTipText("Run selected tests");
-        mRunButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        mRunButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mRunButtonActionPerformed(evt);
-            }
-        });
-
-        mAddButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/file-add.png"))); // NOI18N
-        mAddButton.setToolTipText("Add tests");
+        mAddButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/file-add-white.png"))); // NOI18N
+        mAddButton.setBorderPainted(false);
+        mAddButton.setContentAreaFilled(false);
+        mAddButton.setFocusPainted(false);
         mAddButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        mAddButton.setName(""); // NOI18N
-        mAddButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mAddButtonActionPerformed(evt);
-            }
-        });
 
-        jLabel1.setText("Tests");
+        mRunButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/arrow-right-white.png"))); // NOI18N
+        mRunButton.setBorderPainted(false);
+        mRunButton.setContentAreaFilled(false);
+        mRunButton.setFocusPainted(false);
+        mRunButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Options");
-        jMenuBar1.add(jMenu2);
-
-        setJMenuBar(jMenuBar1);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addComponent(mAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(mCompileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(mRunButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 643, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addContainerGap())))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(mAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mCompileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mRunButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mCompileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mRunButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(mAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(mCompileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(mRunButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(548, Short.MAX_VALUE))
         );
 
-        mCompileButton.getAccessibleContext().setAccessibleName("Compile tests");
-        mAddButton.getAccessibleContext().setAccessibleName("Add tests");
+        javax.swing.GroupLayout mLeftPanelLayout = new javax.swing.GroupLayout(mLeftPanel);
+        mLeftPanel.setLayout(mLeftPanelLayout);
+        mLeftPanelLayout.setHorizontalGroup(
+            mLeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mLeftPanelLayout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 444, Short.MAX_VALUE))
+        );
+        mLeftPanelLayout.setVerticalGroup(
+            mLeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        mSplitPane.setLeftComponent(mLeftPanel);
+
+        getContentPane().add(mSplitPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 710));
+
+        jMenuBar.setBackground(new java.awt.Color(51, 51, 51));
+        jMenuBar.setBorder(null);
+
+        jMenu1.setBackground(new java.awt.Color(51, 51, 51));
+        jMenu1.setForeground(new java.awt.Color(204, 204, 204));
+        jMenu1.setText("File");
+        jMenuBar.add(jMenu1);
+
+        jMenu2.setBackground(new java.awt.Color(51, 51, 51));
+        jMenu2.setForeground(new java.awt.Color(204, 204, 204));
+        jMenu2.setText("Options");
+        jMenuBar.add(jMenu2);
+
+        setJMenuBar(jMenuBar);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void mCompileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mCompileButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_mCompileButtonActionPerformed
-
-    private void mRunButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mRunButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_mRunButtonActionPerformed
-
-    private void mAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mAddButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_mAddButtonActionPerformed
-
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) 
+    {
         /* Set the Nimbus look and feel */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Metal".equals(info.getName())) {
+        try 
+        {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) 
+            {
+                if ("Darcula".equals(info.getName())) 
+                {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -191,22 +205,21 @@ public class MainUI extends javax.swing.JFrame {
         }
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainUI().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new MainUI().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JMenuBar jMenuBar;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JButton mAddButton;
     private javax.swing.JButton mCompileButton;
+    private javax.swing.JPanel mLeftPanel;
+    private javax.swing.JPanel mRightPanel;
     private javax.swing.JButton mRunButton;
+    private javax.swing.JSplitPane mSplitPane;
     // End of variables declaration//GEN-END:variables
 }
