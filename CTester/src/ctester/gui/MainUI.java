@@ -102,7 +102,6 @@ public class MainUI extends javax.swing.JFrame
         setFont(new java.awt.Font("Candara Light", 0, 12)); // NOI18N
         setLocation(new java.awt.Point(100, 100));
         setName("mainFrame"); // NOI18N
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         mSplitPane.setBorder(null);
         mSplitPane.setDividerLocation(500);
@@ -183,7 +182,6 @@ public class MainUI extends javax.swing.JFrame
 
         mTestsScrollPane.setBorder(null);
         mTestsScrollPane.setOpaque(false);
-        mTestsScrollPane.setViewport(null);
 
         mTestsListPanel.setBackground(new java.awt.Color(30, 40, 57));
         mTestsListPanel.setOpaque(false);
@@ -192,7 +190,7 @@ public class MainUI extends javax.swing.JFrame
         mTestsListPanel.setLayout(mTestsListPanelLayout);
         mTestsListPanelLayout.setHorizontalGroup(
             mTestsListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 414, Short.MAX_VALUE)
+            .addGap(0, 420, Short.MAX_VALUE)
         );
         mTestsListPanelLayout.setVerticalGroup(
             mTestsListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,17 +206,14 @@ public class MainUI extends javax.swing.JFrame
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(mTestsScrollPane)
-                .addContainerGap())
+            .addComponent(mTestsScrollPane)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(mTestsScrollPane)
-                .addContainerGap())
+                .addComponent(mTestsScrollPane))
         );
 
         javax.swing.GroupLayout mLeftPanelLayout = new javax.swing.GroupLayout(mLeftPanel);
@@ -242,8 +237,6 @@ public class MainUI extends javax.swing.JFrame
 
         mSplitPane.setLeftComponent(mLeftPanel);
 
-        getContentPane().add(mSplitPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 710));
-
         jMenuBar.setBackground(new java.awt.Color(51, 51, 51));
         jMenuBar.setBorder(null);
         jMenuBar.setFont(new java.awt.Font("Malgun Gothic Semilight", 1, 12)); // NOI18N
@@ -259,6 +252,17 @@ public class MainUI extends javax.swing.JFrame
         jMenuBar.add(jMenu2);
 
         setJMenuBar(jMenuBar);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(mSplitPane)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(mSplitPane)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
