@@ -2,6 +2,8 @@ package ctester.gui;
 
 import constants.Constants;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -9,9 +11,12 @@ import java.awt.Image;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.layout.Border;
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.plaf.basic.BasicSplitPaneDivider;
+import javax.swing.plaf.basic.BasicSplitPaneUI;
 
 /**
  *
@@ -63,9 +68,32 @@ public class MainUI extends javax.swing.JFrame
         mTestsScrollPane.setOpaque(false);
         mTestsScrollPane.getViewport().setOpaque(false);
         // Set the correct layout for the tests.
-        mTestsListPanel.setLayout(new BoxLayout(mTestsListPanel, BoxLayout.Y_AXIS));        
+        mTestsListPanel.setLayout(new BoxLayout(mTestsListPanel, BoxLayout.Y_AXIS));
         
-        for (int i = 0; i < 100; ++i)
+        mSplitPane.setUI(new BasicSplitPaneUI() 
+        {
+            @Override
+            public BasicSplitPaneDivider createDefaultDivider() 
+            {
+                return new BasicSplitPaneDivider(this) 
+                {                
+                    public void setBorder(Border b) {}
+
+                    @Override
+                    public void paint(Graphics g) 
+                    {
+                        super.paint(g);
+                        
+                        g.setColor(new Color(51, 51, 51));
+                        g.fillRect(0, 0, getSize().width, getSize().height);
+                    }
+                };
+            }
+        });
+        
+        mSplitPane.setBorder(null);
+        
+        for (int i = 0; i < 13; ++i)
         {
             mTestsListPanel.add(new TestItemUI());            
         }
@@ -105,6 +133,7 @@ public class MainUI extends javax.swing.JFrame
 
         mSplitPane.setBorder(null);
         mSplitPane.setDividerLocation(500);
+        mSplitPane.setDividerSize(5);
         mSplitPane.setForeground(new java.awt.Color(60, 63, 65));
         mSplitPane.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -114,7 +143,7 @@ public class MainUI extends javax.swing.JFrame
         mRightPanel.setLayout(mRightPanelLayout);
         mRightPanelLayout.setHorizontalGroup(
             mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 860, Short.MAX_VALUE)
+            .addGap(0, 865, Short.MAX_VALUE)
         );
         mRightPanelLayout.setVerticalGroup(
             mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -1,5 +1,13 @@
 package ctester.gui;
 
+import constants.Constants;
+import java.awt.Image;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author dma@logosmartard.com
@@ -12,6 +20,25 @@ public class TestItemUI extends javax.swing.JPanel
     public TestItemUI() 
     {
         initComponents();
+        setupButtons();
+    }
+    
+    private void setupButtons()
+    {
+        Image img;
+        try 
+        {
+            img = ImageIO.read(this.getClass().getResource(Constants.RESOURCES_PATH + Constants.RUN_ICON));
+            img = img.getScaledInstance(28, 28, java.awt.Image.SCALE_SMOOTH);
+            mRunButton.setIcon(new ImageIcon(img));
+
+            img = ImageIO.read(this.getClass().getResource(Constants.RESOURCES_PATH + Constants.REMOVE_TEST_ICON));
+            img = img.getScaledInstance(28, 28, java.awt.Image.SCALE_SMOOTH);
+            mRemoveButton.setIcon(new ImageIcon(img));
+
+        } catch (IOException ex) {
+            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -24,9 +51,8 @@ public class TestItemUI extends javax.swing.JPanel
     private void initComponents() {
 
         jCheckBox1 = new javax.swing.JCheckBox();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        mRemoveButton = new javax.swing.JButton();
+        mRunButton = new javax.swing.JButton();
 
         setOpaque(false);
 
@@ -41,14 +67,21 @@ public class TestItemUI extends javax.swing.JPanel
             }
         });
 
-        jButton1.setText("jButton1");
+        mRemoveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/close-white.png"))); // NOI18N
+        mRemoveButton.setToolTipText("Remove test");
+        mRemoveButton.setBorderPainted(false);
+        mRemoveButton.setContentAreaFilled(false);
+        mRemoveButton.setFocusPainted(false);
+        mRemoveButton.setPreferredSize(new java.awt.Dimension(4, 4));
 
-        jButton2.setText("jButton1");
-
-        jButton3.setText("jButton1");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        mRunButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/arrow-right-white.png"))); // NOI18N
+        mRunButton.setToolTipText("Run test");
+        mRunButton.setBorderPainted(false);
+        mRunButton.setContentAreaFilled(false);
+        mRunButton.setFocusPainted(false);
+        mRunButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                mRunButtonActionPerformed(evt);
             }
         });
 
@@ -58,21 +91,18 @@ public class TestItemUI extends javax.swing.JPanel
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jCheckBox1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 188, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 214, Short.MAX_VALUE)
+                .addComponent(mRunButton, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mRemoveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mRemoveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mRunButton, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCheckBox1))
                 .addGap(2, 2, 2))
         );
@@ -82,15 +112,14 @@ public class TestItemUI extends javax.swing.JPanel
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void mRunButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mRunButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_mRunButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JButton mRemoveButton;
+    private javax.swing.JButton mRunButton;
     // End of variables declaration//GEN-END:variables
 }
