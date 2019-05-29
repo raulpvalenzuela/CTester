@@ -54,6 +54,10 @@ public class MainUI extends javax.swing.JFrame
             img = img.getScaledInstance(Constants.ICON_WIDTH, Constants.ICON_HEIGHT, java.awt.Image.SCALE_SMOOTH);
             mRunButton.setIcon(new ImageIcon(img));
 
+            img = ImageIO.read(this.getClass().getResource(Constants.RESOURCES_PATH + Constants.SETTINGS_ICON));
+            img = img.getScaledInstance(Constants.ICON_WIDTH, Constants.ICON_HEIGHT, java.awt.Image.SCALE_SMOOTH);
+            mSettingsButton.setIcon(new ImageIcon(img));
+
         } catch (IOException ex) {
             Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -115,13 +119,11 @@ public class MainUI extends javax.swing.JFrame
         mCompileButton = new javax.swing.JButton();
         mAddButton = new javax.swing.JButton();
         mRunButton = new javax.swing.JButton();
+        mSettingsButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         mTestsScrollPane = new javax.swing.JScrollPane();
         mTestsListPanel = new javax.swing.JPanel();
-        jMenuBar = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CTester");
@@ -147,7 +149,7 @@ public class MainUI extends javax.swing.JFrame
         );
         mRightPanelLayout.setVerticalGroup(
             mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 710, Short.MAX_VALUE)
+            .addGap(0, 731, Short.MAX_VALUE)
         );
 
         mSplitPane.setRightComponent(mRightPanel);
@@ -177,6 +179,13 @@ public class MainUI extends javax.swing.JFrame
         mRunButton.setFocusPainted(false);
         mRunButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        mSettingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/settings-white.png"))); // NOI18N
+        mSettingsButton.setToolTipText("Run selected tests");
+        mSettingsButton.setBorderPainted(false);
+        mSettingsButton.setContentAreaFilled(false);
+        mSettingsButton.setFocusPainted(false);
+        mSettingsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -186,7 +195,8 @@ public class MainUI extends javax.swing.JFrame
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(mAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mCompileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mRunButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(mRunButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mSettingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -198,14 +208,16 @@ public class MainUI extends javax.swing.JFrame
                 .addComponent(mCompileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(mRunButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(548, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 519, Short.MAX_VALUE)
+                .addComponent(mSettingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanel2.setBackground(new java.awt.Color(30, 40, 57));
         jPanel2.setOpaque(false);
 
         jLabel1.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel1.setFont(new java.awt.Font("Malgun Gothic Semilight", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Malgun Gothic Semilight", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setText("Tests");
 
@@ -235,13 +247,14 @@ public class MainUI extends javax.swing.JFrame
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(mTestsScrollPane)
+            .addComponent(mTestsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addComponent(mTestsScrollPane))
         );
 
@@ -251,7 +264,7 @@ public class MainUI extends javax.swing.JFrame
             mLeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mLeftPanelLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(28, 28, 28)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -265,22 +278,6 @@ public class MainUI extends javax.swing.JFrame
         );
 
         mSplitPane.setLeftComponent(mLeftPanel);
-
-        jMenuBar.setBackground(new java.awt.Color(51, 51, 51));
-        jMenuBar.setBorder(null);
-        jMenuBar.setFont(new java.awt.Font("Malgun Gothic Semilight", 1, 12)); // NOI18N
-
-        jMenu1.setBackground(new java.awt.Color(51, 51, 51));
-        jMenu1.setForeground(new java.awt.Color(204, 204, 204));
-        jMenu1.setText("File");
-        jMenuBar.add(jMenu1);
-
-        jMenu2.setBackground(new java.awt.Color(51, 51, 51));
-        jMenu2.setForeground(new java.awt.Color(204, 204, 204));
-        jMenu2.setText("Options");
-        jMenuBar.add(jMenu2);
-
-        setJMenuBar(jMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -331,9 +328,6 @@ public class MainUI extends javax.swing.JFrame
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton mAddButton;
@@ -341,6 +335,7 @@ public class MainUI extends javax.swing.JFrame
     private javax.swing.JPanel mLeftPanel;
     private javax.swing.JPanel mRightPanel;
     private javax.swing.JButton mRunButton;
+    private javax.swing.JButton mSettingsButton;
     private javax.swing.JSplitPane mSplitPane;
     private javax.swing.JPanel mTestsListPanel;
     private javax.swing.JScrollPane mTestsScrollPane;

@@ -18,4 +18,5 @@ public class Constants
     public static String COMPILE_ICON     = "code-download-white.png";
     public static String NEW_TEST_ICON    = "file-add-white.png";
     public static String REMOVE_TEST_ICON = "close-white.png";
+    public static String SETTINGS_ICON    = "settings-white.png";
 }
