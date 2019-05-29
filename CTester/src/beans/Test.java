@@ -4,8 +4,8 @@ package beans;
  *
  * @author dma@logossmartcard.com
  */
-public class Test {
-    
+public class Test 
+{    
     private String fileName;
     private String path;
     

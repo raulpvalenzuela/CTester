@@ -4,8 +4,8 @@ package constants;
  *
  * @author dma@logossmartcard.com
  */
-public class Constants {
-    
+public class Constants 
+{    
     // GUI Constants
     public static int ICON_WIDTH  = 44;
     public static int ICON_HEIGHT = 44;
