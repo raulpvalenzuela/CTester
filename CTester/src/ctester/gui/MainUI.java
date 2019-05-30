@@ -1,12 +1,9 @@
 package ctester.gui;
 
 import constants.Constants;
-import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -32,6 +29,7 @@ public class MainUI extends javax.swing.JFrame
         initComponents();        
         setupToolbar();
         setupTestsListLayout();
+        setupOutputLayout();
     }
 
     /**
@@ -43,16 +41,20 @@ public class MainUI extends javax.swing.JFrame
         try 
         {
             img = ImageIO.read(this.getClass().getResource(Constants.RESOURCES_PATH + Constants.NEW_TEST_ICON));
-            img = img.getScaledInstance(36, 36, java.awt.Image.SCALE_SMOOTH);
+            img = img.getScaledInstance(Constants.ICON_WIDTH, Constants.ICON_HEIGHT, java.awt.Image.SCALE_SMOOTH);
             mAddButton.setIcon(new ImageIcon(img));
 
             img = ImageIO.read(this.getClass().getResource(Constants.RESOURCES_PATH + Constants.COMPILE_ICON));
-            img = img.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
+            img = img.getScaledInstance(Constants.ICON_WIDTH, Constants.ICON_HEIGHT, java.awt.Image.SCALE_SMOOTH);
             mCompileButton.setIcon(new ImageIcon(img));
 
             img = ImageIO.read(this.getClass().getResource(Constants.RESOURCES_PATH + Constants.RUN_ICON));
-            img = img.getScaledInstance(48, 48, java.awt.Image.SCALE_SMOOTH);
+            img = img.getScaledInstance(Constants.ICON_WIDTH, Constants.ICON_HEIGHT, java.awt.Image.SCALE_SMOOTH);
             mRunButton.setIcon(new ImageIcon(img));
+
+            img = ImageIO.read(this.getClass().getResource(Constants.RESOURCES_PATH + Constants.REMOVE_TEST_ICON));
+            img = img.getScaledInstance(Constants.ICON_WIDTH, Constants.ICON_HEIGHT, java.awt.Image.SCALE_SMOOTH);
+            mRemoveButton.setIcon(new ImageIcon(img));
 
             img = ImageIO.read(this.getClass().getResource(Constants.RESOURCES_PATH + Constants.SETTINGS_ICON));
             img = img.getScaledInstance(Constants.ICON_WIDTH, Constants.ICON_HEIGHT, java.awt.Image.SCALE_SMOOTH);
@@ -97,10 +99,22 @@ public class MainUI extends javax.swing.JFrame
         
         mSplitPane.setBorder(null);
         
+        // TODO remove this
         for (int i = 0; i < 13; ++i)
         {
             mTestsListPanel.add(new TestItemUI());            
         }
+    }
+    
+    private void setupOutputLayout()
+    {
+        // Make the ScrollPane transparent.
+        mOutputScrollPane.setOpaque(false);
+        mOutputScrollPane.getViewport().setOpaque(false);
+        
+        mOutputArea.setFont(new Font("monospaced", Font.PLAIN, 12));
+        // TODO remove this
+        mOutputArea.setText("ResetCard\n\nI: 80 20 11 00 00\nO: 90 00");
     }
     
     /**
@@ -114,16 +128,21 @@ public class MainUI extends javax.swing.JFrame
 
         mSplitPane = new javax.swing.JSplitPane();
         mRightPanel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        mOutputScrollPane = new javax.swing.JScrollPane();
+        mOutputArea = new javax.swing.JTextArea();
         mLeftPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         mCompileButton = new javax.swing.JButton();
         mAddButton = new javax.swing.JButton();
         mRunButton = new javax.swing.JButton();
         mSettingsButton = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        mRemoveButton = new javax.swing.JButton();
         mTestsScrollPane = new javax.swing.JScrollPane();
         mTestsListPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        mSelectAllCheckBox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CTester");
@@ -141,15 +160,49 @@ public class MainUI extends javax.swing.JFrame
 
         mRightPanel.setBackground(new java.awt.Color(58, 58, 79));
 
+        jLabel2.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel2.setFont(new java.awt.Font("Microsoft YaHei UI Light", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel2.setText("Output");
+
+        jSeparator1.setForeground(new java.awt.Color(153, 153, 153));
+        jSeparator1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        mOutputScrollPane.setBorder(null);
+        mOutputScrollPane.setOpaque(false);
+
+        mOutputArea.setEditable(false);
+        mOutputArea.setColumns(20);
+        mOutputArea.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 12)); // NOI18N
+        mOutputArea.setForeground(new java.awt.Color(204, 204, 204));
+        mOutputArea.setRows(5);
+        mOutputArea.setOpaque(false);
+        mOutputScrollPane.setViewportView(mOutputArea);
+
         javax.swing.GroupLayout mRightPanelLayout = new javax.swing.GroupLayout(mRightPanel);
         mRightPanel.setLayout(mRightPanelLayout);
         mRightPanelLayout.setHorizontalGroup(
             mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 865, Short.MAX_VALUE)
+            .addGroup(mRightPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mRightPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jSeparator1)
+                    .addComponent(mOutputScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 853, Short.MAX_VALUE))
+                .addContainerGap())
         );
         mRightPanelLayout.setVerticalGroup(
             mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 731, Short.MAX_VALUE)
+            .addGroup(mRightPanelLayout.createSequentialGroup()
+                .addContainerGap(111, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(mOutputScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         mSplitPane.setRightComponent(mRightPanel);
@@ -186,6 +239,13 @@ public class MainUI extends javax.swing.JFrame
         mSettingsButton.setFocusPainted(false);
         mSettingsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        mRemoveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/close-white.png"))); // NOI18N
+        mRemoveButton.setToolTipText("Remove selected tests");
+        mRemoveButton.setBorderPainted(false);
+        mRemoveButton.setContentAreaFilled(false);
+        mRemoveButton.setFocusPainted(false);
+        mRemoveButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -196,7 +256,8 @@ public class MainUI extends javax.swing.JFrame
                     .addComponent(mAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mCompileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mRunButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mSettingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(mSettingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mRemoveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -208,18 +269,12 @@ public class MainUI extends javax.swing.JFrame
                 .addComponent(mCompileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(mRunButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 519, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(mRemoveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 463, Short.MAX_VALUE)
                 .addComponent(mSettingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-
-        jPanel2.setBackground(new java.awt.Color(30, 40, 57));
-        jPanel2.setOpaque(false);
-
-        jLabel1.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel1.setFont(new java.awt.Font("Malgun Gothic Semilight", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel1.setText("Tests");
 
         mTestsScrollPane.setBorder(null);
         mTestsScrollPane.setOpaque(false);
@@ -231,7 +286,7 @@ public class MainUI extends javax.swing.JFrame
         mTestsListPanel.setLayout(mTestsListPanelLayout);
         mTestsListPanelLayout.setHorizontalGroup(
             mTestsListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 420, Short.MAX_VALUE)
+            .addGap(0, 432, Short.MAX_VALUE)
         );
         mTestsListPanelLayout.setVerticalGroup(
             mTestsListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,23 +295,18 @@ public class MainUI extends javax.swing.JFrame
 
         mTestsScrollPane.setViewportView(mTestsListPanel);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(mTestsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(12, 12, 12)
-                .addComponent(mTestsScrollPane))
-        );
+        jLabel1.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel1.setFont(new java.awt.Font("Microsoft YaHei UI Light", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel1.setText("Tests");
+
+        mSelectAllCheckBox.setToolTipText("Select all");
+        mSelectAllCheckBox.setContentAreaFilled(false);
+        mSelectAllCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mSelectAllCheckBoxActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout mLeftPanelLayout = new javax.swing.GroupLayout(mLeftPanel);
         mLeftPanel.setLayout(mLeftPanelLayout);
@@ -264,8 +314,14 @@ public class MainUI extends javax.swing.JFrame
             mLeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mLeftPanelLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(mLeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(mTestsScrollPane)
+                    .addGroup(mLeftPanelLayout.createSequentialGroup()
+                        .addGroup(mLeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(mSelectAllCheckBox))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         mLeftPanelLayout.setVerticalGroup(
@@ -273,7 +329,11 @@ public class MainUI extends javax.swing.JFrame
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mLeftPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(mSelectAllCheckBox)
+                .addGap(18, 18, 18)
+                .addComponent(mTestsScrollPane)
                 .addContainerGap())
         );
 
@@ -293,6 +353,10 @@ public class MainUI extends javax.swing.JFrame
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void mSelectAllCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mSelectAllCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mSelectAllCheckBoxActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -310,13 +374,7 @@ public class MainUI extends javax.swing.JFrame
                 }
             }
 
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
@@ -328,13 +386,18 @@ public class MainUI extends javax.swing.JFrame
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton mAddButton;
     private javax.swing.JButton mCompileButton;
     private javax.swing.JPanel mLeftPanel;
+    private javax.swing.JTextArea mOutputArea;
+    private javax.swing.JScrollPane mOutputScrollPane;
+    private javax.swing.JButton mRemoveButton;
     private javax.swing.JPanel mRightPanel;
     private javax.swing.JButton mRunButton;
+    private javax.swing.JCheckBox mSelectAllCheckBox;
     private javax.swing.JButton mSettingsButton;
     private javax.swing.JSplitPane mSplitPane;
     private javax.swing.JPanel mTestsListPanel;

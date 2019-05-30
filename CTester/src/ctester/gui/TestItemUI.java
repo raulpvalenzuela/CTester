@@ -57,7 +57,7 @@ public class TestItemUI extends javax.swing.JPanel
         setOpaque(false);
 
         jCheckBox1.setBackground(new java.awt.Color(204, 204, 204));
-        jCheckBox1.setFont(new java.awt.Font("Malgun Gothic Semilight", 1, 12)); // NOI18N
+        jCheckBox1.setFont(new java.awt.Font("Microsoft YaHei UI Light", 1, 12)); // NOI18N
         jCheckBox1.setForeground(new java.awt.Color(204, 204, 204));
         jCheckBox1.setText("   Test Name");
         jCheckBox1.setContentAreaFilled(false);
@@ -91,7 +91,7 @@ public class TestItemUI extends javax.swing.JPanel
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jCheckBox1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 194, Short.MAX_VALUE)
                 .addComponent(mRunButton, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mRemoveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
