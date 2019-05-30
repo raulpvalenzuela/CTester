@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.layout.Border;
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
@@ -30,6 +31,7 @@ public class MainUI extends javax.swing.JFrame
         setupToolbar();
         setupTestsListLayout();
         setupOutputLayout();
+        setupCommandsToolbar();
     }
 
     /**
@@ -106,6 +108,9 @@ public class MainUI extends javax.swing.JFrame
         }
     }
     
+    /**
+     * Sets up the output panel.
+     */
     private void setupOutputLayout()
     {
         // Make the ScrollPane transparent.
@@ -114,7 +119,17 @@ public class MainUI extends javax.swing.JFrame
         
         mOutputArea.setFont(new Font("monospaced", Font.PLAIN, 12));
         // TODO remove this
-        mOutputArea.setText("ResetCard\n\nI: 80 20 11 00 00\nO: 90 00");
+        mOutputArea.setText("ResetCard\n\nI: 80 20 11 00 00\nO: 90 00\n\n// Virginize\nI: 80 2E 00 00 0A 94 55 22 E4 F0 01 97 01 02 04\nO: 6B 02");
+    }
+    
+    /**
+     * Sets up the commands toolbar.
+     */
+    private void setupCommandsToolbar()
+    {
+        mCommandEdittext.setBorder(BorderFactory.createCompoundBorder(
+              mCommandEdittext.getBorder()
+            , BorderFactory.createEmptyBorder(0, 8, 0, 8)));
     }
     
     /**
@@ -132,6 +147,14 @@ public class MainUI extends javax.swing.JFrame
         jSeparator1 = new javax.swing.JSeparator();
         mOutputScrollPane = new javax.swing.JScrollPane();
         mOutputArea = new javax.swing.JTextArea();
+        mResetButton = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        mSendButton = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        mCommandEdittext = new javax.swing.JTextField();
         mLeftPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         mCompileButton = new javax.swing.JButton();
@@ -179,6 +202,85 @@ public class MainUI extends javax.swing.JFrame
         mOutputArea.setOpaque(false);
         mOutputScrollPane.setViewportView(mOutputArea);
 
+        mResetButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(94, 237, 181), 2, true));
+        mResetButton.setToolTipText("Reset the card");
+        mResetButton.setOpaque(false);
+        mResetButton.setLayout(new java.awt.GridBagLayout());
+
+        jLabel3.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel3.setFont(new java.awt.Font("Microsoft YaHei UI Light", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Reset");
+        mResetButton.add(jLabel3, new java.awt.GridBagConstraints());
+
+        jPanel2.setOpaque(false);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 90, Short.MAX_VALUE)
+        );
+
+        jPanel3.setOpaque(false);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 512, Short.MAX_VALUE)
+        );
+
+        jPanel4.setOpaque(false);
+
+        mSendButton.setBackground(new java.awt.Color(94, 237, 181));
+        mSendButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(94, 237, 181), 2, true));
+        mSendButton.setToolTipText("Send command");
+
+        jLabel4.setBackground(new java.awt.Color(51, 51, 51));
+        jLabel4.setFont(new java.awt.Font("Microsoft YaHei UI Light", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel4.setText("Send");
+        mSendButton.add(jLabel4);
+
+        mCommandEdittext.setBackground(new java.awt.Color(30, 40, 57));
+        mCommandEdittext.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 12)); // NOI18N
+        mCommandEdittext.setForeground(new java.awt.Color(204, 204, 204));
+        mCommandEdittext.setText("Command");
+        mCommandEdittext.setToolTipText("Enter command");
+        mCommandEdittext.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(30, 40, 57), 2, true));
+        mCommandEdittext.setCaretColor(new java.awt.Color(204, 204, 204));
+        mCommandEdittext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mCommandEdittextActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mCommandEdittext, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mSendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(mSendButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(mCommandEdittext, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
         javax.swing.GroupLayout mRightPanelLayout = new javax.swing.GroupLayout(mRightPanel);
         mRightPanel.setLayout(mRightPanelLayout);
         mRightPanelLayout.setHorizontalGroup(
@@ -186,23 +288,43 @@ public class MainUI extends javax.swing.JFrame
             .addGroup(mRightPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1)
+                    .addGroup(mRightPanelLayout.createSequentialGroup()
+                        .addComponent(mOutputScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 705, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
+                        .addGroup(mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(mRightPanelLayout.createSequentialGroup()
+                        .addComponent(mResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(mRightPanelLayout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jSeparator1)
-                    .addComponent(mOutputScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 853, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         mRightPanelLayout.setVerticalGroup(
             mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mRightPanelLayout.createSequentialGroup()
-                .addContainerGap(111, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(mResetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(mOutputScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mRightPanelLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(12, Short.MAX_VALUE))
+                    .addGroup(mRightPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mOutputScrollPane))))
         );
 
         mSplitPane.setRightComponent(mRightPanel);
@@ -271,7 +393,7 @@ public class MainUI extends javax.swing.JFrame
                 .addComponent(mRunButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(mRemoveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 463, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 467, Short.MAX_VALUE)
                 .addComponent(mSettingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -357,6 +479,10 @@ public class MainUI extends javax.swing.JFrame
         // TODO add your handling code here:
     }//GEN-LAST:event_mSelectAllCheckBoxActionPerformed
 
+    private void mCommandEdittextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mCommandEdittextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mCommandEdittextActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -387,17 +513,25 @@ public class MainUI extends javax.swing.JFrame
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton mAddButton;
+    private javax.swing.JTextField mCommandEdittext;
     private javax.swing.JButton mCompileButton;
     private javax.swing.JPanel mLeftPanel;
     private javax.swing.JTextArea mOutputArea;
     private javax.swing.JScrollPane mOutputScrollPane;
     private javax.swing.JButton mRemoveButton;
+    private javax.swing.JPanel mResetButton;
     private javax.swing.JPanel mRightPanel;
     private javax.swing.JButton mRunButton;
     private javax.swing.JCheckBox mSelectAllCheckBox;
+    private javax.swing.JPanel mSendButton;
     private javax.swing.JButton mSettingsButton;
     private javax.swing.JSplitPane mSplitPane;
     private javax.swing.JPanel mTestsListPanel;
