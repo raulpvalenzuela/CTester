@@ -1,6 +1,8 @@
 package ctester.gui;
 
+import ctester.gui.components.TestItemUI;
 import constants.Constants;
+import ctester.gui.components.RoundButton;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -127,9 +129,23 @@ public class MainUI extends javax.swing.JFrame
      */
     private void setupCommandsToolbar()
     {
-        mCommandEdittext.setBorder(BorderFactory.createCompoundBorder(
-              mCommandEdittext.getBorder()
-            , BorderFactory.createEmptyBorder(0, 8, 0, 8)));
+        try 
+        {
+            mCommandEdittext.setBorder(BorderFactory.createCompoundBorder(
+                    mCommandEdittext.getBorder()
+                    , BorderFactory.createEmptyBorder(0, 8, 0, 8)));
+                        
+            Image img = ImageIO.read(this.getClass().getResource(Constants.RESOURCES_PATH + Constants.ROUND_GREEN_ICON));
+            img = img.getScaledInstance(58, 58, java.awt.Image.SCALE_SMOOTH);
+            mRoundCommands.setIcon(new ImageIcon(img));
+                        
+            img = ImageIO.read(this.getClass().getResource(Constants.RESOURCES_PATH + Constants.PLUS_ICON));
+            img = img.getScaledInstance(42, 42, java.awt.Image.SCALE_SMOOTH);
+            mRoundCommandsIcon.setIcon(new ImageIcon(img));
+            
+        } catch (IOException ex) {
+            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /**
@@ -149,12 +165,14 @@ public class MainUI extends javax.swing.JFrame
         mOutputArea = new javax.swing.JTextArea();
         mResetButton = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         mSendButton = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         mCommandEdittext = new javax.swing.JTextField();
+        mRightToolbarLowerPanel = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        mRoundCommandsIcon = new javax.swing.JLabel();
+        mRoundCommands = new javax.swing.JLabel();
         mLeftPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         mCompileButton = new javax.swing.JButton();
@@ -198,6 +216,7 @@ public class MainUI extends javax.swing.JFrame
         mOutputArea.setColumns(20);
         mOutputArea.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 12)); // NOI18N
         mOutputArea.setForeground(new java.awt.Color(204, 204, 204));
+        mOutputArea.setLineWrap(true);
         mOutputArea.setRows(5);
         mOutputArea.setOpaque(false);
         mOutputScrollPane.setViewportView(mOutputArea);
@@ -213,32 +232,6 @@ public class MainUI extends javax.swing.JFrame
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Reset");
         mResetButton.add(jLabel3, new java.awt.GridBagConstraints());
-
-        jPanel2.setOpaque(false);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 90, Short.MAX_VALUE)
-        );
-
-        jPanel3.setOpaque(false);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 512, Short.MAX_VALUE)
-        );
 
         jPanel4.setOpaque(false);
 
@@ -273,13 +266,36 @@ public class MainUI extends javax.swing.JFrame
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(mCommandEdittext, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mSendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(mSendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(mSendButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(mCommandEdittext, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
+
+        mRightToolbarLowerPanel.setOpaque(false);
+        mRightToolbarLowerPanel.setPreferredSize(new java.awt.Dimension(140, 140));
+        mRightToolbarLowerPanel.setLayout(new java.awt.GridBagLayout());
+
+        jPanel3.setOpaque(false);
+        jPanel3.setPreferredSize(new java.awt.Dimension(58, 58));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        mRoundCommandsIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mRoundCommandsIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/plus-black.png"))); // NOI18N
+        mRoundCommandsIcon.setAlignmentX(0.5F);
+        mRoundCommandsIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        mRoundCommandsIcon.setPreferredSize(new java.awt.Dimension(58, 58));
+        jPanel3.add(mRoundCommandsIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        mRoundCommands.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mRoundCommands.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/round-green.png"))); // NOI18N
+        mRoundCommands.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        mRoundCommands.setPreferredSize(new java.awt.Dimension(58, 58));
+        jPanel3.add(mRoundCommands, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        mRightToolbarLowerPanel.add(jPanel3, new java.awt.GridBagConstraints());
 
         javax.swing.GroupLayout mRightPanelLayout = new javax.swing.GroupLayout(mRightPanel);
         mRightPanel.setLayout(mRightPanelLayout);
@@ -290,41 +306,35 @@ public class MainUI extends javax.swing.JFrame
                 .addGroup(mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1)
                     .addGroup(mRightPanelLayout.createSequentialGroup()
-                        .addComponent(mOutputScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 705, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
-                        .addGroup(mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(mRightPanelLayout.createSequentialGroup()
                         .addComponent(mResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(mRightPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(mOutputScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 705, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(mRightToolbarLowerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         mRightPanelLayout.setVerticalGroup(
             mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mRightPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(mResetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addGroup(mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(mResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(mOutputScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
                     .addGroup(mRightPanelLayout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(12, Short.MAX_VALUE))
-                    .addGroup(mRightPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mOutputScrollPane))))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(mRightToolbarLowerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
 
         mSplitPane.setRightComponent(mRightPanel);
@@ -393,7 +403,7 @@ public class MainUI extends javax.swing.JFrame
                 .addComponent(mRunButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(mRemoveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 467, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(mSettingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -412,7 +422,7 @@ public class MainUI extends javax.swing.JFrame
         );
         mTestsListPanelLayout.setVerticalGroup(
             mTestsListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 644, Short.MAX_VALUE)
         );
 
         mTestsScrollPane.setViewportView(mTestsListPanel);
@@ -516,7 +526,6 @@ public class MainUI extends javax.swing.JFrame
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
@@ -529,6 +538,9 @@ public class MainUI extends javax.swing.JFrame
     private javax.swing.JButton mRemoveButton;
     private javax.swing.JPanel mResetButton;
     private javax.swing.JPanel mRightPanel;
+    private javax.swing.JPanel mRightToolbarLowerPanel;
+    private javax.swing.JLabel mRoundCommands;
+    private javax.swing.JLabel mRoundCommandsIcon;
     private javax.swing.JButton mRunButton;
     private javax.swing.JCheckBox mSelectAllCheckBox;
     private javax.swing.JPanel mSendButton;

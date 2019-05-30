@@ -19,4 +19,6 @@ public class Constants
     public static String NEW_TEST_ICON    = "file-add-white.png";
     public static String REMOVE_TEST_ICON = "close-white.png";
     public static String SETTINGS_ICON    = "settings-white.png";
+    public static String ROUND_GREEN_ICON = "round-green.png";
+    public static String PLUS_ICON        = "plus-black.png";
 }

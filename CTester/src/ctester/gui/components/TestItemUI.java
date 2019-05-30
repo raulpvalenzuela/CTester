@@ -1,6 +1,7 @@
-package ctester.gui;
+package ctester.gui.components;
 
 import constants.Constants;
+import ctester.gui.MainUI;
 import java.awt.Image;
 import java.io.IOException;
 import java.util.logging.Level;
