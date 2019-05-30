@@ -2,7 +2,6 @@ package ctester.gui;
 
 import ctester.gui.components.TestItemUI;
 import constants.Constants;
-import ctester.gui.components.RoundButton;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -284,6 +283,7 @@ public class MainUI extends javax.swing.JFrame
 
         mRoundCommandsIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         mRoundCommandsIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/plus-black.png"))); // NOI18N
+        mRoundCommandsIcon.setToolTipText("Show more commands");
         mRoundCommandsIcon.setAlignmentX(0.5F);
         mRoundCommandsIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         mRoundCommandsIcon.setPreferredSize(new java.awt.Dimension(58, 58));
