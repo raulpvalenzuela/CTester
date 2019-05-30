@@ -43,7 +43,7 @@ public class MainUI extends javax.swing.JFrame
         try 
         {
             img = ImageIO.read(this.getClass().getResource(Constants.RESOURCES_PATH + Constants.NEW_TEST_ICON));
-            img = img.getScaledInstance(38, 38, java.awt.Image.SCALE_SMOOTH);
+            img = img.getScaledInstance(36, 36, java.awt.Image.SCALE_SMOOTH);
             mAddButton.setIcon(new ImageIcon(img));
 
             img = ImageIO.read(this.getClass().getResource(Constants.RESOURCES_PATH + Constants.COMPILE_ICON));
@@ -51,7 +51,7 @@ public class MainUI extends javax.swing.JFrame
             mCompileButton.setIcon(new ImageIcon(img));
 
             img = ImageIO.read(this.getClass().getResource(Constants.RESOURCES_PATH + Constants.RUN_ICON));
-            img = img.getScaledInstance(Constants.ICON_WIDTH, Constants.ICON_HEIGHT, java.awt.Image.SCALE_SMOOTH);
+            img = img.getScaledInstance(48, 48, java.awt.Image.SCALE_SMOOTH);
             mRunButton.setIcon(new ImageIcon(img));
 
             img = ImageIO.read(this.getClass().getResource(Constants.RESOURCES_PATH + Constants.SETTINGS_ICON));
@@ -180,7 +180,7 @@ public class MainUI extends javax.swing.JFrame
         mRunButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         mSettingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/settings-white.png"))); // NOI18N
-        mSettingsButton.setToolTipText("Run selected tests");
+        mSettingsButton.setToolTipText("Settings");
         mSettingsButton.setBorderPainted(false);
         mSettingsButton.setContentAreaFilled(false);
         mSettingsButton.setFocusPainted(false);

@@ -204,7 +204,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/resources/settings-white.png"/>
                     </Property>
-                    <Property name="toolTipText" type="java.lang.String" value="Run selected tests"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Settings"/>
                     <Property name="borderPainted" type="boolean" value="false"/>
                     <Property name="contentAreaFilled" type="boolean" value="false"/>
                     <Property name="focusPainted" type="boolean" value="false"/>
