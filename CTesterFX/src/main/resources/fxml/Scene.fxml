@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -53,7 +54,7 @@
             </JFXButton>
          </children>
       </AnchorPane>
-      <SplitPane dividerPositions="0.35" layoutX="76.0" prefHeight="731.0" prefWidth="1311.0" style="-fx-padding: 0;">
+      <SplitPane dividerPositions="0.35" layoutX="72.0" prefHeight="731.0" prefWidth="1315.0" style="-fx-padding: 0;">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="731.0" prefWidth="509.0" snapToPixel="false" style="-fx-background-color: #1E2839; -fx-padding: 0;">
                <children>
@@ -67,14 +68,30 @@
                         <Font name="Microsoft YaHei UI Light" size="12.0" />
                      </font>
                   </JFXCheckBox>
-                  <ScrollPane layoutX="68.0" layoutY="111.0" opacity="0.56" prefHeight="620.0" prefWidth="447.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="111.0">
+                  <ScrollPane layoutX="68.0" layoutY="111.0" opacity="0.56" prefHeight="620.0" prefWidth="456.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="111.0">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
                   </ScrollPane>
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="1045.0" style="-fx-background-color: #3A3A4F;" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="1045.0" style="-fx-background-color: #3A3A4F;">
+               <children>
+                  <AnchorPane prefHeight="60.0" prefWidth="849.0">
+                     <children>
+                        <JFXButton id="mSendButton" buttonType="RAISED" layoutX="14.0" layoutY="14.0" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: #53DBB6;" text="Send" textAlignment="CENTER">
+                           <font>
+                              <Font name="Microsoft JhengHei UI Light" size="12.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXTextField focusColor="#53dbb6" layoutX="183.0" layoutY="14.0" prefHeight="32.0" prefWidth="280.0" promptText="Command" unFocusColor="#cccccc">
+                           <font>
+                              <Font name="Microsoft JhengHei UI Light" size="12.0" />
+                           </font>
+                        </JFXTextField>
+                     </children>
+                  </AnchorPane>
+               </children></AnchorPane>
         </items>
       </SplitPane>
    </children>

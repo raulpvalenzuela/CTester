@@ -1,3 +1,13 @@
 .button { 
     -fx-focus-color: transparent; 
 }
+
+.jfx-button{
+     -fx-border-radius: 0pt;
+     -fx-background-radius: 0pt;
+}
+
+.jfx-text-field {
+    -fx-prompt-text-fill: rgb(204, 204, 204);
+    -fx-text-inner-color: rgb(204, 204, 204);
+}
