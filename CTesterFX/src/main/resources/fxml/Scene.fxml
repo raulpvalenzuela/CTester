@@ -9,14 +9,13 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="731.0" prefWidth="1386.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="com.lsc.ctesterfx.FXMLController">
+<AnchorPane id="AnchorPane" prefHeight="731.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lsc.ctesterfx.FXMLController">
    <children>
-      <AnchorPane id="mLeftToolbar" prefHeight="731.0" prefWidth="100.0" style="-fx-background-color: #333333;">
+      <AnchorPane id="mLeftToolbar" prefHeight="731.0" prefWidth="72.0" style="-fx-background-color: #333333;">
          <children>
-            <JFXButton id="mAddTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="16.0" layoutY="14.0" prefHeight="52.0" prefWidth="52.0" ripplerFill="#53dbb6">
+            <JFXButton id="mAddTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="2.0" layoutY="14.0" prefHeight="52.0" prefWidth="52.0" ripplerFill="#53dbb6" text="Add">
                <graphic>
                   <ImageView fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -24,11 +23,8 @@
                      </image>
                   </ImageView>
                </graphic>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
             </JFXButton>
-            <JFXButton id="mAddTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="16.0" layoutY="85.0" prefHeight="52.0" prefWidth="52.0" ripplerFill="#53dbb6">
+            <JFXButton id="mCompileTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="2.0" layoutY="85.0" prefHeight="52.0" prefWidth="52.0" ripplerFill="#53dbb6" text="Compile">
                <graphic>
                   <ImageView fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -37,7 +33,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton id="mAddTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="16.0" layoutY="154.0" prefHeight="52.0" prefWidth="52.0" ripplerFill="#52d9b3">
+            <JFXButton id="mRunTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="2.0" layoutY="154.0" prefHeight="52.0" prefWidth="52.0" ripplerFill="#52d9b3" text="Run">
                <graphic>
                   <ImageView fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -46,7 +42,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton id="mAddTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="16.0" layoutY="657.0" prefHeight="52.0" prefWidth="52.0" ripplerFill="#52d9b3">
+            <JFXButton id="mSettingsTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="2.0" layoutY="657.0" prefHeight="52.0" prefWidth="52.0" ripplerFill="#52d9b3" text="Settings">
                <graphic>
                   <ImageView fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -57,7 +53,7 @@
             </JFXButton>
          </children>
       </AnchorPane>
-      <SplitPane dividerPositions="0.5" layoutX="100.0" prefHeight="731.0" prefWidth="1287.0" style="-fx-padding: 0;">
+      <SplitPane dividerPositions="0.35" layoutX="76.0" prefHeight="731.0" prefWidth="1311.0" style="-fx-padding: 0;">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="731.0" prefWidth="509.0" snapToPixel="false" style="-fx-background-color: #1E2839; -fx-padding: 0;">
                <children>
@@ -71,10 +67,10 @@
                         <Font name="Microsoft YaHei UI Light" size="12.0" />
                      </font>
                   </JFXCheckBox>
-                  <ScrollPane layoutX="14.0" layoutY="101.0" opacity="0.56" prefHeight="616.0" prefWidth="429.0">
-                     <content>
-                        <VBox prefHeight="417.0" prefWidth="306.0" />
-                     </content>
+                  <ScrollPane layoutX="68.0" layoutY="111.0" opacity="0.56" prefHeight="620.0" prefWidth="447.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="111.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
                   </ScrollPane>
                </children>
             </AnchorPane>
