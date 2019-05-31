@@ -178,6 +178,8 @@ public class MainUI extends javax.swing.JFrame
         jLabel6 = new javax.swing.JLabel();
         mBootloaderButton = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
+        mGetProdCodeButton = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
         mLeftPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         mCompileButton = new javax.swing.JButton();
@@ -340,6 +342,18 @@ public class MainUI extends javax.swing.JFrame
         jLabel7.setText("Bootloader");
         mBootloaderButton.add(jLabel7);
 
+        mGetProdCodeButton.setBackground(new java.awt.Color(94, 237, 181));
+        mGetProdCodeButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(94, 237, 181), 2, true));
+        mGetProdCodeButton.setToolTipText("Generate Get Product Code command");
+        mGetProdCodeButton.setOpaque(false);
+
+        jLabel8.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel8.setFont(new java.awt.Font("Microsoft YaHei UI Light", 1, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Get Prod Code");
+        mGetProdCodeButton.add(jLabel8);
+
         javax.swing.GroupLayout mRightPanelLayout = new javax.swing.GroupLayout(mRightPanel);
         mRightPanel.setLayout(mRightPanelLayout);
         mRightPanelLayout.setHorizontalGroup(
@@ -358,12 +372,14 @@ public class MainUI extends javax.swing.JFrame
                             .addComponent(mOutputScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 705, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mRightPanelLayout.createSequentialGroup()
-                                .addComponent(mRightToolbarLowerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(3, 3, 3))
-                            .addComponent(mVirginizeButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(mSecHistoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(mBootloaderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mRightPanelLayout.createSequentialGroup()
+                                    .addComponent(mRightToolbarLowerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(3, 3, 3))
+                                .addComponent(mVirginizeButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(mSecHistoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(mBootloaderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(mGetProdCodeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         mRightPanelLayout.setVerticalGroup(
@@ -374,14 +390,16 @@ public class MainUI extends javax.swing.JFrame
                     .addComponent(mResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mOutputScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
+                    .addComponent(mOutputScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 631, Short.MAX_VALUE)
                     .addGroup(mRightPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(mGetProdCodeButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(mBootloaderButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(mSecHistoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -583,6 +601,7 @@ public class MainUI extends javax.swing.JFrame
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -591,6 +610,7 @@ public class MainUI extends javax.swing.JFrame
     private javax.swing.JPanel mBootloaderButton;
     private javax.swing.JTextField mCommandEdittext;
     private javax.swing.JButton mCompileButton;
+    private javax.swing.JPanel mGetProdCodeButton;
     private javax.swing.JPanel mLeftPanel;
     private javax.swing.JTextArea mOutputArea;
     private javax.swing.JScrollPane mOutputScrollPane;
