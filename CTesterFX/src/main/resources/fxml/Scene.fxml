@@ -10,6 +10,7 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -32,7 +33,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="mAddTestsButton1" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" prefHeight="44.0" prefWidth="44.0" ripplerFill="#53dbb6" text="Add">
+                  <JFXButton fx:id="mCompileTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" prefHeight="44.0" prefWidth="44.0" ripplerFill="#53dbb6" text="Add">
                      <graphic>
                         <ImageView fitHeight="44.0" fitWidth="44.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -41,7 +42,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="mAddTestsButton2" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" prefHeight="44.0" prefWidth="44.0" ripplerFill="#53dbb6" text="Add">
+                  <JFXButton fx:id="mRunTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" prefHeight="44.0" prefWidth="44.0" ripplerFill="#53dbb6" text="Add">
                      <graphic>
                         <ImageView fitHeight="44.0" fitWidth="44.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -60,7 +61,7 @@
             </VBox>
             <VBox alignment="BOTTOM_CENTER" minWidth="-Infinity" prefHeight="238.0" prefWidth="64.0" style="-fx-background-color: #333333;" VBox.vgrow="ALWAYS">
                <children>
-                  <JFXButton fx:id="mAddTestsButton21" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" prefHeight="44.0" prefWidth="44.0" ripplerFill="#53dbb6" text="Add">
+                  <JFXButton fx:id="mSettingsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" prefHeight="44.0" prefWidth="44.0" ripplerFill="#53dbb6" text="Add">
                      <graphic>
                         <ImageView fitHeight="44.0" fitWidth="44.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -145,13 +146,14 @@
                   </Separator>
                   <HBox prefHeight="640.0" prefWidth="802.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <VBox prefHeight="639.0" prefWidth="606.0" HBox.hgrow="ALWAYS">
+                        <VBox prefHeight="639.0" prefWidth="606.0" spacing="16.0" HBox.hgrow="ALWAYS">
                            <children>
                               <Label text="Output" textFill="#cccccc">
                                  <font>
                                     <Font name="Microsoft JhengHei UI Light" size="18.0" />
                                  </font>
                               </Label>
+                              <BorderPane fx:id="mOutputContainer" prefHeight="568.0" prefWidth="583.0" />
                            </children>
                            <padding>
                               <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
@@ -185,7 +187,7 @@
                                     <Insets right="16.0" />
                                  </padding>
                               </VBox>
-                              <JFXButton fx:id="mSettingsTestsButton1" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" prefHeight="52.0" prefWidth="52.0" ripplerFill="#52d9b3" textAlignment="CENTER">
+                              <JFXButton fx:id="mFABButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" prefHeight="52.0" prefWidth="52.0" ripplerFill="#52d9b3" textAlignment="CENTER">
                                  <graphic>
                                     <ImageView fitHeight="52.0" fitWidth="52.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
                                        <image>

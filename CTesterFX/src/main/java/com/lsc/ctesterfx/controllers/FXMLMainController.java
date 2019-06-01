@@ -2,16 +2,16 @@ package com.lsc.ctesterfx.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import org.fxmisc.flowless.VirtualizedScrollPane;
+import org.fxmisc.richtext.InlineCssTextArea;
 
 /**
  * FXML Controller class of the main window.
@@ -22,15 +22,11 @@ public class FXMLMainController implements Initializable
 {
     @FXML
     private VBox mTestListVBox;
+    @FXML
+    private BorderPane mOutputContainer;
     
     @FXML
     private JFXButton mAddTestsButton;
-    @FXML
-    private JFXButton mAddTestsButton1;
-    @FXML
-    private JFXButton mAddTestsButton2;
-    @FXML
-    private JFXButton mAddTestsButton21;
     @FXML
     private JFXButton mSendButton;
     @FXML
@@ -44,10 +40,19 @@ public class FXMLMainController implements Initializable
     @FXML
     private JFXButton mVirginizeButton;
     @FXML
-    private JFXButton mSettingsTestsButton1;
+    private JFXButton mFABButton;
+    @FXML
+    private JFXButton mCompileTestsButton;
+    @FXML
+    private JFXButton mRunTestsButton;
+    @FXML
+    private JFXButton mSettingsButton;
     
     @FXML
     private JFXTextField mCommandTextfield;
+    
+    // RichTextArea that will contain the output of the test.
+    private final InlineCssTextArea mOutputTextArea = new InlineCssTextArea();
     
     /**
      * Initializes the controller class.
@@ -57,17 +62,23 @@ public class FXMLMainController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-        for (int i = 0; i < 7; ++i)
-        {
-            try 
-            {
-                Parent testItem = FXMLLoader.load(getClass().getResource("/fxml/TestItem.fxml"));
-                
-                mTestListVBox.getChildren().add(testItem);
-                
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        // Set the common style for output. Monospace and font size.
+        mOutputTextArea.setStyle("-fx-font-family: monospace; -fx-font-size: 10pt;");
+        // Not editable.
+        mOutputTextArea.setEditable(false);
+        // Transparent background
+        mOutputTextArea.setBackground(Background.EMPTY);
+        // No wrapping.
+        mOutputTextArea.setWrapText(false);
+        
+        // Container of the output text area. The virtualized container will only render the text visible.
+        VirtualizedScrollPane<InlineCssTextArea> vsPane = new VirtualizedScrollPane<>(mOutputTextArea);
+        VBox.setVgrow(vsPane, Priority.ALWAYS);
+        
+        // Force to fill the parent size.
+        vsPane.prefWidthProperty().bind(mOutputContainer.prefWidthProperty());
+        vsPane.prefHeightProperty().bind(mOutputContainer.prefHeightProperty());
+        
+        mOutputContainer.setCenter(vsPane);
     }
 }
