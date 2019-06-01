@@ -11,3 +11,11 @@
     -fx-prompt-text-fill: rgb(204, 204, 204);
     -fx-text-inner-color: rgb(204, 204, 204);
 }
+
+.scroll-pane {
+   -fx-background-color:transparent;
+}
+
+.scroll-pane > .viewport {
+   -fx-background-color: transparent;
+}
