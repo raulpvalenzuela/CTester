@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="731.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lsc.ctesterfx.FXMLController">
+   <children>
+      <AnchorPane fx:id="mLeftToolbar" prefHeight="731.0" prefWidth="72.0" style="-fx-background-color: #333333;">
+         <children>
+            <JFXButton fx:id="mAddTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="2.0" layoutY="14.0" prefHeight="52.0" prefWidth="52.0" ripplerFill="#53dbb6" text="Add">
+               <graphic>
+                  <ImageView fitHeight="52.0" fitWidth="52.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/file-add-white.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="mCompileTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="2.0" layoutY="85.0" prefHeight="52.0" prefWidth="52.0" ripplerFill="#53dbb6" text="Compile">
+               <graphic>
+                  <ImageView fitHeight="52.0" fitWidth="52.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/code-download-white.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="mRunTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="2.0" layoutY="154.0" prefHeight="52.0" prefWidth="52.0" ripplerFill="#52d9b3" text="Run">
+               <graphic>
+                  <ImageView fitHeight="52.0" fitWidth="52.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/arrow-right-white.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="mSettingsTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="2.0" layoutY="657.0" prefHeight="52.0" prefWidth="52.0" ripplerFill="#52d9b3" text="Settings">
+               <graphic>
+                  <ImageView fitHeight="52.0" fitWidth="52.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/settings-white.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+      <SplitPane dividerPositions="0.35" layoutX="72.0" prefHeight="731.0" prefWidth="1315.0" style="-fx-padding: 0;">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="731.0" prefWidth="509.0" snapToPixel="false" style="-fx-background-color: #1E2839; -fx-padding: 0;">
+               <children>
+                  <Label layoutX="14.0" layoutY="14.0" text="Tests" textFill="#cccccc">
+                     <font>
+                        <Font name="Microsoft JhengHei UI Light" size="18.0" />
+                     </font>
+                  </Label>
+                  <JFXCheckBox checkedColor="#53dbb6" layoutX="14.0" layoutY="65.0" text="Select all" textFill="#cccccc" unCheckedColor="#cccccc">
+                     <font>
+                        <Font name="Microsoft YaHei UI Light" size="12.0" />
+                     </font>
+                  </JFXCheckBox>
+                  <ScrollPane layoutX="14.0" layoutY="101.0">
+                     <content>
+                        <VBox prefHeight="618.0" prefWidth="430.0" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="1045.0" style="-fx-background-color: #3A3A4F;">
+               <children>
+                  <AnchorPane prefHeight="60.0" prefWidth="849.0">
+                     <children>
+                        <JFXButton fx:id="mSendButton" buttonType="RAISED" layoutX="14.0" layoutY="14.0" prefHeight="32.0" prefWidth="155.0" style="-fx-background-color: #53DBB6;" text="Send" textAlignment="CENTER">
+                           <font>
+                              <Font name="Microsoft JhengHei UI Light" size="12.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXTextField fx:id="mCommandTextfield" focusColor="#53dbb6" layoutX="188.0" layoutY="14.0" prefHeight="32.0" prefWidth="280.0" promptText="Command" unFocusColor="#cccccc">
+                           <font>
+                              <Font name="Microsoft JhengHei UI Light" size="12.0" />
+                           </font>
+                        </JFXTextField>
+                        <JFXButton id="mResetButton" fx:id="mSendButton1" buttonType="RAISED" layoutX="680.0" layoutY="14.0" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Reset" textAlignment="CENTER" textFill="#cccccc">
+                           <font>
+                              <Font name="Microsoft JhengHei UI Light" size="12.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </AnchorPane>
+                  <Separator layoutX="14.0" layoutY="59.0" opacity="0.5" prefHeight="0.0" prefWidth="821.0" />
+                  <Label layoutX="14.0" layoutY="78.0" text="Output" textFill="#cccccc">
+                     <font>
+                        <Font name="Microsoft JhengHei UI Light" size="18.0" />
+                     </font>
+                  </Label>
+                  <AnchorPane fx:id="mOutputContainer" layoutX="14.0" layoutY="118.0" prefHeight="598.0" prefWidth="650.0" />
+                  <AnchorPane layoutX="664.0" layoutY="72.0" prefHeight="659.0" prefWidth="189.0">
+                     <children>
+                        <JFXButton fx:id="mSettingsTestsButton1" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="59.0" layoutY="554.0" prefHeight="52.0" prefWidth="52.0" ripplerFill="#52d9b3" textAlignment="CENTER">
+                           <graphic>
+                              <ImageView fitHeight="52.0" fitWidth="52.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/round-plus-green.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <font>
+                              <Font name="Microsoft JhengHei UI Light" size="15.0" />
+                           </font>
+                        </JFXButton>
+                        <VBox alignment="BOTTOM_CENTER" layoutY="-7.0" prefHeight="529.0" prefWidth="189.0" style="-fx-spacing: 24;">
+                           <children>
+                              <JFXButton id="mBootloaderButton" fx:id="mSendButton1121" buttonType="RAISED" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Bootloader" textAlignment="CENTER" textFill="#cccccc">
+                                 <font>
+                                    <Font name="Microsoft JhengHei UI Light" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                              <JFXButton id="mGetProductCodeButton" fx:id="mSendButton112" buttonType="RAISED" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Get Product Code" textAlignment="CENTER" textFill="#cccccc">
+                                 <font>
+                                    <Font name="Microsoft JhengHei UI Light" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                              <JFXButton id="mSecurityHistoryButton" fx:id="mSendButton11" buttonType="RAISED" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Security History" textAlignment="CENTER" textFill="#cccccc">
+                                 <font>
+                                    <Font name="Microsoft JhengHei UI Light" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                              <JFXButton id="mVirginizeButton" fx:id="mSendButton111" buttonType="RAISED" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Virginize" textAlignment="CENTER" textFill="#cccccc">
+                                 <font>
+                                    <Font name="Microsoft JhengHei UI Light" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                           </children>
+                        </VBox>
+                     </children></AnchorPane>
+               </children>
+          </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
