@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+
+<HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="361.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lsc.ctesterfx.controllers.FXMLTestItemController">
+   <children>
+      <JFXCheckBox fx:id="mTestNameCheckbox" checkedColor="#53dbb6" prefHeight="18.0" prefWidth="354.0" text="Test" textFill="#cccccc" unCheckedColor="#cccccc" HBox.hgrow="ALWAYS">
+         <font>
+            <Font name="Microsoft YaHei UI Light" size="12.0" />
+         </font>
+      </JFXCheckBox>
+      <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="159.0" HBox.hgrow="ALWAYS">
+         <children>
+            <JFXButton fx:id="mRunTestButton" fx:fx:id="mAddTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="28.0" ripplerFill="#53dbb6" text="Add" HBox.hgrow="NEVER">
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="28.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/arrow-right-white.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="mRemoveTestButton" fx:fx:id="mAddTestsButton1" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="28.0" ripplerFill="#53dbb6" text="Add" HBox.hgrow="NEVER">
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="28.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/close-white.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children>
+      </HBox>
+   </children>
+</HBox>
