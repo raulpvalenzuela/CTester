@@ -16,10 +16,15 @@ public class FXMLMainController implements Initializable
     @FXML
     private VBox mTestListVBox;
     
+    /**
+     * Initializes the controller class.
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-        for (int i = 0; i < 15; ++i)
+        for (int i = 0; i < 7; ++i)
         {
             try 
             {
