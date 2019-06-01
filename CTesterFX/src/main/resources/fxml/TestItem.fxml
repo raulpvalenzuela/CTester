@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lsc.ctesterfx.controllers.FXMLTestItemController">
-    <stylesheets>
-        <URL value="@/styles/fxmltestitem.css"/>
-    </stylesheets>
+
+<AnchorPane id="AnchorPane" prefHeight="32.0" prefWidth="388.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lsc.ctesterfx.controllers.FXMLTestItemController">
+   <children>
+      <JFXCheckBox checkedColor="#53dbb6" layoutY="10.0" text="Test" textFill="#cccccc" unCheckedColor="#cccccc">
+         <font>
+            <Font name="Microsoft YaHei UI Light" size="12.0" />
+         </font>
+      </JFXCheckBox>
+      <JFXButton fx:id="mAddTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="344.0" layoutY="2.0" prefHeight="28.0" prefWidth="28.0" ripplerFill="#53dbb6" text="Add">
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="28.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/close-white.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="mAddTestsButton1" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="308.0" layoutY="2.0" prefHeight="28.0" prefWidth="28.0" ripplerFill="#53dbb6" text="Add">
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="28.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/arrow-right-white.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+   </children>
 </AnchorPane>
