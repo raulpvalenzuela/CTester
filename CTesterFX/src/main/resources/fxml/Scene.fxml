@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="715.0" prefWidth="1303.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="715.0" prefWidth="1303.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lsc.ctesterfx.controllers.FXMLMainController">
    <children>
       <VBox HBox.hgrow="NEVER">
          <HBox.margin>
@@ -126,7 +126,7 @@
                         </HBox>
                         <HBox alignment="CENTER_RIGHT" minHeight="-Infinity" prefHeight="66.0" prefWidth="283.0" HBox.hgrow="ALWAYS">
                            <children>
-                              <JFXButton id="mResetButton" fx:id="mSendButton1" buttonType="RAISED" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Reset" textAlignment="CENTER" textFill="#cccccc">
+                              <JFXButton fx:id="mResetButton" buttonType="RAISED" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Reset" textAlignment="CENTER" textFill="#cccccc">
                                  <font>
                                     <Font name="Microsoft JhengHei UI Light" size="12.0" />
                                  </font>
@@ -150,22 +150,22 @@
                            <children>
                               <VBox alignment="BOTTOM_RIGHT" prefHeight="527.0" prefWidth="186.0" spacing="24.0">
                                  <children>
-                                    <JFXButton id="mBootloaderButton" fx:id="mSendButton1121" buttonType="RAISED" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Bootloader" textAlignment="CENTER" textFill="#cccccc">
+                                    <JFXButton fx:id="mBootloaderButton" buttonType="RAISED" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Bootloader" textAlignment="CENTER" textFill="#cccccc">
                                        <font>
                                           <Font name="Microsoft JhengHei UI Light" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton id="mGetProductCodeButton" fx:id="mSendButton112" buttonType="RAISED" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Get Product Code" textAlignment="CENTER" textFill="#cccccc">
+                                    <JFXButton fx:id="mGetProductCodeButton" buttonType="RAISED" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Get Product Code" textAlignment="CENTER" textFill="#cccccc">
                                        <font>
                                           <Font name="Microsoft JhengHei UI Light" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton id="mSecurityHistoryButton" fx:id="mSendButton11" buttonType="RAISED" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Security History" textAlignment="CENTER" textFill="#cccccc">
+                                    <JFXButton fx:id="mSecurityHistoryButton" buttonType="RAISED" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Security History" textAlignment="CENTER" textFill="#cccccc">
                                        <font>
                                           <Font name="Microsoft JhengHei UI Light" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton id="mVirginizeButton" fx:id="mSendButton111" buttonType="RAISED" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Virginize" textAlignment="CENTER" textFill="#cccccc">
+                                    <JFXButton fx:id="mVirginizeButton" buttonType="RAISED" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Virginize" textAlignment="CENTER" textFill="#cccccc">
                                        <font>
                                           <Font name="Microsoft JhengHei UI Light" size="12.0" />
                                        </font>
