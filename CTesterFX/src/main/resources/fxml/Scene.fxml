@@ -145,7 +145,17 @@
                   </Separator>
                   <HBox prefHeight="640.0" prefWidth="802.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <VBox prefHeight="639.0" prefWidth="606.0" HBox.hgrow="ALWAYS" />
+                        <VBox prefHeight="639.0" prefWidth="606.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Output" textFill="#cccccc">
+                                 <font>
+                                    <Font name="Microsoft JhengHei UI Light" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+                           </padding></VBox>
                         <VBox alignment="BOTTOM_RIGHT" prefHeight="639.0" prefWidth="177.0" spacing="24.0" HBox.hgrow="ALWAYS">
                            <children>
                               <VBox alignment="BOTTOM_RIGHT" prefHeight="527.0" prefWidth="186.0" spacing="24.0">

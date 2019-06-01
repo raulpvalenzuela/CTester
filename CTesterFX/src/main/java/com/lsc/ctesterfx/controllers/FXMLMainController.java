@@ -1,5 +1,7 @@
 package com.lsc.ctesterfx.controllers;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,6 +22,32 @@ public class FXMLMainController implements Initializable
 {
     @FXML
     private VBox mTestListVBox;
+    
+    @FXML
+    private JFXButton mAddTestsButton;
+    @FXML
+    private JFXButton mAddTestsButton1;
+    @FXML
+    private JFXButton mAddTestsButton2;
+    @FXML
+    private JFXButton mAddTestsButton21;
+    @FXML
+    private JFXButton mSendButton;
+    @FXML
+    private JFXButton mResetButton;
+    @FXML
+    private JFXButton mBootloaderButton;
+    @FXML
+    private JFXButton mGetProductCodeButton;
+    @FXML
+    private JFXButton mSecurityHistoryButton;
+    @FXML
+    private JFXButton mVirginizeButton;
+    @FXML
+    private JFXButton mSettingsTestsButton1;
+    
+    @FXML
+    private JFXTextField mCommandTextfield;
     
     /**
      * Initializes the controller class.

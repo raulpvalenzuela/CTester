@@ -15,11 +15,9 @@ import javafx.fxml.Initializable;
 public class FXMLTestItemController implements Initializable 
 {
     @FXML
-    private JFXCheckBox mTestNameCheckbox;
-    
+    private JFXCheckBox mTestNameCheckbox;    
     @FXML
-    private JFXButton mRunTestButton;
-    
+    private JFXButton mRunTestButton;    
     @FXML
     private JFXButton mRemoveTestButton;
     
