@@ -2,9 +2,9 @@
     -fx-focus-color: transparent; 
 }
 
-.jfx-button{
-     -fx-border-radius: 0pt;
-     -fx-background-radius: 0pt;
+.jfx-button {
+     -fx-border-radius: 1pt;
+     -fx-background-radius: 1pt;
 }
 
 .jfx-text-field {

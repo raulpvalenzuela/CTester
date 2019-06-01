@@ -90,15 +90,59 @@
                               <Font name="Microsoft JhengHei UI Light" size="12.0" />
                            </font>
                         </JFXTextField>
+                        <JFXButton id="mResetButton" fx:id="mSendButton1" buttonType="RAISED" layoutX="680.0" layoutY="14.0" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Reset" textAlignment="CENTER" textFill="#cccccc">
+                           <font>
+                              <Font name="Microsoft JhengHei UI Light" size="12.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </AnchorPane>
-                  <Separator layoutX="14.0" layoutY="59.0" opacity="0.5" prefHeight="1.0" prefWidth="650.0" />
+                  <Separator layoutX="14.0" layoutY="59.0" opacity="0.5" prefHeight="0.0" prefWidth="821.0" />
                   <Label layoutX="14.0" layoutY="78.0" text="Output" textFill="#cccccc">
                      <font>
                         <Font name="Microsoft JhengHei UI Light" size="18.0" />
                      </font>
                   </Label>
                   <AnchorPane fx:id="mOutputContainer" layoutX="14.0" layoutY="118.0" prefHeight="598.0" prefWidth="650.0" />
+                  <AnchorPane layoutX="664.0" layoutY="72.0" prefHeight="659.0" prefWidth="189.0">
+                     <children>
+                        <JFXButton fx:id="mSettingsTestsButton1" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="59.0" layoutY="554.0" prefHeight="52.0" prefWidth="52.0" ripplerFill="#52d9b3" textAlignment="CENTER">
+                           <graphic>
+                              <ImageView fitHeight="52.0" fitWidth="52.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/round-plus-green.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <font>
+                              <Font name="Microsoft JhengHei UI Light" size="15.0" />
+                           </font>
+                        </JFXButton>
+                        <VBox alignment="BOTTOM_CENTER" layoutY="-7.0" prefHeight="529.0" prefWidth="189.0" style="-fx-spacing: 24;">
+                           <children>
+                              <JFXButton id="mBootloaderButton" fx:id="mSendButton1121" buttonType="RAISED" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Bootloader" textAlignment="CENTER" textFill="#cccccc">
+                                 <font>
+                                    <Font name="Microsoft JhengHei UI Light" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                              <JFXButton id="mGetProductCodeButton" fx:id="mSendButton112" buttonType="RAISED" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Get Product Code" textAlignment="CENTER" textFill="#cccccc">
+                                 <font>
+                                    <Font name="Microsoft JhengHei UI Light" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                              <JFXButton id="mSecurityHistoryButton" fx:id="mSendButton11" buttonType="RAISED" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Security History" textAlignment="CENTER" textFill="#cccccc">
+                                 <font>
+                                    <Font name="Microsoft JhengHei UI Light" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                              <JFXButton id="mVirginizeButton" fx:id="mSendButton111" buttonType="RAISED" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Virginize" textAlignment="CENTER" textFill="#cccccc">
+                                 <font>
+                                    <Font name="Microsoft JhengHei UI Light" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                           </children>
+                        </VBox>
+                     </children></AnchorPane>
                </children>
           </AnchorPane>
         </items>
