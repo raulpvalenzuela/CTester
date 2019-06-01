@@ -11,6 +11,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
 
+/**
+ * FXML Controller class of the main window.
+ *
+ * @author dma@logossmartcard.com
+ */
 public class FXMLMainController implements Initializable 
 {
     @FXML

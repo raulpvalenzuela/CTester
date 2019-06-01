@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 /**
- * FXML Controller class
+ * FXML Controller class of every test item in the VBox.
  *
  * @author dma@logossmartcard.com
  */
