@@ -6,6 +6,7 @@ import com.lsc.ctesterfx.constants.Constants;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -148,6 +149,7 @@ public class FXMLMainController implements Initializable
             mFadeInAnimationsList[i].setFromValue(0.0f);
             mFadeInAnimationsList[i].setToValue(1.0f);
             mFadeInAnimationsList[i].setDelay(Duration.millis(delay));
+            mFadeInAnimationsList[i].setInterpolator(Interpolator.EASE_BOTH);
 
             delay += Constants.FAST_DELAY;
         }
@@ -158,6 +160,7 @@ public class FXMLMainController implements Initializable
             mFadeOutAnimationsList[i].setFromValue(1.0f);
             mFadeOutAnimationsList[i].setToValue(0.0f);
             mFadeOutAnimationsList[i].setDelay(Duration.millis(delay));
+            mFadeOutAnimationsList[i].setInterpolator(Interpolator.EASE_BOTH);
 
             delay += Constants.FAST_DELAY;
         }
