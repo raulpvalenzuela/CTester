@@ -24,7 +24,7 @@
          <children>
             <VBox alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="593.0" prefWidth="64.0" spacing="8.0" style="-fx-background-color: #333333;" VBox.vgrow="ALWAYS">
                <children>
-                  <JFXButton fx:id="mAddTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" prefHeight="56.0" prefWidth="56.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add">
+                  <JFXButton fx:id="mAddTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickAddTests" prefHeight="56.0" prefWidth="56.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add">
                      <graphic>
                         <ImageView fitHeight="44.0" fitWidth="44.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -33,7 +33,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="mCompileTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" prefHeight="56.0" prefWidth="56.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add">
+                  <JFXButton fx:id="mCompileTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickCompileTests" prefHeight="56.0" prefWidth="56.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add">
                      <graphic>
                         <ImageView fitHeight="44.0" fitWidth="44.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -42,7 +42,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="mRunTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" prefHeight="56.0" prefWidth="56.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add">
+                  <JFXButton fx:id="mRunTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickRunTests" prefHeight="56.0" prefWidth="56.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add">
                      <graphic>
                         <ImageView fitHeight="44.0" fitWidth="44.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -61,7 +61,7 @@
             </VBox>
             <VBox alignment="BOTTOM_CENTER" minWidth="-Infinity" prefHeight="238.0" prefWidth="64.0" style="-fx-background-color: #333333;" VBox.vgrow="ALWAYS">
                <children>
-                  <JFXButton fx:id="mSettingsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" prefHeight="56.0" prefWidth="56.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add">
+                  <JFXButton fx:id="mSettingsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickSettings" prefHeight="56.0" prefWidth="56.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add">
                      <graphic>
                         <ImageView fitHeight="44.0" fitWidth="44.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -85,11 +85,17 @@
                      <font>
                         <Font name="Microsoft JhengHei UI Light" size="18.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets bottom="8.0" />
+                     </VBox.margin>
                   </Label>
                   <JFXCheckBox checkedColor="#53dbb6" text="Select all" textFill="#cccccc" unCheckedColor="#cccccc">
                      <font>
                         <Font name="Microsoft YaHei UI Light" size="12.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                   </JFXCheckBox>
                   <ScrollPane VBox.vgrow="ALWAYS">
                      <content>
@@ -187,11 +193,11 @@
                                     <Insets right="16.0" />
                                  </padding>
                               </VBox>
-                              <JFXButton fx:id="mFABButton" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" ellipsisString="" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="52.0" prefWidth="52.0" ripplerFill="WHITE" style="-fx-background-color: #52d9b3; -fx-border-radius: 32; -fx-background-radius: 32;" textAlignment="CENTER">
+                              <JFXButton fx:id="mFABButton" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" ellipsisString="" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickFAB" prefHeight="52.0" prefWidth="52.0" ripplerFill="WHITE" style="-fx-background-color: #52d9b3; -fx-border-radius: 32; -fx-background-radius: 32;" textAlignment="CENTER">
                                  <graphic>
                                     <ImageView fitHeight="32.0" fitWidth="32.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../images/plus-black.png" />
+                                          <Image url="@../images/minus-black.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
