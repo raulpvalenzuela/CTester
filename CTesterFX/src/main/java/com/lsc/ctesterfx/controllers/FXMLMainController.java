@@ -1,16 +1,24 @@
 package com.lsc.ctesterfx.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 import com.lsc.ctesterfx.constants.Constants;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -18,6 +26,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.InlineCssTextArea;
@@ -28,7 +39,10 @@ import org.fxmisc.richtext.InlineCssTextArea;
  * @author dma@logossmartcard.com
  */
 public class FXMLMainController implements Initializable 
-{
+{    
+    // RichTextArea that will contain the output of the test.
+    private final InlineCssTextArea mOutputTextArea = new InlineCssTextArea();
+    
     // Flag to indicate if the commands list is visible.
     private boolean mCommandsListVisible;
     
@@ -68,10 +82,12 @@ public class FXMLMainController implements Initializable
     private JFXTextField mCommandTextfield;
     
     @FXML
+    private JFXCheckBox mSelectAllCheckbox;
+    
+    @FXML
     private ImageView mFABPlusIcon;
     
-    // RichTextArea that will contain the output of the test.
-    private final InlineCssTextArea mOutputTextArea = new InlineCssTextArea();
+    private Stage mStage;
     
     // Add all the animations to be run when the FAB is clicked.
     private FadeTransition[] mFadeInAnimationsList;    
@@ -140,7 +156,7 @@ public class FXMLMainController implements Initializable
      * Sets up all the animations in this window.
      */
     private void _setupAnimations()
-    {        
+    {
         mFadeInAnimationsList = new FadeTransition[] { 
               new FadeTransition(Duration.millis(Constants.FADE_IN_ANIMATION_DURATION), mVirginizeButton)
             , new FadeTransition(Duration.millis(Constants.FADE_IN_ANIMATION_DURATION), mSecurityHistoryButton)
@@ -168,7 +184,7 @@ public class FXMLMainController implements Initializable
         
         delay = 0;
         for (int i = mFadeOutAnimationsList.length - 1; i >= 0; --i)
-        {          
+        {
             mFadeOutAnimationsList[i].setFromValue(1.0f);
             mFadeOutAnimationsList[i].setToValue(0.0f);
             mFadeOutAnimationsList[i].setDelay(Duration.millis(delay));
@@ -198,7 +214,30 @@ public class FXMLMainController implements Initializable
     @FXML
     private void onClickAddTests(ActionEvent event) 
     {
-        // TODO
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        fileChooser.getExtensionFilters().add(new ExtensionFilter("Java Files", "*.java"));
+        List<File> selectedFiles = fileChooser.showOpenMultipleDialog(mStage);        
+        
+        if (selectedFiles != null) 
+        {
+            selectedFiles.forEach((file) -> {
+                try 
+                {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TestItem.fxml"));
+                    Parent testItem = (Parent) loader.load();
+                    FXMLTestItemController controller = (FXMLTestItemController) loader.getController();
+                    controller.setAttributes(file);
+                    
+                    System.out.println(file.getName());
+                    
+                    mTestListVBox.getChildren().add(testItem);
+
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+        }
     }
 
     @FXML
@@ -233,7 +272,7 @@ public class FXMLMainController implements Initializable
             }
             
             // Minus to plus transition.
-            mFadeOutAnimation.play(); 
+            mFadeInAnimation.play(); 
             // Change the tooltip.
             mFABButton.setTooltip(new Tooltip(Constants.TOOLTIP_SHOW_MORE));
         }
@@ -247,7 +286,7 @@ public class FXMLMainController implements Initializable
             }
             
             // Plus to minus transition.
-            mFadeInAnimation.play();
+            mFadeOutAnimation.play();
             // Change the tooltip.
             mFABButton.setTooltip(new Tooltip(Constants.TOOLTIP_SHOW_LESS));
         }
@@ -277,5 +316,10 @@ public class FXMLMainController implements Initializable
     private void onClickVirginizeButton(ActionEvent event) 
     {
         // TODO
+    }
+    
+    public void setStage(Stage stage)
+    {
+        mStage = stage;
     }
 }
