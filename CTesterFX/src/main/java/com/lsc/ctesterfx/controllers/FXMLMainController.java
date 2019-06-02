@@ -8,6 +8,8 @@ import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tooltip;
@@ -162,6 +164,17 @@ public class FXMLMainController implements Initializable
             mFadeOutAnimationsList[i].setDelay(Duration.millis(delay));
             mFadeOutAnimationsList[i].setInterpolator(Interpolator.EASE_BOTH);
 
+            // Hide the node once it's finished so that it cannot get clicked.
+            final int index = i;
+            mFadeOutAnimationsList[i].setOnFinished(new EventHandler<ActionEvent>() 
+            {
+                @Override
+                public void handle(ActionEvent event) 
+                {
+                    mFadeOutAnimationsList[index].getNode().setVisible(false);
+                }
+            });
+            
             delay += Constants.FAST_DELAY;
         }
     }
@@ -203,11 +216,37 @@ public class FXMLMainController implements Initializable
         else
         {
             for (int i = 0; i < mFadeInAnimationsList.length; ++i)
-            {                
+            {
+                // Make the node visible again.
+                mFadeInAnimationsList[i].getNode().setVisible(true);
                 mFadeInAnimationsList[i].play();
             }
         }
         
         mCommandsListVisible = !mCommandsListVisible;
+    }
+
+    @FXML
+    private void onClickBootloaderButton(ActionEvent event) 
+    {
+        // TODO
+    }
+
+    @FXML
+    private void onClickGetProductCodeButton(ActionEvent event) 
+    {
+        // TODO
+    }
+
+    @FXML
+    private void onClickSecurityHistoryButton(ActionEvent event) 
+    {
+        // TODO
+    }
+
+    @FXML
+    private void onClickVirginizeButton(ActionEvent event) 
+    {
+        // TODO
     }
 }
