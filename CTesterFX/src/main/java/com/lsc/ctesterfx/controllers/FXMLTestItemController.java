@@ -2,6 +2,7 @@ package com.lsc.ctesterfx.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -21,6 +22,9 @@ public class FXMLTestItemController implements Initializable
     @FXML
     private JFXButton mRemoveTestButton;
     
+    private String mTestname;
+    private String mTestPath;
+    
     /**
      * Initializes the controller class.
      * @param url
@@ -30,5 +34,13 @@ public class FXMLTestItemController implements Initializable
     public void initialize(URL url, ResourceBundle rb) 
     {
         // TODO
+    }
+    
+    public void setAttributes(File file)
+    {
+        mTestname = file.getName();
+        mTestPath = file.getAbsolutePath();
+        
+        mTestNameCheckbox.setText(mTestname);
     }
 }

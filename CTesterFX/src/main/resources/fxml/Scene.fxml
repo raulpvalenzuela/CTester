@@ -87,25 +87,28 @@
                         <Font name="Microsoft JhengHei UI Light" size="18.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="8.0" />
+                        <Insets bottom="8.0" left="16.0" />
                      </VBox.margin>
                   </Label>
-                  <JFXCheckBox checkedColor="#53dbb6" text="Select all" textFill="#cccccc" unCheckedColor="#cccccc">
+                  <JFXCheckBox fx:id="mSelectAllCheckbox" checkedColor="#53dbb6" text="Select all" textFill="#cccccc" unCheckedColor="#cccccc">
                      <font>
                         <Font name="Microsoft YaHei UI Light" size="12.0" />
                      </font>
                      <VBox.margin>
-                        <Insets />
+                        <Insets left="16.0" />
                      </VBox.margin>
                   </JFXCheckBox>
                   <ScrollPane VBox.vgrow="ALWAYS">
                      <content>
                         <VBox fx:id="mTestListVBox" prefHeight="612.0" prefWidth="385.0" />
                      </content>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                   </ScrollPane>
                </children>
                <padding>
-                  <Insets bottom="2.0" left="16.0" right="2.0" top="16.0" />
+                  <Insets bottom="2.0" right="2.0" top="16.0" />
                </padding>
             </VBox>
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="741.0" spacing="4.0" style="-fx-background-color: #3A3A4F;">

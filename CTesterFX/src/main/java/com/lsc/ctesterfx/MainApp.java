@@ -1,5 +1,6 @@
 package com.lsc.ctesterfx;
 
+import com.lsc.ctesterfx.controllers.FXMLMainController;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +14,10 @@ public class MainApp extends Application
     @Override
     public void start(Stage stage) throws Exception 
     {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene.fxml"));
+        Parent root = (Parent) loader.load();
+        FXMLMainController controller = (FXMLMainController) loader.getController();
+        controller.setStage(stage);
         
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
