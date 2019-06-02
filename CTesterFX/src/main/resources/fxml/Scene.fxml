@@ -100,7 +100,7 @@
                   </JFXCheckBox>
                   <ScrollPane VBox.vgrow="ALWAYS">
                      <content>
-                        <VBox fx:id="mTestListVBox" prefHeight="612.0" prefWidth="385.0" />
+                        <VBox fx:id="mTestListVBox" prefHeight="612.0" prefWidth="402.0" />
                      </content>
                      <VBox.margin>
                         <Insets />
