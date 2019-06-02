@@ -8,8 +8,6 @@ import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tooltip;
@@ -166,13 +164,8 @@ public class FXMLMainController implements Initializable
 
             // Hide the node once it's finished so that it cannot get clicked.
             final int index = i;
-            mFadeOutAnimationsList[i].setOnFinished(new EventHandler<ActionEvent>() 
-            {
-                @Override
-                public void handle(ActionEvent event) 
-                {
-                    mFadeOutAnimationsList[index].getNode().setVisible(false);
-                }
+            mFadeOutAnimationsList[i].setOnFinished((e) -> {
+                mFadeOutAnimationsList[index].getNode().setVisible(false);
             });
             
             delay += Constants.FAST_DELAY;
