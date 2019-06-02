@@ -272,7 +272,7 @@ public class FXMLMainController implements Initializable
             }
             
             // Minus to plus transition.
-            mFadeOutAnimation.play(); 
+            mFadeInAnimation.play(); 
             // Change the tooltip.
             mFABButton.setTooltip(new Tooltip(Constants.TOOLTIP_SHOW_MORE));
         }
@@ -286,7 +286,7 @@ public class FXMLMainController implements Initializable
             }
             
             // Plus to minus transition.
-            mFadeInAnimation.play();
+            mFadeOutAnimation.play();
             // Change the tooltip.
             mFABButton.setTooltip(new Tooltip(Constants.TOOLTIP_SHOW_LESS));
         }
