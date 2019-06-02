@@ -12,6 +12,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -195,11 +196,20 @@
                               </VBox>
                               <JFXButton fx:id="mFABButton" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" ellipsisString="" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickFAB" prefHeight="52.0" prefWidth="52.0" ripplerFill="WHITE" style="-fx-background-color: #52d9b3; -fx-border-radius: 32; -fx-background-radius: 32;" textAlignment="CENTER">
                                  <graphic>
-                                    <ImageView fitHeight="32.0" fitWidth="32.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../images/minus-black.png" />
-                                       </image>
-                                    </ImageView>
+                                    <StackPane fx:id="mFABIconsContainer">
+                                       <children>
+                                          <ImageView fitHeight="32.0" fitWidth="32.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../images/minus-black.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fx:id="mFABPlusIcon" fitHeight="32.0" fitWidth="32.0" focusTraversable="true" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../images/plus-black.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </StackPane>
                                  </graphic>
                                  <font>
                                     <Font name="Microsoft JhengHei UI Light" size="15.0" />

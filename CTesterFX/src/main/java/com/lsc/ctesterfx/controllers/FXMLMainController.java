@@ -7,13 +7,16 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
+import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.fxmisc.flowless.VirtualizedScrollPane;
@@ -34,6 +37,9 @@ public class FXMLMainController implements Initializable
     
     @FXML
     private BorderPane mOutputContainer;
+    
+    @FXML
+    private StackPane mFABIconsContainer;
     
     @FXML
     private JFXButton mAddTestsButton;
@@ -61,12 +67,18 @@ public class FXMLMainController implements Initializable
     @FXML
     private JFXTextField mCommandTextfield;
     
+    @FXML
+    private ImageView mFABPlusIcon;
+    
     // RichTextArea that will contain the output of the test.
     private final InlineCssTextArea mOutputTextArea = new InlineCssTextArea();
     
     // Add all the animations to be run when the FAB is clicked.
     private FadeTransition[] mFadeInAnimationsList;    
     private FadeTransition[] mFadeOutAnimationsList;
+    private RotateTransition mRotateTransition;
+    private FadeTransition mFadeInAnimation;
+    private FadeTransition mFadeOutAnimation;
     
     /**
      * Initializes the controller class.
@@ -120,8 +132,8 @@ public class FXMLMainController implements Initializable
      */
     private void _setupTooltips()
     {
-        mAddTestsButton.setTooltip(new Tooltip("Add new tests"));
-        mFABButton.setTooltip(new Tooltip("Show more commands"));
+        mAddTestsButton.setTooltip(new Tooltip(Constants.TOOLTIP_ADD_TESTS));
+        mFABButton.setTooltip(new Tooltip(Constants.TOOLTIP_SHOW_MORE));
     }
     
     /**
@@ -170,6 +182,17 @@ public class FXMLMainController implements Initializable
             
             delay += Constants.FAST_DELAY;
         }
+        
+        mRotateTransition = new RotateTransition(Duration.millis(Constants.SLOW_DELAY), mFABIconsContainer);
+        mRotateTransition.setByAngle(180);
+        
+        mFadeInAnimation  = new FadeTransition(Duration.millis(Constants.SLOW_DELAY), mFABPlusIcon);
+        mFadeOutAnimation = new FadeTransition(Duration.millis(Constants.SLOW_DELAY), mFABPlusIcon);
+        
+        mFadeInAnimation.setFromValue(0.0f);
+        mFadeInAnimation.setToValue(1.0f);
+        mFadeOutAnimation.setFromValue(1.0f);
+        mFadeOutAnimation.setToValue(0.0f);
     }
 
     @FXML
@@ -198,13 +221,21 @@ public class FXMLMainController implements Initializable
 
     @FXML
     private void onClickFAB(ActionEvent event) 
-    {        
+    {
+        // Rotation of the FAB 180 degrees.
+        mRotateTransition.play();
+        
         if (mCommandsListVisible)
         {            
             for (int i = 0; i < mFadeOutAnimationsList.length; ++i)
             {                
                 mFadeOutAnimationsList[i].play();
             }
+            
+            // Minus to plus transition.
+            mFadeOutAnimation.play(); 
+            // Change the tooltip.
+            mFABButton.setTooltip(new Tooltip(Constants.TOOLTIP_SHOW_MORE));
         }
         else
         {
@@ -214,6 +245,11 @@ public class FXMLMainController implements Initializable
                 mFadeInAnimationsList[i].getNode().setVisible(true);
                 mFadeInAnimationsList[i].play();
             }
+            
+            // Plus to minus transition.
+            mFadeInAnimation.play();
+            // Change the tooltip.
+            mFABButton.setTooltip(new Tooltip(Constants.TOOLTIP_SHOW_LESS));
         }
         
         mCommandsListVisible = !mCommandsListVisible;
