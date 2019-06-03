@@ -101,7 +101,7 @@
                               <Insets bottom="8.0" left="16.0" />
                            </VBox.margin>
                         </Label>
-                        <JFXCheckBox fx:id="mSelectAllCheckbox" checkedColor="#53dbb6" text="Select all" textFill="#cccccc" unCheckedColor="#cccccc">
+                        <JFXCheckBox fx:id="mSelectAllCheckbox" checkedColor="#53dbb6" onAction="#onStateChangedSelectAll" text="Select all" textFill="#cccccc" unCheckedColor="#cccccc">
                            <font>
                               <Font name="Microsoft YaHei UI Light" size="12.0" />
                            </font>

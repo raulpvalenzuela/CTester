@@ -341,6 +341,14 @@ public class FXMLMainController implements Initializable
     {
         // TODO
     }
+
+    @FXML
+    private void onStateChangedSelectAll(ActionEvent event) 
+    {
+        mTestItemControllerList.forEach((controller) -> {
+            controller.select(mSelectAllCheckbox.isSelected());
+        });
+    }
     
     /**
      * Method to store the stage object.

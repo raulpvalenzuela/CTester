@@ -51,6 +51,18 @@ public class FXMLTestItemController implements Initializable
         mRunTestButton.setTooltip(new Tooltip(Constants.TOOLTIP_RUN_TEST));
         mRemoveTestButton.setTooltip(new Tooltip(Constants.TOOLTIP_REMOVE_TEST));
     }
+
+    @FXML
+    private void onClickRunTestButton(ActionEvent event) 
+    {
+        // TODO
+    }
+
+    @FXML
+    private void onClickRemoveTestButton(ActionEvent event) 
+    {
+        mMainController.removeTestAtIndex(mIndex);
+    }
     
     /**
      * Sets only the index of the test in the list.
@@ -81,16 +93,14 @@ public class FXMLTestItemController implements Initializable
         mTestNameCheckbox.setMnemonicParsing(false);
         mTestNameCheckbox.setText(mTestname);
     }
-
-    @FXML
-    private void onClickRunTestButton(ActionEvent event) 
+    
+    /**
+     * Selects or deselects the checkbox.
+     * 
+     * @param selected: the checkbox has to be selected if true. Deselected otherwise.
+     */
+    public void select(boolean selected)
     {
-        // TODO
-    }
-
-    @FXML
-    private void onClickRemoveTestButton(ActionEvent event) 
-    {
-        mMainController.removeTestAtIndex(mIndex);
+        mTestNameCheckbox.setSelected(selected);
     }
 }
