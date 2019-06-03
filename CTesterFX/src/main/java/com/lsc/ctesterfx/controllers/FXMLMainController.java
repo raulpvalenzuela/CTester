@@ -7,6 +7,7 @@ import com.lsc.ctesterfx.constants.Constants;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -43,6 +45,9 @@ public class FXMLMainController implements Initializable
 {    
     // RichTextArea that will contain the output of the test.
     private final InlineCssTextArea mOutputTextArea = new InlineCssTextArea();
+    
+    // List with all the test controllers.
+    private final List<FXMLTestItemController> mTestItemControllerList = new ArrayList<>();
     
     // Flag to indicate if the commands list is visible.
     private boolean mCommandsListVisible;
@@ -239,22 +244,23 @@ public class FXMLMainController implements Initializable
         
         if (selectedFiles != null) 
         {
-            selectedFiles.forEach((file) -> {
+            int index = 0;
+            for (File file : selectedFiles) 
+            {
                 try 
                 {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TestItem.fxml"));
                     Parent testItem = (Parent) loader.load();
                     FXMLTestItemController controller = (FXMLTestItemController) loader.getController();
-                    controller.setAttributes(file);
-                    
-                    System.out.println(file.getName());
-                    
+                    controller.setAttributes(file, this, index++);
+                                        
                     mTestListVBox.getChildren().add(testItem);
+                    mTestItemControllerList.add(controller);
 
                 } catch (IOException ex) {
                     Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            });
+            }
         }
     }
 
@@ -335,6 +341,14 @@ public class FXMLMainController implements Initializable
     {
         // TODO
     }
+
+    @FXML
+    private void onStateChangedSelectAll(ActionEvent event) 
+    {
+        mTestItemControllerList.forEach((controller) -> {
+            controller.select(mSelectAllCheckbox.isSelected());
+        });
+    }
     
     /**
      * Method to store the stage object.
@@ -344,5 +358,23 @@ public class FXMLMainController implements Initializable
     public void setStage(Stage stage)
     {
         mStage = stage;
+    }
+    
+    /**
+     * Removes a specific test at the given index.
+     * 
+     * @param index: index of the test.
+     */
+    public void removeTestAtIndex(int index)
+    {
+        // Remove the test and the controller from the lists.
+        mTestListVBox.getChildren().remove(index);
+        mTestItemControllerList.remove(index);
+        
+        index = 0;
+        for (FXMLTestItemController controller : mTestItemControllerList)
+        {
+            controller.setAttributes(index++);
+        }
     }
 }
