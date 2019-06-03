@@ -182,7 +182,7 @@
                                           <Font name="Microsoft JhengHei UI Light" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton fx:id="mSecurityHistoryButton" buttonType="RAISED" minWidth="-Infinity" onAction="#onClickSecurityHistoryButton" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Security History" textAlignment="CENTER" textFill="#cccccc">
+                                    <JFXButton fx:id="mSecurityHistoryButton" buttonType="RAISED" minWidth="-Infinity" onAction="#onClickSecurityHistoryButton" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Get Security History" textAlignment="CENTER" textFill="#cccccc">
                                        <font>
                                           <Font name="Microsoft JhengHei UI Light" size="12.0" />
                                        </font>

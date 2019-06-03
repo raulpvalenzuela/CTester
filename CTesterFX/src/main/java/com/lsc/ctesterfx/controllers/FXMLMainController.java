@@ -149,7 +149,16 @@ public class FXMLMainController implements Initializable
     private void _setupTooltips()
     {
         mAddTestsButton.setTooltip(new Tooltip(Constants.TOOLTIP_ADD_TESTS));
+        mCompileTestsButton.setTooltip(new Tooltip(Constants.TOOLTIP_COMPILE_TESTS));
+        mRunTestsButton.setTooltip(new Tooltip(Constants.TOOLTIP_RUN_TESTS));
+        mSettingsButton.setTooltip(new Tooltip(Constants.TOOLTIP_SETTINGS));
         mFABButton.setTooltip(new Tooltip(Constants.TOOLTIP_SHOW_MORE));
+        mSendButton.setTooltip(new Tooltip(Constants.TOOLTIP_SEND));
+        mResetButton.setTooltip(new Tooltip(Constants.TOOLTIP_RESET));
+        mVirginizeButton.setTooltip(new Tooltip(Constants.TOOLTIP_VIRGINIZE));
+        mBootloaderButton.setTooltip(new Tooltip(Constants.TOOLTIP_BOOTLOADER));
+        mSecurityHistoryButton.setTooltip(new Tooltip(Constants.TOOLTIP_SEC_HISTORY));
+        mGetProductCodeButton.setTooltip(new Tooltip(Constants.TOOLTIP_GET_PROD_CODE));
     }
     
     /**
@@ -318,6 +327,11 @@ public class FXMLMainController implements Initializable
         // TODO
     }
     
+    /**
+     * Method to store the stage object.
+     * 
+     * @param stage stage object passed from the main window.
+     */
     public void setStage(Stage stage)
     {
         mStage = stage;
