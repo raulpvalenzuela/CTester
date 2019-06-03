@@ -19,3 +19,11 @@
 .scroll-pane > .viewport {
    -fx-background-color: transparent;
 }
+
+.split-pane:vertical > .split-pane-divider {
+   -fx-background-color: #333333;
+}
+
+.split-pane:horizontal > .split-pane-divider {
+   -fx-background-color: #333333;
+}
