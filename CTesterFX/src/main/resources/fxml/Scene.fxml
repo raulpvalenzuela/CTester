@@ -246,6 +246,32 @@
             </SplitPane>
          </children>
       </HBox>
-      <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="23.0" prefWidth="1303.0" style="-fx-background-color: #333333;" VBox.vgrow="ALWAYS" />
+      <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="23.0" prefWidth="1303.0" style="-fx-background-color: #333333;" VBox.vgrow="ALWAYS">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="733.0">
+               <HBox.margin>
+                  <Insets left="6.0" />
+               </HBox.margin>
+               <children>
+                  <Label fx:id="mReaderSelectedLabel" text="No reader selected" textFill="#cccccc">
+                     <font>
+                        <Font name="Microsoft JhengHei UI Light" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="23.0" prefWidth="557.0">
+               <children>
+                  <Label fx:id="mVersionLabel" contentDisplay="TEXT_ONLY" text="v1.0.0" textFill="#cccccc">
+                     <font>
+                        <Font name="Microsoft JhengHei UI Light" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+               <HBox.margin>
+                  <Insets right="6.0" />
+               </HBox.margin>
+            </HBox>
+         </children></HBox>
    </children>
 </VBox>
