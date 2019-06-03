@@ -52,6 +52,7 @@ public class FXMLTestItemController implements Initializable
         mTestname = file.getName();
         mTestPath = file.getAbsolutePath();
         
+        mTestNameCheckbox.setMnemonicParsing(false);
         mTestNameCheckbox.setText(mTestname);
     }
 }
