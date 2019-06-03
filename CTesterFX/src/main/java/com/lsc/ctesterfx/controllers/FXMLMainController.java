@@ -77,6 +77,8 @@ public class FXMLMainController implements Initializable
     private JFXButton mRunTestsButton;
     @FXML
     private JFXButton mSettingsButton;
+    @FXML
+    private JFXButton mReadersButton;
     
     @FXML
     private JFXTextField mCommandTextfield;
@@ -159,6 +161,7 @@ public class FXMLMainController implements Initializable
         mBootloaderButton.setTooltip(new Tooltip(Constants.TOOLTIP_BOOTLOADER));
         mSecurityHistoryButton.setTooltip(new Tooltip(Constants.TOOLTIP_SEC_HISTORY));
         mGetProductCodeButton.setTooltip(new Tooltip(Constants.TOOLTIP_GET_PROD_CODE));
+        mReadersButton.setTooltip(new Tooltip(Constants.TOOLTIP_READERS));
     }
     
     /**

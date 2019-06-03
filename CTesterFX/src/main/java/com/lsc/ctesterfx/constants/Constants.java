@@ -22,6 +22,7 @@ public class Constants
     public static final String TOOLTIP_RUN_TESTS     = "Run selected tests";
     public static final String TOOLTIP_REMOVE_TESTS  = "Remove selected tests";
     public static final String TOOLTIP_SETTINGS      = "Settings";
+    public static final String TOOLTIP_READERS       = "Show readers";
     public static final String TOOLTIP_RUN_TEST      = "Run test";
     public static final String TOOLTIP_REMOVE_TEST   = "Remove test";
     public static final String TOOLTIP_SEND          = "Send command";

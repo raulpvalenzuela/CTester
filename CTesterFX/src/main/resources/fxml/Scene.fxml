@@ -16,221 +16,236 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="715.0" prefWidth="1303.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lsc.ctesterfx.controllers.FXMLMainController">
+<VBox prefHeight="738.0" prefWidth="1303.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lsc.ctesterfx.controllers.FXMLMainController">
    <children>
-      <VBox HBox.hgrow="NEVER">
-         <HBox.margin>
-            <Insets />
-         </HBox.margin>
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="715.0" prefWidth="1303.0" VBox.vgrow="ALWAYS">
          <children>
-            <VBox alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="593.0" prefWidth="64.0" spacing="8.0" style="-fx-background-color: #333333;" VBox.vgrow="ALWAYS">
-               <children>
-                  <JFXButton fx:id="mAddTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickAddTests" prefHeight="56.0" prefWidth="56.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add">
-                     <graphic>
-                        <ImageView fitHeight="44.0" fitWidth="44.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/file-add-white.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
-                  <JFXButton fx:id="mCompileTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickCompileTests" prefHeight="56.0" prefWidth="56.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add">
-                     <graphic>
-                        <ImageView fitHeight="44.0" fitWidth="44.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/code-download-white.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
-                  <JFXButton fx:id="mRunTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickRunTests" prefHeight="56.0" prefWidth="56.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add">
-                     <graphic>
-                        <ImageView fitHeight="44.0" fitWidth="44.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/arrow-right-white.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
-               </children>
-               <opaqueInsets>
+            <VBox HBox.hgrow="NEVER">
+               <HBox.margin>
                   <Insets />
-               </opaqueInsets>
-               <padding>
-                  <Insets top="12.0" />
-               </padding>
-            </VBox>
-            <VBox alignment="BOTTOM_CENTER" minWidth="-Infinity" prefHeight="238.0" prefWidth="64.0" style="-fx-background-color: #333333;" VBox.vgrow="ALWAYS">
+               </HBox.margin>
                <children>
-                  <JFXButton fx:id="mSettingsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickSettings" prefHeight="56.0" prefWidth="56.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add">
-                     <graphic>
-                        <ImageView fitHeight="44.0" fitWidth="44.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/settings-white.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
-               </children>
-               <padding>
-                  <Insets bottom="12.0" />
-               </padding>
-            </VBox>
-         </children>
-      </VBox>
-      <SplitPane dividerPositions="0.35" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="675.0" prefWidth="1043.0" style="-fx-padding: 0;" HBox.hgrow="ALWAYS">
-        <items>
-            <VBox prefWidth="395.0" spacing="16.0" style="-fx-background-color: #1E2839;">
-               <children>
-                  <Label text="Tests" textFill="#cccccc">
-                     <font>
-                        <Font name="Microsoft JhengHei UI Light" size="18.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="8.0" left="16.0" />
-                     </VBox.margin>
-                  </Label>
-                  <JFXCheckBox fx:id="mSelectAllCheckbox" checkedColor="#53dbb6" text="Select all" textFill="#cccccc" unCheckedColor="#cccccc">
-                     <font>
-                        <Font name="Microsoft YaHei UI Light" size="12.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets left="16.0" />
-                     </VBox.margin>
-                  </JFXCheckBox>
-                  <ScrollPane VBox.vgrow="ALWAYS">
-                     <content>
-                        <VBox fx:id="mTestListVBox" prefHeight="612.0" prefWidth="402.0" />
-                     </content>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </ScrollPane>
-               </children>
-               <padding>
-                  <Insets bottom="2.0" right="2.0" top="16.0" />
-               </padding>
-            </VBox>
-            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="741.0" spacing="4.0" style="-fx-background-color: #3A3A4F;">
-               <children>
-                  <HBox prefHeight="66.0" prefWidth="802.0">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
+                  <VBox alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="593.0" prefWidth="64.0" spacing="8.0" style="-fx-background-color: #333333;" VBox.vgrow="ALWAYS">
                      <children>
-                        <HBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="66.0" prefWidth="562.0" spacing="16.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <JFXButton fx:id="mSendButton" buttonType="RAISED" minWidth="-Infinity" prefHeight="32.0" prefWidth="155.0" ripplerFill="WHITE" style="-fx-background-color: #53DBB6;" text="Send" textAlignment="CENTER">
-                                 <font>
-                                    <Font name="Microsoft JhengHei UI Light" size="12.0" />
-                                 </font>
-                              </JFXButton>
-                              <JFXTextField fx:id="mCommandTextfield" focusColor="#53dbb6" prefHeight="32.0" prefWidth="280.0" promptText="Command" unFocusColor="#cccccc">
-                                 <font>
-                                    <Font name="Microsoft JhengHei UI Light" size="12.0" />
-                                 </font>
-                              </JFXTextField>
-                           </children>
-                           <padding>
-                              <Insets left="16.0" />
-                           </padding>
-                        </HBox>
-                        <HBox alignment="CENTER_RIGHT" minHeight="-Infinity" prefHeight="66.0" prefWidth="283.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <JFXButton fx:id="mResetButton" buttonType="RAISED" minWidth="-Infinity" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Reset" textAlignment="CENTER" textFill="#cccccc">
-                                 <font>
-                                    <Font name="Microsoft JhengHei UI Light" size="12.0" />
-                                 </font>
-                              </JFXButton>
-                           </children>
-                           <padding>
-                              <Insets left="16.0" right="16.0" />
-                           </padding>
-                        </HBox>
+                        <JFXButton fx:id="mAddTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickAddTests" prefHeight="56.0" prefWidth="56.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add">
+                           <graphic>
+                              <ImageView fitHeight="44.0" fitWidth="44.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/file-add-white.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="mCompileTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickCompileTests" prefHeight="56.0" prefWidth="56.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add">
+                           <graphic>
+                              <ImageView fitHeight="44.0" fitWidth="44.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/code-download-white.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="mRunTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickRunTests" prefHeight="56.0" prefWidth="56.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add">
+                           <graphic>
+                              <ImageView fitHeight="44.0" fitWidth="44.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/arrow-right-white.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
                      </children>
-                  </HBox>
-                  <Separator opacity="0.5" prefHeight="0.0" prefWidth="821.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
                      <padding>
-                        <Insets left="16.0" right="16.0" />
+                        <Insets top="12.0" />
                      </padding>
-                  </Separator>
-                  <HBox prefHeight="640.0" prefWidth="802.0" VBox.vgrow="ALWAYS">
+                  </VBox>
+                  <VBox alignment="BOTTOM_CENTER" minWidth="-Infinity" prefHeight="238.0" prefWidth="64.0" spacing="8.0" style="-fx-background-color: #333333;" VBox.vgrow="ALWAYS">
                      <children>
-                        <VBox prefHeight="639.0" prefWidth="606.0" spacing="16.0" HBox.hgrow="ALWAYS">
+                        <JFXButton fx:id="mReadersButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickSettings" prefHeight="56.0" prefWidth="56.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add">
+                           <graphic>
+                              <ImageView fitHeight="44.0" fitWidth="44.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/readers-white.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="mSettingsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickSettings" prefHeight="56.0" prefWidth="56.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add">
+                           <graphic>
+                              <ImageView fitHeight="44.0" fitWidth="44.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/settings-white.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                     <padding>
+                        <Insets bottom="12.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </VBox>
+            <SplitPane dividerPositions="0.35" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="675.0" prefWidth="1043.0" style="-fx-padding: 0;" HBox.hgrow="ALWAYS">
+              <items>
+                  <VBox prefWidth="395.0" spacing="16.0" style="-fx-background-color: #1E2839;">
+                     <children>
+                        <Label text="Tests" textFill="#cccccc">
+                           <font>
+                              <Font name="Microsoft JhengHei UI Light" size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="8.0" left="16.0" />
+                           </VBox.margin>
+                        </Label>
+                        <JFXCheckBox fx:id="mSelectAllCheckbox" checkedColor="#53dbb6" text="Select all" textFill="#cccccc" unCheckedColor="#cccccc">
+                           <font>
+                              <Font name="Microsoft YaHei UI Light" size="12.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="16.0" />
+                           </VBox.margin>
+                        </JFXCheckBox>
+                        <ScrollPane VBox.vgrow="ALWAYS">
+                           <content>
+                              <VBox fx:id="mTestListVBox" prefHeight="612.0" prefWidth="402.0" />
+                           </content>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </ScrollPane>
+                     </children>
+                     <padding>
+                        <Insets bottom="2.0" right="2.0" top="16.0" />
+                     </padding>
+                  </VBox>
+                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="741.0" spacing="4.0" style="-fx-background-color: #3A3A4F;">
+                     <children>
+                        <HBox prefHeight="66.0" prefWidth="802.0">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
                            <children>
-                              <Label text="Output" textFill="#cccccc">
-                                 <font>
-                                    <Font name="Microsoft JhengHei UI Light" size="18.0" />
-                                 </font>
-                              </Label>
-                              <BorderPane fx:id="mOutputContainer" prefHeight="568.0" prefWidth="583.0" />
-                           </children>
-                           <padding>
-                              <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
-                           </padding></VBox>
-                        <VBox alignment="BOTTOM_RIGHT" prefHeight="639.0" prefWidth="177.0" spacing="24.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <VBox alignment="BOTTOM_RIGHT" prefHeight="527.0" prefWidth="186.0" spacing="24.0">
+                              <HBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="66.0" prefWidth="562.0" spacing="16.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <JFXButton fx:id="mBootloaderButton" buttonType="RAISED" minWidth="-Infinity" onAction="#onClickBootloaderButton" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Bootloader" textAlignment="CENTER" textFill="#cccccc">
+                                    <JFXButton fx:id="mSendButton" buttonType="RAISED" minWidth="-Infinity" prefHeight="32.0" prefWidth="155.0" ripplerFill="WHITE" style="-fx-background-color: #53DBB6;" text="Send" textAlignment="CENTER">
                                        <font>
                                           <Font name="Microsoft JhengHei UI Light" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton fx:id="mGetProductCodeButton" buttonType="RAISED" minWidth="-Infinity" onAction="#onClickGetProductCodeButton" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Get Product Code" textAlignment="CENTER" textFill="#cccccc">
+                                    <JFXTextField fx:id="mCommandTextfield" focusColor="#53dbb6" prefHeight="32.0" prefWidth="280.0" promptText="Command" unFocusColor="#cccccc">
                                        <font>
                                           <Font name="Microsoft JhengHei UI Light" size="12.0" />
                                        </font>
-                                    </JFXButton>
-                                    <JFXButton fx:id="mSecurityHistoryButton" buttonType="RAISED" minWidth="-Infinity" onAction="#onClickSecurityHistoryButton" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Get Security History" textAlignment="CENTER" textFill="#cccccc">
-                                       <font>
-                                          <Font name="Microsoft JhengHei UI Light" size="12.0" />
-                                       </font>
-                                    </JFXButton>
-                                    <JFXButton fx:id="mVirginizeButton" buttonType="RAISED" minWidth="-Infinity" onAction="#onClickVirginizeButton" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Virginize" textAlignment="CENTER" textFill="#cccccc">
+                                    </JFXTextField>
+                                 </children>
+                                 <padding>
+                                    <Insets left="16.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="CENTER_RIGHT" minHeight="-Infinity" prefHeight="66.0" prefWidth="283.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <JFXButton fx:id="mResetButton" buttonType="RAISED" minWidth="-Infinity" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Reset" textAlignment="CENTER" textFill="#cccccc">
                                        <font>
                                           <Font name="Microsoft JhengHei UI Light" size="12.0" />
                                        </font>
                                     </JFXButton>
                                  </children>
                                  <padding>
-                                    <Insets right="16.0" />
+                                    <Insets left="16.0" right="16.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <Separator opacity="0.5" prefHeight="0.0" prefWidth="821.0">
+                           <padding>
+                              <Insets left="16.0" right="16.0" />
+                           </padding>
+                        </Separator>
+                        <HBox prefHeight="640.0" prefWidth="802.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <VBox prefHeight="639.0" prefWidth="606.0" spacing="16.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Output" textFill="#cccccc">
+                                       <font>
+                                          <Font name="Microsoft JhengHei UI Light" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <BorderPane fx:id="mOutputContainer" prefHeight="568.0" prefWidth="583.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
                                  </padding>
                               </VBox>
-                              <JFXButton fx:id="mFABButton" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" ellipsisString="" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickFAB" prefHeight="52.0" prefWidth="52.0" ripplerFill="WHITE" style="-fx-background-color: #52d9b3; -fx-border-radius: 32; -fx-background-radius: 32;" textAlignment="CENTER">
-                                 <graphic>
-                                    <StackPane fx:id="mFABIconsContainer">
+                              <VBox alignment="BOTTOM_RIGHT" prefHeight="639.0" prefWidth="177.0" spacing="24.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <VBox alignment="BOTTOM_RIGHT" prefHeight="527.0" prefWidth="186.0" spacing="24.0">
                                        <children>
-                                          <ImageView fitHeight="32.0" fitWidth="32.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../images/minus-black.png" />
-                                             </image>
-                                          </ImageView>
-                                          <ImageView fx:id="mFABPlusIcon" fitHeight="32.0" fitWidth="32.0" focusTraversable="true" opacity="0.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../images/plus-black.png" />
-                                             </image>
-                                          </ImageView>
+                                          <JFXButton fx:id="mBootloaderButton" buttonType="RAISED" minWidth="-Infinity" onAction="#onClickBootloaderButton" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Bootloader" textAlignment="CENTER" textFill="#cccccc">
+                                             <font>
+                                                <Font name="Microsoft JhengHei UI Light" size="12.0" />
+                                             </font>
+                                          </JFXButton>
+                                          <JFXButton fx:id="mGetProductCodeButton" buttonType="RAISED" minWidth="-Infinity" onAction="#onClickGetProductCodeButton" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Get Product Code" textAlignment="CENTER" textFill="#cccccc">
+                                             <font>
+                                                <Font name="Microsoft JhengHei UI Light" size="12.0" />
+                                             </font>
+                                          </JFXButton>
+                                          <JFXButton fx:id="mSecurityHistoryButton" buttonType="RAISED" minWidth="-Infinity" onAction="#onClickSecurityHistoryButton" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Get Security History" textAlignment="CENTER" textFill="#cccccc">
+                                             <font>
+                                                <Font name="Microsoft JhengHei UI Light" size="12.0" />
+                                             </font>
+                                          </JFXButton>
+                                          <JFXButton fx:id="mVirginizeButton" buttonType="RAISED" minWidth="-Infinity" onAction="#onClickVirginizeButton" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Virginize" textAlignment="CENTER" textFill="#cccccc">
+                                             <font>
+                                                <Font name="Microsoft JhengHei UI Light" size="12.0" />
+                                             </font>
+                                          </JFXButton>
                                        </children>
-                                    </StackPane>
-                                 </graphic>
-                                 <font>
-                                    <Font name="Microsoft JhengHei UI Light" size="15.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets right="68.0" top="12.0" />
-                                 </VBox.margin>
-                              </JFXButton>
+                                       <padding>
+                                          <Insets right="16.0" />
+                                       </padding>
+                                    </VBox>
+                                    <JFXButton fx:id="mFABButton" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" ellipsisString="" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickFAB" prefHeight="52.0" prefWidth="52.0" ripplerFill="WHITE" style="-fx-background-color: #52d9b3; -fx-border-radius: 32; -fx-background-radius: 32;" textAlignment="CENTER">
+                                       <graphic>
+                                          <StackPane fx:id="mFABIconsContainer">
+                                             <children>
+                                                <ImageView fitHeight="32.0" fitWidth="32.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../images/minus-black.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <ImageView fx:id="mFABPlusIcon" fitHeight="32.0" fitWidth="32.0" focusTraversable="true" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../images/plus-black.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </StackPane>
+                                       </graphic>
+                                       <font>
+                                          <Font name="Microsoft JhengHei UI Light" size="12.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets right="68.0" top="12.0" />
+                                       </VBox.margin>
+                                    </JFXButton>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="38.0" />
+                                 </padding>
+                              </VBox>
                            </children>
-                           <padding>
-                              <Insets bottom="38.0" />
-                           </padding>
-                        </VBox>
+                        </HBox>
                      </children>
-                  </HBox>
-               </children>
-            </VBox>
-        </items>
-      </SplitPane>
+                  </VBox>
+              </items>
+            </SplitPane>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="23.0" prefWidth="1303.0" style="-fx-background-color: #333333;" VBox.vgrow="ALWAYS" />
    </children>
-</HBox>
+</VBox>
