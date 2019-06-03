@@ -6,6 +6,7 @@ import com.lsc.ctesterfx.constants.Constants;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tooltip;
@@ -27,6 +28,10 @@ public class FXMLTestItemController implements Initializable
     private String mTestname;
     private String mTestPath;
     
+    private int mIndex;
+    
+    private FXMLMainController mMainController;
+    
     /**
      * Initializes the controller class.
      * @param url
@@ -47,12 +52,45 @@ public class FXMLTestItemController implements Initializable
         mRemoveTestButton.setTooltip(new Tooltip(Constants.TOOLTIP_REMOVE_TEST));
     }
     
-    public void setAttributes(File file)
+    /**
+     * Sets only the index of the test in the list.
+     * 
+     * @param index: index of the test in the list.
+     */
+    public void setAttributes(int index)
+    {
+        mIndex = index;
+    }
+    
+    /**
+     * Sets the different attributes needed to initialize the test item.
+     * 
+     * @param file: name of the test file.
+     * @param controller: controller that has to be notified if something happens.
+     * @param index: index in the list.
+     */
+    public void setAttributes(File file, FXMLMainController controller, int index)
     {
         mTestname = file.getName();
         mTestPath = file.getAbsolutePath();
         
+        mMainController = controller;
+        
+        mIndex = index;
+        
         mTestNameCheckbox.setMnemonicParsing(false);
         mTestNameCheckbox.setText(mTestname);
+    }
+
+    @FXML
+    private void onClickRunTestButton(ActionEvent event) 
+    {
+        // TODO
+    }
+
+    @FXML
+    private void onClickRemoveTestButton(ActionEvent event) 
+    {
+        mMainController.removeTestAtIndex(mIndex);
     }
 }
