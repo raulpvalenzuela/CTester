@@ -24,7 +24,9 @@ public class Printer
     {
         if (mPrinter == null)
         {
-            return new Printer();
+            System.out.println("New printer");
+            
+            mPrinter = new Printer();
         }
         
         return mPrinter;
@@ -54,6 +56,7 @@ public class Printer
     
     public void log(String message)
     {
-        mOutputTextArea.appendText(message + "\n\n");
+        mOutputTextArea.appendText(message);
+        mOutputTextArea.setStyle(0, "-fx-fill: white");
     }
 }

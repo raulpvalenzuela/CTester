@@ -1,4 +1,4 @@
-package com.lsc.ctesterfx;
+package com.lsc.ctesterfx.tests;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -14,28 +14,24 @@ import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 
 /**
- *
+ * Class that manages the compilation and loading of the test files.
+ * 
  * @author dma@logossmartcard.com
  */
-public class TestExecutor extends ClassLoader
+public class TestLoader extends ClassLoader
 {
-    private static TestExecutor mTestExecutor;
+    private static TestLoader mTestLoader;
     
-    private TestExecutor() {}
+    private TestLoader() {}
     
-    public static synchronized TestExecutor newInstance()
+    public static synchronized TestLoader newInstance()
     {
-        if (mTestExecutor == null)
+        if (mTestLoader == null)
         {
-            return new TestExecutor();
+            return new TestLoader();
         }
         
-        return mTestExecutor;
-    }
-    
-    public static void transmit(String message)
-    {
-        System.out.println(message);
+        return mTestLoader;
     }
     
     public void compile(Path dest, File... tests) throws Exception
@@ -66,7 +62,7 @@ public class TestExecutor extends ClassLoader
         System.out.println("Loading class: " + classFile.getName() + ".class");
 
         // create FileInputStream object
-        File file = new File("F:\\Coding\\GitHub\\Testing\\build\\classes\\");
+        File file = new File(classFile.getParent());
  
         // Convert File to a URL
         URL url = file.toURI().toURL();

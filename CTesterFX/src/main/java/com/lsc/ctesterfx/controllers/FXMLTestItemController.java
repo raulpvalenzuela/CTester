@@ -2,11 +2,10 @@ package com.lsc.ctesterfx.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
-import com.lsc.ctesterfx.TestExecutor;
+import com.lsc.ctesterfx.tests.TestLoader;
 import com.lsc.ctesterfx.constants.Constants;
 import java.io.File;
 import java.net.URL;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -61,12 +60,12 @@ public class FXMLTestItemController implements Initializable
     @FXML
     private void onClickRunTestButton(ActionEvent event) 
     {
-        TestExecutor testExecutor = TestExecutor.newInstance();
+        TestLoader testLoader = TestLoader.newInstance();
         
         try 
         {
-            testExecutor.compile(Paths.get(mTestFile.getParent()), mTestFile);
-            testExecutor.load(mTestFile);
+            testLoader.compile(Paths.get(mTestFile.getParent()), mTestFile);
+            testLoader.load(mTestFile);
             
         } catch (Exception ex) {
             Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
