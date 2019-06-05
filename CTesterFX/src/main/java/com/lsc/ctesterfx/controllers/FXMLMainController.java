@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 import com.lsc.ctesterfx.constants.Constants;
+import com.lsc.ctesterfx.printer.Printer;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -23,7 +24,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
@@ -42,9 +42,6 @@ import org.fxmisc.richtext.InlineCssTextArea;
  */
 public class FXMLMainController implements Initializable 
 {    
-    // RichTextArea that will contain the output of the test.
-    private final InlineCssTextArea mOutputTextArea = new InlineCssTextArea();
-    
     // List with all the test controllers.
     private final List<FXMLTestItemController> mTestItemControllerList = new ArrayList<>();
     
@@ -100,6 +97,7 @@ public class FXMLMainController implements Initializable
     private Label mVersionLabel;
     
     private Stage mStage;
+    private Printer mPrinter;
     
     // Add all the animations to be run when the FAB is clicked.
     private FadeTransition[] mFadeInAnimationsList;    
@@ -135,24 +133,9 @@ public class FXMLMainController implements Initializable
      */
     private void _setupOutputArea()
     {
-        // Set the common style for output. Monospace and font size.
-        mOutputTextArea.setStyle("-fx-font-family: monospace; -fx-font-size: 10pt;");
-        // Not editable.
-        mOutputTextArea.setEditable(false);
-        // Transparent background
-        mOutputTextArea.setBackground(Background.EMPTY);
-        // No wrapping.
-        mOutputTextArea.setWrapText(false);
+        mPrinter = Printer.newInstance();
         
-        // Container of the output text area. The virtualized container will only render the text visible.
-        VirtualizedScrollPane<InlineCssTextArea> vsPane = new VirtualizedScrollPane<>(mOutputTextArea);
-        VBox.setVgrow(vsPane, Priority.ALWAYS);
-        
-        // Force to fill the parent size.
-        vsPane.prefWidthProperty().bind(mOutputContainer.prefWidthProperty());
-        vsPane.prefHeightProperty().bind(mOutputContainer.prefHeightProperty());
-        
-        mOutputContainer.setCenter(vsPane);
+        mPrinter.setup(mOutputContainer);
     }
     
     /**
