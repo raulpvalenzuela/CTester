@@ -25,38 +25,35 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.fxmisc.flowless.VirtualizedScrollPane;
-import org.fxmisc.richtext.InlineCssTextArea;
 
 /**
  * FXML Controller class of the main window.
  *
  * @author dma@logossmartcard.com
  */
-public class FXMLMainController implements Initializable 
-{    
+public class FXMLMainController implements Initializable
+{
     // List with all the test controllers.
     private final List<FXMLTestItemController> mTestItemControllerList = new ArrayList<>();
-    
+
     // Flag to indicate if the commands list is visible.
     private boolean mCommandsListVisible;
-    
+
     @FXML
     private VBox mTestListVBox;
-    
+
     @FXML
     private BorderPane mOutputContainer;
-    
+
     @FXML
     private StackPane mFABIconsContainer;
-    
+
     @FXML
     private JFXButton mAddTestsButton;
     @FXML
@@ -81,45 +78,45 @@ public class FXMLMainController implements Initializable
     private JFXButton mSettingsButton;
     @FXML
     private JFXButton mReadersButton;
-    
+
     @FXML
     private JFXTextField mCommandTextfield;
-    
+
     @FXML
     private JFXCheckBox mSelectAllCheckbox;
-    
+
     @FXML
     private ImageView mFABPlusIcon;
-    
+
     @FXML
     private Label mReaderSelectedLabel;
     @FXML
     private Label mVersionLabel;
-    
+
     private Stage mStage;
     private Printer mPrinter;
-    
+
     // Add all the animations to be run when the FAB is clicked.
-    private FadeTransition[] mFadeInAnimationsList;    
+    private FadeTransition[] mFadeInAnimationsList;
     private FadeTransition[] mFadeOutAnimationsList;
     private RotateTransition mRotateTransition;
     private FadeTransition mFadeInAnimation;
     private FadeTransition mFadeOutAnimation;
-    
+
     /**
      * Initializes the controller class.
      * @param url
      * @param rb
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) 
+    public void initialize(URL url, ResourceBundle rb)
     {
         _initialize();
         _setupOutputArea();
         _setupTooltips();
         _setupAnimations();
     }
-    
+
     /**
      * Sets up different variables.
      */
@@ -127,17 +124,17 @@ public class FXMLMainController implements Initializable
     {
         mCommandsListVisible = true;
     }
-    
+
     /**
      * Sets up the output area.
      */
     private void _setupOutputArea()
     {
         mPrinter = Printer.newInstance();
-        
+
         mPrinter.setup(mOutputContainer);
     }
-    
+
     /**
      * Sets up all the buttons' tooltips.
      */
@@ -156,27 +153,27 @@ public class FXMLMainController implements Initializable
         mGetProductCodeButton.setTooltip(new Tooltip(Constants.TOOLTIP_GET_PROD_CODE));
         mReadersButton.setTooltip(new Tooltip(Constants.TOOLTIP_READERS));
     }
-    
+
     /**
      * Sets up all the animations in this window.
      */
     private void _setupAnimations()
     {
-        mFadeInAnimationsList = new FadeTransition[] { 
+        mFadeInAnimationsList = new FadeTransition[] {
               new FadeTransition(Duration.millis(Constants.FADE_IN_ANIMATION_DURATION), mVirginizeButton)
             , new FadeTransition(Duration.millis(Constants.FADE_IN_ANIMATION_DURATION), mSecurityHistoryButton)
             , new FadeTransition(Duration.millis(Constants.FADE_IN_ANIMATION_DURATION), mGetProductCodeButton)
-            , new FadeTransition(Duration.millis(Constants.FADE_IN_ANIMATION_DURATION), mBootloaderButton) 
+            , new FadeTransition(Duration.millis(Constants.FADE_IN_ANIMATION_DURATION), mBootloaderButton)
         };
-        
-        mFadeOutAnimationsList = new FadeTransition[] {        
+
+        mFadeOutAnimationsList = new FadeTransition[] {
               new FadeTransition(Duration.millis(Constants.FADE_OUT_ANIMATION_DURATION), mVirginizeButton)
             , new FadeTransition(Duration.millis(Constants.FADE_OUT_ANIMATION_DURATION), mSecurityHistoryButton)
             , new FadeTransition(Duration.millis(Constants.FADE_OUT_ANIMATION_DURATION), mGetProductCodeButton)
-            , new FadeTransition(Duration.millis(Constants.FADE_OUT_ANIMATION_DURATION), mBootloaderButton) 
+            , new FadeTransition(Duration.millis(Constants.FADE_OUT_ANIMATION_DURATION), mBootloaderButton)
         };
-        
-        int delay = 0;        
+
+        int delay = 0;
         for (int i = 0; i < mFadeInAnimationsList.length; ++i)
         {
             mFadeInAnimationsList[i].setFromValue(0.0f);
@@ -186,7 +183,7 @@ public class FXMLMainController implements Initializable
 
             delay += Constants.FAST_DELAY;
         }
-        
+
         delay = 0;
         for (int i = mFadeOutAnimationsList.length - 1; i >= 0; --i)
         {
@@ -200,16 +197,16 @@ public class FXMLMainController implements Initializable
             mFadeOutAnimationsList[i].setOnFinished((e) -> {
                 mFadeOutAnimationsList[index].getNode().setVisible(false);
             });
-            
+
             delay += Constants.FAST_DELAY;
         }
-        
+
         mRotateTransition = new RotateTransition(Duration.millis(Constants.SLOW_DELAY), mFABIconsContainer);
         mRotateTransition.setByAngle(180);
-        
+
         mFadeInAnimation  = new FadeTransition(Duration.millis(Constants.SLOW_DELAY), mFABPlusIcon);
         mFadeOutAnimation = new FadeTransition(Duration.millis(Constants.SLOW_DELAY), mFABPlusIcon);
-        
+
         mFadeInAnimation.setFromValue(0.0f);
         mFadeInAnimation.setToValue(1.0f);
         mFadeOutAnimation.setFromValue(1.0f);
@@ -217,25 +214,25 @@ public class FXMLMainController implements Initializable
     }
 
     @FXML
-    private void onClickAddTests(ActionEvent event) 
+    private void onClickAddTests(ActionEvent event)
     {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         fileChooser.getExtensionFilters().add(new ExtensionFilter("Java Files", "*.java"));
-        List<File> selectedFiles = fileChooser.showOpenMultipleDialog(mStage);        
-        
-        if (selectedFiles != null) 
+        List<File> selectedFiles = fileChooser.showOpenMultipleDialog(mStage);
+
+        if (selectedFiles != null)
         {
             int index = 0;
-            for (File file : selectedFiles) 
+            for (File file : selectedFiles)
             {
-                try 
+                try
                 {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TestItem.fxml"));
                     Parent testItem = (Parent) loader.load();
                     FXMLTestItemController controller = (FXMLTestItemController) loader.getController();
                     controller.setAttributes(file, this, index++);
-                                        
+
                     mTestListVBox.getChildren().add(testItem);
                     mTestItemControllerList.add(controller);
 
@@ -247,38 +244,38 @@ public class FXMLMainController implements Initializable
     }
 
     @FXML
-    private void onClickCompileTests(ActionEvent event) 
+    private void onClickCompileTests(ActionEvent event)
     {
         // TODO
     }
 
     @FXML
-    private void onClickRunTests(ActionEvent event) 
+    private void onClickRunTests(ActionEvent event)
     {
         // TODO
     }
 
     @FXML
-    private void onClickSettings(ActionEvent event) 
+    private void onClickSettings(ActionEvent event)
     {
         // TODO
     }
 
     @FXML
-    private void onClickFAB(ActionEvent event) 
+    private void onClickFAB(ActionEvent event)
     {
         // Rotation of the FAB 180 degrees.
         mRotateTransition.play();
-        
+
         if (mCommandsListVisible)
-        {            
+        {
             for (int i = 0; i < mFadeOutAnimationsList.length; ++i)
-            {                
+            {
                 mFadeOutAnimationsList[i].play();
             }
-            
+
             // Minus to plus transition.
-            mFadeInAnimation.play(); 
+            mFadeInAnimation.play();
             // Change the tooltip.
             mFABButton.setTooltip(new Tooltip(Constants.TOOLTIP_SHOW_MORE));
         }
@@ -290,61 +287,61 @@ public class FXMLMainController implements Initializable
                 mFadeInAnimationsList[i].getNode().setVisible(true);
                 mFadeInAnimationsList[i].play();
             }
-            
+
             // Plus to minus transition.
             mFadeOutAnimation.play();
             // Change the tooltip.
             mFABButton.setTooltip(new Tooltip(Constants.TOOLTIP_SHOW_LESS));
         }
-        
+
         mCommandsListVisible = !mCommandsListVisible;
     }
 
     @FXML
-    private void onClickBootloaderButton(ActionEvent event) 
+    private void onClickBootloaderButton(ActionEvent event)
     {
         // TODO
     }
 
     @FXML
-    private void onClickGetProductCodeButton(ActionEvent event) 
+    private void onClickGetProductCodeButton(ActionEvent event)
     {
         // TODO
     }
 
     @FXML
-    private void onClickSecurityHistoryButton(ActionEvent event) 
+    private void onClickSecurityHistoryButton(ActionEvent event)
     {
         // TODO
     }
 
     @FXML
-    private void onClickVirginizeButton(ActionEvent event) 
+    private void onClickVirginizeButton(ActionEvent event)
     {
         // TODO
     }
 
     @FXML
-    private void onStateChangedSelectAll(ActionEvent event) 
+    private void onStateChangedSelectAll(ActionEvent event)
     {
         mTestItemControllerList.forEach((controller) -> {
             controller.select(mSelectAllCheckbox.isSelected());
         });
     }
-    
+
     /**
      * Method to store the stage object.
-     * 
+     *
      * @param stage stage object passed from the main window.
      */
     public void setStage(Stage stage)
     {
         mStage = stage;
     }
-    
+
     /**
      * Removes a specific test at the given index.
-     * 
+     *
      * @param index: index of the test.
      */
     public void removeTestAtIndex(int index)
@@ -352,7 +349,7 @@ public class FXMLMainController implements Initializable
         // Remove the test and the controller from the lists.
         mTestListVBox.getChildren().remove(index);
         mTestItemControllerList.remove(index);
-        
+
         index = 0;
         for (FXMLTestItemController controller : mTestItemControllerList)
         {

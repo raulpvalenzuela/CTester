@@ -17,7 +17,7 @@ public class TestExecutor
     {
         if (mTestExecutor == null)
         {
-            return new TestExecutor();
+            mTestExecutor = new TestExecutor();
         }
         
         return mTestExecutor;

@@ -23,9 +23,7 @@ public class Printer
     public static synchronized Printer newInstance()
     {
         if (mPrinter == null)
-        {
-            System.out.println("New printer");
-            
+        {            
             mPrinter = new Printer();
         }
         

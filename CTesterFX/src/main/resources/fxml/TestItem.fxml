@@ -10,13 +10,21 @@
 
 <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="361.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lsc.ctesterfx.controllers.FXMLTestItemController">
    <children>
-      <JFXCheckBox fx:id="mTestNameCheckbox" checkedColor="#53dbb6" prefHeight="18.0" prefWidth="354.0" text="Test" textFill="#cccccc" unCheckedColor="#cccccc" HBox.hgrow="ALWAYS">
+      <JFXCheckBox fx:id="mTestNameCheckbox" checkedColor="#53dbb6" prefHeight="18.0" prefWidth="174.0" text="Test" textFill="#cccccc" unCheckedColor="#cccccc" HBox.hgrow="ALWAYS">
          <font>
             <Font name="Microsoft YaHei UI Light" size="12.0" />
          </font>
       </JFXCheckBox>
       <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="159.0" HBox.hgrow="ALWAYS">
          <children>
+            <JFXButton fx:id="mTestStatusIcon" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" prefWidth="108.0" ripplerFill="TRANSPARENT" style="-fx-border-radius: 32; -fx-background-radius: 32; -fx-background-color: #DDDDDD;" text="Not compiled">
+               <font>
+                  <Font name="Microsoft JhengHei UI Light" size="9.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="8.0" />
+               </HBox.margin>
+            </JFXButton>
             <JFXButton fx:id="mRunTestButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickRunTestButton" prefHeight="28.0" prefWidth="28.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add" HBox.hgrow="NEVER">
                <graphic>
                   <ImageView fitHeight="28.0" fitWidth="28.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
