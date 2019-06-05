@@ -22,6 +22,9 @@ import javax.tools.ToolProvider;
  */
 public class TestLoader extends ClassLoader
 {
+    private static final String PACKAGE = "runnables.";
+    private static final String RUN_METHOD = "run";
+
     // Single instance of a TestLoader.
     private static TestLoader mTestLoader;
     private static Printer mPrinter;
@@ -58,9 +61,12 @@ public class TestLoader extends ClassLoader
             Iterable<? extends JavaFileObject> fileObjects = fm.getJavaFileObjectsFromFiles(Arrays.asList(tests));
 
             List<String> options = new ArrayList<>();
+
+            // Create the folder structure.
             options.add("-d");
             options.add(dest.toString());
 
+            // Sets the classpath.
             options.add("-cp");
             options.add(System.getProperty("java.class.path"));
 
@@ -90,11 +96,10 @@ public class TestLoader extends ClassLoader
         // Create a new class loader with the directory
         ClassLoader cl = new URLClassLoader(urls);
 
-        // Load in the class; MyClass.class should be located in
-        // the directory file:/c:/myclasses/com/mycompany
-        Class cls = cl.loadClass("testing.Test");
+        // Load in the class; Test.class. Should be located in path + \runnables\
+        Class cls = cl.loadClass(PACKAGE + classFile.getName().replace(".java", ""));
         Object obj = cls.newInstance();
-        Method method = cls.getDeclaredMethod("run");
+        Method method = cls.getDeclaredMethod(RUN_METHOD);
 
         return new Pair<>(obj, method);
     }
