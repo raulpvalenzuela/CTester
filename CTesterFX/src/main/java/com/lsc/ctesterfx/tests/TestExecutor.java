@@ -23,6 +23,14 @@ public class TestExecutor
         return mTestExecutor;
     }
 
+    /**
+     * Method that runs the given method contained in the object.
+     *
+     * @param object: instance of the class containig the method.
+     * @param method: method to be executed.
+     * @return boolean with the result of the execution.
+     * @throws Exception
+     */
     public boolean run(Object object, Method method) throws Exception
     {
         Object result = method.invoke(object);

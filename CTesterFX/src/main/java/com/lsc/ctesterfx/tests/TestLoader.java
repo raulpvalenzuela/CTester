@@ -42,6 +42,14 @@ public class TestLoader extends ClassLoader
         return mTestLoader;
     }
 
+    /**
+     * Method that compiles the tests given. It automatically creates the correct folder structure
+     * and sets the classpath.
+     *
+     * @param dest: destination folder to place the resulting .class file.
+     * @param tests: list of tests to be compiled.
+     * @throws Exception
+     */
     public void compile(Path dest, File... tests) throws Exception
     {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
@@ -63,6 +71,13 @@ public class TestLoader extends ClassLoader
         }
     }
 
+    /**
+     * Method that dynamically loads the .class file previously generated.
+     *
+     * @param classFile: .class file to be loaded.
+     * @return Pair containing the object and the method 'run'.
+     * @throws Exception
+     */
     public Pair<Object, Method> load(File classFile) throws Exception
     {
         // create FileInputStream object
