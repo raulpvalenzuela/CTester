@@ -1,15 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.lsc.ctesterfx.tests;
 
 /**
+ * Abstract class that every test should extend.
  *
- * @author danim
+ * @author dma@logossmartcard.com
  */
-public abstract class TestRunnable 
+public abstract class TestRunnable
 {
-    public abstract void run();
+    /**
+     * This method must be implemented by every test executed by this tool.
+     *
+     * @return true if the execution of the test is succesful, false otherwise.
+     */
+    public abstract boolean run();
 }

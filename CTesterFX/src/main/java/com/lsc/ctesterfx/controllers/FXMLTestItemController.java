@@ -4,8 +4,8 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.lsc.ctesterfx.tests.TestLoader;
 import com.lsc.ctesterfx.constants.Constants;
+import com.lsc.ctesterfx.tests.TestExecutor;
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -43,7 +43,7 @@ public class FXMLTestItemController implements Initializable
     @FXML
     private JFXButton mRemoveTestButton;
     @FXML
-    private JFXButton mTestStatusIcon;
+    private JFXButton mTestStatusButton;
 
     private File mTestFile;
     private String mTestname;
@@ -80,13 +80,16 @@ public class FXMLTestItemController implements Initializable
     @FXML
     private void onClickRunTestButton(ActionEvent event)
     {
-        Pair<Object, Method> result;
+        Pair<Object, Method> result = null;
         TestLoader testLoader = TestLoader.newInstance();
+        TestExecutor testExecutor = TestExecutor.newInstance();
 
         try
         {
+            // Update the status image.
             setState(TEST_STATE.COMPILING);
 
+            // Compile and load the test class.
             testLoader.compile(Paths.get(mTestFile.getParent()), mTestFile);
             result = testLoader.load(mTestFile);
 
@@ -96,26 +99,28 @@ public class FXMLTestItemController implements Initializable
             setState(TEST_STATE.COMPILATION_FAILED);
 
             Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
-
-            return;
         }
 
-        try
+        if (result != null)
         {
-            Method method = result.getValue();
-            Object object = result.getKey();
+            try
+            {
+                Method method = result.getValue();
+                Object object = result.getKey();
 
-            setState(TEST_STATE.RUNNING);
+                setState(TEST_STATE.RUNNING);
 
-            method.invoke(object);
+                // Call the 'run' method.
+                boolean ret = testExecutor.run(object, method);
 
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-            setState(TEST_STATE.EXECUTION_FAILED);
+                setState((ret) ? TEST_STATE.EXECUTION_OK : TEST_STATE.EXECUTION_FAILED);
 
-            Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                setState(TEST_STATE.EXECUTION_FAILED);
+
+                Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-
-        setState(TEST_STATE.EXECUTION_OK);
     }
 
     @FXML
@@ -131,39 +136,39 @@ public class FXMLTestItemController implements Initializable
         switch (state) {
             case NOT_COMPILED:
                 System.out.println("Not compiled");
-                mTestStatusIcon.setStyle("-fx-background-radius: 32; -fx-background-color: #dddddd; -fx-text-fill: black");
-                mTestStatusIcon.setText("Not compiled");
+                mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #dddddd; -fx-text-fill: black");
+                mTestStatusButton.setText("Not compiled");
                 break;
 
             case COMPILING:
             case RUNNING:
                 System.out.println("Compiling/running");
-                mTestStatusIcon.setStyle("-fx-background-radius: 32; -fx-background-color: #eeeeee; -fx-text-fill: black");
-                mTestStatusIcon.setText("Running");
+                mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #eeeeee; -fx-text-fill: black");
+                mTestStatusButton.setText("Running");
                 break;
 
             case COMPILATION_OK:
                 System.out.println("Compilation ok");
-                mTestStatusIcon.setStyle("-fx-background-radius: 32; -fx-background-color: #aeffad; -fx-text-fill: black");
-                mTestStatusIcon.setText("Compiled");
+                mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #aeffad; -fx-text-fill: black");
+                mTestStatusButton.setText("Compiled");
                 break;
 
             case COMPILATION_FAILED:
                 System.out.println("Compilation failed");
-                mTestStatusIcon.setStyle("-fx-background-radius: 32; -fx-background-color: red; -fx-text-fill: white");
-                mTestStatusIcon.setText("Compilation error");
+                mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: red; -fx-text-fill: white");
+                mTestStatusButton.setText("Compilation error");
                 break;
 
             case EXECUTION_OK:
                 System.out.println("Execution ok");
-                mTestStatusIcon.setStyle("-fx-background-radius: 32; -fx-background-color: #42ff3f; -fx-text-fill: black");
-                mTestStatusIcon.setText("Succesful");
+                mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #42ff3f; -fx-text-fill: black");
+                mTestStatusButton.setText("Succesful");
                 break;
 
             case EXECUTION_FAILED:
                 System.out.println("Execution failed");
-                mTestStatusIcon.setStyle("-fx-background-radius: 32; -fx-background-color: red; -fx-text-fill: white");
-                mTestStatusIcon.setText("Failed");
+                mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: red; -fx-text-fill: white");
+                mTestStatusButton.setText("Failed");
                 break;
         }
     }
