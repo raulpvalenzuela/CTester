@@ -16,3 +16,4 @@ hs_err_pid*
 /CTesterFX/dist/
 /CTesterFX/build/
 /CTesterFX/target/
+/Testing/nbproject/private/

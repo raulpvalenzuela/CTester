@@ -2,10 +2,15 @@ package com.lsc.ctesterfx.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import com.lsc.ctesterfx.TestExecutor;
 import com.lsc.ctesterfx.constants.Constants;
 import java.io.File;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,6 +30,7 @@ public class FXMLTestItemController implements Initializable
     @FXML
     private JFXButton mRemoveTestButton;
     
+    private File mTestFile;
     private String mTestname;
     private String mTestPath;
     
@@ -55,7 +61,16 @@ public class FXMLTestItemController implements Initializable
     @FXML
     private void onClickRunTestButton(ActionEvent event) 
     {
-        // TODO
+        TestExecutor testExecutor = TestExecutor.newInstance();
+        
+        try 
+        {
+            testExecutor.compile(Paths.get(mTestFile.getParent()), mTestFile);
+            testExecutor.load(mTestFile);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
@@ -83,7 +98,8 @@ public class FXMLTestItemController implements Initializable
      */
     public void setAttributes(File file, FXMLMainController controller, int index)
     {
-        mTestname = file.getName();
+        mTestFile = file;
+        mTestname = file.getName().replace(".java", "");
         mTestPath = file.getAbsolutePath();
         
         mMainController = controller;
