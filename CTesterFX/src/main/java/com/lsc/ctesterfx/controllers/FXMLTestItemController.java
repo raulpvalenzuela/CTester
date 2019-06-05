@@ -47,9 +47,6 @@ public class FXMLTestItemController implements Initializable
 
     private File mTestFile;
     private String mTestname;
-    private String mTestPath;
-
-    private TEST_STATE mTestState;
 
     private int mIndex;
 
@@ -63,8 +60,6 @@ public class FXMLTestItemController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        mTestState = TEST_STATE.NOT_COMPILED;
-
         _setupTooltips();
     }
 
@@ -131,8 +126,6 @@ public class FXMLTestItemController implements Initializable
 
     private void setState(TEST_STATE state)
     {
-        mTestState = state;
-
         switch (state) {
             case NOT_COMPILED:
                 System.out.println("Not compiled");
@@ -194,7 +187,6 @@ public class FXMLTestItemController implements Initializable
     {
         mTestFile = file;
         mTestname = file.getName().replace(".java", "");
-        mTestPath = file.getAbsolutePath();
 
         mMainController = controller;
 
