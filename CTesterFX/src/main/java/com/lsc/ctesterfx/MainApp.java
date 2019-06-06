@@ -25,7 +25,7 @@ public class MainApp extends Application
         stage.setScene(scene);
         stage.show();
     }
-    
+
     @Override
     public void stop() throws Exception 
     {
