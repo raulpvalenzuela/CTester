@@ -24,6 +24,7 @@ import javafx.util.Pair;
 public class FXMLTestItemController implements Initializable
 {
     private enum TEST_STATE {
+        WAITING,
         NOT_COMPILED,
         COMPILING,
         COMPILATION_OK,
@@ -72,52 +73,29 @@ public class FXMLTestItemController implements Initializable
     @FXML
     private void onClickRunTestButton(ActionEvent event)
     {
-        Pair<Object, Method> result = null;
-        TestLoader testLoader = TestLoader.newInstance();
-        TestExecutor testExecutor = TestExecutor.newInstance();
+        Pair<Object, Method> result;
 
-        try
+        // Update the status image.
+        setState(TEST_STATE.COMPILING);
+        result = compileTest();
+
+        if (result != null)
         {
-            // Update the status image.
-            setState(TEST_STATE.COMPILING);
-
-            // Compile and load the test class.
-            if (testLoader.compile(mTest))
-            {
-                result = testLoader.load(mTest);
-            }
-
-            if (result == null)
-            {
-                setState(TEST_STATE.COMPILATION_FAILED);
-                return;
-            }
-
             setState(TEST_STATE.COMPILATION_OK);
-
-        } catch (Exception ex) {
-            System.err.println(ex.getMessage());
-
-            setState(TEST_STATE.COMPILATION_FAILED);
-            return;
-        }
-
-        try
-        {
-            Method method = result.getValue();
-            Object object = result.getKey();
-
             setState(TEST_STATE.RUNNING);
 
-            // Call the 'run' method.
-            boolean ret = testExecutor.run(object, method);
-
-            setState((ret) ? TEST_STATE.EXECUTION_OK : TEST_STATE.EXECUTION_FAILED);
-
-        } catch (Exception ex) {
-            System.err.println(ex.getMessage());
-
-            setState(TEST_STATE.EXECUTION_FAILED);
+            if (runTest(result.getKey(), result.getValue()))
+            {
+                setState(TEST_STATE.EXECUTION_OK);
+            }
+            else
+            {
+                setState(TEST_STATE.EXECUTION_FAILED);
+            }
+        }
+        else
+        {
+            setState(TEST_STATE.COMPILATION_FAILED);
         }
     }
 
@@ -125,6 +103,44 @@ public class FXMLTestItemController implements Initializable
     private void onClickRemoveTestButton(ActionEvent event)
     {
         mMainController.removeTestAtIndex(mIndex);
+    }
+
+    private Pair<Object, Method> compileTest()
+    {
+        Pair<Object, Method> result = null;
+        TestLoader testLoader = TestLoader.newInstance();
+
+        try
+        {
+            // Compile and load the test class.
+            if (testLoader.compile(mTest))
+            {
+                result = testLoader.load(mTest);
+            }
+
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
+
+        return result;
+    }
+
+    private boolean runTest(Object object, Method method)
+    {
+        TestExecutor testExecutor = TestExecutor.newInstance();
+
+        try
+        {
+            setState(TEST_STATE.RUNNING);
+
+            // Call the 'run' method.
+            return testExecutor.run(object, method);
+
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
+
+        return false;
     }
 
     private void setState(TEST_STATE state)
