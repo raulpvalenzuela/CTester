@@ -3,7 +3,7 @@ package com.lsc.ctesterfx.controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
-import com.lsc.ctesterfx.constants.Constants;
+import com.lsc.ctesterfx.constants.Animations;
 import com.lsc.ctesterfx.constants.Tooltips;
 import com.lsc.ctesterfx.printer.Printer;
 import java.io.File;
@@ -160,17 +160,17 @@ public class FXMLMainController implements Initializable
     private void _setupAnimations()
     {
         mFadeInAnimationsList = new FadeTransition[] {
-              new FadeTransition(Duration.millis(Constants.FADE_IN_ANIMATION_DURATION), mVirginizeButton)
-            , new FadeTransition(Duration.millis(Constants.FADE_IN_ANIMATION_DURATION), mSecurityHistoryButton)
-            , new FadeTransition(Duration.millis(Constants.FADE_IN_ANIMATION_DURATION), mGetProductCodeButton)
-            , new FadeTransition(Duration.millis(Constants.FADE_IN_ANIMATION_DURATION), mBootloaderButton)
+              new FadeTransition(Duration.millis(Animations.FADE_IN_DURATION), mVirginizeButton)
+            , new FadeTransition(Duration.millis(Animations.FADE_IN_DURATION), mSecurityHistoryButton)
+            , new FadeTransition(Duration.millis(Animations.FADE_IN_DURATION), mGetProductCodeButton)
+            , new FadeTransition(Duration.millis(Animations.FADE_IN_DURATION), mBootloaderButton)
         };
 
         mFadeOutAnimationsList = new FadeTransition[] {
-              new FadeTransition(Duration.millis(Constants.FADE_OUT_ANIMATION_DURATION), mVirginizeButton)
-            , new FadeTransition(Duration.millis(Constants.FADE_OUT_ANIMATION_DURATION), mSecurityHistoryButton)
-            , new FadeTransition(Duration.millis(Constants.FADE_OUT_ANIMATION_DURATION), mGetProductCodeButton)
-            , new FadeTransition(Duration.millis(Constants.FADE_OUT_ANIMATION_DURATION), mBootloaderButton)
+              new FadeTransition(Duration.millis(Animations.FADE_OUT_DURATION), mVirginizeButton)
+            , new FadeTransition(Duration.millis(Animations.FADE_OUT_DURATION), mSecurityHistoryButton)
+            , new FadeTransition(Duration.millis(Animations.FADE_OUT_DURATION), mGetProductCodeButton)
+            , new FadeTransition(Duration.millis(Animations.FADE_OUT_DURATION), mBootloaderButton)
         };
 
         int delay = 0;
@@ -181,7 +181,7 @@ public class FXMLMainController implements Initializable
             mFadeInAnimationsList[i].setDelay(Duration.millis(delay));
             mFadeInAnimationsList[i].setInterpolator(Interpolator.EASE_BOTH);
 
-            delay += Constants.FAST_DELAY;
+            delay += Animations.FAST_DELAY;
         }
 
         delay = 0;
@@ -198,14 +198,14 @@ public class FXMLMainController implements Initializable
                 mFadeOutAnimationsList[index].getNode().setVisible(false);
             });
 
-            delay += Constants.FAST_DELAY;
+            delay += Animations.FAST_DELAY;
         }
 
-        mRotateTransition = new RotateTransition(Duration.millis(Constants.SLOW_DELAY), mFABIconsContainer);
+        mRotateTransition = new RotateTransition(Duration.millis(Animations.SLOW_DELAY), mFABIconsContainer);
         mRotateTransition.setByAngle(180);
 
-        mFadeInAnimation  = new FadeTransition(Duration.millis(Constants.SLOW_DELAY), mFABPlusIcon);
-        mFadeOutAnimation = new FadeTransition(Duration.millis(Constants.SLOW_DELAY), mFABPlusIcon);
+        mFadeInAnimation  = new FadeTransition(Duration.millis(Animations.SLOW_DELAY), mFABPlusIcon);
+        mFadeOutAnimation = new FadeTransition(Duration.millis(Animations.SLOW_DELAY), mFABPlusIcon);
 
         mFadeInAnimation.setFromValue(0.0f);
         mFadeInAnimation.setToValue(1.0f);
