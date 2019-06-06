@@ -2,13 +2,13 @@ package com.lsc.ctesterfx.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
-import com.lsc.ctesterfx.tests.TestLoader;
+import com.lsc.ctesterfx.test.TestLoader;
 import com.lsc.ctesterfx.constants.Constants;
-import com.lsc.ctesterfx.tests.TestExecutor;
+import com.lsc.ctesterfx.dao.Test;
+import com.lsc.ctesterfx.test.TestExecutor;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,8 +45,7 @@ public class FXMLTestItemController implements Initializable
     @FXML
     private JFXButton mTestStatusButton;
 
-    private File mTestFile;
-    private String mTestname;
+    private Test mTest;
 
     private int mIndex;
 
@@ -85,8 +84,8 @@ public class FXMLTestItemController implements Initializable
             setState(TEST_STATE.COMPILING);
 
             // Compile and load the test class.
-            testLoader.compile(Paths.get(mTestFile.getParent()), mTestFile);
-            result = testLoader.load(mTestFile);
+            testLoader.compile(mTest);
+            result = testLoader.load(mTest);
 
             setState(TEST_STATE.COMPILATION_OK);
 
@@ -185,15 +184,14 @@ public class FXMLTestItemController implements Initializable
      */
     public void setAttributes(File file, FXMLMainController controller, int index)
     {
-        mTestFile = file;
-        mTestname = file.getName().replace(".java", "");
+        mTest = new Test(file);
 
         mMainController = controller;
 
         mIndex = index;
 
         mTestNameCheckbox.setMnemonicParsing(false);
-        mTestNameCheckbox.setText(mTestname);
+        mTestNameCheckbox.setText(mTest.getName());
     }
 
     /**

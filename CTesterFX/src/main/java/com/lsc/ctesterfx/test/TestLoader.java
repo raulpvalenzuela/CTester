@@ -1,11 +1,13 @@
-package com.lsc.ctesterfx.tests;
+package com.lsc.ctesterfx.test;
 
+import com.lsc.ctesterfx.dao.Test;
 import com.lsc.ctesterfx.printer.Printer;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -49,12 +51,14 @@ public class TestLoader extends ClassLoader
      * Method that compiles the tests given. It automatically creates the correct folder structure
      * and sets the classpath.
      *
-     * @param dest: destination folder to place the resulting .class file.
-     * @param tests: list of tests to be compiled.
+     * @param test: test file to be compiled.
      * @throws Exception
      */
-    public void compile(Path dest, File... tests) throws Exception
+    public void compile(final Test test) throws Exception
     {
+        Path dest = Paths.get(test.getPath());
+        File[] tests = new File[]{ test.getFile() };
+
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         try (StandardJavaFileManager fm = compiler.getStandardFileManager(null, null, null))
         {
@@ -80,14 +84,14 @@ public class TestLoader extends ClassLoader
     /**
      * Method that dynamically loads the .class file previously generated.
      *
-     * @param classFile: .class file to be loaded.
+     * @param test: test to be loaded.
      * @return Pair containing the object and the method 'run'.
      * @throws Exception
      */
-    public Pair<Object, Method> load(File classFile) throws Exception
+    public Pair<Object, Method> load(Test test) throws Exception
     {
         // create FileInputStream object
-        File file = new File(classFile.getParent());
+        File file = new File(test.getPath());
 
         // Convert File to a URL
         URL url = file.toURI().toURL();
@@ -97,7 +101,7 @@ public class TestLoader extends ClassLoader
         ClassLoader cl = new URLClassLoader(urls);
 
         // Load in the class; Test.class. Should be located in path + \runnables\
-        Class cls = cl.loadClass(PACKAGE + classFile.getName().replace(".java", ""));
+        Class cls = cl.loadClass(PACKAGE + test.getName());
         Object obj = cls.newInstance();
         Method method = cls.getDeclaredMethod(RUN_METHOD);
 

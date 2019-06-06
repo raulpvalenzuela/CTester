@@ -1,4 +1,4 @@
-package com.lsc.ctesterfx.tests;
+package com.lsc.ctesterfx.test;
 
 import java.lang.reflect.Method;
 
