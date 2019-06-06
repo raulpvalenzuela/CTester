@@ -105,6 +105,11 @@ public class FXMLTestItemController implements Initializable
         mMainController.removeTestAtIndex(mIndex);
     }
 
+    /**
+     * Method that compiles and loads the test.
+     *
+     * @return Pair containing the object and the method to be invoked.
+     */
     private Pair<Object, Method> compileTest()
     {
         Pair<Object, Method> result = null;
@@ -125,6 +130,13 @@ public class FXMLTestItemController implements Initializable
         return result;
     }
 
+    /**
+     * Method that runs the specified method.
+     *
+     * @param object: instance of the test.
+     * @param method: method to be invoked.
+     * @return true if the execution is succesful, false otherwise.
+     */
     private boolean runTest(Object object, Method method)
     {
         TestExecutor testExecutor = TestExecutor.newInstance();
@@ -143,6 +155,11 @@ public class FXMLTestItemController implements Initializable
         return false;
     }
 
+    /**
+     * Method that updates the GUI with the new state.
+     *
+     * @param state: new state of the test.
+     */
     private void setState(TEST_STATE state)
     {
         switch (state) {

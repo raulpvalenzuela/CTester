@@ -3,13 +3,14 @@ package com.lsc.ctesterfx.dao;
 import java.io.File;
 
 /**
+ * Class that represents a test. It will contain basically a reference to the file.
  *
  * @author dma@logossmartcard.com
  */
 public class Test
 {
     // File containing the .java file.
-    private File mFile;
+    private final File mFile;
 
     public Test(File file)
     {
