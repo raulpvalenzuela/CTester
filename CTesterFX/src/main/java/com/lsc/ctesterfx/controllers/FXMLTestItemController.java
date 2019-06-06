@@ -2,7 +2,7 @@ package com.lsc.ctesterfx.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
-import com.lsc.ctesterfx.constants.Constants;
+import com.lsc.ctesterfx.constants.Tooltips;
 import com.lsc.ctesterfx.dao.Test;
 import com.lsc.ctesterfx.task.CompilationTask;
 import com.lsc.ctesterfx.task.ExecutionTask;
@@ -16,7 +16,6 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Tooltip;
 import javafx.util.Pair;
 
 /**
@@ -69,8 +68,8 @@ public class FXMLTestItemController implements Initializable
      */
     private void _setupTooltips()
     {
-        mRunTestButton.setTooltip(new Tooltip(Constants.TOOLTIP_RUN_TEST));
-        mRemoveTestButton.setTooltip(new Tooltip(Constants.TOOLTIP_REMOVE_TEST));
+        mRunTestButton.setTooltip(Tooltips.create(Tooltips.RUN_TEST));
+        mRemoveTestButton.setTooltip(Tooltips.create(Tooltips.REMOVE_TEST));
     }
 
     @FXML

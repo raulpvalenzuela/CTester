@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 import com.lsc.ctesterfx.constants.Constants;
+import com.lsc.ctesterfx.constants.Tooltips;
 import com.lsc.ctesterfx.printer.Printer;
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +23,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -140,18 +140,18 @@ public class FXMLMainController implements Initializable
      */
     private void _setupTooltips()
     {
-        mAddTestsButton.setTooltip(new Tooltip(Constants.TOOLTIP_ADD_TESTS));
-        mCompileTestsButton.setTooltip(new Tooltip(Constants.TOOLTIP_COMPILE_TESTS));
-        mRunTestsButton.setTooltip(new Tooltip(Constants.TOOLTIP_RUN_TESTS));
-        mSettingsButton.setTooltip(new Tooltip(Constants.TOOLTIP_SETTINGS));
-        mFABButton.setTooltip(new Tooltip(Constants.TOOLTIP_SHOW_MORE));
-        mSendButton.setTooltip(new Tooltip(Constants.TOOLTIP_SEND));
-        mResetButton.setTooltip(new Tooltip(Constants.TOOLTIP_RESET));
-        mVirginizeButton.setTooltip(new Tooltip(Constants.TOOLTIP_VIRGINIZE));
-        mBootloaderButton.setTooltip(new Tooltip(Constants.TOOLTIP_BOOTLOADER));
-        mSecurityHistoryButton.setTooltip(new Tooltip(Constants.TOOLTIP_SEC_HISTORY));
-        mGetProductCodeButton.setTooltip(new Tooltip(Constants.TOOLTIP_GET_PROD_CODE));
-        mReadersButton.setTooltip(new Tooltip(Constants.TOOLTIP_READERS));
+        mAddTestsButton.setTooltip(Tooltips.create(Tooltips.ADD_TESTS));
+        mCompileTestsButton.setTooltip(Tooltips.create(Tooltips.COMPILE_TESTS));
+        mRunTestsButton.setTooltip(Tooltips.create(Tooltips.RUN_TESTS));
+        mSettingsButton.setTooltip(Tooltips.create(Tooltips.SETTINGS));
+        mFABButton.setTooltip(Tooltips.create(Tooltips.SHOW_MORE));
+        mSendButton.setTooltip(Tooltips.create(Tooltips.SEND));
+        mResetButton.setTooltip(Tooltips.create(Tooltips.RESET));
+        mVirginizeButton.setTooltip(Tooltips.create(Tooltips.VIRGINIZE));
+        mBootloaderButton.setTooltip(Tooltips.create(Tooltips.BOOTLOADER));
+        mSecurityHistoryButton.setTooltip(Tooltips.create(Tooltips.SEC_HISTORY));
+        mGetProductCodeButton.setTooltip(Tooltips.create(Tooltips.GET_PROD_CODE));
+        mReadersButton.setTooltip(Tooltips.create(Tooltips.READERS));
     }
 
     /**
@@ -277,7 +277,7 @@ public class FXMLMainController implements Initializable
             // Minus to plus transition.
             mFadeInAnimation.play();
             // Change the tooltip.
-            mFABButton.setTooltip(new Tooltip(Constants.TOOLTIP_SHOW_MORE));
+            mFABButton.setTooltip(Tooltips.create(Tooltips.SHOW_MORE));
         }
         else
         {
@@ -291,7 +291,7 @@ public class FXMLMainController implements Initializable
             // Plus to minus transition.
             mFadeOutAnimation.play();
             // Change the tooltip.
-            mFABButton.setTooltip(new Tooltip(Constants.TOOLTIP_SHOW_LESS));
+            mFABButton.setTooltip(Tooltips.create(Tooltips.SHOW_LESS));
         }
 
         mCommandsListVisible = !mCommandsListVisible;
