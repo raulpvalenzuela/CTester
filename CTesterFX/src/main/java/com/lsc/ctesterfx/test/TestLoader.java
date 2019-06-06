@@ -4,6 +4,7 @@ import com.lsc.ctesterfx.dao.Test;
 import com.lsc.ctesterfx.printer.Printer;
 import java.io.File;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Path;
@@ -52,9 +53,10 @@ public class TestLoader extends ClassLoader
      * and sets the classpath.
      *
      * @param test: test file to be compiled.
+     * @return true if the compilation is succesful, false otherwise.
      * @throws Exception
      */
-    public void compile(final Test test) throws Exception
+    public boolean compile(final Test test) throws Exception
     {
         Path dest = Paths.get(test.getPath());
         File[] tests = new File[]{ test.getFile() };
@@ -77,7 +79,7 @@ public class TestLoader extends ClassLoader
             JavaCompiler.CompilationTask task =
                 compiler.getTask(null, fm, null, options, null, fileObjects);
 
-            task.call();
+            return task.call();
         }
     }
 
@@ -85,26 +87,31 @@ public class TestLoader extends ClassLoader
      * Method that dynamically loads the .class file previously generated.
      *
      * @param test: test to be loaded.
-     * @return Pair containing the object and the method 'run'.
-     * @throws Exception
+     * @return Pair containing the object and the method 'run'. Null if there's an exception.
      */
-    public Pair<Object, Method> load(Test test) throws Exception
+    public Pair<Object, Method> load(final Test test)
     {
-        // create FileInputStream object
-        File file = new File(test.getPath());
+        try {
+            // create FileInputStream object
+            File file = new File(test.getPath());
 
-        // Convert File to a URL
-        URL url = file.toURI().toURL();
-        URL[] urls = new URL[]{url};
+            // Convert File to a URL
+            URL url = file.toURI().toURL();
+            URL[] urls = new URL[]{url};
 
-        // Create a new class loader with the directory
-        ClassLoader cl = new URLClassLoader(urls);
+            // Create a new class loader with the directory
+            ClassLoader cl = new URLClassLoader(urls);
 
-        // Load in the class; Test.class. Should be located in path + \runnables\
-        Class cls = cl.loadClass(PACKAGE + test.getName());
-        Object obj = cls.newInstance();
-        Method method = cls.getDeclaredMethod(RUN_METHOD);
+            // Load in the class; Test.class. Should be located in path + \runnables\
+            Class cls = cl.loadClass(PACKAGE + test.getName());
+            Object obj = cls.newInstance();
+            Method method = cls.getDeclaredMethod(RUN_METHOD);
 
-        return new Pair<>(obj, method);
+            return new Pair<>(obj, method);
+
+        } catch (MalformedURLException | ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException ex) {
+            System.err.println(ex.getMessage());
+            return null;
+        }
     }
 }

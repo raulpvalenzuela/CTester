@@ -8,18 +8,18 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="361.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lsc.ctesterfx.controllers.FXMLTestItemController">
+<HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="471.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lsc.ctesterfx.controllers.FXMLTestItemController">
    <children>
-      <JFXCheckBox fx:id="mTestNameCheckbox" checkedColor="#53dbb6" prefHeight="18.0" prefWidth="174.0" text="Test" textFill="#cccccc" unCheckedColor="#cccccc" HBox.hgrow="ALWAYS">
+      <JFXCheckBox fx:id="mTestNameCheckbox" checkedColor="#53dbb6" minWidth="-Infinity" prefHeight="18.0" prefWidth="248.0" text="Test" textFill="#cccccc" unCheckedColor="#cccccc" HBox.hgrow="ALWAYS">
          <font>
             <Font name="Microsoft YaHei UI Light" size="12.0" />
          </font>
       </JFXCheckBox>
       <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="159.0" HBox.hgrow="ALWAYS">
          <children>
-            <JFXButton fx:id="mTestStatusButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" prefWidth="108.0" ripplerFill="TRANSPARENT" style="-fx-border-radius: 32; -fx-background-radius: 32; -fx-background-color: #DDDDDD;" text="Not compiled">
+            <JFXButton fx:id="mTestStatusButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="128.0" ripplerFill="TRANSPARENT" style="-fx-border-radius: 32; -fx-background-radius: 32; -fx-background-color: #DDDDDD;" text="Not compiled">
                <font>
-                  <Font name="Microsoft JhengHei UI Light" size="9.0" />
+                  <Font name="Microsoft JhengHei UI Light" size="10.0" />
                </font>
                <HBox.margin>
                   <Insets right="8.0" />

@@ -10,8 +10,6 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -84,36 +82,42 @@ public class FXMLTestItemController implements Initializable
             setState(TEST_STATE.COMPILING);
 
             // Compile and load the test class.
-            testLoader.compile(mTest);
-            result = testLoader.load(mTest);
+            if (testLoader.compile(mTest))
+            {
+                result = testLoader.load(mTest);
+            }
+
+            if (result == null)
+            {
+                setState(TEST_STATE.COMPILATION_FAILED);
+                return;
+            }
 
             setState(TEST_STATE.COMPILATION_OK);
 
         } catch (Exception ex) {
-            setState(TEST_STATE.COMPILATION_FAILED);
+            System.err.println(ex.getMessage());
 
-            Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
+            setState(TEST_STATE.COMPILATION_FAILED);
+            return;
         }
 
-        if (result != null)
+        try
         {
-            try
-            {
-                Method method = result.getValue();
-                Object object = result.getKey();
+            Method method = result.getValue();
+            Object object = result.getKey();
 
-                setState(TEST_STATE.RUNNING);
+            setState(TEST_STATE.RUNNING);
 
-                // Call the 'run' method.
-                boolean ret = testExecutor.run(object, method);
+            // Call the 'run' method.
+            boolean ret = testExecutor.run(object, method);
 
-                setState((ret) ? TEST_STATE.EXECUTION_OK : TEST_STATE.EXECUTION_FAILED);
+            setState((ret) ? TEST_STATE.EXECUTION_OK : TEST_STATE.EXECUTION_FAILED);
 
-            } catch (Exception ex) {
-                setState(TEST_STATE.EXECUTION_FAILED);
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
 
-                Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            setState(TEST_STATE.EXECUTION_FAILED);
         }
     }
 
@@ -133,8 +137,13 @@ public class FXMLTestItemController implements Initializable
                 break;
 
             case COMPILING:
+                System.out.println("Compiling");
+                mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #eeeeee; -fx-text-fill: black");
+                mTestStatusButton.setText("Compiling");
+                break;
+
             case RUNNING:
-                System.out.println("Compiling/running");
+                System.out.println("Running");
                 mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #eeeeee; -fx-text-fill: black");
                 mTestStatusButton.setText("Running");
                 break;
