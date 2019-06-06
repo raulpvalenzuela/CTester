@@ -2,15 +2,18 @@ package com.lsc.ctesterfx.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
-import com.lsc.ctesterfx.test.TestLoader;
 import com.lsc.ctesterfx.constants.Constants;
 import com.lsc.ctesterfx.dao.Test;
-import com.lsc.ctesterfx.test.TestExecutor;
+import com.lsc.ctesterfx.task.CompilationTask;
+import com.lsc.ctesterfx.task.ExecutionTask;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tooltip;
@@ -73,86 +76,53 @@ public class FXMLTestItemController implements Initializable
     @FXML
     private void onClickRunTestButton(ActionEvent event)
     {
-        Pair<Object, Method> result;
+        // Create an executor and the compilation task.
+        ExecutorService compilationExecutor = Executors.newFixedThreadPool(1);
+        CompilationTask compilationTask = new CompilationTask(mTest);
+        // Set a listener that will be triggered when the task is finished.
+        compilationTask.setOnSucceeded((Event e) ->
+        {
+            // Get the result.
+            Pair<Object, Method> result = (Pair<Object, Method>) compilationTask.getValue();
+
+            // Check if it's succesful.
+            if (result != null)
+            {
+                setState(TEST_STATE.COMPILATION_OK);
+
+                // Do the same process but this time for the execution of the test.
+                ExecutorService executionExecutor = Executors.newFixedThreadPool(1);
+                ExecutionTask executionTask = new ExecutionTask(result.getKey(), result.getValue());
+                executionTask.setOnSucceeded((Event ev) ->
+                {
+                    if ((boolean) executionTask.getValue())
+                    {
+                        setState(TEST_STATE.EXECUTION_OK);
+                    }
+                    else
+                    {
+                        setState(TEST_STATE.EXECUTION_FAILED);
+                    }
+                });
+
+                setState(TEST_STATE.RUNNING);
+                // Start the execution.
+                executionExecutor.execute(executionTask);
+                executionExecutor.shutdown();
+            }
+        });
 
         // Update the status image.
         setState(TEST_STATE.COMPILING);
-        result = compileTest();
-
-        if (result != null)
-        {
-            setState(TEST_STATE.COMPILATION_OK);
-            setState(TEST_STATE.RUNNING);
-
-            if (runTest(result.getKey(), result.getValue()))
-            {
-                setState(TEST_STATE.EXECUTION_OK);
-            }
-            else
-            {
-                setState(TEST_STATE.EXECUTION_FAILED);
-            }
-        }
-        else
-        {
-            setState(TEST_STATE.COMPILATION_FAILED);
-        }
+        // Start the compilation.
+        compilationExecutor.execute(compilationTask);
+        compilationExecutor.shutdown();
     }
 
     @FXML
     private void onClickRemoveTestButton(ActionEvent event)
     {
         mMainController.removeTestAtIndex(mIndex);
-    }
-
-    /**
-     * Method that compiles and loads the test.
-     *
-     * @return Pair containing the object and the method to be invoked.
-     */
-    private Pair<Object, Method> compileTest()
-    {
-        Pair<Object, Method> result = null;
-        TestLoader testLoader = TestLoader.newInstance();
-
-        try
-        {
-            // Compile and load the test class.
-            if (testLoader.compile(mTest))
-            {
-                result = testLoader.load(mTest);
-            }
-
-        } catch (Exception ex) {
-            System.err.println(ex.getMessage());
-        }
-
-        return result;
-    }
-
-    /**
-     * Method that runs the specified method.
-     *
-     * @param object: instance of the test.
-     * @param method: method to be invoked.
-     * @return true if the execution is succesful, false otherwise.
-     */
-    private boolean runTest(Object object, Method method)
-    {
-        TestExecutor testExecutor = TestExecutor.newInstance();
-
-        try
-        {
-            setState(TEST_STATE.RUNNING);
-
-            // Call the 'run' method.
-            return testExecutor.run(object, method);
-
-        } catch (Exception ex) {
-            System.err.println(ex.getMessage());
-        }
-
-        return false;
     }
 
     /**
