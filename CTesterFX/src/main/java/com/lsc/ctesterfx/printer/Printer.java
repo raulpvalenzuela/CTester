@@ -18,7 +18,6 @@ public class Printer implements ILogger
 {
     // RichTextArea that will contain the output of the test.
     private final InlineCssTextArea mOutputTextArea = new InlineCssTextArea();
-
     private static Printer mPrinter;
 
     private Printer() {}
@@ -67,21 +66,27 @@ public class Printer implements ILogger
     }
 
     @Override
+    public void logComment(String text)
+    {
+        logWithFormat(COMMENT_HEADER + text, Colors.createAsString(Colors.Color.GRAY));
+    }
+
+    @Override
     public void logError(String text)
     {
-        logWithFormat(text, Colors.createAsString(Colors.Color.RED));
+        logWithFormat(ERROR_HEADER + text, Colors.createAsString(Colors.Color.RED));
     }
 
     @Override
     public void logWarning(String text)
     {
-        logWithFormat(text, Colors.createAsString(Colors.Color.YELLOW));
+        logWithFormat(WARNING_HEADER + text, Colors.createAsString(Colors.Color.YELLOW));
     }
 
     @Override
     public void logDebug(String text)
     {
-        logWithFormat(text, Colors.createAsString(Colors.Color.BLUE));
+        logWithFormat(DEBUG_HEADER + text, Colors.createAsString(Colors.Color.BLUE));
     }
 
     /**
