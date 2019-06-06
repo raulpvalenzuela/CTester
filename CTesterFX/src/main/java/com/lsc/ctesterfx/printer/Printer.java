@@ -1,5 +1,7 @@
 package com.lsc.ctesterfx.printer;
 
+import com.lsc.ctesterfx.constants.Colors;
+import com.lsc.ctesterfx.interfaces.ILogger;
 import javafx.application.Platform;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
@@ -12,7 +14,7 @@ import org.fxmisc.richtext.InlineCssTextArea;
  *
  * @author dma@logossmartcard.com
  */
-public class Printer
+public class Printer implements ILogger
 {
     // RichTextArea that will contain the output of the test.
     private final InlineCssTextArea mOutputTextArea = new InlineCssTextArea();
@@ -31,6 +33,11 @@ public class Printer
         return mPrinter;
     }
 
+    /**
+     * Set up the output area.
+     *
+     * @param container: layout containing the output pane.
+     */
     public void setup(BorderPane container)
     {
         // Set the common style for output. Monospace and font size.
@@ -53,27 +60,62 @@ public class Printer
         container.setCenter(vsPane);
     }
 
-    public void log(String message)
+    @Override
+    public void log(String text)
     {
-        LogRunnable logRunnable = new LogRunnable(message);
+        logWithFormat(text, Colors.createAsString(Colors.Color.GRAY));
+    }
+
+    @Override
+    public void logError(String text)
+    {
+        logWithFormat(text, Colors.createAsString(Colors.Color.RED));
+    }
+
+    @Override
+    public void logWarning(String text)
+    {
+        logWithFormat(text, Colors.createAsString(Colors.Color.YELLOW));
+    }
+
+    @Override
+    public void logDebug(String text)
+    {
+        logWithFormat(text, Colors.createAsString(Colors.Color.BLUE));
+    }
+
+    /**
+     * Logs in the output panel a text with a specific color.
+     *
+     * @param text: text to be printed.
+     * @param color: color to be used.
+     */
+    private void logWithFormat(String text, String color)
+    {
+        LogRunnable logRunnable = new LogRunnable(text, color);
 
         Platform.runLater(logRunnable);
     }
 
+    /**
+     * Runnable needed to print something from a background process.
+     */
     private class LogRunnable implements Runnable
     {
-        private final String mMessage;
+        private final String mText;
+        private final String mColor;
 
-        public LogRunnable(String message)
+        public LogRunnable(String text, String color)
         {
-            mMessage = message;
+            mText = text;
+            mColor = color;
         }
 
         @Override
         public void run()
         {
-            mOutputTextArea.appendText(mMessage);
-            mOutputTextArea.setStyle(0, "-fx-fill: white");
+            mOutputTextArea.appendText(mText);
+            mOutputTextArea.setStyle(mOutputTextArea.getDocument().getParagraphs().size() - 1, "-fx-fill: " + mColor);
         }
     }
 }

@@ -31,7 +31,7 @@ public class TestExecutor
      * @return boolean with the result of the execution.
      * @throws Exception
      */
-    public boolean run(Object object, Method method) throws Exception
+    public boolean run(final Object object, final Method method) throws Exception
     {
         Object result = method.invoke(object);
 

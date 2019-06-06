@@ -1,4 +1,4 @@
-package com.lsc.ctesterfx.test;
+package com.lsc.ctesterfx.interfaces;
 
 /**
  * Abstract class that every test should extend.
