@@ -46,7 +46,7 @@ public class ExecutionTask extends Task
      */
     private boolean runTest(Object object, Method method)
     {
-        mLogger.logComment("Calling '" + method.getName() + "' method");
+        mLogger.logComment("Calling '" + method.getName() + "' method\n");
 
         TestExecutor testExecutor = TestExecutor.newInstance();
 
@@ -57,18 +57,18 @@ public class ExecutionTask extends Task
 
             if (result)
             {
-                mLogger.logComment("'" + method.getName() + "' method passed succesfully");
+                mLogger.logComment("'" + method.getName() + "' method passed succesfully\n");
             }
             else
             {
-                mLogger.logError("'" + method.getName() + "' method failed");
+                mLogger.logError("'" + method.getName() + "' method failed\n");
             }
 
             return result;
 
         } catch (Exception ex) {
             mLogger.logError("Exception executing'" + method.getName() + "' method");
-            mLogger.logError("Exception: " + ex.toString());
+            mLogger.logError("Exception: " + ex.toString() + "\n");
         }
 
         return false;
