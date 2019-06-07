@@ -4,6 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
+ * Class that handles the executors needed in the system.
  *
  * @author dma@logossmartcard.com
  */
@@ -22,6 +23,8 @@ public class MultithreadController
 
     /**
      * Method that initializes the controller.
+     *
+     * FOR INTERNAL USE ONLY
      */
     public static void initializeExecutors()
     {
@@ -31,6 +34,8 @@ public class MultithreadController
 
     /**
      * Method to free the resources.
+     *
+     * FOR INTERNAL USE ONLY
      */
     public static void shutdown()
     {
@@ -40,6 +45,8 @@ public class MultithreadController
 
     /**
      * Method that executes a task using the corresponding executor.
+     *
+     * FOR INTERNAL USE ONLY
      *
      * @param task: task to be executed.
      * @param type: type of executor to be used.

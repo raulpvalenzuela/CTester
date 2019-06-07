@@ -105,6 +105,7 @@ public class FXMLMainController implements Initializable
 
     /**
      * Initializes the controller class.
+     *
      * @param url: unused.
      * @param rb: unused.
      */
@@ -250,12 +251,13 @@ public class FXMLMainController implements Initializable
     {
         if (!mTestItemControllerList.isEmpty())
         {
-            //
+            // First initialize the state of each test.
             mTestItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
             {
                 testItem.setState(FXMLTestItemController.TEST_STATE.QUEUED);
             });
 
+            // Compile only the ones checked.
             mTestItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
             {
                 testItem.compile(false);
@@ -266,7 +268,20 @@ public class FXMLMainController implements Initializable
     @FXML
     private void onClickRunTests(ActionEvent event)
     {
-        // TODO
+        if (!mTestItemControllerList.isEmpty())
+        {
+            // First initialize the state of each test.
+            mTestItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
+            {
+                testItem.setState(FXMLTestItemController.TEST_STATE.QUEUED);
+            });
+
+            // Compile only the ones checked.
+            mTestItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
+            {
+                testItem.compile(true);
+            });
+        }
     }
 
     @FXML

@@ -40,6 +40,8 @@ public class ExecutionTask extends Task
     /**
      * Method that runs the specified method.
      *
+     * FOR INTERNAL USE ONLY
+     *
      * @param object: instance of the test.
      * @param method: method to be invoked.
      * @return true if the execution is succesful, false otherwise.

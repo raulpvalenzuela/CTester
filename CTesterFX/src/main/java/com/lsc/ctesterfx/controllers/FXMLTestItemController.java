@@ -215,7 +215,7 @@ public class FXMLTestItemController implements Initializable
 
                     setState(TEST_STATE.RUNNING);
                     // Start the execution.
-                    MultithreadController.execute(executionTask, MultithreadController.TYPE.COMPILATION);
+                    MultithreadController.execute(executionTask, MultithreadController.TYPE.EXECUTION);
                 }
             }
         });
