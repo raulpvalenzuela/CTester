@@ -2,7 +2,7 @@ package com.lsc.ctesterfx.background;
 
 import com.lsc.ctesterfx.controllers.FXMLTestItemController;
 import com.lsc.ctesterfx.dao.Test;
-import com.lsc.ctesterfx.interfaces.AbstractLogger;
+import com.lsc.ctesterfx.logger.AbstractLogger;
 import com.lsc.ctesterfx.logger.Logger;
 import com.lsc.ctesterfx.test.TestLoader;
 import java.lang.reflect.Method;
@@ -27,7 +27,7 @@ public class CompilationTask extends Task
     {
         mTest           = test;
         mTestController = testController;
-        
+
         mLogger         = Logger.newInstance();
     }
 
@@ -58,10 +58,15 @@ public class CompilationTask extends Task
             if (testLoader.compile(mTest))
             {
                 result = testLoader.load(mTest);
-            }
 
-            mLogger.logSuccess("Compilation of " + mTest.getName() + " succesful!\n");
-            mTestController.setState(FXMLTestItemController.TEST_STATE.COMPILATION_OK);
+                mLogger.logSuccess("Compilation of " + mTest.getName() + " succesful!\n");
+                mTestController.setState(FXMLTestItemController.TEST_STATE.COMPILATION_OK);
+            }
+            else
+            {
+                mLogger.logError("Compilation of " + mTest.getName() + " failed\n");
+                mTestController.setState(FXMLTestItemController.TEST_STATE.COMPILATION_FAILED);
+            }
 
         } catch (Exception ex) {
             mLogger.logError("Compilation of " + mTest.getName() + " failed");

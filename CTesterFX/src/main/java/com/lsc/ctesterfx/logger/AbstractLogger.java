@@ -1,4 +1,4 @@
-package com.lsc.ctesterfx.interfaces;
+package com.lsc.ctesterfx.logger;
 
 /**
  * Abstract class to be implemented by the different loggers in the system.

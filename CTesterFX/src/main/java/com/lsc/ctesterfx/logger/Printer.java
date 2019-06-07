@@ -1,7 +1,6 @@
 package com.lsc.ctesterfx.logger;
 
 import com.lsc.ctesterfx.constants.Colors;
-import com.lsc.ctesterfx.interfaces.AbstractLogger;
 import javafx.application.Platform;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;

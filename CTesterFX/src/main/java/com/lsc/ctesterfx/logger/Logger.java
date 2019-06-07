@@ -1,6 +1,5 @@
 package com.lsc.ctesterfx.logger;
 
-import com.lsc.ctesterfx.interfaces.AbstractLogger;
 import javafx.scene.layout.BorderPane;
 
 /**

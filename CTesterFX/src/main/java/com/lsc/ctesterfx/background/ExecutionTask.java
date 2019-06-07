@@ -1,7 +1,7 @@
 package com.lsc.ctesterfx.background;
 
 import com.lsc.ctesterfx.controllers.FXMLTestItemController;
-import com.lsc.ctesterfx.interfaces.AbstractLogger;
+import com.lsc.ctesterfx.logger.AbstractLogger;
 import com.lsc.ctesterfx.logger.Logger;
 import com.lsc.ctesterfx.test.TestExecutor;
 import java.lang.reflect.Method;
