@@ -62,31 +62,31 @@ public class Printer implements ILogger
     @Override
     public void log(String text)
     {
-        logWithFormat(text, Colors.createAsString(Colors.Color.GRAY));
+        logWithFormat(text + "\n", Colors.createAsString(Colors.Color.GRAY));
     }
 
     @Override
     public void logComment(String text)
     {
-        logWithFormat(COMMENT_HEADER + text, Colors.createAsString(Colors.Color.GRAY));
+        logWithFormat(COMMENT_HEADER + text + "\n", Colors.createAsString(Colors.Color.GRAY));
     }
 
     @Override
     public void logError(String text)
     {
-        logWithFormat(ERROR_HEADER + text, Colors.createAsString(Colors.Color.RED));
+        logWithFormat(ERROR_HEADER + text + "\n", Colors.createAsString(Colors.Color.RED));
     }
 
     @Override
     public void logWarning(String text)
     {
-        logWithFormat(WARNING_HEADER + text, Colors.createAsString(Colors.Color.YELLOW));
+        logWithFormat(WARNING_HEADER + text + "\n", Colors.createAsString(Colors.Color.YELLOW));
     }
 
     @Override
     public void logDebug(String text)
     {
-        logWithFormat(DEBUG_HEADER + text, Colors.createAsString(Colors.Color.BLUE));
+        logWithFormat(DEBUG_HEADER + text + "\n", Colors.createAsString(Colors.Color.BLUE));
     }
 
     /**
@@ -109,6 +109,7 @@ public class Printer implements ILogger
     {
         private final String mText;
         private final String mColor;
+        private int mIndex;
 
         public LogRunnable(String text, String color)
         {
@@ -119,8 +120,11 @@ public class Printer implements ILogger
         @Override
         public void run()
         {
+            // Save the last paragraph's index
+            mIndex = mOutputTextArea.getDocument().getParagraphs().size() - 1;
+
             mOutputTextArea.appendText(mText);
-            mOutputTextArea.setStyle(mOutputTextArea.getDocument().getParagraphs().size() - 1, "-fx-fill: " + mColor);
+            mOutputTextArea.setStyle(mIndex, "-fx-fill: " + mColor);
         }
     }
 }
