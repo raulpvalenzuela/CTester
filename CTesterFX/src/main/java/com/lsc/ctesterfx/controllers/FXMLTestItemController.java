@@ -145,6 +145,11 @@ public class FXMLTestItemController implements Initializable
         return mTestNameCheckbox.isSelected();
     }
 
+    /**
+     * Method that compiles and executes the test.
+     *
+     * @param run: true if the test has to be executed as well.
+     */
     public void compile(boolean run)
     {
         // Create an executor and the compilation task.

@@ -34,7 +34,6 @@ public class Logger extends AbstractLogger
     public void setup(BorderPane container)
     {
         mPrinter = Printer.newInstance();
-
         mPrinter.setup(container);
     }
 
