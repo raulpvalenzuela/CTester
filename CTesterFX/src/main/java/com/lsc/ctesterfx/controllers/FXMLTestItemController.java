@@ -133,43 +133,36 @@ public class FXMLTestItemController implements Initializable
     {
         switch (state) {
             case NOT_COMPILED:
-                System.out.println("Not compiled");
                 mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #dddddd; -fx-text-fill: black");
                 mTestStatusButton.setText("Not compiled");
                 break;
 
             case COMPILING:
-                System.out.println("Compiling");
                 mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #eeeeee; -fx-text-fill: black");
                 mTestStatusButton.setText("Compiling");
                 break;
 
             case RUNNING:
-                System.out.println("Running");
                 mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #eeeeee; -fx-text-fill: black");
                 mTestStatusButton.setText("Running");
                 break;
 
             case COMPILATION_OK:
-                System.out.println("Compilation ok");
                 mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #aeffad; -fx-text-fill: black");
                 mTestStatusButton.setText("Compiled");
                 break;
 
             case COMPILATION_FAILED:
-                System.out.println("Compilation failed");
                 mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: red; -fx-text-fill: white");
                 mTestStatusButton.setText("Compilation error");
                 break;
 
             case EXECUTION_OK:
-                System.out.println("Execution ok");
                 mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #42ff3f; -fx-text-fill: black");
                 mTestStatusButton.setText("Succesful");
                 break;
 
             case EXECUTION_FAILED:
-                System.out.println("Execution failed");
                 mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: red; -fx-text-fill: white");
                 mTestStatusButton.setText("Failed");
                 break;

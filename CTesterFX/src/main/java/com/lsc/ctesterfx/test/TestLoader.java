@@ -1,7 +1,6 @@
 package com.lsc.ctesterfx.test;
 
 import com.lsc.ctesterfx.dao.Test;
-import com.lsc.ctesterfx.printer.Printer;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -30,13 +29,8 @@ public class TestLoader extends ClassLoader
 
     // Single instance of a TestLoader.
     private static TestLoader mTestLoader;
-    private static Printer mPrinter;
 
-    private TestLoader()
-    {
-        // Get a printer instance to log stuff.
-        mPrinter = Printer.newInstance();
-    }
+    private TestLoader() {}
 
     public static synchronized TestLoader newInstance()
     {
@@ -110,7 +104,6 @@ public class TestLoader extends ClassLoader
             return new Pair<>(obj, method);
 
         } catch (MalformedURLException | ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException ex) {
-            System.err.println(ex.getMessage());
             return null;
         }
     }

@@ -1,6 +1,8 @@
 package com.lsc.ctesterfx.task;
 
 import com.lsc.ctesterfx.dao.Test;
+import com.lsc.ctesterfx.interfaces.AbstractLogger;
+import com.lsc.ctesterfx.logger.Logger;
 import com.lsc.ctesterfx.test.TestLoader;
 import java.lang.reflect.Method;
 import javafx.concurrent.Task;
@@ -13,11 +15,15 @@ import javafx.util.Pair;
  */
 public class CompilationTask extends Task
 {
+    // Instance of the logger.
+    private final AbstractLogger mLogger;
+    // Instance to the test to be compiled.
     private final Test mTest;
 
     public CompilationTask(Test test)
     {
-        mTest = test;
+        mTest   = test;
+        mLogger = Logger.newInstance();
     }
 
     @Override
@@ -33,6 +39,8 @@ public class CompilationTask extends Task
      */
     private Pair<Object, Method> compileTest()
     {
+        mLogger.logComment("Compiling " + mTest.getName());
+
         Pair<Object, Method> result = null;
         TestLoader testLoader = TestLoader.newInstance();
 
@@ -44,8 +52,11 @@ public class CompilationTask extends Task
                 result = testLoader.load(mTest);
             }
 
+            mLogger.logComment("Compilation of " + mTest.getName() + " succesful!");
+
         } catch (Exception ex) {
-            System.err.println(ex.getMessage());
+            mLogger.logError("Compilation of " + mTest.getName() + " failed");
+            mLogger.logError("Exception: " + ex.toString());
         }
 
         return result;

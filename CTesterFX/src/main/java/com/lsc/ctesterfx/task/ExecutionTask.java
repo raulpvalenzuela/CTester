@@ -1,9 +1,9 @@
 package com.lsc.ctesterfx.task;
 
+import com.lsc.ctesterfx.interfaces.AbstractLogger;
+import com.lsc.ctesterfx.logger.Logger;
 import com.lsc.ctesterfx.test.TestExecutor;
 import java.lang.reflect.Method;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.concurrent.Task;
 
 /**
@@ -15,13 +15,20 @@ import javafx.concurrent.Task;
  */
 public class ExecutionTask extends Task
 {
+    // Instance of the logger.
+    private final AbstractLogger mLogger;
+
+    // Instance of the test class.
     private final Object mObject;
+    // Method to be invoked.
     private final Method mMethod;
 
     public ExecutionTask(Object object, Method method)
     {
         mObject = object;
         mMethod = method;
+
+        mLogger = Logger.newInstance();
     }
 
     @Override
@@ -39,15 +46,29 @@ public class ExecutionTask extends Task
      */
     private boolean runTest(Object object, Method method)
     {
+        mLogger.logComment("Calling '" + method.getName() + "' method");
+
         TestExecutor testExecutor = TestExecutor.newInstance();
 
         try
         {
             // Call the 'run' method.
-            return testExecutor.run(object, method);
+            boolean result = testExecutor.run(object, method);
+
+            if (result)
+            {
+                mLogger.logComment("'" + method.getName() + "' method passed succesfully");
+            }
+            else
+            {
+                mLogger.logError("'" + method.getName() + "' method failed");
+            }
+
+            return result;
 
         } catch (Exception ex) {
-            Logger.getLogger(ExecutionTask.class.getName()).log(Level.SEVERE, null, ex);
+            mLogger.logError("Exception executing'" + method.getName() + "' method");
+            mLogger.logError("Exception: " + ex.toString());
         }
 
         return false;
