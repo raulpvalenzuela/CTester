@@ -303,6 +303,9 @@ public class FXMLMainController implements Initializable
     {
         if (!mTestItemControllerList.isEmpty())
         {
+            // Clear the output panel.
+            mLogger.clear();
+
             // First initialize the state of each test.
             mTestItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
             {
@@ -322,6 +325,9 @@ public class FXMLMainController implements Initializable
     {
         if (!mTestItemControllerList.isEmpty())
         {
+            // Clear the output panel.
+            mLogger.clear();
+
             // First initialize the state of each test.
             mTestItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
             {
@@ -460,5 +466,10 @@ public class FXMLMainController implements Initializable
         {
             _enableButtons();
         }
+    }
+
+    public void requestClear()
+    {
+        mLogger.clear();
     }
 }

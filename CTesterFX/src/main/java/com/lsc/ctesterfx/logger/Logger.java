@@ -37,6 +37,14 @@ public class Logger extends AbstractLogger
         mPrinter.setup(container);
     }
 
+    /**
+     * Clears the output area.
+     */
+    public void clear()
+    {
+        mPrinter.clear();
+    }
+
     @Override
     public void log(String text)
     {
