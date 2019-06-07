@@ -39,8 +39,8 @@ public class MultithreadController
      */
     public static void shutdown()
     {
-        mCompilationExecutor.shutdown();
-        mExecutionExecutor.shutdown();
+        mCompilationExecutor.shutdownNow();
+        mExecutionExecutor.shutdownNow();
     }
 
     /**
