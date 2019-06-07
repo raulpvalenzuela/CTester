@@ -47,10 +47,16 @@ public class FXMLTestItemController implements Initializable
     private JFXButton mTestStatusButton;
 
     private Test mTest;
-
     private int mIndex;
 
+    // Reference to the Main controller.
     private FXMLMainController mMainController;
+    // Executor used to compile the test in the background.
+    private static final ExecutorService COMPILATION_EXECUTOR
+            = Executors.newFixedThreadPool(1);
+    // Executor used to execute the test in the background.
+    private static final ExecutorService EXECUTION_EXECUTOR
+            = Executors.newFixedThreadPool(1);
 
     /**
      * Initializes the controller class.
@@ -187,7 +193,6 @@ public class FXMLTestItemController implements Initializable
     public void compile(boolean run)
     {
         // Create an executor and the compilation task.
-        ExecutorService compilationExecutor = Executors.newFixedThreadPool(1);
         CompilationTask compilationTask = new CompilationTask(mTest);
         // Set a listener that will be triggered when the task is finished.
         compilationTask.setOnSucceeded((Event e) ->
@@ -203,7 +208,6 @@ public class FXMLTestItemController implements Initializable
                 if (run)
                 {
                     // Do the same process but this time for the execution of the test.
-                    ExecutorService executionExecutor = Executors.newFixedThreadPool(1);
                     ExecutionTask executionTask = new ExecutionTask(result.getKey(), result.getValue());
                     executionTask.setOnSucceeded((Event ev) ->
                     {
@@ -219,8 +223,7 @@ public class FXMLTestItemController implements Initializable
 
                     setState(TEST_STATE.RUNNING);
                     // Start the execution.
-                    executionExecutor.execute(executionTask);
-                    executionExecutor.shutdown();
+                    EXECUTION_EXECUTOR.execute(executionTask);
                 }
             }
         });
@@ -228,7 +231,6 @@ public class FXMLTestItemController implements Initializable
         // Update the status image.
         setState(TEST_STATE.COMPILING);
         // Start the compilation.
-        compilationExecutor.execute(compilationTask);
-        compilationExecutor.shutdown();
+        COMPILATION_EXECUTOR.execute(compilationTask);
     }
 }
