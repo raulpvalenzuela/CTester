@@ -1,11 +1,11 @@
-package com.lsc.ctesterfx.test;
+package com.lsc.ctesterfx.interfaces;
 
 /**
  * Abstract class that every test should extend.
  *
  * @author dma@logossmartcard.com
  */
-public abstract class TestRunnable
+public abstract class AbstractTest
 {
     /**
      * This method must be implemented by every test executed by this tool.

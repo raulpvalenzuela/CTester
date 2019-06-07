@@ -5,15 +5,13 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 import com.lsc.ctesterfx.constants.Animations;
 import com.lsc.ctesterfx.constants.Tooltips;
-import com.lsc.ctesterfx.printer.Printer;
+import com.lsc.ctesterfx.logger.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
@@ -94,7 +92,7 @@ public class FXMLMainController implements Initializable
     private Label mVersionLabel;
 
     private Stage mStage;
-    private Printer mPrinter;
+    private Logger mLogger;
 
     // Add all the animations to be run when the FAB is clicked.
     private FadeTransition[] mFadeInAnimationsList;
@@ -130,9 +128,9 @@ public class FXMLMainController implements Initializable
      */
     private void _setupOutputArea()
     {
-        mPrinter = Printer.newInstance();
+        mLogger = Logger.newInstance();
 
-        mPrinter.setup(mOutputContainer);
+        mLogger.setup(mOutputContainer);
     }
 
     /**
@@ -237,7 +235,7 @@ public class FXMLMainController implements Initializable
                     mTestItemControllerList.add(controller);
 
                 } catch (IOException ex) {
-                    Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
+                    // TODO
                 }
             }
         }
