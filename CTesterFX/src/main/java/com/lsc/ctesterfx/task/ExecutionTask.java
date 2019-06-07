@@ -1,5 +1,6 @@
 package com.lsc.ctesterfx.task;
 
+import com.lsc.ctesterfx.controllers.FXMLTestItemController;
 import com.lsc.ctesterfx.interfaces.AbstractLogger;
 import com.lsc.ctesterfx.logger.Logger;
 import com.lsc.ctesterfx.test.TestExecutor;
@@ -22,19 +23,22 @@ public class ExecutionTask extends Task
     private final Object mObject;
     // Method to be invoked.
     private final Method mMethod;
+    // Referente to the test controller to update the GUI.
+    private final FXMLTestItemController mTestController;
 
-    public ExecutionTask(Object object, Method method)
+    public ExecutionTask(Object object, Method method, FXMLTestItemController testController)
     {
-        mObject = object;
-        mMethod = method;
+        mObject         = object;
+        mMethod         = method;
+        mTestController = testController;
 
-        mLogger = Logger.newInstance();
+        mLogger         = Logger.newInstance();
     }
 
     @Override
     protected Object call() throws Exception
     {
-        return runTest(mObject, mMethod);
+        return runTest();
     }
 
     /**
@@ -42,36 +46,39 @@ public class ExecutionTask extends Task
      *
      * FOR INTERNAL USE ONLY
      *
-     * @param object: instance of the test.
-     * @param method: method to be invoked.
      * @return true if the execution is succesful, false otherwise.
      */
-    private boolean runTest(Object object, Method method)
+    private boolean runTest()
     {
-        mLogger.logComment("Calling '" + method.getName() + "' method\n");
+        mLogger.logComment("Calling '" + mMethod.getName() + "' method\n");
+        mTestController.setState(FXMLTestItemController.TEST_STATE.RUNNING);
 
         TestExecutor testExecutor = TestExecutor.newInstance();
 
         try
         {
             // Call the 'run' method.
-            boolean result = testExecutor.run(object, method);
+            boolean result = testExecutor.run(mObject, mMethod);
 
             if (result)
             {
-                mLogger.logSuccess("'" + method.getName() + "' method passed succesfully\n");
+                mLogger.logSuccess("'" + mMethod.getName() + "' method passed succesfully\n");
+                mTestController.setState(FXMLTestItemController.TEST_STATE.EXECUTION_OK);
             }
             else
             {
-                mLogger.logError("'" + method.getName() + "' method failed\n");
+                mLogger.logError("'" + mMethod.getName() + "' method failed\n");
+                mTestController.setState(FXMLTestItemController.TEST_STATE.EXECUTION_FAILED);
             }
 
             return result;
 
         } catch (Exception ex) {
-            mLogger.logError("Exception executing'" + method.getName() + "' method");
+            mLogger.logError("Exception executing'" + mMethod.getName() + "' method");
             mLogger.logError("Exception: " + ex.toString() + "\n");
         }
+
+        mTestController.setState(FXMLTestItemController.TEST_STATE.EXECUTION_FAILED);
 
         return false;
     }

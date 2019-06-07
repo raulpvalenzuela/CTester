@@ -10,6 +10,7 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -89,48 +90,9 @@ public class FXMLTestItemController implements Initializable
      */
     public void setState(TEST_STATE state)
     {
-        switch (state)
-        {
-            case QUEUED:
-                mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #dddddd; -fx-text-fill: black");
-                mTestStatusButton.setText("Queued");
-                break;
+        UpdateStateRunnable updateStateRunnable = new UpdateStateRunnable(state);
 
-            case NOT_COMPILED:
-                mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #dddddd; -fx-text-fill: black");
-                mTestStatusButton.setText("Not compiled");
-                break;
-
-            case COMPILING:
-                mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #eeeeee; -fx-text-fill: black");
-                mTestStatusButton.setText("Compiling");
-                break;
-
-            case RUNNING:
-                mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #eeeeee; -fx-text-fill: black");
-                mTestStatusButton.setText("Running");
-                break;
-
-            case COMPILATION_OK:
-                mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #aeffad; -fx-text-fill: black");
-                mTestStatusButton.setText("Compiled");
-                break;
-
-            case COMPILATION_FAILED:
-                mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: red; -fx-text-fill: white");
-                mTestStatusButton.setText("Compilation error");
-                break;
-
-            case EXECUTION_OK:
-                mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #42ff3f; -fx-text-fill: black");
-                mTestStatusButton.setText("Succesful");
-                break;
-
-            case EXECUTION_FAILED:
-                mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: red; -fx-text-fill: white");
-                mTestStatusButton.setText("Failed");
-                break;
-        }
+        Platform.runLater(updateStateRunnable);
     }
 
     /**
@@ -185,7 +147,7 @@ public class FXMLTestItemController implements Initializable
     public void compile(boolean run)
     {
         // Create an executor and the compilation task.
-        CompilationTask compilationTask = new CompilationTask(mTest);
+        CompilationTask compilationTask = new CompilationTask(mTest, this);
         // Set a listener that will be triggered when the task is finished.
         compilationTask.setOnSucceeded((Event e) ->
         {
@@ -195,34 +157,75 @@ public class FXMLTestItemController implements Initializable
             // Check if it's succesful.
             if (result != null)
             {
-                setState(TEST_STATE.COMPILATION_OK);
-
                 if (run)
                 {
                     // Do the same process but this time for the execution of the test.
-                    ExecutionTask executionTask = new ExecutionTask(result.getKey(), result.getValue());
-                    executionTask.setOnSucceeded((Event ev) ->
-                    {
-                        if ((boolean) executionTask.getValue())
-                        {
-                            setState(TEST_STATE.EXECUTION_OK);
-                        }
-                        else
-                        {
-                            setState(TEST_STATE.EXECUTION_FAILED);
-                        }
-                    });
+                    ExecutionTask executionTask = new ExecutionTask(result.getKey(), result.getValue(), this);
 
-                    setState(TEST_STATE.RUNNING);
                     // Start the execution.
                     MultithreadController.execute(executionTask, MultithreadController.TYPE.EXECUTION);
                 }
             }
         });
 
-        // Update the status image.
-        setState(TEST_STATE.COMPILING);
         // Start the compilation.
         MultithreadController.execute(compilationTask, MultithreadController.TYPE.COMPILATION);
+    }
+
+    private class UpdateStateRunnable implements Runnable
+    {
+        private final TEST_STATE mState;
+
+        public UpdateStateRunnable(TEST_STATE state)
+        {
+            mState = state;
+        }
+
+        @Override
+        public void run()
+        {
+            switch (mState)
+            {
+                case QUEUED:
+                    mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #dddddd; -fx-text-fill: black");
+                    mTestStatusButton.setText("Queued");
+                    break;
+
+                case NOT_COMPILED:
+                    mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #dddddd; -fx-text-fill: black");
+                    mTestStatusButton.setText("Not compiled");
+                    break;
+
+                case COMPILING:
+                    mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #eeeeee; -fx-text-fill: black");
+                    mTestStatusButton.setText("Compiling");
+                    break;
+
+                case RUNNING:
+                    mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #eeeeee; -fx-text-fill: black");
+                    mTestStatusButton.setText("Running");
+                    break;
+
+                case COMPILATION_OK:
+                    mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #aeffad; -fx-text-fill: black");
+                    mTestStatusButton.setText("Compiled");
+                    break;
+
+                case COMPILATION_FAILED:
+                    mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: red; -fx-text-fill: white");
+                    mTestStatusButton.setText("Compilation error");
+                    break;
+
+                case EXECUTION_OK:
+                    mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #42ff3f; -fx-text-fill: black");
+                    mTestStatusButton.setText("Succesful");
+                    break;
+
+                case EXECUTION_FAILED:
+                    mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: red; -fx-text-fill: white");
+                    mTestStatusButton.setText("Failed");
+                    break;
+            }
+        }
     }
 }
