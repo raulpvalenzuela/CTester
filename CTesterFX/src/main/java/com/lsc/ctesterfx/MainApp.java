@@ -1,7 +1,7 @@
 package com.lsc.ctesterfx;
 
 import com.lsc.ctesterfx.controllers.FXMLMainController;
-import com.lsc.ctesterfx.controllers.MultithreadController;
+import com.lsc.ctesterfx.background.MultithreadController;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;

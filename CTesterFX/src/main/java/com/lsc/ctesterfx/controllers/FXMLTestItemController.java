@@ -1,11 +1,12 @@
 package com.lsc.ctesterfx.controllers;
 
+import com.lsc.ctesterfx.background.MultithreadController;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.lsc.ctesterfx.constants.Tooltips;
 import com.lsc.ctesterfx.dao.Test;
-import com.lsc.ctesterfx.task.CompilationTask;
-import com.lsc.ctesterfx.task.ExecutionTask;
+import com.lsc.ctesterfx.background.CompilationTask;
+import com.lsc.ctesterfx.background.ExecutionTask;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;

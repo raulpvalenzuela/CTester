@@ -1,5 +1,6 @@
 package com.lsc.ctesterfx.controllers;
 
+import com.lsc.ctesterfx.background.MultithreadController;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
