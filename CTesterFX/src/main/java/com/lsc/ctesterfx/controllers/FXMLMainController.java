@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
@@ -43,6 +44,12 @@ public class FXMLMainController implements Initializable
 
     // Flag to indicate if the commands list is visible.
     private boolean mCommandsListVisible;
+    // Reference to the window.
+    private Stage mStage;
+    // Referemce to the logger.
+    private Logger mLogger;
+    // Variable to keep track of the tests in execution.
+    private AtomicInteger mNumOfTestsInExecution;
 
     @FXML
     private VBox mTestListVBox;
@@ -94,9 +101,6 @@ public class FXMLMainController implements Initializable
     @FXML
     private Label mVersionLabel;
 
-    private Stage mStage;
-    private Logger mLogger;
-
     // Add all the animations to be run when the FAB is clicked.
     private FadeTransition[] mFadeInAnimationsList;
     private FadeTransition[] mFadeOutAnimationsList;
@@ -124,7 +128,8 @@ public class FXMLMainController implements Initializable
      */
     private void _initialize()
     {
-        mCommandsListVisible = true;
+        mCommandsListVisible   = true;
+        mNumOfTestsInExecution = new AtomicInteger(0);
 
         MultithreadController.initializeExecutors();
     }
@@ -215,6 +220,52 @@ public class FXMLMainController implements Initializable
         mFadeInAnimation.setToValue(1.0f);
         mFadeOutAnimation.setFromValue(1.0f);
         mFadeOutAnimation.setToValue(0.0f);
+    }
+
+    /**
+     * Disables all the buttons.
+     */
+    private void _disableButtons()
+    {
+        mAddTestsButton.setDisable(true);
+        mCompileTestsButton.setDisable(true);
+        mRunTestsButton.setDisable(true);
+        mReadersButton.setDisable(true);
+        mSettingsButton.setDisable(true);
+        mSendButton.setDisable(true);
+        mResetButton.setDisable(true);
+        mVirginizeButton.setDisable(true);
+        mSecurityHistoryButton.setDisable(true);
+        mGetProductCodeButton.setDisable(true);
+        mBootloaderButton.setDisable(true);
+        mFABButton.setDisable(true);
+        mTestItemControllerList.forEach((controller) ->
+        {
+            controller.disableButtons();
+        });
+    }
+
+    /**
+     * Enables all the buttons.
+     */
+    private void _enableButtons()
+    {
+        mAddTestsButton.setDisable(false);
+        mCompileTestsButton.setDisable(false);
+        mRunTestsButton.setDisable(false);
+        mReadersButton.setDisable(false);
+        mSettingsButton.setDisable(false);
+        mSendButton.setDisable(false);
+        mResetButton.setDisable(false);
+        mVirginizeButton.setDisable(false);
+        mSecurityHistoryButton.setDisable(false);
+        mGetProductCodeButton.setDisable(false);
+        mBootloaderButton.setDisable(false);
+        mFABButton.setDisable(false);
+        mTestItemControllerList.forEach((controller) ->
+        {
+            controller.enableButtons();
+        });
     }
 
     @FXML
@@ -384,6 +435,30 @@ public class FXMLMainController implements Initializable
         for (FXMLTestItemController controller : mTestItemControllerList)
         {
             controller.setAttributes(index++);
+        }
+    }
+
+    /**
+     * Method called from a test controller to notify that a task has started.
+     * If it's the first task, disable all the buttons.
+     */
+    public void notifyStartExecution()
+    {
+        if (mNumOfTestsInExecution.getAndIncrement() == 0)
+        {
+            _disableButtons();
+        }
+    }
+
+    /**
+     * Method called from a test controller to notify that a task has finished.
+     * If it's the last task, enable back the buttons.
+     */
+    public void notifyFinishedExecution()
+    {
+        if (mNumOfTestsInExecution.decrementAndGet() == 0)
+        {
+            _enableButtons();
         }
     }
 }
