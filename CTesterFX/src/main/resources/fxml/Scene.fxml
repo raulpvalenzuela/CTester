@@ -91,7 +91,7 @@
             </VBox>
             <SplitPane dividerPositions="0.4" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="675.0" prefWidth="1043.0" style="-fx-padding: 0;" HBox.hgrow="ALWAYS">
               <items>
-                  <VBox prefWidth="395.0" spacing="16.0" style="-fx-background-color: #1E2839;">
+                  <VBox fx:id="mSnackbarContainer" prefWidth="395.0" spacing="16.0" style="-fx-background-color: #1E2839;">
                      <children>
                         <Label text="Tests" textFill="#cccccc">
                            <font>

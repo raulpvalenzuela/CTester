@@ -45,6 +45,8 @@ public class FXMLMainController implements Initializable
 
     @FXML
     private VBox mTestListVBox;
+    @FXML
+    private VBox mSnackbarContainer;
 
     @FXML
     private BorderPane mOutputContainer;
@@ -103,8 +105,8 @@ public class FXMLMainController implements Initializable
 
     /**
      * Initializes the controller class.
-     * @param url
-     * @param rb
+     * @param url: unused.
+     * @param rb: unused.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -244,7 +246,19 @@ public class FXMLMainController implements Initializable
     @FXML
     private void onClickCompileTests(ActionEvent event)
     {
-        // TODO
+        if (!mTestItemControllerList.isEmpty())
+        {
+            //
+            mTestItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
+            {
+                testItem.setState(FXMLTestItemController.TEST_STATE.QUEUED);
+            });
+
+            mTestItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
+            {
+                testItem.compile(false);
+            });
+        }
     }
 
     @FXML

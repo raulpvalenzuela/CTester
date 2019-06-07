@@ -49,6 +49,9 @@ public class TestLoader extends ClassLoader
      * @param test: test file to be compiled.
      * @return true if the compilation is succesful, false otherwise.
      * @throws Exception
+     *
+     *    IllegalArgumentException if the list of files includes
+     *        a directory.
      */
     public boolean compile(final Test test) throws Exception
     {

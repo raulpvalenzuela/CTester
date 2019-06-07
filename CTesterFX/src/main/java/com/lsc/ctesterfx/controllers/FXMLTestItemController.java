@@ -25,8 +25,8 @@ import javafx.util.Pair;
  */
 public class FXMLTestItemController implements Initializable
 {
-    private enum TEST_STATE {
-        WAITING,
+    public enum TEST_STATE {
+        QUEUED,
         NOT_COMPILED,
         COMPILING,
         COMPILATION_OK,
@@ -54,8 +54,8 @@ public class FXMLTestItemController implements Initializable
 
     /**
      * Initializes the controller class.
-     * @param url
-     * @param rb
+     * @param url: unused.
+     * @param rb: unused.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -75,47 +75,7 @@ public class FXMLTestItemController implements Initializable
     @FXML
     private void onClickRunTestButton(ActionEvent event)
     {
-        // Create an executor and the compilation task.
-        ExecutorService compilationExecutor = Executors.newFixedThreadPool(1);
-        CompilationTask compilationTask = new CompilationTask(mTest);
-        // Set a listener that will be triggered when the task is finished.
-        compilationTask.setOnSucceeded((Event e) ->
-        {
-            // Get the result.
-            Pair<Object, Method> result = (Pair<Object, Method>) compilationTask.getValue();
-
-            // Check if it's succesful.
-            if (result != null)
-            {
-                setState(TEST_STATE.COMPILATION_OK);
-
-                // Do the same process but this time for the execution of the test.
-                ExecutorService executionExecutor = Executors.newFixedThreadPool(1);
-                ExecutionTask executionTask = new ExecutionTask(result.getKey(), result.getValue());
-                executionTask.setOnSucceeded((Event ev) ->
-                {
-                    if ((boolean) executionTask.getValue())
-                    {
-                        setState(TEST_STATE.EXECUTION_OK);
-                    }
-                    else
-                    {
-                        setState(TEST_STATE.EXECUTION_FAILED);
-                    }
-                });
-
-                setState(TEST_STATE.RUNNING);
-                // Start the execution.
-                executionExecutor.execute(executionTask);
-                executionExecutor.shutdown();
-            }
-        });
-
-        // Update the status image.
-        setState(TEST_STATE.COMPILING);
-        // Start the compilation.
-        compilationExecutor.execute(compilationTask);
-        compilationExecutor.shutdown();
+        this.compile(true);
     }
 
     @FXML
@@ -129,9 +89,15 @@ public class FXMLTestItemController implements Initializable
      *
      * @param state: new state of the test.
      */
-    private void setState(TEST_STATE state)
+    public void setState(TEST_STATE state)
     {
-        switch (state) {
+        switch (state)
+        {
+            case QUEUED:
+                mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #dddddd; -fx-text-fill: black");
+                mTestStatusButton.setText("Queued");
+                break;
+
             case NOT_COMPILED:
                 mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #dddddd; -fx-text-fill: black");
                 mTestStatusButton.setText("Not compiled");
@@ -206,5 +172,63 @@ public class FXMLTestItemController implements Initializable
     public void select(boolean selected)
     {
         mTestNameCheckbox.setSelected(selected);
+    }
+
+    /**
+     * Method that returns if the checkbox is selected.
+     *
+     * @return true if the checkbox is selected, false otherwise.
+     */
+    public boolean isSelected()
+    {
+        return mTestNameCheckbox.isSelected();
+    }
+
+    public void compile(boolean run)
+    {
+        // Create an executor and the compilation task.
+        ExecutorService compilationExecutor = Executors.newFixedThreadPool(1);
+        CompilationTask compilationTask = new CompilationTask(mTest);
+        // Set a listener that will be triggered when the task is finished.
+        compilationTask.setOnSucceeded((Event e) ->
+        {
+            // Get the result.
+            Pair<Object, Method> result = (Pair<Object, Method>) compilationTask.getValue();
+
+            // Check if it's succesful.
+            if (result != null)
+            {
+                setState(TEST_STATE.COMPILATION_OK);
+
+                if (run)
+                {
+                    // Do the same process but this time for the execution of the test.
+                    ExecutorService executionExecutor = Executors.newFixedThreadPool(1);
+                    ExecutionTask executionTask = new ExecutionTask(result.getKey(), result.getValue());
+                    executionTask.setOnSucceeded((Event ev) ->
+                    {
+                        if ((boolean) executionTask.getValue())
+                        {
+                            setState(TEST_STATE.EXECUTION_OK);
+                        }
+                        else
+                        {
+                            setState(TEST_STATE.EXECUTION_FAILED);
+                        }
+                    });
+
+                    setState(TEST_STATE.RUNNING);
+                    // Start the execution.
+                    executionExecutor.execute(executionTask);
+                    executionExecutor.shutdown();
+                }
+            }
+        });
+
+        // Update the status image.
+        setState(TEST_STATE.COMPILING);
+        // Start the compilation.
+        compilationExecutor.execute(compilationTask);
+        compilationExecutor.shutdown();
     }
 }
