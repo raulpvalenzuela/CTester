@@ -52,7 +52,7 @@ public class CompilationTask extends Task
                 result = testLoader.load(mTest);
             }
 
-            mLogger.logComment("Compilation of " + mTest.getName() + " succesful!\n");
+            mLogger.logSuccess("Compilation of " + mTest.getName() + " succesful!\n");
 
         } catch (Exception ex) {
             mLogger.logError("Compilation of " + mTest.getName() + " failed");

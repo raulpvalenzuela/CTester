@@ -11,6 +11,7 @@ public abstract class AbstractLogger
     protected static final String ERROR_HEADER   = "// [ERROR]: ";
     protected static final String WARNING_HEADER = "// [WARNING]: ";
     protected static final String DEBUG_HEADER   = "// [DEBUG]: ";
+    protected static final String SUCCESS_HEADER = "// [SUCCESS]: ";
 
     /**
      * Method to log general information.
@@ -46,4 +47,11 @@ public abstract class AbstractLogger
      * @param text: text to be printed.
      */
     public abstract void logDebug(String text);
+
+    /**
+     * Method to log a succesful message.
+     *
+     * @param text: text to be printed.
+     */
+    public abstract void logSuccess(String text);
 }

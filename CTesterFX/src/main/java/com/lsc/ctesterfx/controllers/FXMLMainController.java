@@ -123,6 +123,8 @@ public class FXMLMainController implements Initializable
     private void _initialize()
     {
         mCommandsListVisible = true;
+
+        MultithreadController.initializeExecutors();
     }
 
     /**

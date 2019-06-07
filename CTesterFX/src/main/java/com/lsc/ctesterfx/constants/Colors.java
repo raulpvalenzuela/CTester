@@ -13,6 +13,7 @@ public class Colors
         RED("#FF0000"),
         YELLOW("#FFCC00"),
         BLUE("#00FFEA"),
+        GREEN("#aeffad"),
         DARK_GRAY("#888888"),
         GRAY("#CCCCCC");
 

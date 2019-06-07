@@ -10,8 +10,6 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -51,12 +49,6 @@ public class FXMLTestItemController implements Initializable
 
     // Reference to the Main controller.
     private FXMLMainController mMainController;
-    // Executor used to compile the test in the background.
-    private static final ExecutorService COMPILATION_EXECUTOR
-            = Executors.newFixedThreadPool(1);
-    // Executor used to execute the test in the background.
-    private static final ExecutorService EXECUTION_EXECUTOR
-            = Executors.newFixedThreadPool(1);
 
     /**
      * Initializes the controller class.
@@ -223,7 +215,7 @@ public class FXMLTestItemController implements Initializable
 
                     setState(TEST_STATE.RUNNING);
                     // Start the execution.
-                    EXECUTION_EXECUTOR.execute(executionTask);
+                    MultithreadController.execute(executionTask, MultithreadController.TYPE.COMPILATION);
                 }
             }
         });
@@ -231,6 +223,6 @@ public class FXMLTestItemController implements Initializable
         // Update the status image.
         setState(TEST_STATE.COMPILING);
         // Start the compilation.
-        COMPILATION_EXECUTOR.execute(compilationTask);
+        MultithreadController.execute(compilationTask, MultithreadController.TYPE.COMPILATION);
     }
 }

@@ -78,4 +78,12 @@ public class Logger extends AbstractLogger
 
         mPrinter.logDebug(text);
     }
+
+    @Override
+    public void logSuccess(String text)
+    {
+        text = SUCCESS_HEADER + text + "\n";
+
+        mPrinter.logSuccess(text);
+    }
 }

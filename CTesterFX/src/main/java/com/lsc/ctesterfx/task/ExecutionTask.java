@@ -57,7 +57,7 @@ public class ExecutionTask extends Task
 
             if (result)
             {
-                mLogger.logComment("'" + method.getName() + "' method passed succesfully\n");
+                mLogger.logSuccess("'" + method.getName() + "' method passed succesfully\n");
             }
             else
             {

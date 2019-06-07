@@ -90,6 +90,12 @@ public class Printer extends AbstractLogger
         logWithFormat(text, Colors.createAsString(Colors.Color.BLUE));
     }
 
+    @Override
+    public void logSuccess(String text)
+    {
+        logWithFormat(text, Colors.createAsString(Colors.Color.GREEN));
+    }
+
     /**
      * Logs in the output panel a text with a specific color.
      *
