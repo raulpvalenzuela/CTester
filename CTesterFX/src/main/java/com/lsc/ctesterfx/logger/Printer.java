@@ -1,7 +1,7 @@
-package com.lsc.ctesterfx.printer;
+package com.lsc.ctesterfx.logger;
 
 import com.lsc.ctesterfx.constants.Colors;
-import com.lsc.ctesterfx.interfaces.ILogger;
+import com.lsc.ctesterfx.interfaces.AbstractLogger;
 import javafx.application.Platform;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
@@ -11,10 +11,11 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.InlineCssTextArea;
 
 /**
+ * Class that logs the results in the output panel.
  *
  * @author dma@logossmartcard.com
  */
-public class Printer implements ILogger
+public class Printer extends AbstractLogger
 {
     // RichTextArea that will contain the output of the test.
     private final InlineCssTextArea mOutputTextArea = new InlineCssTextArea();
@@ -62,31 +63,31 @@ public class Printer implements ILogger
     @Override
     public void log(String text)
     {
-        logWithFormat(text + "\n", Colors.createAsString(Colors.Color.GRAY));
+        logWithFormat(text, Colors.createAsString(Colors.Color.GRAY));
     }
 
     @Override
     public void logComment(String text)
     {
-        logWithFormat(COMMENT_HEADER + text + "\n", Colors.createAsString(Colors.Color.GRAY));
+        logWithFormat(text, Colors.createAsString(Colors.Color.DARK_GRAY));
     }
 
     @Override
     public void logError(String text)
     {
-        logWithFormat(ERROR_HEADER + text + "\n", Colors.createAsString(Colors.Color.RED));
+        logWithFormat(text, Colors.createAsString(Colors.Color.RED));
     }
 
     @Override
     public void logWarning(String text)
     {
-        logWithFormat(WARNING_HEADER + text + "\n", Colors.createAsString(Colors.Color.YELLOW));
+        logWithFormat(text, Colors.createAsString(Colors.Color.YELLOW));
     }
 
     @Override
     public void logDebug(String text)
     {
-        logWithFormat(DEBUG_HEADER + text + "\n", Colors.createAsString(Colors.Color.BLUE));
+        logWithFormat(text, Colors.createAsString(Colors.Color.BLUE));
     }
 
     /**

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.lsc.ctesterfx.constants;
 
 /**
@@ -16,8 +11,9 @@ public class Colors
     {
         ACCENT("#53DBB6"),
         RED("#FF0000"),
-        YELLOW("FFCC00"),
-        BLUE("00FFEA"),
+        YELLOW("#FFCC00"),
+        BLUE("#00FFEA"),
+        DARK_GRAY("#888888"),
         GRAY("#CCCCCC");
 
         public final String value;
