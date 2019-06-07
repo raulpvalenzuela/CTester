@@ -75,6 +75,9 @@ public class FXMLTestItemController implements Initializable
     @FXML
     private void onClickRunTestButton(ActionEvent event)
     {
+        // Clear the output first.
+        mMainController.requestClear();
+
         this.compile(true);
     }
 

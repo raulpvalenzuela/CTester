@@ -61,6 +61,14 @@ public class Printer extends AbstractLogger
         container.setCenter(vsPane);
     }
 
+    /**
+     * Clears the output area.
+     */
+    public void clear()
+    {
+        mOutputTextArea.clear();
+    }
+
     @Override
     public void log(String text)
     {
