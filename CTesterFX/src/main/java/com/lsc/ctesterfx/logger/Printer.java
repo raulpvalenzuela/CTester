@@ -132,6 +132,7 @@ public class Printer extends AbstractLogger
 
             mOutputTextArea.appendText(mText);
             mOutputTextArea.setStyle(mIndex, "-fx-fill: " + mColor);
+            mOutputTextArea.scrollYBy(1000);
         }
     }
 }

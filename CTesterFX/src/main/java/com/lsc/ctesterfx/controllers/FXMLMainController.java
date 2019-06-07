@@ -113,7 +113,7 @@ public class FXMLMainController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         _initialize();
-        _setupOutputArea();
+        _setupLogger();
         _setupTooltips();
         _setupAnimations();
     }
@@ -129,9 +129,9 @@ public class FXMLMainController implements Initializable
     }
 
     /**
-     * Sets up the output area.
+     * Sets up the logger.
      */
-    private void _setupOutputArea()
+    private void _setupLogger()
     {
         mLogger = Logger.newInstance();
 
