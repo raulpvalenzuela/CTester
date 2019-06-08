@@ -25,9 +25,9 @@ import javax.tools.ToolProvider;
 public class TestLoader extends ClassLoader
 {
     private static final String PACKAGE         = "runnables.";
-    private static final String SETUP_METHOD    = "run";
+    private static final String SETUP_METHOD    = "setUp";
     private static final String RUN_METHOD      = "run";
-    private static final String TEARDOWN_METHOD = "run";
+    private static final String TEARDOWN_METHOD = "tearDown";
 
     // Single instance of a TestLoader.
     private static TestLoader mTestLoader;
