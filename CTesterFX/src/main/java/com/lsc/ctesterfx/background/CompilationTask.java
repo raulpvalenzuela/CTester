@@ -6,6 +6,7 @@ import com.lsc.ctesterfx.logger.AbstractLogger;
 import com.lsc.ctesterfx.logger.Logger;
 import com.lsc.ctesterfx.test.TestLoader;
 import java.lang.reflect.Method;
+import java.util.List;
 import javafx.concurrent.Task;
 import javafx.util.Pair;
 
@@ -42,14 +43,14 @@ public class CompilationTask extends Task
      *
      * FOR INTERNAL USE ONLY
      *
-     * @return Pair containing the object and the method to be invoked.
+     * @return Pair containing the object and the methods to be invoked.
      */
-    private Pair<Object, Method> compileTest()
+    private Pair<Object, List<Method>> compileTest()
     {
         mLogger.logComment("Compiling " + mTest.getName() + "\n");
         mTestController.setState(FXMLTestItemController.TEST_STATE.COMPILING);
 
-        Pair<Object, Method> result = null;
+        Pair<Object, List<Method>> result = null;
         TestLoader testLoader = TestLoader.newInstance();
 
         try
