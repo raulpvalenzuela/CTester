@@ -27,6 +27,11 @@ public class FileLogger extends AbstractLogger
 
         public Builder() {}
 
+        /**
+         * Sets the file name.
+         * @param fileName: name of the test file.
+         * @return a Builder instance
+         */
         public Builder withName(String fileName)
         {
             this.fileName = fileName;
@@ -34,6 +39,11 @@ public class FileLogger extends AbstractLogger
             return this;
         }
 
+        /**
+         * Sets the path to the test file.
+         * @param path: path to the test file.
+         * @return a Builder instance
+         */
         public Builder in(String path)
         {
             this.path = path;
