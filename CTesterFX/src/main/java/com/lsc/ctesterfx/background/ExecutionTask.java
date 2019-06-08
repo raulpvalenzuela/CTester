@@ -88,10 +88,10 @@ public class ExecutionTask extends Task
             Object object = compilationResult.getKey();
             List<Method> methods = compilationResult.getValue();
 
+            mTestController.setState(FXMLTestItemController.TEST_STATE.RUNNING);
             for (Method method : methods)
             {
                 mLogger.logComment("Calling '" + method.getName() + "' method\n");
-                mTestController.setState(FXMLTestItemController.TEST_STATE.RUNNING);
 
                 try
                 {
@@ -116,6 +116,8 @@ public class ExecutionTask extends Task
                     return false;
                 }
             }
+
+            mTestController.setState(FXMLTestItemController.TEST_STATE.EXECUTION_OK);
 
             return true;
         }
