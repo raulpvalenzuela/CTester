@@ -39,7 +39,7 @@ public class ExecutionTask extends Task
     @Override
     protected Object call() throws Exception
     {
-        return runTest();
+        return _runTest();
     }
 
     /**
@@ -50,7 +50,7 @@ public class ExecutionTask extends Task
      *
      * @return true if the execution is succesful, false otherwise.
      */
-    private boolean runTest()
+    private boolean _runTest()
     {
         Pair<Object, List<Method>> compilationResult = null;
 

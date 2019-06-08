@@ -35,7 +35,7 @@ public class CompilationTask extends Task
     @Override
     protected Object call() throws Exception
     {
-        return compileTest();
+        return _compileTest();
     }
 
     /**
@@ -45,7 +45,7 @@ public class CompilationTask extends Task
      *
      * @return Pair containing the object and the methods to be invoked.
      */
-    private Pair<Object, List<Method>> compileTest()
+    private Pair<Object, List<Method>> _compileTest()
     {
         mLogger.logComment("Compiling " + mTest.getName() + "\n");
         mTestController.setState(FXMLTestItemController.TEST_STATE.COMPILING);

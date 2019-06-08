@@ -72,37 +72,37 @@ public class Printer extends AbstractLogger
     @Override
     public void log(String text)
     {
-        logWithFormat(text, Colors.createAsString(Colors.Color.GRAY));
+        _logWithFormat(text, Colors.createAsString(Colors.Color.GRAY));
     }
 
     @Override
     public void logComment(String text)
     {
-        logWithFormat(text, Colors.createAsString(Colors.Color.DARK_GRAY));
+        _logWithFormat(text, Colors.createAsString(Colors.Color.DARK_GRAY));
     }
 
     @Override
     public void logError(String text)
     {
-        logWithFormat(text, Colors.createAsString(Colors.Color.RED));
+        _logWithFormat(text, Colors.createAsString(Colors.Color.RED));
     }
 
     @Override
     public void logWarning(String text)
     {
-        logWithFormat(text, Colors.createAsString(Colors.Color.YELLOW));
+        _logWithFormat(text, Colors.createAsString(Colors.Color.YELLOW));
     }
 
     @Override
     public void logDebug(String text)
     {
-        logWithFormat(text, Colors.createAsString(Colors.Color.BLUE));
+        _logWithFormat(text, Colors.createAsString(Colors.Color.BLUE));
     }
 
     @Override
     public void logSuccess(String text)
     {
-        logWithFormat(text, Colors.createAsString(Colors.Color.GREEN));
+        _logWithFormat(text, Colors.createAsString(Colors.Color.GREEN));
     }
 
     /**
@@ -111,7 +111,7 @@ public class Printer extends AbstractLogger
      * @param text: text to be printed.
      * @param color: color to be used.
      */
-    private void logWithFormat(String text, String color)
+    private void _logWithFormat(String text, String color)
     {
         LogRunnable logRunnable = new LogRunnable(text, color);
 
