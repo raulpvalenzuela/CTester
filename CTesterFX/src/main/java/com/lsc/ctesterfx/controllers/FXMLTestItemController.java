@@ -34,21 +34,21 @@ public class FXMLTestItemController implements Initializable
         EXECUTION_FAILED
     }
 
+    private int index;
+
+    // Reference to the Main controller.
+    private FXMLMainController mainController;
+    // Reference to the TestController.
+    private TestController testController;
+
     @FXML
     private JFXCheckBox mTestNameCheckbox;
-
     @FXML
     private JFXButton mRunTestButton;
     @FXML
     private JFXButton mRemoveTestButton;
     @FXML
     private JFXButton mTestStatusButton;
-
-    private TestController testController;
-    private int mIndex;
-
-    // Reference to the Main controller.
-    private FXMLMainController mMainController;
 
     /**
      * Initializes the controller class.
@@ -74,7 +74,7 @@ public class FXMLTestItemController implements Initializable
     private void onClickRunTestButton(ActionEvent event)
     {
         // Clear the output first.
-        mMainController.requestClear();
+        mainController.requestClear();
 
         run();
     }
@@ -82,7 +82,7 @@ public class FXMLTestItemController implements Initializable
     @FXML
     private void onClickRemoveTestButton(ActionEvent event)
     {
-        mMainController.removeTestAtIndex(mIndex);
+        mainController.removeTestAtIndex(index);
     }
 
     /**
@@ -104,23 +104,22 @@ public class FXMLTestItemController implements Initializable
      */
     public void setAttributes(int index)
     {
-        mIndex = index;
+        this.index = index;
     }
 
     /**
      * Sets the different attributes needed to initialize the test item.
      *
      * @param file: name of the test file.
-     * @param controller: controller that has to be notified if something happens.
+     * @param mainController: controller that has to be notified if something happens.
      * @param index: index in the list.
      */
-    public void setAttributes(File file, FXMLMainController controller, int index)
+    public void setAttributes(File file, FXMLMainController mainController, int index)
     {
-        testController = new TestController(new Test(file), this);
-
-        mMainController = controller;
-
-        mIndex = index;
+        testController      = new TestController(new Test(file), this);
+        
+        this.mainController = mainController;
+        this.index          = index;
 
         mTestNameCheckbox.setMnemonicParsing(false);
         mTestNameCheckbox.setText(testController.getTestName());
@@ -151,7 +150,7 @@ public class FXMLTestItemController implements Initializable
      */
     public void notifyStartExecution()
     {
-        mMainController.notifyStartExecution();
+        mainController.notifyStartExecution();
     }
 
     /**
@@ -159,7 +158,7 @@ public class FXMLTestItemController implements Initializable
      */
     public void notifyFinishedExecution()
     {
-        mMainController.notifyFinishedExecution();
+        mainController.notifyFinishedExecution();
     }
 
     /**

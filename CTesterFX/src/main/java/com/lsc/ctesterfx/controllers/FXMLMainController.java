@@ -40,28 +40,26 @@ import javafx.util.Duration;
 public class FXMLMainController implements Initializable
 {
     // List with all the test controllers.
-    private final List<FXMLTestItemController> mTestItemControllerList = new ArrayList<>();
+    private List<FXMLTestItemController> testItemControllerList;
 
-    // Flag to indicate if the commands list is visible.
-    private boolean mCommandsListVisible;
     // Reference to the window.
-    private Stage mStage;
+    private Stage stage;
     // Reference to the printer.
     private Printer printer;
+
+    // Flag to indicate if the commands list is visible.
+    private boolean commandsListVisible;
     // Variable to keep track of the tests in execution.
-    private AtomicInteger mNumOfTestsInExecution;
+    private AtomicInteger numOfTestsInExecution;
 
     @FXML
     private VBox mTestListVBox;
     @FXML
     private VBox mSnackbarContainer;
-
     @FXML
     private BorderPane mOutputContainer;
-
     @FXML
     private StackPane mFABIconsContainer;
-
     @FXML
     private JFXButton mAddTestsButton;
     @FXML
@@ -86,27 +84,23 @@ public class FXMLMainController implements Initializable
     private JFXButton mSettingsButton;
     @FXML
     private JFXButton mReadersButton;
-
     @FXML
     private JFXTextField mCommandTextfield;
-
     @FXML
     private JFXCheckBox mSelectAllCheckbox;
-
     @FXML
     private ImageView mFABPlusIcon;
-
     @FXML
     private Label mReaderSelectedLabel;
     @FXML
     private Label mVersionLabel;
 
     // Add all the animations to be run when the FAB is clicked.
-    private FadeTransition[] mFadeInAnimationsList;
-    private FadeTransition[] mFadeOutAnimationsList;
-    private RotateTransition mRotateTransition;
-    private FadeTransition mFadeInAnimation;
-    private FadeTransition mFadeOutAnimation;
+    private FadeTransition[] fadeInAnimationsList;
+    private FadeTransition[] fadeOutAnimationsList;
+    private RotateTransition rotateTransition;
+    private FadeTransition fadeInAnimation;
+    private FadeTransition fadeOutAnimation;
 
     /**
      * Initializes the controller class.
@@ -128,8 +122,9 @@ public class FXMLMainController implements Initializable
      */
     private void _initialize()
     {
-        mCommandsListVisible   = true;
-        mNumOfTestsInExecution = new AtomicInteger(0);
+        commandsListVisible   = true;
+        numOfTestsInExecution = new AtomicInteger(0);
+        testItemControllerList = new ArrayList<>();
 
         MultithreadController.initialize();
     }
@@ -168,14 +163,14 @@ public class FXMLMainController implements Initializable
      */
     private void _setupAnimations()
     {
-        mFadeInAnimationsList = new FadeTransition[] {
+        fadeInAnimationsList = new FadeTransition[] {
               new FadeTransition(Duration.millis(Animations.FADE_IN_DURATION), mVirginizeButton)
             , new FadeTransition(Duration.millis(Animations.FADE_IN_DURATION), mSecurityHistoryButton)
             , new FadeTransition(Duration.millis(Animations.FADE_IN_DURATION), mGetProductCodeButton)
             , new FadeTransition(Duration.millis(Animations.FADE_IN_DURATION), mBootloaderButton)
         };
 
-        mFadeOutAnimationsList = new FadeTransition[] {
+        fadeOutAnimationsList = new FadeTransition[] {
               new FadeTransition(Duration.millis(Animations.FADE_OUT_DURATION), mVirginizeButton)
             , new FadeTransition(Duration.millis(Animations.FADE_OUT_DURATION), mSecurityHistoryButton)
             , new FadeTransition(Duration.millis(Animations.FADE_OUT_DURATION), mGetProductCodeButton)
@@ -183,43 +178,43 @@ public class FXMLMainController implements Initializable
         };
 
         int delay = 0;
-        for (int i = 0; i < mFadeInAnimationsList.length; ++i)
+        for (int i = 0; i < fadeInAnimationsList.length; ++i)
         {
-            mFadeInAnimationsList[i].setFromValue(0.0f);
-            mFadeInAnimationsList[i].setToValue(1.0f);
-            mFadeInAnimationsList[i].setDelay(Duration.millis(delay));
-            mFadeInAnimationsList[i].setInterpolator(Interpolator.EASE_BOTH);
+            fadeInAnimationsList[i].setFromValue(0.0f);
+            fadeInAnimationsList[i].setToValue(1.0f);
+            fadeInAnimationsList[i].setDelay(Duration.millis(delay));
+            fadeInAnimationsList[i].setInterpolator(Interpolator.EASE_BOTH);
 
             delay += Animations.FAST_DELAY;
         }
 
         delay = 0;
-        for (int i = mFadeOutAnimationsList.length - 1; i >= 0; --i)
+        for (int i = fadeOutAnimationsList.length - 1; i >= 0; --i)
         {
-            mFadeOutAnimationsList[i].setFromValue(1.0f);
-            mFadeOutAnimationsList[i].setToValue(0.0f);
-            mFadeOutAnimationsList[i].setDelay(Duration.millis(delay));
-            mFadeOutAnimationsList[i].setInterpolator(Interpolator.EASE_BOTH);
+            fadeOutAnimationsList[i].setFromValue(1.0f);
+            fadeOutAnimationsList[i].setToValue(0.0f);
+            fadeOutAnimationsList[i].setDelay(Duration.millis(delay));
+            fadeOutAnimationsList[i].setInterpolator(Interpolator.EASE_BOTH);
 
             // Hide the node once it's finished so that it cannot get clicked.
             final int index = i;
-            mFadeOutAnimationsList[i].setOnFinished((e) -> {
-                mFadeOutAnimationsList[index].getNode().setVisible(false);
+            fadeOutAnimationsList[i].setOnFinished((e) -> {
+                fadeOutAnimationsList[index].getNode().setVisible(false);
             });
 
             delay += Animations.FAST_DELAY;
         }
 
-        mRotateTransition = new RotateTransition(Duration.millis(Animations.SLOW_DELAY), mFABIconsContainer);
-        mRotateTransition.setByAngle(180);
+        rotateTransition = new RotateTransition(Duration.millis(Animations.SLOW_DELAY), mFABIconsContainer);
+        rotateTransition.setByAngle(180);
 
-        mFadeInAnimation  = new FadeTransition(Duration.millis(Animations.SLOW_DELAY), mFABPlusIcon);
-        mFadeOutAnimation = new FadeTransition(Duration.millis(Animations.SLOW_DELAY), mFABPlusIcon);
+        fadeInAnimation  = new FadeTransition(Duration.millis(Animations.SLOW_DELAY), mFABPlusIcon);
+        fadeOutAnimation = new FadeTransition(Duration.millis(Animations.SLOW_DELAY), mFABPlusIcon);
 
-        mFadeInAnimation.setFromValue(0.0f);
-        mFadeInAnimation.setToValue(1.0f);
-        mFadeOutAnimation.setFromValue(1.0f);
-        mFadeOutAnimation.setToValue(0.0f);
+        fadeInAnimation.setFromValue(0.0f);
+        fadeInAnimation.setToValue(1.0f);
+        fadeOutAnimation.setFromValue(1.0f);
+        fadeOutAnimation.setToValue(0.0f);
     }
 
     /**
@@ -239,7 +234,7 @@ public class FXMLMainController implements Initializable
         mGetProductCodeButton.setDisable(true);
         mBootloaderButton.setDisable(true);
         mFABButton.setDisable(true);
-        mTestItemControllerList.forEach((controller) ->
+        testItemControllerList.forEach((controller) ->
         {
             controller.disableButtons();
         });
@@ -262,7 +257,7 @@ public class FXMLMainController implements Initializable
         mGetProductCodeButton.setDisable(false);
         mBootloaderButton.setDisable(false);
         mFABButton.setDisable(false);
-        mTestItemControllerList.forEach((controller) ->
+        testItemControllerList.forEach((controller) ->
         {
             controller.enableButtons();
         });
@@ -274,7 +269,7 @@ public class FXMLMainController implements Initializable
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         fileChooser.getExtensionFilters().add(new ExtensionFilter("Java Files", "*.java"));
-        List<File> selectedFiles = fileChooser.showOpenMultipleDialog(mStage);
+        List<File> selectedFiles = fileChooser.showOpenMultipleDialog(stage);
 
         if (selectedFiles != null)
         {
@@ -289,7 +284,7 @@ public class FXMLMainController implements Initializable
                     controller.setAttributes(file, this, index++);
 
                     mTestListVBox.getChildren().add(testItem);
-                    mTestItemControllerList.add(controller);
+                    testItemControllerList.add(controller);
 
                 } catch (IOException ex) {
                     // TODO
@@ -301,19 +296,19 @@ public class FXMLMainController implements Initializable
     @FXML
     private void onClickCompileTests(ActionEvent event)
     {
-        if (!mTestItemControllerList.isEmpty())
+        if (!testItemControllerList.isEmpty())
         {
             // Clear the output panel.
             printer.clear();
 
             // First initialize the state of each test.
-            mTestItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
+            testItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
             {
                 testItem.setState(FXMLTestItemController.TEST_STATE.QUEUED);
             });
 
             // Compile only the ones checked.
-            mTestItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
+            testItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
             {
                 testItem.compile();
             });
@@ -323,19 +318,19 @@ public class FXMLMainController implements Initializable
     @FXML
     private void onClickRunTests(ActionEvent event)
     {
-        if (!mTestItemControllerList.isEmpty())
+        if (!testItemControllerList.isEmpty())
         {
             // Clear the output panel.
             printer.clear();
 
             // First initialize the state of each test.
-            mTestItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
+            testItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
             {
                 testItem.setState(FXMLTestItemController.TEST_STATE.QUEUED);
             });
 
             // Compile only the ones checked.
-            mTestItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
+            testItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
             {
                 testItem.run();
             });
@@ -352,36 +347,36 @@ public class FXMLMainController implements Initializable
     private void onClickFAB(ActionEvent event)
     {
         // Rotation of the FAB 180 degrees.
-        mRotateTransition.play();
+        rotateTransition.play();
 
-        if (mCommandsListVisible)
+        if (commandsListVisible)
         {
-            for (int i = 0; i < mFadeOutAnimationsList.length; ++i)
+            for (int i = 0; i < fadeOutAnimationsList.length; ++i)
             {
-                mFadeOutAnimationsList[i].play();
+                fadeOutAnimationsList[i].play();
             }
 
             // Minus to plus transition.
-            mFadeInAnimation.play();
+            fadeInAnimation.play();
             // Change the tooltip.
             mFABButton.setTooltip(Tooltips.create(Tooltips.SHOW_MORE));
         }
         else
         {
-            for (int i = 0; i < mFadeInAnimationsList.length; ++i)
+            for (int i = 0; i < fadeInAnimationsList.length; ++i)
             {
                 // Make the node visible again.
-                mFadeInAnimationsList[i].getNode().setVisible(true);
-                mFadeInAnimationsList[i].play();
+                fadeInAnimationsList[i].getNode().setVisible(true);
+                fadeInAnimationsList[i].play();
             }
 
             // Plus to minus transition.
-            mFadeOutAnimation.play();
+            fadeOutAnimation.play();
             // Change the tooltip.
             mFABButton.setTooltip(Tooltips.create(Tooltips.SHOW_LESS));
         }
 
-        mCommandsListVisible = !mCommandsListVisible;
+        commandsListVisible = !commandsListVisible;
     }
 
     @FXML
@@ -411,7 +406,7 @@ public class FXMLMainController implements Initializable
     @FXML
     private void onStateChangedSelectAll(ActionEvent event)
     {
-        mTestItemControllerList.forEach((controller) -> {
+        testItemControllerList.forEach((controller) -> {
             controller.select(mSelectAllCheckbox.isSelected());
         });
     }
@@ -424,7 +419,7 @@ public class FXMLMainController implements Initializable
      */
     public void setStage(Stage stage)
     {
-        mStage = stage;
+        stage = stage;
     }
 
     /**
@@ -438,10 +433,10 @@ public class FXMLMainController implements Initializable
     {
         // Remove the test and the controller from the lists.
         mTestListVBox.getChildren().remove(index);
-        mTestItemControllerList.remove(index);
+        testItemControllerList.remove(index);
 
         index = 0;
-        for (FXMLTestItemController controller : mTestItemControllerList)
+        for (FXMLTestItemController controller : testItemControllerList)
         {
             controller.setAttributes(index++);
         }
@@ -453,7 +448,7 @@ public class FXMLMainController implements Initializable
      */
     public void notifyStartExecution()
     {
-        if (mNumOfTestsInExecution.getAndIncrement() == 0)
+        if (numOfTestsInExecution.getAndIncrement() == 0)
         {
             _disableButtons();
         }
@@ -465,7 +460,7 @@ public class FXMLMainController implements Initializable
      */
     public void notifyFinishedExecution()
     {
-        if (mNumOfTestsInExecution.decrementAndGet() == 0)
+        if (numOfTestsInExecution.decrementAndGet() == 0)
         {
             _enableButtons();
         }

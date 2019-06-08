@@ -9,18 +9,18 @@ import java.lang.reflect.Method;
  */
 public class TestExecutor
 {
-    private static TestExecutor mTestExecutor;
+    private static TestExecutor testExecutor;
 
     private TestExecutor() {}
 
     public static synchronized TestExecutor newInstance()
     {
-        if (mTestExecutor == null)
+        if (testExecutor == null)
         {
-            mTestExecutor = new TestExecutor();
+            testExecutor = new TestExecutor();
         }
 
-        return mTestExecutor;
+        return testExecutor;
     }
 
     /**

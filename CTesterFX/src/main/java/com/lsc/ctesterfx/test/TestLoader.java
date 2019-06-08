@@ -30,18 +30,18 @@ public class TestLoader extends ClassLoader
     private static final String TEARDOWN_METHOD = "tearDown";
 
     // Single instance of a TestLoader.
-    private static TestLoader mTestLoader;
+    private static TestLoader testLoader;
 
     private TestLoader() {}
 
     public static synchronized TestLoader newInstance()
     {
-        if (mTestLoader == null)
+        if (testLoader == null)
         {
-            mTestLoader = new TestLoader();
+            testLoader = new TestLoader();
         }
 
-        return mTestLoader;
+        return testLoader;
     }
 
     /**
@@ -86,7 +86,8 @@ public class TestLoader extends ClassLoader
      * Dynamically loads the .class file previously generated.
      *
      * @param test: test to be loaded.
-     * @return Pair containing the object and the methods 'setup', 'run' and 'teardown'. Null if there's been an exception.
+     * @return Pair containing the object and the
+     *         methods 'setup', 'run' and 'teardown'. Null if there's been an exception.
      */
     public Pair<Object, List<Method>> load(final Test test)
     {

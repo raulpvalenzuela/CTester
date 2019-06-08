@@ -19,7 +19,7 @@ import org.fxmisc.richtext.InlineCssTextArea;
  */
 public class Printer extends AbstractLogger
 {
-    private static Printer mPrinter;
+    private static Printer printer;
     // RichTextArea that will contain the output of the test.
     private InlineCssTextArea mOutputTextArea;
 
@@ -27,12 +27,12 @@ public class Printer extends AbstractLogger
 
     public static synchronized Printer newInstance()
     {
-        if (mPrinter == null)
+        if (printer == null)
         {
-            mPrinter = new Printer();
+            printer = new Printer();
         }
 
-        return mPrinter;
+        return printer;
     }
 
     /**

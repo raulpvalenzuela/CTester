@@ -17,9 +17,9 @@ public class MultithreadController
     }
 
     // Executor used to compile the test in the background.
-    private static ExecutorService mCompilationExecutor;
+    private static ExecutorService compilationExecutor;
     // Executor used to execute the test in the background.
-    private static ExecutorService mExecutionExecutor;
+    private static ExecutorService executionExecutor;
 
     /**
      * Initializes the controller creating different executor instances
@@ -28,8 +28,8 @@ public class MultithreadController
      */
     public static void initialize()
     {
-        mCompilationExecutor = Executors.newFixedThreadPool(1);
-        mExecutionExecutor   = Executors.newFixedThreadPool(1);
+        compilationExecutor = Executors.newFixedThreadPool(1);
+        executionExecutor   = Executors.newFixedThreadPool(1);
     }
 
     /**
@@ -39,8 +39,8 @@ public class MultithreadController
      */
     public static void shutdown()
     {
-        mCompilationExecutor.shutdownNow();
-        mExecutionExecutor.shutdownNow();
+        compilationExecutor.shutdownNow();
+        executionExecutor.shutdownNow();
     }
 
     /**
@@ -56,11 +56,11 @@ public class MultithreadController
         switch (type)
         {
             case COMPILATION:
-                mCompilationExecutor.execute(task);
+                compilationExecutor.execute(task);
                 break;
 
             case EXECUTION:
-                mExecutionExecutor.execute(task);
+                executionExecutor.execute(task);
                 break;
         }
     }
