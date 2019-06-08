@@ -1,49 +1,45 @@
 package com.lsc.ctesterfx.logger;
 
-import javafx.scene.layout.BorderPane;
-
 /**
- * This layer will manage the different loggers in the system.
+ * This layer will manage the different loggers in the system. It will store
+ * one instance of Printer (there can only be one in the system) and one instance
+ * of FileLogger.
+ *
+ * As every test needs one FileLogger (different files), the reference must be changed
+ * everytime a new test starts.
  *
  * @author dma@logossmartcard.com
  */
 public class Logger extends AbstractLogger
 {
-    private static Logger mLogger;
+    private static Logger logger;
     // Internal references to the different loggers.
-    private static Printer mPrinter;
+    private final Printer printer;
+    private FileLogger fileLogger;
 
-    private Logger() {}
+    private Logger()
+    {
+        printer = Printer.newInstance();
+    }
 
     public static synchronized Logger newInstance()
     {
-        if (mLogger == null)
+        if (logger == null)
         {
-            mLogger = new Logger();
+            logger = new Logger();
         }
 
-        return mLogger;
+        return logger;
     }
 
     /**
-     * Initializes the logger.
+     * Sets a new FileLogger reference to be used.
      *
-     * FOR INTERNAL USE ONLY
-     *
-     * @param container: layout containing the output pane.
+     * @param fileLogger: reference to a FileLogger.
      */
-    public void setup(BorderPane container)
+    public void setFileLogger(FileLogger fileLogger)
     {
-        mPrinter = Printer.newInstance();
-        mPrinter.setup(container);
-    }
-
-    /**
-     * Clears the output area.
-     */
-    public void clear()
-    {
-        mPrinter.clear();
+        this.fileLogger = fileLogger;
     }
 
     @Override
@@ -51,7 +47,8 @@ public class Logger extends AbstractLogger
     {
         text = text + "\n";
 
-        mPrinter.log(text);
+        printer.log(text);
+        fileLogger.log(text);
     }
 
     @Override
@@ -59,7 +56,8 @@ public class Logger extends AbstractLogger
     {
         text = COMMENT_HEADER + text + "\n";
 
-        mPrinter.logComment(text);
+        printer.logComment(text);
+        fileLogger.logComment(text);
     }
 
     @Override
@@ -67,7 +65,8 @@ public class Logger extends AbstractLogger
     {
         text = ERROR_HEADER + text + "\n";
 
-        mPrinter.logError(text);
+        printer.logError(text);
+        fileLogger.logError(text);
     }
 
     @Override
@@ -75,7 +74,8 @@ public class Logger extends AbstractLogger
     {
         text = WARNING_HEADER + text + "\n";
 
-        mPrinter.logWarning(text);
+        printer.logWarning(text);
+        fileLogger.logWarning(text);
     }
 
     @Override
@@ -83,7 +83,8 @@ public class Logger extends AbstractLogger
     {
         text = DEBUG_HEADER + text + "\n";
 
-        mPrinter.logDebug(text);
+        printer.logDebug(text);
+        fileLogger.logDebug(text);
     }
 
     @Override
@@ -91,6 +92,7 @@ public class Logger extends AbstractLogger
     {
         text = SUCCESS_HEADER + text + "\n";
 
-        mPrinter.logSuccess(text);
+        printer.logSuccess(text);
+        fileLogger.logSuccess(text);
     }
 }

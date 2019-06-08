@@ -10,7 +10,10 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.InlineCssTextArea;
 
 /**
- * Class that logs the results in the output panel.
+ * Class that logs the results in the output panel. There's only one
+ * panel, so only one instance of Printer is forced with a Singleton.
+ *
+ * The MainController is responsible of setting this up once.
  *
  * @author dma@logossmartcard.com
  */
@@ -18,7 +21,7 @@ public class Printer extends AbstractLogger
 {
     private static Printer mPrinter;
     // RichTextArea that will contain the output of the test.
-    private final InlineCssTextArea mOutputTextArea = new InlineCssTextArea();
+    private InlineCssTextArea mOutputTextArea;
 
     private Printer() {}
 
@@ -41,6 +44,8 @@ public class Printer extends AbstractLogger
      */
     public void setup(BorderPane container)
     {
+        mOutputTextArea = new InlineCssTextArea();
+
         // Set the common style for output. Monospace and font size.
         mOutputTextArea.setStyle("-fx-font-family: monospace; -fx-font-size: 10pt;");
         // Not editable.
@@ -72,37 +77,37 @@ public class Printer extends AbstractLogger
     @Override
     public void log(String text)
     {
-        logWithFormat(text, Colors.createAsString(Colors.Color.GRAY));
+        _logWithFormat(text, Colors.createAsString(Colors.Color.GRAY));
     }
 
     @Override
     public void logComment(String text)
     {
-        logWithFormat(text, Colors.createAsString(Colors.Color.DARK_GRAY));
+        _logWithFormat(text, Colors.createAsString(Colors.Color.DARK_GRAY));
     }
 
     @Override
     public void logError(String text)
     {
-        logWithFormat(text, Colors.createAsString(Colors.Color.RED));
+        _logWithFormat(text, Colors.createAsString(Colors.Color.RED));
     }
 
     @Override
     public void logWarning(String text)
     {
-        logWithFormat(text, Colors.createAsString(Colors.Color.YELLOW));
+        _logWithFormat(text, Colors.createAsString(Colors.Color.YELLOW));
     }
 
     @Override
     public void logDebug(String text)
     {
-        logWithFormat(text, Colors.createAsString(Colors.Color.BLUE));
+        _logWithFormat(text, Colors.createAsString(Colors.Color.BLUE));
     }
 
     @Override
     public void logSuccess(String text)
     {
-        logWithFormat(text, Colors.createAsString(Colors.Color.GREEN));
+        _logWithFormat(text, Colors.createAsString(Colors.Color.GREEN));
     }
 
     /**
@@ -111,7 +116,7 @@ public class Printer extends AbstractLogger
      * @param text: text to be printed.
      * @param color: color to be used.
      */
-    private void logWithFormat(String text, String color)
+    private void _logWithFormat(String text, String color)
     {
         LogRunnable logRunnable = new LogRunnable(text, color);
 

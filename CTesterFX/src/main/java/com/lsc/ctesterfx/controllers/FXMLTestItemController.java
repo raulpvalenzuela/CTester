@@ -4,9 +4,10 @@ import com.lsc.ctesterfx.background.MultithreadController;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.lsc.ctesterfx.constants.Tooltips;
-import com.lsc.ctesterfx.dao.Test;
 import com.lsc.ctesterfx.background.CompilationTask;
 import com.lsc.ctesterfx.background.ExecutionTask;
+import com.lsc.ctesterfx.dao.Test;
+import com.lsc.ctesterfx.test.TestController;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -43,7 +44,7 @@ public class FXMLTestItemController implements Initializable
     @FXML
     private JFXButton mTestStatusButton;
 
-    private Test mTest;
+    private TestController testController;
     private int mIndex;
 
     // Reference to the Main controller.
@@ -75,7 +76,7 @@ public class FXMLTestItemController implements Initializable
         // Clear the output first.
         mMainController.requestClear();
 
-        this.run();
+        run();
     }
 
     @FXML
@@ -115,14 +116,14 @@ public class FXMLTestItemController implements Initializable
      */
     public void setAttributes(File file, FXMLMainController controller, int index)
     {
-        mTest = new Test(file);
+        testController = new TestController(new Test(file), this);
 
         mMainController = controller;
 
         mIndex = index;
 
         mTestNameCheckbox.setMnemonicParsing(false);
-        mTestNameCheckbox.setText(mTest.getName());
+        mTestNameCheckbox.setText(testController.getTestName());
     }
 
     /**
@@ -185,7 +186,7 @@ public class FXMLTestItemController implements Initializable
     public void compile()
     {
         // Create an executor and the compilation task.
-        CompilationTask compilationTask = new CompilationTask(mTest, this);
+        CompilationTask compilationTask = new CompilationTask(testController);
         // Start the compilation.
         MultithreadController.execute(compilationTask, MultithreadController.TYPE.COMPILATION);
     }
@@ -197,7 +198,7 @@ public class FXMLTestItemController implements Initializable
     public void run()
     {
         // Do the same process but this time for the execution of the test.
-        ExecutionTask executionTask = new ExecutionTask(mTest, this);
+        ExecutionTask executionTask = new ExecutionTask(testController);
 
         // Start the execution.
         MultithreadController.execute(executionTask, MultithreadController.TYPE.EXECUTION);

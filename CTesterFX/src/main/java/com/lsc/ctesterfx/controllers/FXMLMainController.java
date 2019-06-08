@@ -6,7 +6,7 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 import com.lsc.ctesterfx.constants.Animations;
 import com.lsc.ctesterfx.constants.Tooltips;
-import com.lsc.ctesterfx.logger.Logger;
+import com.lsc.ctesterfx.logger.Printer;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -46,8 +46,8 @@ public class FXMLMainController implements Initializable
     private boolean mCommandsListVisible;
     // Reference to the window.
     private Stage mStage;
-    // Referemce to the logger.
-    private Logger mLogger;
+    // Reference to the printer.
+    private Printer printer;
     // Variable to keep track of the tests in execution.
     private AtomicInteger mNumOfTestsInExecution;
 
@@ -118,7 +118,7 @@ public class FXMLMainController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         _initialize();
-        _setupLogger();
+        _setupPrinter();
         _setupTooltips();
         _setupAnimations();
     }
@@ -135,13 +135,13 @@ public class FXMLMainController implements Initializable
     }
 
     /**
-     * Sets up the logger.
+     * Sets up the printer.
      */
-    private void _setupLogger()
+    private void _setupPrinter()
     {
-        mLogger = Logger.newInstance();
+        printer = Printer.newInstance();
 
-        mLogger.setup(mOutputContainer);
+        printer.setup(mOutputContainer);
     }
 
     /**
@@ -304,7 +304,7 @@ public class FXMLMainController implements Initializable
         if (!mTestItemControllerList.isEmpty())
         {
             // Clear the output panel.
-            mLogger.clear();
+            printer.clear();
 
             // First initialize the state of each test.
             mTestItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
@@ -326,7 +326,7 @@ public class FXMLMainController implements Initializable
         if (!mTestItemControllerList.isEmpty())
         {
             // Clear the output panel.
-            mLogger.clear();
+            printer.clear();
 
             // First initialize the state of each test.
             mTestItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
@@ -476,6 +476,6 @@ public class FXMLMainController implements Initializable
      */
     public void requestClear()
     {
-        mLogger.clear();
+        printer.clear();
     }
 }

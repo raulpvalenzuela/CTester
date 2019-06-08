@@ -10,11 +10,11 @@ import java.io.File;
 public class Test
 {
     // File containing the .java file.
-    private final File mFile;
+    private final File file;
 
     public Test(File file)
     {
-        mFile = file;
+        this.file = file;
     }
 
     /**
@@ -24,7 +24,7 @@ public class Test
      */
     public String getPath()
     {
-        return mFile.getParent();
+        return file.getParent();
     }
 
     /**
@@ -34,7 +34,7 @@ public class Test
      */
     public String getName()
     {
-        return mFile.getName().replace(".java", "");
+        return file.getName().replace(".java", "");
     }
 
     /**
@@ -44,6 +44,6 @@ public class Test
      */
     public File getFile()
     {
-        return mFile;
+        return file;
     }
 }
