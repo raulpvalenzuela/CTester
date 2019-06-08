@@ -10,7 +10,10 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.InlineCssTextArea;
 
 /**
- * Class that logs the results in the output panel.
+ * Class that logs the results in the output panel. There's only one
+ * panel, so only one instance of Printer is forced with a Singleton.
+ *
+ * The MainController is responsible of setting this up once.
  *
  * @author dma@logossmartcard.com
  */

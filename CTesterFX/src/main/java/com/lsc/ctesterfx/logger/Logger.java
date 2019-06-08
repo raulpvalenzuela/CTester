@@ -1,7 +1,12 @@
 package com.lsc.ctesterfx.logger;
 
 /**
- * This layer will manage the different loggers in the system.
+ * This layer will manage the different loggers in the system. It will store
+ * one instance of Printer (there can only be one in the system) and one instance
+ * of FileLogger.
+ *
+ * As every test needs one FileLogger (different files), the reference must be changed
+ * everytime a new test starts.
  *
  * @author dma@logossmartcard.com
  */
@@ -27,6 +32,11 @@ public class Logger extends AbstractLogger
         return logger;
     }
 
+    /**
+     * Sets a new FileLogger reference to be used.
+     *
+     * @param fileLogger: reference to a FileLogger.
+     */
     public void setFileLogger(FileLogger fileLogger)
     {
         this.fileLogger = fileLogger;

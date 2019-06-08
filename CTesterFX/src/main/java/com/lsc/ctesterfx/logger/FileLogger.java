@@ -6,7 +6,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * Class that logs the results in a file.
+ * Class that logs the results in a file. Every test controller
+ * will contain an instance of this class.
+ *
+ * The TestController must ensure that the logger is set up before
+ * the test starts.
  *
  * @author dma@logossmartcard.com
  */
