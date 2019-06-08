@@ -24,8 +24,10 @@ import javax.tools.ToolProvider;
  */
 public class TestLoader extends ClassLoader
 {
-    private static final String PACKAGE = "runnables.";
-    private static final String RUN_METHOD = "run";
+    private static final String PACKAGE         = "runnables.";
+    private static final String SETUP_METHOD    = "run";
+    private static final String RUN_METHOD      = "run";
+    private static final String TEARDOWN_METHOD = "run";
 
     // Single instance of a TestLoader.
     private static TestLoader mTestLoader;
@@ -84,27 +86,31 @@ public class TestLoader extends ClassLoader
      * Method that dynamically loads the .class file previously generated.
      *
      * @param test: test to be loaded.
-     * @return Pair containing the object and the method 'run'. Null if there's an exception.
+     * @return Pair containing the object and the methods 'setup', 'run' and 'teardown'. Null if there's an exception.
      */
-    public Pair<Object, Method> load(final Test test)
+    public Pair<Object, List<Method>> load(final Test test)
     {
-        try {
+        try
+        {
             // create FileInputStream object
             File file = new File(test.getPath());
 
             // Convert File to a URL
             URL url = file.toURI().toURL();
-            URL[] urls = new URL[]{url};
+            URL[] urls = new URL[]{ url };
 
             // Create a new class loader with the directory
             ClassLoader cl = new URLClassLoader(urls);
 
             // Load in the class; Test.class. Should be located in path + \runnables\
-            Class cls = cl.loadClass(PACKAGE + test.getName());
+            Class cls  = cl.loadClass(PACKAGE + test.getName());
             Object obj = cls.newInstance();
-            Method method = cls.getDeclaredMethod(RUN_METHOD);
 
-            return new Pair<>(obj, method);
+            Method setupMethod    = cls.getDeclaredMethod(SETUP_METHOD);
+            Method runMethod      = cls.getDeclaredMethod(RUN_METHOD);
+            Method teardownMethod = cls.getDeclaredMethod(TEARDOWN_METHOD);
+
+            return new Pair<>(obj, Arrays.asList(new Method[] { setupMethod, runMethod, teardownMethod }));
 
         } catch (MalformedURLException | ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException ex) {
             return null;
