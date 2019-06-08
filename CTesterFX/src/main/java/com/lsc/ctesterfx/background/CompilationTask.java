@@ -59,7 +59,7 @@ public class CompilationTask extends Task
             {
                 result = testLoader.load(mTest);
 
-                mLogger.logSuccess("Compilation of " + mTest.getName() + " succesful!\n");
+                mLogger.logComment("Compilation of " + mTest.getName() + " succesful!\n");
                 mTestController.setState(FXMLTestItemController.TEST_STATE.COMPILATION_OK);
             }
             else

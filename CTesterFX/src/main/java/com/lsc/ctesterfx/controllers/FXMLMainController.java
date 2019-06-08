@@ -315,7 +315,7 @@ public class FXMLMainController implements Initializable
             // Compile only the ones checked.
             mTestItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
             {
-                testItem.compile(false);
+                testItem.compile();
             });
         }
     }
@@ -337,7 +337,7 @@ public class FXMLMainController implements Initializable
             // Compile only the ones checked.
             mTestItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
             {
-                testItem.compile(true);
+                testItem.run();
             });
         }
     }

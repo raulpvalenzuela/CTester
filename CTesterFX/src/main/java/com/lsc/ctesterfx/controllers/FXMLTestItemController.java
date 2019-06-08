@@ -8,15 +8,12 @@ import com.lsc.ctesterfx.dao.Test;
 import com.lsc.ctesterfx.background.CompilationTask;
 import com.lsc.ctesterfx.background.ExecutionTask;
 import java.io.File;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.util.Pair;
 
 /**
  * FXML Controller class of every test item in the VBox.
@@ -78,7 +75,7 @@ public class FXMLTestItemController implements Initializable
         // Clear the output first.
         mMainController.requestClear();
 
-        this.compile(true);
+        this.run();
     }
 
     @FXML
@@ -182,36 +179,26 @@ public class FXMLTestItemController implements Initializable
     }
 
     /**
-     * Method that compiles and executes the test.
-     *
-     * @param run: true if the test has to be executed as well.
+     * Method that compiles the test.
      */
-    public void compile(boolean run)
+    public void compile()
     {
         // Create an executor and the compilation task.
         CompilationTask compilationTask = new CompilationTask(mTest, this);
-        // Set a listener that will be triggered when the task is finished.
-        compilationTask.setOnSucceeded((Event e) ->
-        {
-            // Get the result.
-            Pair<Object, Method> result = (Pair<Object, Method>) compilationTask.getValue();
-
-            // Check if it's succesful.
-            if (result != null)
-            {
-                if (run)
-                {
-                    // Do the same process but this time for the execution of the test.
-                    ExecutionTask executionTask = new ExecutionTask(result.getKey(), result.getValue(), this);
-
-                    // Start the execution.
-                    MultithreadController.execute(executionTask, MultithreadController.TYPE.EXECUTION);
-                }
-            }
-        });
-
         // Start the compilation.
         MultithreadController.execute(compilationTask, MultithreadController.TYPE.COMPILATION);
+    }
+
+    /**
+     * Method that compiles and runs the test.
+     */
+    public void run()
+    {
+        // Do the same process but this time for the execution of the test.
+        ExecutionTask executionTask = new ExecutionTask(mTest, this);
+
+        // Start the execution.
+        MultithreadController.execute(executionTask, MultithreadController.TYPE.EXECUTION);
     }
 
     private class UpdateStateRunnable implements Runnable
