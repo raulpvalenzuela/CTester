@@ -3,14 +3,14 @@ package com.lsc.ctesterfx.logger;
 import javafx.scene.layout.BorderPane;
 
 /**
- * This layer will manage the different loggers.
+ * This layer will manage the different loggers in the system.
  *
  * @author dma@logossmartcard.com
  */
 public class Logger extends AbstractLogger
 {
-    // Internal references to the different loggers.
     private static Logger mLogger;
+    // Internal references to the different loggers.
     private static Printer mPrinter;
 
     private Logger() {}
@@ -26,8 +26,9 @@ public class Logger extends AbstractLogger
     }
 
     /**
+     * Initializes the logger.
+     *
      * FOR INTERNAL USE ONLY
-     * Method to initialize the logger.
      *
      * @param container: layout containing the output pane.
      */

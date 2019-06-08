@@ -16,9 +16,9 @@ import org.fxmisc.richtext.InlineCssTextArea;
  */
 public class Printer extends AbstractLogger
 {
+    private static Printer mPrinter;
     // RichTextArea that will contain the output of the test.
     private final InlineCssTextArea mOutputTextArea = new InlineCssTextArea();
-    private static Printer mPrinter;
 
     private Printer() {}
 
@@ -33,7 +33,7 @@ public class Printer extends AbstractLogger
     }
 
     /**
-     * Set up the output area.
+     * Sets up the output area.
      *
      * FOR INTERNAL USE ONLY.
      *
@@ -119,7 +119,7 @@ public class Printer extends AbstractLogger
     }
 
     /**
-     * Runnable needed to print something from a background process.
+     * Runnable needed to print something from a thread.
      */
     private class LogRunnable implements Runnable
     {

@@ -45,7 +45,7 @@ public class TestLoader extends ClassLoader
     }
 
     /**
-     * Method that compiles the tests given. It automatically creates the correct folder structure
+     * Compiles the tests given. It automatically creates the correct folder structure
      * and sets the classpath.
      *
      * @param test: test file to be compiled.
@@ -83,10 +83,10 @@ public class TestLoader extends ClassLoader
     }
 
     /**
-     * Method that dynamically loads the .class file previously generated.
+     * Dynamically loads the .class file previously generated.
      *
      * @param test: test to be loaded.
-     * @return Pair containing the object and the methods 'setup', 'run' and 'teardown'. Null if there's an exception.
+     * @return Pair containing the object and the methods 'setup', 'run' and 'teardown'. Null if there's been an exception.
      */
     public Pair<Object, List<Method>> load(final Test test)
     {

@@ -22,18 +22,18 @@ public class MultithreadController
     private static ExecutorService mExecutionExecutor;
 
     /**
-     * Method that initializes the controller.
+     * Initializes the controller creating different executor instances
      *
      * FOR INTERNAL USE ONLY
      */
-    public static void initializeExecutors()
+    public static void initialize()
     {
         mCompilationExecutor = Executors.newFixedThreadPool(1);
         mExecutionExecutor   = Executors.newFixedThreadPool(1);
     }
 
     /**
-     * Method to free the resources.
+     * Frees resources.
      *
      * FOR INTERNAL USE ONLY
      */
@@ -44,7 +44,7 @@ public class MultithreadController
     }
 
     /**
-     * Method that executes a task using the corresponding executor.
+     * Executes a task using the corresponding executor.
      *
      * FOR INTERNAL USE ONLY
      *

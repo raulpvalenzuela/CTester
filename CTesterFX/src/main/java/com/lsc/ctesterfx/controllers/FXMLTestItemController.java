@@ -136,7 +136,7 @@ public class FXMLTestItemController implements Initializable
     }
 
     /**
-     * Method that returns if the checkbox is selected.
+     * Returns if the checkbox is selected.
      *
      * @return true if the checkbox is selected, false otherwise.
      */
@@ -146,7 +146,7 @@ public class FXMLTestItemController implements Initializable
     }
 
     /**
-     * Method that notifies the main controller that a task has started.
+     * Notifies the main controller that a task has started.
      */
     public void notifyStartExecution()
     {
@@ -154,7 +154,7 @@ public class FXMLTestItemController implements Initializable
     }
 
     /**
-     * Method that notifies the main controller that a task has finished.
+     * Notifies the main controller that a task has finished.
      */
     public void notifyFinishedExecution()
     {
@@ -162,7 +162,7 @@ public class FXMLTestItemController implements Initializable
     }
 
     /**
-     * Method that disables all the buttons.
+     * Disables all the buttons.
      */
     public void disableButtons()
     {
@@ -170,7 +170,7 @@ public class FXMLTestItemController implements Initializable
         mRemoveTestButton.setDisable(true);
     }
     /**
-     * Method that enables all the buttons.
+     * Enables all the buttons.
      */
     public void enableButtons()
     {
@@ -179,7 +179,8 @@ public class FXMLTestItemController implements Initializable
     }
 
     /**
-     * Method that compiles the test.
+     * Compiles the test. It will create new CompilationTask to be run in the background
+     * to avoid freezing the GUI.
      */
     public void compile()
     {
@@ -190,7 +191,8 @@ public class FXMLTestItemController implements Initializable
     }
 
     /**
-     * Method that compiles and runs the test.
+     * Compiles and runs the test. It will create new ExecutionTask to be run in the background
+     * to avoid freezing the GUI.
      */
     public void run()
     {
@@ -201,6 +203,10 @@ public class FXMLTestItemController implements Initializable
         MultithreadController.execute(executionTask, MultithreadController.TYPE.EXECUTION);
     }
 
+    /**
+     * Runnable to modify the the test state from a thread. Called from either a CompilationTask or
+     * an ExecutionTask.
+     */
     private class UpdateStateRunnable implements Runnable
     {
         private final TEST_STATE mState;
@@ -216,55 +222,71 @@ public class FXMLTestItemController implements Initializable
             switch (mState)
             {
                 case QUEUED:
-                    mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #dddddd; -fx-text-fill: black");
-                    mTestStatusButton.setText("Queued");
+                    mTestStatusButton.setStyle(
+                            "-fx-background-radius: 32; -fx-background-color: #dddddd; -fx-text-fill: black");
+                    mTestStatusButton.setText(
+                            "Queued");
                     break;
 
                 case NOT_COMPILED:
-                    mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #dddddd; -fx-text-fill: black");
-                    mTestStatusButton.setText("Not compiled");
+                    mTestStatusButton.setStyle(
+                            "-fx-background-radius: 32; -fx-background-color: #dddddd; -fx-text-fill: black");
+                    mTestStatusButton.setText(
+                            "Not compiled");
                     break;
 
                 case COMPILING:
                     notifyStartExecution();
 
-                    mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #eeeeee; -fx-text-fill: black");
-                    mTestStatusButton.setText("Compiling");
+                    mTestStatusButton.setStyle(
+                            "-fx-background-radius: 32; -fx-background-color: #eeeeee; -fx-text-fill: black");
+                    mTestStatusButton.setText(
+                            "Compiling");
                     break;
 
                 case RUNNING:
                     notifyStartExecution();
 
-                    mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #eeeeee; -fx-text-fill: black");
-                    mTestStatusButton.setText("Running");
+                    mTestStatusButton.setStyle(
+                            "-fx-background-radius: 32; -fx-background-color: #eeeeee; -fx-text-fill: black");
+                    mTestStatusButton.setText(
+                            "Running");
                     break;
 
                 case COMPILATION_OK:
                     notifyFinishedExecution();
 
-                    mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #aeffad; -fx-text-fill: black");
-                    mTestStatusButton.setText("Compiled");
+                    mTestStatusButton.setStyle(
+                            "-fx-background-radius: 32; -fx-background-color: #aeffad; -fx-text-fill: black");
+                    mTestStatusButton.setText(
+                            "Compiled");
                     break;
 
                 case COMPILATION_FAILED:
                     notifyFinishedExecution();
 
-                    mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: red; -fx-text-fill: white");
-                    mTestStatusButton.setText("Compilation error");
+                    mTestStatusButton.setStyle(
+                            "-fx-background-radius: 32; -fx-background-color: red; -fx-text-fill: white");
+                    mTestStatusButton.setText(
+                            "Compilation error");
                     break;
 
                 case EXECUTION_OK:
                     notifyFinishedExecution();
 
-                    mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: #42ff3f; -fx-text-fill: black");
-                    mTestStatusButton.setText("Succesful");
+                    mTestStatusButton.setStyle(
+                            "-fx-background-radius: 32; -fx-background-color: #42ff3f; -fx-text-fill: black");
+                    mTestStatusButton.setText(
+                            "Succesful");
                     break;
 
                 case EXECUTION_FAILED:
                     notifyFinishedExecution();
 
-                    mTestStatusButton.setStyle("-fx-background-radius: 32; -fx-background-color: red; -fx-text-fill: white");
-                    mTestStatusButton.setText("Failed");
+                    mTestStatusButton.setStyle(
+                            "-fx-background-radius: 32; -fx-background-color: red; -fx-text-fill: white");
+                    mTestStatusButton.setText(
+                            "Failed");
                     break;
             }
         }

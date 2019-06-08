@@ -3,7 +3,7 @@ package com.lsc.ctesterfx.test;
 import java.lang.reflect.Method;
 
 /**
- * The purpose of this class is to run Java tests.
+ * Class that hides how to run a method from a .java class.
  *
  * @author dma@logossmartcard.com
  */

@@ -39,7 +39,7 @@ public class CompilationTask extends Task
     }
 
     /**
-     * Method that compiles and loads the test.
+     * Compiles and loads the test, returning the object and a list of methods.
      *
      * FOR INTERNAL USE ONLY
      *

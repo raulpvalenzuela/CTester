@@ -131,7 +131,7 @@ public class FXMLMainController implements Initializable
         mCommandsListVisible   = true;
         mNumOfTestsInExecution = new AtomicInteger(0);
 
-        MultithreadController.initializeExecutors();
+        MultithreadController.initialize();
     }
 
     /**
@@ -417,7 +417,8 @@ public class FXMLMainController implements Initializable
     }
 
     /**
-     * Method to store the stage object.
+     * Stores the stage object. This method is called from MainApp so
+     * that this controller can have access to different components.
      *
      * @param stage stage object passed from the main window.
      */
@@ -427,7 +428,9 @@ public class FXMLMainController implements Initializable
     }
 
     /**
-     * Removes a specific test at the given index.
+     * Removes a specific test at the given index. This method is called
+     * from within a test controller to notify that the method has
+     * been removed.
      *
      * @param index: index of the test.
      */
@@ -445,8 +448,8 @@ public class FXMLMainController implements Initializable
     }
 
     /**
-     * Method called from a test controller to notify that a task has started.
-     * If it's the first task, disable all the buttons.
+     * Increments the number of tests in execution. This method is called from a
+     * test controller to notify that a task has started. If it's the first task, disable all the buttons.
      */
     public void notifyStartExecution()
     {
@@ -457,8 +460,8 @@ public class FXMLMainController implements Initializable
     }
 
     /**
-     * Method called from a test controller to notify that a task has finished.
-     * If it's the last task, enable back the buttons.
+     * Decrements the number of tests in execution. This method is called from a
+     * test controller to notify that a task has finished. If it's the last task, enable all the buttons.
      */
     public void notifyFinishedExecution()
     {
@@ -468,6 +471,9 @@ public class FXMLMainController implements Initializable
         }
     }
 
+    /**
+     * Clears the output panel. Called when a new test has started.
+     */
     public void requestClear()
     {
         mLogger.clear();

@@ -43,7 +43,8 @@ public class ExecutionTask extends Task
     }
 
     /**
-     * Method that compiles and runs the specified method.
+     * Compiles and runs the specified method notifying the changes so
+     * that the GUI gets updated accordingly.
      *
      * FOR INTERNAL USE ONLY
      *
