@@ -7,6 +7,7 @@ import com.lsc.ctesterfx.logger.Logger;
 import com.lsc.ctesterfx.test.TestExecutor;
 import com.lsc.ctesterfx.test.TestLoader;
 import java.lang.reflect.Method;
+import java.util.List;
 import javafx.concurrent.Task;
 import javafx.util.Pair;
 
@@ -50,11 +51,12 @@ public class ExecutionTask extends Task
      */
     private boolean runTest()
     {
-        Pair<Object, Method> compilationResult = null;
+        Pair<Object, List<Method>> compilationResult = null;
 
         TestLoader testLoader     = TestLoader.newInstance();
         TestExecutor testExecutor = TestExecutor.newInstance();
 
+        // Compilation process starts here
         mLogger.logComment("Compiling " + mTest.getName() + "\n");
         mTestController.setState(FXMLTestItemController.TEST_STATE.COMPILING);
 
@@ -80,38 +82,44 @@ public class ExecutionTask extends Task
             mTestController.setState(FXMLTestItemController.TEST_STATE.COMPILATION_FAILED);
         }
 
+        // Execution starts here
         if (compilationResult != null)
         {
             Object object = compilationResult.getKey();
-            Method method = compilationResult.getValue();
+            List<Method> methods = compilationResult.getValue();
 
-            mLogger.logComment("Calling '" + method.getName() + "' method\n");
             mTestController.setState(FXMLTestItemController.TEST_STATE.RUNNING);
-
-            try
+            for (Method method : methods)
             {
-                // Call the 'run' method.
-                boolean result = testExecutor.run(object, method);
+                mLogger.logComment("Calling '" + method.getName() + "' method\n");
 
-                if (result)
+                try
                 {
-                    mLogger.logSuccess("'" + method.getName() + "' method passed succesfully\n");
-                    mTestController.setState(FXMLTestItemController.TEST_STATE.EXECUTION_OK);
-                }
-                else
-                {
-                    mLogger.logError("'" + method.getName() + "' method failed\n");
+                    // Call the method.
+                    if (testExecutor.run(object, method))
+                    {
+                        mLogger.logSuccess("'" + method.getName() + "' method passed succesfully\n");
+                    }
+                    else
+                    {
+                        mLogger.logError("'" + method.getName() + "' method failed\n");
+                        mTestController.setState(FXMLTestItemController.TEST_STATE.EXECUTION_FAILED);
+
+                        return false;
+                    }
+
+                } catch (Exception ex) {
+                    mLogger.logError("Exception executing'" + method.getName() + "' method");
+                    mLogger.logError("Exception: " + ex.toString() + "\n");
                     mTestController.setState(FXMLTestItemController.TEST_STATE.EXECUTION_FAILED);
+
+                    return false;
                 }
-
-                return result;
-
-            } catch (Exception ex) {
-                mLogger.logError("Exception executing'" + method.getName() + "' method");
-                mLogger.logError("Exception: " + ex.toString() + "\n");
             }
 
-            mTestController.setState(FXMLTestItemController.TEST_STATE.EXECUTION_FAILED);
+            mTestController.setState(FXMLTestItemController.TEST_STATE.EXECUTION_OK);
+
+            return true;
         }
 
         return false;
