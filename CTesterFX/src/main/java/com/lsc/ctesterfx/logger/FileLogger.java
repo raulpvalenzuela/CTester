@@ -3,6 +3,7 @@ package com.lsc.ctesterfx.logger;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Class that logs the results in a file.
@@ -13,88 +14,140 @@ public class FileLogger extends AbstractLogger
 {
     private static final String LOG_EXTENSION = ".log";
 
-    private static FileLogger mFileLogger;
-    // Reference to the log file.
-    private File mLogFile;
-    private FileWriter mLogFileWriter;
+    private String fileName;
+    private String path;
+
+    private File logFile;
+    private FileWriter logFileWriter;
+
+    public static class Builder
+    {
+        private String fileName;
+        private String path;
+
+        public Builder() {}
+
+        public Builder withName(String fileName)
+        {
+            this.fileName = fileName;
+
+            return this;
+        }
+
+        public Builder in(String path)
+        {
+            this.path = path;
+
+            return this;
+        }
+
+        public FileLogger build()
+        {
+            FileLogger fileLogger = new FileLogger();
+
+            fileLogger.fileName = fileName;
+            fileLogger.path     = path;
+
+            return fileLogger;
+        }
+    }
 
     private FileLogger() {}
 
-    public static synchronized FileLogger newInstance()
-    {
-        if (mFileLogger == null)
-        {
-            mFileLogger = new FileLogger();
-        }
-
-        return mFileLogger;
-    }
-
     /**
      * Sets up the logger and creates the log file.
-     *
-     * @param fileName: name of the log file.
-     * @param path: path where the log file should be located.
      */
-    public void setup(String fileName, String path)
+    public void initialize()
     {
         try
         {
-            _createFile(fileName, path);
+            _createFile();
 
         } catch (IOException ex) {
-            // TODO
+            System.err.println(ex.toString());
+        }
+    }
+
+    /**
+     * Closes the log file.
+     */
+    public void close()
+    {
+        try
+        {
+            logFileWriter.close();
+
+        } catch (IOException ex) {
+            System.err.println(ex.toString());
         }
     }
 
     @Override
     public void log(String text)
     {
-
+        _append(text);
     }
 
     @Override
     public void logComment(String text)
     {
-
+        _append(text);
     }
 
     @Override
     public void logError(String text)
     {
-
+        _append(text);
     }
 
     @Override
     public void logWarning(String text)
     {
-
+        _append(text);
     }
 
     @Override
     public void logDebug(String text)
     {
-
+        _append(text);
     }
 
     @Override
     public void logSuccess(String text)
     {
+        _append(text);
+    }
 
+    /**
+     * Appends the text.
+     *
+     * @param text: text to be appended.
+     */
+    private void _append(String text)
+    {
+        try
+        {
+            logFileWriter.append(text);
+            logFileWriter.flush();
+
+        } catch (IOException ex) {
+            System.err.println(ex.toString());
+        }
     }
 
     /**
      * Creates the log file in the specified path.
      *
-     * @param fileName: log file name.
-     * @param path: path where the file should be located.
      * @return: reference to the file.
      */
-    private void _createFile(String fileName, String path) throws IOException
+    private void _createFile() throws IOException
     {
-        mLogFile = new File(path + fileName + LOG_EXTENSION);
-        mLogFile.createNewFile();
+        logFile = new File(path + System.getProperty("file.separator") + fileName + LOG_EXTENSION);
+        logFile.createNewFile();
 
-        mLogFileWriter = new FileWriter(mLogFile);
+        // Delete the content
+        new PrintWriter(logFile).close();
+
+        logFileWriter = new FileWriter(logFile);
     }
 }

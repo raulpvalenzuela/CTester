@@ -18,7 +18,7 @@ public class Printer extends AbstractLogger
 {
     private static Printer mPrinter;
     // RichTextArea that will contain the output of the test.
-    private final InlineCssTextArea mOutputTextArea = new InlineCssTextArea();
+    private InlineCssTextArea mOutputTextArea;
 
     private Printer() {}
 
@@ -41,6 +41,8 @@ public class Printer extends AbstractLogger
      */
     public void setup(BorderPane container)
     {
+        mOutputTextArea = new InlineCssTextArea();
+
         // Set the common style for output. Monospace and font size.
         mOutputTextArea.setStyle("-fx-font-family: monospace; -fx-font-size: 10pt;");
         // Not editable.

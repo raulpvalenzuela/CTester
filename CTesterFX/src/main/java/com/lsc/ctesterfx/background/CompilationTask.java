@@ -1,9 +1,7 @@
 package com.lsc.ctesterfx.background;
 
 import com.lsc.ctesterfx.controllers.FXMLTestItemController;
-import com.lsc.ctesterfx.dao.Test;
-import com.lsc.ctesterfx.logger.AbstractLogger;
-import com.lsc.ctesterfx.logger.Logger;
+import com.lsc.ctesterfx.test.TestController;
 import com.lsc.ctesterfx.test.TestLoader;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -17,19 +15,12 @@ import javafx.util.Pair;
  */
 public class CompilationTask extends Task
 {
-    // Instance of the logger.
-    private final AbstractLogger mLogger;
-    // Instance to the test to be compiled.
-    private final Test mTest;
-    // Referente to the test controller to update the GUI.
-    private final FXMLTestItemController mTestController;
+    // Instance to the test controller.
+    private final TestController testController;
 
-    public CompilationTask(Test test, FXMLTestItemController testController)
+    public CompilationTask(TestController testController)
     {
-        mTest           = test;
-        mTestController = testController;
-
-        mLogger         = Logger.newInstance();
+        this.testController = testController;
     }
 
     @Override
@@ -47,8 +38,10 @@ public class CompilationTask extends Task
      */
     private Pair<Object, List<Method>> _compileTest()
     {
-        mLogger.logComment("Compiling " + mTest.getName() + "\n");
-        mTestController.setState(FXMLTestItemController.TEST_STATE.COMPILING);
+        testController.notifyStartTest();
+
+        testController.getLogger().logComment("Compiling " + testController.getTestName() + "\n");
+        testController.setState(FXMLTestItemController.TEST_STATE.COMPILING);
 
         Pair<Object, List<Method>> result = null;
         TestLoader testLoader = TestLoader.newInstance();
@@ -56,24 +49,26 @@ public class CompilationTask extends Task
         try
         {
             // Compile and load the test class.
-            if (testLoader.compile(mTest))
+            if (testLoader.compile(testController.getTest()))
             {
-                result = testLoader.load(mTest);
+                result = testLoader.load(testController.getTest());
 
-                mLogger.logComment("Compilation of " + mTest.getName() + " succesful!\n");
-                mTestController.setState(FXMLTestItemController.TEST_STATE.COMPILATION_OK);
+                testController.getLogger().logComment("Compilation of " + testController.getTestName() + " succesful!\n");
+                testController.setState(FXMLTestItemController.TEST_STATE.COMPILATION_OK);
             }
             else
             {
-                mLogger.logError("Compilation of " + mTest.getName() + " failed\n");
-                mTestController.setState(FXMLTestItemController.TEST_STATE.COMPILATION_FAILED);
+                testController.getLogger().logError("Compilation of " + testController.getTestName() + " failed\n");
+                testController.setState(FXMLTestItemController.TEST_STATE.COMPILATION_FAILED);
             }
 
         } catch (Exception ex) {
-            mLogger.logError("Compilation of " + mTest.getName() + " failed");
-            mLogger.logError("Exception: " + ex.toString() + "\n");
-            mTestController.setState(FXMLTestItemController.TEST_STATE.COMPILATION_FAILED);
+            testController.getLogger().logError("Compilation of " + testController.getTestName() + " failed");
+            testController.getLogger().logError("Exception: " + ex.toString() + "\n");
+            testController.setState(FXMLTestItemController.TEST_STATE.COMPILATION_FAILED);
         }
+
+        testController.notifyFinishStart();
 
         return result;
     }
