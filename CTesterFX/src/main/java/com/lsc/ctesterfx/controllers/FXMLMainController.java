@@ -419,7 +419,7 @@ public class FXMLMainController implements Initializable
      */
     public void setStage(Stage stage)
     {
-        stage = stage;
+        this.stage = stage;
     }
 
     /**
