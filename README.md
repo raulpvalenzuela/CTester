@@ -36,17 +36,20 @@ The following libraries have been used for this project:
 
 ## Requirements
 
-- JDK 8 or above.
-- JRE 8 or above.
+- JDK 8.
 - NetBeans 8.2 or Eclipse (NetBeans recommended).
 
 ---
 
 ## How to use
 
+### GUI
+
 1. Open the application.
 
 2. TODO
+
+### Command line
 
 ---
 
@@ -56,7 +59,7 @@ The following libraries have been used for this project:
 
 2. Checkout `develop` branch.
 
-3. Open the project with NetBeans or Eclipse. 
+3. Open the project with NetBeans or Eclipse.
 
 4. Create a test inside `runnables` package that extends `com.lsc.ctesterfx.tests.TestRunnable`.
 
