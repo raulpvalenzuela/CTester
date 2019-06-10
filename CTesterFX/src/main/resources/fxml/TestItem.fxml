@@ -10,7 +10,7 @@
 
 <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="471.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lsc.ctesterfx.controllers.FXMLTestItemController">
    <children>
-      <JFXCheckBox fx:id="mTestNameCheckbox" checkedColor="#53dbb6" minWidth="-Infinity" prefHeight="24.0" prefWidth="248.0" text="Test" textFill="#cccccc" unCheckedColor="#cccccc" HBox.hgrow="ALWAYS">
+      <JFXCheckBox fx:id="mTestNameCheckbox" checkedColor="#53dbb6" focusTraversable="false" minWidth="-Infinity" prefHeight="24.0" prefWidth="248.0" text="Test" textFill="#cccccc" unCheckedColor="#cccccc" HBox.hgrow="ALWAYS">
          <font>
             <Font name="Microsoft YaHei UI Light" size="12.0" />
          </font>
@@ -25,7 +25,7 @@
                   <Insets right="8.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton fx:id="mRunTestButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickRunTestButton" prefHeight="32.0" prefWidth="32.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add" HBox.hgrow="NEVER">
+            <JFXButton fx:id="mRunTestButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickRunTestButton" prefHeight="32.0" prefWidth="32.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add" HBox.hgrow="NEVER">
                <graphic>
                   <ImageView fitHeight="32.0" fitWidth="32.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -34,7 +34,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="mRemoveTestButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickRemoveTestButton" prefHeight="32.0" prefWidth="32.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add" HBox.hgrow="NEVER">
+            <JFXButton fx:id="mRemoveTestButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickRemoveTestButton" prefHeight="32.0" prefWidth="32.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add" HBox.hgrow="NEVER">
                <graphic>
                   <ImageView fitHeight="32.0" fitWidth="32.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
                      <image>
