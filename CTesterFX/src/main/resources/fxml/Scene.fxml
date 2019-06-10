@@ -25,7 +25,7 @@
                   <Insets />
                </HBox.margin>
                <children>
-                  <VBox alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="593.0" prefWidth="64.0" spacing="8.0" style="-fx-background-color: #333333;" VBox.vgrow="ALWAYS">
+                  <VBox alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="236.0" prefWidth="64.0" spacing="8.0" style="-fx-background-color: #333333;" VBox.vgrow="ALWAYS">
                      <children>
                         <JFXButton fx:id="mAddTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickAddTests" prefHeight="56.0" prefWidth="56.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add">
                            <graphic>
@@ -62,7 +62,7 @@
                         <Insets top="12.0" />
                      </padding>
                   </VBox>
-                  <VBox alignment="BOTTOM_CENTER" minWidth="-Infinity" prefHeight="238.0" prefWidth="64.0" spacing="8.0" style="-fx-background-color: #333333;" VBox.vgrow="ALWAYS">
+                  <VBox alignment="BOTTOM_CENTER" minWidth="-Infinity" prefHeight="353.0" prefWidth="64.0" spacing="8.0" style="-fx-background-color: #333333;" VBox.vgrow="ALWAYS">
                      <children>
                         <JFXButton fx:id="mReadersButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickSettings" prefHeight="56.0" prefWidth="56.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add">
                            <graphic>
@@ -109,9 +109,9 @@
                               <Insets left="16.0" />
                            </VBox.margin>
                         </JFXCheckBox>
-                        <ScrollPane VBox.vgrow="ALWAYS">
+                        <ScrollPane fx:id="mTestListScrollPane" VBox.vgrow="ALWAYS">
                            <content>
-                              <VBox fx:id="mTestListVBox" prefHeight="612.0" prefWidth="452.0" />
+                              <VBox fx:id="mTestListVBox" prefHeight="612.0" prefWidth="454.0" />
                            </content>
                            <VBox.margin>
                               <Insets />
@@ -119,7 +119,7 @@
                         </ScrollPane>
                      </children>
                      <padding>
-                        <Insets bottom="2.0" right="2.0" top="16.0" />
+                        <Insets top="16.0" />
                      </padding>
                   </VBox>
                   <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="741.0" spacing="4.0" style="-fx-background-color: #3A3A4F;">
@@ -246,9 +246,9 @@
             </SplitPane>
          </children>
       </HBox>
-      <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="23.0" prefWidth="1303.0" style="-fx-background-color: #333333;" VBox.vgrow="ALWAYS">
+      <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="23.0" prefWidth="1303.0" style="-fx-background-color: #333333;" VBox.vgrow="NEVER">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="733.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="733.0" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="6.0" />
                </HBox.margin>
@@ -260,7 +260,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="23.0" prefWidth="557.0">
+            <HBox alignment="CENTER_RIGHT" prefHeight="23.0" prefWidth="557.0" HBox.hgrow="ALWAYS">
                <children>
                   <Label fx:id="mVersionLabel" contentDisplay="TEXT_ONLY" text="v1.0.0" textFill="#cccccc">
                      <font>

@@ -27,6 +27,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -60,6 +61,8 @@ public class FXMLMainController implements Initializable
     private VBox mTestListVBox;
     @FXML
     private VBox mSnackbarContainer;
+    @FXML
+    private ScrollPane mTestListScrollPane;
     @FXML
     private BorderPane mOutputContainer;
     @FXML
@@ -116,8 +119,7 @@ public class FXMLMainController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         _initialize();
-        _setupPrinter();
-        _setupTooltips();
+        _setupViews();
         _setupAnimations();
         _setVersion();
     }
@@ -143,23 +145,18 @@ public class FXMLMainController implements Initializable
 
         // Initialize the executors.
         MultithreadController.initialize();
-    }
 
-    /**
-     * Sets up the printer.
-     */
-    private void _setupPrinter()
-    {
+        // Printer setup
         printer = Printer.newInstance();
-
         printer.setup(mOutputContainer);
     }
 
     /**
-     * Sets up all the buttons' tooltips.
+     * Sets up the different views.
      */
-    private void _setupTooltips()
+    private void _setupViews()
     {
+        // Tooltips
         mAddTestsButton.setTooltip(Tooltips.create(Tooltips.ADD_TESTS));
         mCompileTestsButton.setTooltip(Tooltips.create(Tooltips.COMPILE_TESTS));
         mRunTestsButton.setTooltip(Tooltips.create(Tooltips.RUN_TESTS));
@@ -172,6 +169,9 @@ public class FXMLMainController implements Initializable
         mSecurityHistoryButton.setTooltip(Tooltips.create(Tooltips.SEC_HISTORY));
         mGetProductCodeButton.setTooltip(Tooltips.create(Tooltips.GET_PROD_CODE));
         mReadersButton.setTooltip(Tooltips.create(Tooltips.READERS));
+
+        mTestListScrollPane.setFitToHeight(true);
+        mTestListScrollPane.setFitToWidth(true);
     }
 
     /**

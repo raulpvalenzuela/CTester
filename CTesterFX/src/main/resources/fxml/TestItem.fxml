@@ -44,6 +44,9 @@
                </graphic>
             </JFXButton>
          </children>
+         <HBox.margin>
+            <Insets right="16.0" />
+         </HBox.margin>
       </HBox>
    </children>
    <padding>
