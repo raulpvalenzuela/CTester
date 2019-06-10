@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXTextField;
 import com.lsc.ctesterfx.constants.Animations;
 import com.lsc.ctesterfx.constants.Tooltips;
 import com.lsc.ctesterfx.logger.Printer;
+import com.lsc.ctesterfx.persistence.Configuration;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -118,14 +119,25 @@ public class FXMLMainController implements Initializable
     }
 
     /**
-     * Sets up different variables.
+     * Sets up different variables and components.
      */
     private void _initialize()
     {
-        commandsListVisible   = true;
-        numOfTestsInExecution = new AtomicInteger(0);
+        commandsListVisible    = true;
+        numOfTestsInExecution  = new AtomicInteger(0);
         testItemControllerList = new ArrayList<>();
 
+        // It's needed to set the Java Home to the one inside the JDK (~/../Java/jdk1.8.xxx/jre)
+        // to be able to compile the tests. When running the .jar by default
+        // it will use the JRE located in ~/../Java/jre1.8.xxx.
+        Configuration configuration = new Configuration();
+        String javaHome = configuration.getValueAsString(Configuration.JAVA_HOME);
+        if (javaHome != null)
+        {
+            System.setProperty("java.home", javaHome);
+        }
+
+        // Initialize the executors.
         MultithreadController.initialize();
     }
 
