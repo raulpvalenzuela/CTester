@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
@@ -118,6 +119,7 @@ public class FXMLMainController implements Initializable
         _setupPrinter();
         _setupTooltips();
         _setupAnimations();
+        _setVersion();
     }
 
     /**
@@ -229,6 +231,24 @@ public class FXMLMainController implements Initializable
         fadeInAnimation.setToValue(1.0f);
         fadeOutAnimation.setFromValue(1.0f);
         fadeOutAnimation.setToValue(0.0f);
+    }
+
+    /**
+     * Updates the version label reading the pom.xml.
+     */
+    private void _setVersion()
+    {
+        try
+        {
+            Properties properties = new Properties();
+            properties.load(
+                    this.getClass().getClassLoader().getResourceAsStream("application/application.properties"));
+
+            mVersionLabel.setText("v" + properties.getProperty("version"));
+
+        } catch (IOException | NullPointerException ex) {
+            Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
