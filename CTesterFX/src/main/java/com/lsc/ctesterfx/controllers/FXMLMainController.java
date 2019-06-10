@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
@@ -129,7 +131,7 @@ public class FXMLMainController implements Initializable
 
         // It's needed to set the Java Home to the one inside the JDK (~/../Java/jdk1.8.xxx/jre)
         // to be able to compile the tests. When running the .jar by default
-        // it will use the JRE located in ~/../Java/jre1.8.xxx.
+        // it will run against the JRE located in ~/../Java/jre1.8.xxx.
         Configuration configuration = new Configuration();
         String javaHome = configuration.getValueAsString(Configuration.JAVA_HOME);
         if (javaHome != null)
@@ -299,7 +301,7 @@ public class FXMLMainController implements Initializable
                     testItemControllerList.add(controller);
 
                 } catch (IOException ex) {
-                    // TODO
+                    Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

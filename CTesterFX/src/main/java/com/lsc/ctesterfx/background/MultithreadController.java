@@ -22,7 +22,7 @@ public class MultithreadController
     private static ExecutorService executionExecutor;
 
     /**
-     * Initializes the controller creating different executor instances
+     * Initializes the controller creating different executor instances.
      *
      * FOR INTERNAL USE ONLY
      */

@@ -1,9 +1,15 @@
 package com.lsc.ctesterfx.persistence;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
 
 /**
  * Class to handle the configuration file.
@@ -13,7 +19,8 @@ import org.dom4j.io.SAXReader;
 public class Configuration
 {
     // Public constants
-    public static final String JAVA_HOME = "JavaHome";
+    public static final String CTESTER = "CTester";
+        public static final String JAVA_HOME = "JavaHome";
 
     // Private constants
     private static final String CONFIG_PATH =
@@ -28,14 +35,64 @@ public class Configuration
      */
     public class Editor
     {
-        public void edit()
-        {
+        private Document document;
 
+        /**
+         * Constructor.
+         */
+        public Editor()
+        {
+            try
+            {
+                SAXReader reader = new SAXReader();
+                document = reader.read(configurationFile);
+
+            } catch (DocumentException ex) {
+                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
-        public String commit()
+        /**
+         * Updates the node with a new value.
+         *
+         * @param key: node to be updated.
+         * @param newValue: new value to be set.
+         */
+        public void edit(String key, String newValue)
         {
-            return null;
+            document.selectSingleNode("//" + key).setText(newValue);
+        }
+
+        /**
+         * Commits all the changes done to the document.
+         */
+        public void commit()
+        {
+            XMLWriter writer = null;
+
+            try
+            {
+                writer = new XMLWriter(new FileWriter(configurationFile));
+                writer.write(document);
+
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
+
+            } catch (IOException ex) {
+                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
+
+            } finally {
+                if (writer != null)
+                {
+                    try
+                    {
+                        writer.close();
+
+                    } catch (IOException ex) {
+                        Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
         }
     }
 
@@ -45,6 +102,16 @@ public class Configuration
     public Configuration()
     {
         configurationFile = new File(CONFIG_PATH + CONFIG_NAME);
+    }
+
+    /**
+     *
+     * Creates and returns a new configuration editor.
+     * @return reference to a new configuration editor.
+     */
+    public Editor getEditor()
+    {
+        return new Editor();
     }
 
     /**
@@ -63,7 +130,7 @@ public class Configuration
             return document.selectSingleNode("//" + key).getStringValue();
 
         } catch (DocumentException ex) {
-            // TODO
+            Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return null;
