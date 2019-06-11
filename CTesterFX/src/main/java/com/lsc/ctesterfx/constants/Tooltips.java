@@ -18,6 +18,7 @@ public class Tooltips
     public static final String SETTINGS      = "Settings";
     public static final String READERS       = "Show readers";
     public static final String RUN_TEST      = "Run test";
+    public static final String STOP_TEST     = "Stop test";
     public static final String REMOVE_TEST   = "Remove test";
     public static final String SEND          = "Send command";
     public static final String RESET         = "Reset the card";

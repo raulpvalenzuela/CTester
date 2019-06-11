@@ -88,6 +88,8 @@ public class FXMLMainController implements Initializable
     @FXML
     private JFXButton mRunTestsButton;
     @FXML
+    private JFXButton mStopTestsButton;
+    @FXML
     private JFXButton mSettingsButton;
     @FXML
     private JFXButton mReadersButton;
@@ -169,6 +171,7 @@ public class FXMLMainController implements Initializable
         mSecurityHistoryButton.setTooltip(Tooltips.create(Tooltips.SEC_HISTORY));
         mGetProductCodeButton.setTooltip(Tooltips.create(Tooltips.GET_PROD_CODE));
         mReadersButton.setTooltip(Tooltips.create(Tooltips.READERS));
+        mStopTestsButton.setTooltip(Tooltips.create(Tooltips.STOP_TEST));
 
         mTestListScrollPane.setFitToHeight(true);
         mTestListScrollPane.setFitToWidth(true);
