@@ -56,6 +56,8 @@ public class FXMLMainController implements Initializable
     private boolean commandsListVisible;
     // Variable to keep track of the tests in execution.
     private AtomicInteger numOfTestsInExecution;
+    // Variable to keep track of the test being currently executed.
+    private int currentTest;
 
     @FXML
     private VBox mTestListVBox;
@@ -131,6 +133,7 @@ public class FXMLMainController implements Initializable
      */
     private void _initialize()
     {
+        currentTest            = -1;
         commandsListVisible    = true;
         numOfTestsInExecution  = new AtomicInteger(0);
         testItemControllerList = new ArrayList<>();
@@ -375,6 +378,30 @@ public class FXMLMainController implements Initializable
     }
 
     @FXML
+    private void onClickStopTest(ActionEvent event)
+    {
+        // Shutdown the executors.
+        MultithreadController.shutdown();
+        // Restart them.
+        MultithreadController.initialize();
+
+        // Update only the tests that haven't started.
+        for (int i = 0; i < testItemControllerList.size(); ++i)
+        {
+            if (testItemControllerList.get(i).isSelected() && i >= currentTest)
+            {
+                testItemControllerList.get(i).setState(FXMLTestItemController.TEST_STATE.STOPPED);
+            }
+        }
+
+        // In case the test has been started individually.
+        if (currentTest > -1)
+        {
+            testItemControllerList.get(currentTest).setState(FXMLTestItemController.TEST_STATE.STOPPED);
+        }
+    }
+
+    @FXML
     private void onClickSettings(ActionEvent event)
     {
         // TODO
@@ -482,9 +509,13 @@ public class FXMLMainController implements Initializable
     /**
      * Increments the number of tests in execution. This method is called from a
      * test controller to notify that a task has started. If it's the first task, disable all the buttons.
+     * @param index: index of the test.
      */
-    public void notifyStartExecution()
+    public void notifyStartExecution(int index)
     {
+        // Save the index of the test.
+        currentTest = index;
+
         if (numOfTestsInExecution.getAndIncrement() == 0)
         {
             _disableButtons();
@@ -497,6 +528,9 @@ public class FXMLMainController implements Initializable
      */
     public void notifyFinishedExecution()
     {
+        // Clear the flag.
+        currentTest = -1;
+
         if (numOfTestsInExecution.decrementAndGet() == 0)
         {
             _enableButtons();
@@ -504,10 +538,12 @@ public class FXMLMainController implements Initializable
     }
 
     /**
-     * Clears the output panel. Called when a new test has started.
+     * Restart variables and clear the log. Called when a new test has started.
      */
     public void requestClear()
     {
+        numOfTestsInExecution.set(0);
+
         printer.clear();
     }
 }
