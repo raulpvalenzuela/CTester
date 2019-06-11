@@ -31,7 +31,8 @@ public class FXMLTestItemController implements Initializable
         COMPILATION_FAILED,
         RUNNING,
         EXECUTION_OK,
-        EXECUTION_FAILED
+        EXECUTION_FAILED,
+        STOPPED
     }
 
     private int index;
@@ -73,7 +74,7 @@ public class FXMLTestItemController implements Initializable
     @FXML
     private void onClickRunTestButton(ActionEvent event)
     {
-        // Clear the output first.
+        // Clear the output first and restart variables
         mainController.requestClear();
 
         run();
@@ -117,7 +118,7 @@ public class FXMLTestItemController implements Initializable
     public void setAttributes(File file, FXMLMainController mainController, int index)
     {
         testController      = new TestController(new Test(file), this);
-        
+
         this.mainController = mainController;
         this.index          = index;
 
@@ -150,7 +151,7 @@ public class FXMLTestItemController implements Initializable
      */
     public void notifyStartExecution()
     {
-        mainController.notifyStartExecution();
+        mainController.notifyStartExecution(index);
     }
 
     /**
@@ -287,6 +288,13 @@ public class FXMLTestItemController implements Initializable
                             "-fx-background-radius: 32; -fx-background-color: red; -fx-text-fill: white");
                     mTestStatusButton.setText(
                             "Failed");
+                    break;
+
+                case STOPPED:
+                    mTestStatusButton.setStyle(
+                            "-fx-background-radius: 32; -fx-background-color: #eeeeee; -fx-text-fill: black");
+                    mTestStatusButton.setText(
+                            "Stopped");
                     break;
             }
         }

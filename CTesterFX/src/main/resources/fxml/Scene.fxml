@@ -47,9 +47,21 @@
                         </JFXButton>
                         <JFXButton fx:id="mRunTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickRunTests" prefHeight="56.0" prefWidth="56.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add">
                            <graphic>
-                              <ImageView fitHeight="44.0" fitWidth="44.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="48.0" fitWidth="48.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/arrow-right-white.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </JFXButton>
+                        <JFXButton fx:id="mStopTestsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickStopTest" prefHeight="56.0" prefWidth="56.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add">
+                           <graphic>
+                              <ImageView fitHeight="38.0" fitWidth="38.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/stop-white.png" />
                                  </image>
                               </ImageView>
                            </graphic>
