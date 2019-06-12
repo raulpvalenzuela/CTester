@@ -21,7 +21,7 @@ public class Printer extends AbstractLogger
 {
     private static Printer printer;
     // RichTextArea that will contain the output of the test.
-    private InlineCssTextArea mOutputTextArea;
+    private InlineCssTextArea outputTextArea;
 
     private Printer() {}
 
@@ -44,19 +44,19 @@ public class Printer extends AbstractLogger
      */
     public void setup(BorderPane container)
     {
-        mOutputTextArea = new InlineCssTextArea();
+        outputTextArea = new InlineCssTextArea();
 
         // Set the common style for output. Monospace and font size.
-        mOutputTextArea.setStyle("-fx-font-family: monospace; -fx-font-size: 10pt;");
+        outputTextArea.setStyle("-fx-font-family: monospace; -fx-font-size: 10pt;");
         // Not editable.
-        mOutputTextArea.setEditable(false);
+        outputTextArea.setEditable(false);
         // Transparent background
-        mOutputTextArea.setBackground(Background.EMPTY);
+        outputTextArea.setBackground(Background.EMPTY);
         // No wrapping.
-        mOutputTextArea.setWrapText(false);
+        outputTextArea.setWrapText(false);
 
         // Container of the output text area. The virtualized container will only render the text visible.
-        VirtualizedScrollPane<InlineCssTextArea> vsPane = new VirtualizedScrollPane<>(mOutputTextArea);
+        VirtualizedScrollPane<InlineCssTextArea> vsPane = new VirtualizedScrollPane<>(outputTextArea);
         VBox.setVgrow(vsPane, Priority.ALWAYS);
 
         // Force to fill the parent size.
@@ -71,7 +71,7 @@ public class Printer extends AbstractLogger
      */
     public void clear()
     {
-        mOutputTextArea.clear();
+        outputTextArea.clear();
     }
 
     @Override
@@ -142,11 +142,11 @@ public class Printer extends AbstractLogger
         public void run()
         {
             // Save the last paragraph's index
-            mIndex = mOutputTextArea.getDocument().getParagraphs().size() - 1;
+            mIndex = outputTextArea.getDocument().getParagraphs().size() - 1;
 
-            mOutputTextArea.appendText(mText);
-            mOutputTextArea.setStyle(mIndex, "-fx-fill: " + mColor);
-            mOutputTextArea.scrollYBy(1000);
+            outputTextArea.appendText(mText);
+            outputTextArea.setStyle(mIndex, "-fx-fill: " + mColor);
+            outputTextArea.scrollYBy(1000);
         }
     }
 }
