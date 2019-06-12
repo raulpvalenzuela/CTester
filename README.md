@@ -19,8 +19,8 @@ __CTester__ is Tool created for the __EMV__ group for testing the product in a c
 
 - __Cross-platform__.
 - __Self-contained__: the tool won't have to be recompiled if a test changes.
-- __Configurable__: things than are likely to change are configured through a `.ini` file.
-- __GUI__ and __command line__.
+- __Configurable__: things than are likely to change are configured through an `.xml` file.
+- Run through __GUI__ and __command line__.
 
 ---
 
@@ -28,16 +28,29 @@ __CTester__ is Tool created for the __EMV__ group for testing the product in a c
 
 The following libraries have been used for this project:
 
-- GUI
-  - [JFoenix](https://github.com/jfoenixadmin/JFoenix): material design components for JavaFX.
-  - [RichTextFX](https://github.com/FXMisc/RichTextFX): memory-efficient text area for JavaFX.
+- [JFoenix](https://github.com/jfoenixadmin/JFoenix): material design components for JavaFX.
+- [RichTextFX](https://github.com/FXMisc/RichTextFX): memory-efficient text area for JavaFX.
+- [Smart Card I/O API](https://docs.oracle.com/javase/7/docs/jre/api/security/smartcardio/spec/): Java API for communication with Smart Cards using ISO/IEC 7816-4 APDUs.
+- [dom4j](https://dom4j.github.io/): Flexible XML framework for Java.
 
 ---
 
 ## Requirements
 
+### For just running tests
+
 - JDK 8.
-- NetBeans 8.2 or Eclipse (NetBeans recommended).
+
+### For test developing
+
+- JDK 8.
+- NetBeans 8.2. (optional)
+
+### For tool developing
+
+- JDK 8.
+- NetBeans 8.2.
+- Scene Builder (optional)
 
 ---
 
@@ -47,7 +60,9 @@ The following libraries have been used for this project:
 
 1. Open the application.
 
-2. TODO
+2. Add some tests.
+
+3. Run'em!
 
 ### Command line
 
@@ -59,8 +74,30 @@ The following libraries have been used for this project:
 
 2. Checkout `develop` branch.
 
-3. Open the project with NetBeans or Eclipse.
+3. Open the project with NetBeans.
 
-4. Create a test inside `runnables` package that extends `com.lsc.ctesterfx.tests.TestRunnable`.
+4. Create a test inside that extends the class `AbstractTest`, located in the package `com.lsc.ctesterfx.test`.
 
 5. Implement the logic inside the `run` method and return `true` or `false` if the execution is succesful or not.
+
+---
+
+Note: The tests can be located anywhere, there's no restrictions about package naming neither. However, do notice that a java file, in order to be compiled have to be inside the folder structure have to match the package name. Here's some examples:
+
+```#comment
+package testing;
+
+Folder structure:
+    /testing
+       test.java
+```
+
+```#comment
+package testing.performance;
+
+Folder structure:
+
+    /testing
+      - /performance
+           test.java
+```
