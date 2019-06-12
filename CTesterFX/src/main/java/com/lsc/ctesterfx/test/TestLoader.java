@@ -1,7 +1,11 @@
 package com.lsc.ctesterfx.test;
 
 import com.lsc.ctesterfx.dao.Test;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -24,7 +28,6 @@ import javax.tools.ToolProvider;
  */
 public class TestLoader extends ClassLoader
 {
-    private static final String PACKAGE         = "runnables.";
     private static final String SETUP_METHOD    = "setUp";
     private static final String RUN_METHOD      = "run";
     private static final String TEARDOWN_METHOD = "tearDown";
@@ -91,6 +94,22 @@ public class TestLoader extends ClassLoader
      */
     public Pair<Object, List<Method>> load(final Test test)
     {
+        String pkg = null;
+        try
+        {
+            // Read the package name
+            BufferedReader br = new BufferedReader(new FileReader(test.getFile()));
+            while (!(pkg = br.readLine()).contains("package")) {}
+
+            // Remove all the nonsense.
+            pkg = pkg.replace("package", "").replace(";", "").replace(" ", "").trim();
+
+        } catch (FileNotFoundException ex) {
+            return null;
+        } catch (IOException ex) {
+            return null;
+        }
+
         try
         {
             // create FileInputStream object
@@ -103,8 +122,8 @@ public class TestLoader extends ClassLoader
             // Create a new class loader with the directory
             ClassLoader cl = new URLClassLoader(urls);
 
-            // Load in the class; Test.class. Should be located in path + \runnables\
-            Class cls  = cl.loadClass(PACKAGE + test.getName());
+            // Load in the class; Test.class. Should be located in path + \package\
+            Class cls  = cl.loadClass(pkg + test.getName());
             Object obj = cls.newInstance();
 
             Method setupMethod    = cls.getDeclaredMethod(SETUP_METHOD);
