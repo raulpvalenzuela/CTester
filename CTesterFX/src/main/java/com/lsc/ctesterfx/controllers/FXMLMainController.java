@@ -4,6 +4,7 @@ import com.lsc.ctesterfx.background.MultithreadController;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleButton;
 import com.lsc.ctesterfx.constants.Animations;
 import com.lsc.ctesterfx.constants.Tooltips;
 import com.lsc.ctesterfx.logger.Printer;
@@ -99,6 +100,8 @@ public class FXMLMainController implements Initializable
     private JFXTextField mCommandTextfield;
     @FXML
     private JFXCheckBox mSelectAllCheckbox;
+    @FXML
+    private JFXToggleButton mAutoScrollToggleButton;
     @FXML
     private ImageView mFABPlusIcon;
     @FXML
@@ -475,6 +478,12 @@ public class FXMLMainController implements Initializable
         testItemControllerList.forEach((controller) -> {
             controller.select(mSelectAllCheckbox.isSelected());
         });
+    }
+
+    @FXML
+    private void onAutoScrollChange(ActionEvent event)
+    {
+        printer.setAutoscroll(mAutoScrollToggleButton.isSelected());
     }
 
     /**

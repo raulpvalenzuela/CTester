@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -74,7 +75,7 @@
                         <Insets top="12.0" />
                      </padding>
                   </VBox>
-                  <VBox alignment="BOTTOM_CENTER" minWidth="-Infinity" prefHeight="353.0" prefWidth="64.0" spacing="8.0" style="-fx-background-color: #333333;" VBox.vgrow="ALWAYS">
+                  <VBox alignment="BOTTOM_CENTER" minWidth="-Infinity" prefHeight="251.0" prefWidth="64.0" spacing="8.0" style="-fx-background-color: #333333;" VBox.vgrow="ALWAYS">
                      <children>
                         <JFXButton fx:id="mReadersButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" minHeight="-Infinity" minWidth="-Infinity" onAction="#onClickSettings" prefHeight="56.0" prefWidth="56.0" ripplerFill="#53dbb6" style="-fx-border-radius: 32; -fx-background-radius: 32;" text="Add">
                            <graphic>
@@ -181,11 +182,20 @@
                            <children>
                               <VBox prefHeight="639.0" prefWidth="606.0" spacing="16.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <Label text="Output" textFill="#cccccc">
-                                       <font>
-                                          <Font name="Microsoft JhengHei UI Light" size="18.0" />
-                                       </font>
-                                    </Label>
+                                    <HBox alignment="CENTER_LEFT" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <Label prefHeight="24.0" prefWidth="74.0" text="Output" textFill="#cccccc" HBox.hgrow="NEVER">
+                                             <font>
+                                                <Font name="Microsoft JhengHei UI Light" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <HBox alignment="CENTER_RIGHT" prefHeight="32.0" prefWidth="469.0" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <JFXToggleButton fx:id="mAutoScrollToggleButton" focusTraversable="false" minHeight="-Infinity" minWidth="-Infinity" onAction="#onAutoScrollChange" prefHeight="32.0" prefWidth="143.0" selected="true" text="Autoscroll" textFill="#cccccc" toggleColor="#53dbb6" toggleLineColor="#43ae90" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </HBox>
                                     <BorderPane fx:id="mOutputContainer" prefHeight="568.0" prefWidth="583.0" />
                                  </children>
                                  <padding>
