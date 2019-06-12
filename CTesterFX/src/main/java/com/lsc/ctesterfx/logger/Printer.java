@@ -23,6 +23,9 @@ public class Printer extends AbstractLogger
     // RichTextArea that will contain the output of the test.
     private InlineCssTextArea outputTextArea;
 
+    // Flag to disable the auto-scroll.
+    private boolean autoscroll;
+
     private Printer() {}
 
     public static synchronized Printer newInstance()
@@ -72,6 +75,16 @@ public class Printer extends AbstractLogger
     public void clear()
     {
         outputTextArea.clear();
+    }
+
+    /**
+     * Method to enable/disable the auto-scroll.
+     *
+     * @param autoscroll true to enable the autoscroll, false to disable.
+     */
+    public void setAutoscroll(boolean autoscroll)
+    {
+        this.autoscroll = autoscroll;
     }
 
     @Override
@@ -146,7 +159,11 @@ public class Printer extends AbstractLogger
 
             outputTextArea.appendText(mText);
             outputTextArea.setStyle(mIndex, "-fx-fill: " + mColor);
-            outputTextArea.scrollYBy(1000);
+
+            if (autoscroll)
+            {
+                outputTextArea.scrollYBy(Integer.MAX_VALUE);
+            }
         }
     }
 }
