@@ -102,7 +102,7 @@ public class TestLoader extends ClassLoader
             while (!(pkg = br.readLine()).contains("package")) {}
 
             // Remove all the nonsense.
-            pkg = pkg.replace("package", "").replace(";", "").replace(" ", "").trim();
+            pkg = pkg.replace("package", "").replace(";", ".").replace(" ", "").trim();
 
         } catch (FileNotFoundException ex) {
             return null;
