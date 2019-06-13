@@ -18,7 +18,7 @@
             <artifactId>CTester</artifactId>
             <version>0.3.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/../Executable/CTester-jar-with-dependencies.jar</systemPath>
+            <systemPath>${project.basedir}/../Executable/CTester.jar</systemPath>
         </dependency>
     </dependencies>
 
@@ -48,8 +48,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.1.2</version>
                 <configuration>
-                    <finalName>CTesterAPI</finalName>
-                    <outputDirectory>../CTesterFX/src/main/resources/libs</outputDirectory>
+                    <outputDirectory>../CTesterFX/libs/com/lsc/CTesterAPI/1.0</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>

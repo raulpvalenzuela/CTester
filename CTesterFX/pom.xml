@@ -49,15 +49,21 @@
             <version>1.2.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.lsc</groupId>
-            <artifactId>CTesterAPI</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/resources/libs/CTesterAPI.jar</systemPath>
-        </dependency>
-
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>libs</id>
+            <releases>
+                <enabled>true</enabled>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <url>file://${project.basedir}/libs</url>
+        </repository>
+    </repositories>
 
     <build>
         <resources>
@@ -172,6 +178,7 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.1.1</version>
                 <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
                     <outputDirectory>../Executable</outputDirectory>
                     <finalName>CTester</finalName>
                     <archive>

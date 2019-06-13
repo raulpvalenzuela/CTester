@@ -1,6 +1,7 @@
 package com.lsc.ctesterapi;
 
 import com.lsc.ctesterfx.logger.AbstractLogger;
+import com.lsc.ctesterfx.logger.ApplicationLogger;
 
 /**
  *
@@ -8,33 +9,58 @@ import com.lsc.ctesterfx.logger.AbstractLogger;
  */
 public class Logger extends AbstractLogger
 {
-    @Override
-    public void log(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private static Logger logger;
+
+    private final ApplicationLogger applicationLogger;
+
+    private Logger()
+    {
+        applicationLogger = ApplicationLogger.newInstance();
+    }
+
+    public static synchronized Logger newInstance()
+    {
+        if (logger == null)
+        {
+            logger = new Logger();
+        }
+
+        return logger;
     }
 
     @Override
-    public void logComment(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void log(String text)
+    {
+        applicationLogger.log(text);
     }
 
     @Override
-    public void logError(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void logComment(String text)
+    {
+        applicationLogger.logComment(text);
     }
 
     @Override
-    public void logWarning(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void logError(String text)
+    {
+        applicationLogger.logError(text);
     }
 
     @Override
-    public void logDebug(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void logWarning(String text)
+    {
+        applicationLogger.logWarning(text);
     }
 
     @Override
-    public void logSuccess(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void logDebug(String text)
+    {
+        applicationLogger.logDebug(text);
+    }
+
+    @Override
+    public void logSuccess(String text)
+    {
+        applicationLogger.logSuccess(text);
     }
 }

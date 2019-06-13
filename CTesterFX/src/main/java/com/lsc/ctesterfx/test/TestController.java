@@ -3,7 +3,7 @@ package com.lsc.ctesterfx.test;
 import com.lsc.ctesterfx.controllers.FXMLTestItemController;
 import com.lsc.ctesterfx.dao.Test;
 import com.lsc.ctesterfx.logger.FileLogger;
-import com.lsc.ctesterfx.logger.Logger;
+import com.lsc.ctesterfx.logger.ApplicationLogger;
 
 /**
  * Class containing all the stuff related to a specific test.
@@ -14,14 +14,14 @@ public class TestController
 {
     private final FXMLTestItemController testItemController;
     private final Test test;
-    private final Logger logger;
+    private final ApplicationLogger logger;
     private final FileLogger fileLogger;
 
     public TestController(Test test, FXMLTestItemController testItemController1)
     {
         this.test               = test;
         this.testItemController = testItemController1;
-        this.logger             = Logger.newInstance();
+        this.logger             = ApplicationLogger.newInstance();
 
         this.fileLogger = new FileLogger.Builder()
                                 .withName(test.getName())
@@ -44,7 +44,7 @@ public class TestController
      *
      * @return the logger instance.
      */
-    public Logger getLogger()
+    public ApplicationLogger getLogger()
     {
         return logger;
     }
