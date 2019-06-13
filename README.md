@@ -76,8 +76,8 @@ Note: The tests can be located anywhere, there's no restrictions about package n
 package testing;
 
 Folder structure:
-    /testing
-       test.java
+    testing
+    |   test.java
 ```
 
 ```#comment
@@ -85,7 +85,7 @@ package testing.performance;
 
 Folder structure:
 
-    /testing
-      - /performance
-           test.java
+    |testing
+    |___performance
+    |      test.java
 ```
