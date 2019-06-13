@@ -26,7 +26,10 @@ public class Printer extends AbstractLogger
     // Flag to disable the auto-scroll.
     private boolean autoscroll;
 
-    private Printer() {}
+    private Printer()
+    {
+        autoscroll = true;
+    }
 
     public static synchronized Printer newInstance()
     {
