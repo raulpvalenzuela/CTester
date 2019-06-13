@@ -93,7 +93,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>${java.home}/../bin/javafxpackager</executable>
+                            <executable>${java.home}/../bin/javapackager</executable>
                             <arguments>
                                 <argument>-createjar</argument>
                                 <argument>-nocss2bin</argument>
@@ -164,6 +164,7 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.1.1</version>
                 <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
                     <outputDirectory>../Executable</outputDirectory>
                     <finalName>CTester</finalName>
                     <archive>
