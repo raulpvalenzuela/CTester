@@ -26,7 +26,7 @@
     </organization>
 
     <build>
-        <plugins>
+        <plugins>            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -60,7 +60,7 @@
                         <id>install-external</id>
                         <phase>process-resources</phase>
                         <configuration>
-                            <file>${basedir}/../Executable/CTester.jar</file>
+                            <file>${basedir}/../../Executable/CTester.jar</file>
                             <repositoryLayout>default</repositoryLayout>
                             <groupId>com.lsc</groupId>
                             <artifactId>CTester</artifactId>
