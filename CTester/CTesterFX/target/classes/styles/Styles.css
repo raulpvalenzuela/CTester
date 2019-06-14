@@ -1,0 +1,29 @@
+.button { 
+    -fx-focus-color: transparent; 
+}
+
+.jfx-button {
+    -fx-border-radius: 1pt;
+    -fx-background-radius: 1pt;
+}
+
+.jfx-text-field {
+    -fx-prompt-text-fill: rgb(204, 204, 204);
+    -fx-text-inner-color: rgb(204, 204, 204);
+}
+
+.scroll-pane {
+   -fx-background-color:transparent;
+}
+
+.scroll-pane > .viewport {
+   -fx-background-color: transparent;
+}
+
+.split-pane:vertical > .split-pane-divider {
+   -fx-background-color: #333333;
+}
+
+.split-pane:horizontal > .split-pane-divider {
+   -fx-background-color: #333333;
+}
