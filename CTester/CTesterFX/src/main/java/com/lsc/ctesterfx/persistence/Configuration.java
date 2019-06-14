@@ -105,8 +105,8 @@ public class Configuration
     }
 
     /**
-     *
      * Creates and returns a new configuration editor.
+     * 
      * @return reference to a new configuration editor.
      */
     public Editor getEditor()

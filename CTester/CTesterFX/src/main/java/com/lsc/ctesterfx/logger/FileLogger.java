@@ -16,14 +16,21 @@ import java.io.PrintWriter;
  */
 public class FileLogger extends AbstractLogger
 {
+    // Extension of the log file.
     private static final String LOG_EXTENSION = ".log";
 
+    // Name of the log file.
     private String fileName;
+    // Path to the lof file.
     private String path;
 
+    // Reference to the file.
     private File logFile;
     private FileWriter logFileWriter;
 
+    /**
+     * Builder class to build a FileLogger instance.
+     */
     public static class Builder
     {
         private String fileName;

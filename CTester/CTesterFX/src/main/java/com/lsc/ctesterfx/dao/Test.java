@@ -3,7 +3,7 @@ package com.lsc.ctesterfx.dao;
 import java.io.File;
 
 /**
- * Class that represents a test. It will contain basically a reference to the file.
+ * Class that represents a test. It will contain basically a reference to the java file.
  *
  * @author dma@logossmartcard.com
  */

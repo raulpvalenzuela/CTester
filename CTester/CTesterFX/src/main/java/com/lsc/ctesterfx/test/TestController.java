@@ -17,6 +17,12 @@ public class TestController
     private final ApplicationLogger logger;
     private final FileLogger fileLogger;
 
+    /**
+     * Constructor.
+     * 
+     * @param test: reference to the test object.
+     * @param testItemController1: referente to the FXMLTestItemController.
+     */
     public TestController(Test test, FXMLTestItemController testItemController1)
     {
         this.test               = test;

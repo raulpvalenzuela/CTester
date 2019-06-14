@@ -27,6 +27,12 @@ public class Tooltips
     public static final String GET_PROD_CODE = "Generate Get Product Code command";
     public static final String BOOTLOADER    = "Generate Back to Bootloader command";
 
+    /**
+     * Create a tooltip object from a string.
+     * 
+     * @param tooltip: Tooltip object with the string received set.
+     * @return Tooltip object with the string received set.
+     */
     public static Tooltip create(String tooltip)
     {
         return new Tooltip(tooltip);

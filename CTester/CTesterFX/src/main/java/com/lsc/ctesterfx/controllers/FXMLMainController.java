@@ -488,7 +488,7 @@ public class FXMLMainController implements Initializable
 
     /**
      * Stores the stage object. This method is called from MainApp so
-     * that this controller can have access to different components.
+     * that this controller can have access to different components using the stage object.
      *
      * @param stage stage object passed from the main window.
      */
@@ -502,7 +502,7 @@ public class FXMLMainController implements Initializable
      * from within a test controller to notify that the method has
      * been removed.
      *
-     * @param index: index of the test.
+     * @param index: index of the test to be removed.
      */
     public void removeTestAtIndex(int index)
     {

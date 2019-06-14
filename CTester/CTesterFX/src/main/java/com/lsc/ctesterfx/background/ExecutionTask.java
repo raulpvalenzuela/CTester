@@ -36,8 +36,6 @@ public class ExecutionTask extends Task
      * Compiles and runs the specified method notifying the changes so
      * that the GUI gets updated accordingly.
      *
-     * FOR INTERNAL USE ONLY
-     *
      * @return true if the execution is succesful, false otherwise.
      */
     private boolean _runTest()

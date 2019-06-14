@@ -32,8 +32,6 @@ public class CompilationTask extends Task
     /**
      * Compiles and loads the test, returning the object and a list of methods.
      *
-     * FOR INTERNAL USE ONLY
-     *
      * @return Pair containing the object and the methods to be invoked.
      */
     private Pair<Object, List<Method>> _compileTest()

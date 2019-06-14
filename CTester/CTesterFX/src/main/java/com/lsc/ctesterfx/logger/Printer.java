@@ -41,8 +41,6 @@ public class Printer extends AbstractLogger
     /**
      * Sets up the output area.
      *
-     * FOR INTERNAL USE ONLY.
-     *
      * @param container: layout containing the output pane.
      */
     public void setup(BorderPane container)

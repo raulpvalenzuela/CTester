@@ -17,7 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 /**
- * FXML Controller class of every test item in the VBox.
+ * FXML Controller class of every test item in the list.
  *
  * @author dma@logossmartcard.com
  */
@@ -69,6 +69,22 @@ public class FXMLTestItemController implements Initializable
     {
         mRunTestButton.setTooltip(Tooltips.create(Tooltips.RUN_TEST));
         mRemoveTestButton.setTooltip(Tooltips.create(Tooltips.REMOVE_TEST));
+    }
+
+    /**
+     * Notifies the main controller that a task has started.
+     */
+    private void _notifyStartExecution()
+    {
+        mainController.notifyStartExecution(index);
+    }
+
+    /**
+     * Notifies the main controller that a task has finished.
+     */
+    private void _notifyFinishedExecution()
+    {
+        mainController.notifyFinishedExecution();
     }
 
     @FXML
@@ -147,22 +163,6 @@ public class FXMLTestItemController implements Initializable
     }
 
     /**
-     * Notifies the main controller that a task has started.
-     */
-    public void notifyStartExecution()
-    {
-        mainController.notifyStartExecution(index);
-    }
-
-    /**
-     * Notifies the main controller that a task has finished.
-     */
-    public void notifyFinishedExecution()
-    {
-        mainController.notifyFinishedExecution();
-    }
-
-    /**
      * Disables all the buttons.
      */
     public void disableButtons()
@@ -237,7 +237,7 @@ public class FXMLTestItemController implements Initializable
                     break;
 
                 case COMPILING:
-                    notifyStartExecution();
+                    _notifyStartExecution();
 
                     mTestStatusButton.setStyle(
                             "-fx-background-radius: 32; -fx-background-color: #eeeeee; -fx-text-fill: black");
@@ -246,7 +246,7 @@ public class FXMLTestItemController implements Initializable
                     break;
 
                 case RUNNING:
-                    notifyStartExecution();
+                    _notifyStartExecution();
 
                     mTestStatusButton.setStyle(
                             "-fx-background-radius: 32; -fx-background-color: #eeeeee; -fx-text-fill: black");
@@ -255,7 +255,7 @@ public class FXMLTestItemController implements Initializable
                     break;
 
                 case COMPILATION_OK:
-                    notifyFinishedExecution();
+                    _notifyFinishedExecution();
 
                     mTestStatusButton.setStyle(
                             "-fx-background-radius: 32; -fx-background-color: #aeffad; -fx-text-fill: black");
@@ -264,7 +264,7 @@ public class FXMLTestItemController implements Initializable
                     break;
 
                 case COMPILATION_FAILED:
-                    notifyFinishedExecution();
+                    _notifyFinishedExecution();
 
                     mTestStatusButton.setStyle(
                             "-fx-background-radius: 32; -fx-background-color: red; -fx-text-fill: white");
@@ -273,7 +273,7 @@ public class FXMLTestItemController implements Initializable
                     break;
 
                 case EXECUTION_OK:
-                    notifyFinishedExecution();
+                    _notifyFinishedExecution();
 
                     mTestStatusButton.setStyle(
                             "-fx-background-radius: 32; -fx-background-color: #42ff3f; -fx-text-fill: black");
@@ -282,7 +282,7 @@ public class FXMLTestItemController implements Initializable
                     break;
 
                 case EXECUTION_FAILED:
-                    notifyFinishedExecution();
+                    _notifyFinishedExecution();
 
                     mTestStatusButton.setStyle(
                             "-fx-background-radius: 32; -fx-background-color: red; -fx-text-fill: white");
