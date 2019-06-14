@@ -17,8 +17,6 @@
             <groupId>com.lsc</groupId>
             <artifactId>CTester</artifactId>
             <version>0.3.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/../Executable/CTester.jar</systemPath>
         </dependency>
     </dependencies>
 
@@ -35,6 +33,11 @@
                 <version>3.1.0</version>
                 <executions>
                     <execution>
+                        <configuration>
+                            <finalName>CTesterAPI</finalName>
+                            <outputDirectory>${basedir}/../../Executable/Docs/Javadoc</outputDirectory>
+                            <jarOutputDirectory>../CTesterFX/libs</jarOutputDirectory>
+                        </configuration>
                         <id>attach-javadocs</id>
                         <goals>
                             <goal>jar</goal>
@@ -48,8 +51,33 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.1.2</version>
                 <configuration>
-                    <outputDirectory>../CTesterFX/libs/com/lsc/CTesterAPI/1.0</outputDirectory>
+                    <finalName>CTesterAPI</finalName>
+                    <outputDirectory>../CTesterFX/libs</outputDirectory>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.5.2</version>
+                <executions>
+                    <execution>
+                        <id>install-external</id>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <file>${basedir}/../../Executable/CTester.jar</file>
+                            <repositoryLayout>default</repositoryLayout>
+                            <groupId>com.lsc</groupId>
+                            <artifactId>CTester</artifactId>
+                            <version>0.3.1</version>
+                            <packaging>jar</packaging>
+                            <generatePom>true</generatePom>
+                        </configuration>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

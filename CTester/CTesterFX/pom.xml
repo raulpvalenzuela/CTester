@@ -48,7 +48,7 @@
             <artifactId>jaxen</artifactId>
             <version>1.2.0</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.lsc</groupId>
             <artifactId>CTesterAPI</artifactId>
@@ -157,6 +157,11 @@
                 <version>3.1.0</version>
                 <executions>
                     <execution>
+                        <configuration>
+                            <finalName>CTester</finalName>
+                            <outputDirectory>${basedir}/../Docs/Javadoc</outputDirectory>
+                            <jarOutputDirectory>../Docs/Javadoc</jarOutputDirectory>
+                        </configuration>
                         <id>attach-javadocs</id>
                         <goals>
                             <goal>jar</goal>
