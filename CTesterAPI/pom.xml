@@ -46,7 +46,8 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.1.2</version>
                 <configuration>
-                    <outputDirectory>../CTesterFX/libs/com/lsc/CTesterAPI/1.0</outputDirectory>
+                    <finalName>CTesterAPI</finalName>
+                    <outputDirectory>../CTesterFX/libs</outputDirectory>
                 </configuration>
             </plugin>
             
