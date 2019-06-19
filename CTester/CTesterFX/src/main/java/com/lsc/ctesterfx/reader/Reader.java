@@ -16,7 +16,9 @@ public abstract class Reader implements IReader
     public abstract byte[] reset() throws CardException;
 
     @Override
-    public abstract ApduResponse transmit(ApduCommand command);
+    public abstract ApduResponse transmit(ApduCommand command) throws CardException;
+
+    public abstract void connect() throws CardException;
 
     public abstract void release() throws CardException;
 }

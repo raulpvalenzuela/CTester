@@ -8,14 +8,20 @@ import javax.smartcardio.CardException;
 import javax.smartcardio.CardTerminal;
 
 /**
- * Class that represents a smartcard reader.
+ * Class that represents a PCSC reader.
  *
  * @author dma@logossmartcard.com
  */
 public class PCSCReader extends Reader
 {
+    // Flag to indicate if a connection to the card has been estabished.
+    private boolean isConnected;
+
+    // Reference to the card.
     private Card card;
+    // Reference to the card channel used to transmit commands.
     private CardChannel channel;
+    // Reference to the terminal.
     private CardTerminal reader;
 
     public static class Builder
@@ -41,8 +47,9 @@ public class PCSCReader extends Reader
         {
             PCSCReader cardReader = new PCSCReader();
 
-            cardReader.reader = this.reader;
-            cardReader.card   = null;
+            cardReader.reader      = this.reader;
+            cardReader.card        = null;
+            cardReader.isConnected = false;
 
             return cardReader;
         }
@@ -51,23 +58,43 @@ public class PCSCReader extends Reader
     private PCSCReader() {}
 
     @Override
-    public byte[] reset() throws CardException
+    public void connect() throws CardException
     {
-        card = reader.connect("*");
+        channel = card.getBasicChannel();
 
-        return card.getATR().getBytes();
-    }
-
-    @Override
-    public ApduResponse transmit(ApduCommand command)
-    {
-        throw new UnsupportedOperationException("Not supported yet.");
+        isConnected = true;
     }
 
     @Override
     public void release() throws CardException
     {
-        channel.close();
+        if (isConnected)
+        {
+            channel.close();
+
+            isConnected = false;
+        }
+    }
+
+    @Override
+    public byte[] reset() throws CardException
+    {
+        // Establishes a connection to the card. If a connection has previously established using the
+        // specified protocol, this method returns the same Card object as the previous call.
+        card = reader.connect("*");
+        
+        if (!isConnected)
+        {
+            connect();
+        }
+
+        return card.getATR().getBytes();
+    }
+
+    @Override
+    public ApduResponse transmit(ApduCommand command) throws CardException
+    {
+        return new ApduResponse();
     }
 
     public String getName()

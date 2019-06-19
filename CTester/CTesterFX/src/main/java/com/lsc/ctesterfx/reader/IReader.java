@@ -13,5 +13,5 @@ public interface IReader
 {
     public byte[] reset() throws CardException;
 
-    public ApduResponse transmit(ApduCommand command);
+    public ApduResponse transmit(ApduCommand command) throws CardException;
 }

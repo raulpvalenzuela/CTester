@@ -20,7 +20,8 @@ public class ReaderAccessor implements IReader
     }
 
     @Override
-    public ApduResponse transmit(ApduCommand command) {
+    public ApduResponse transmit(ApduCommand command)
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
