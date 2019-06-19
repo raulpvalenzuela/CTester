@@ -49,6 +49,7 @@
             <version>1.2.0</version>
         </dependency>
 
+        <!-- This dependency is needed to compile the tests -->
         <dependency>
             <groupId>com.lsc</groupId>
             <artifactId>CTesterAPI</artifactId>

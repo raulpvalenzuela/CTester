@@ -9,6 +9,7 @@ import com.lsc.ctesterfx.constants.Animations;
 import com.lsc.ctesterfx.constants.Tooltips;
 import com.lsc.ctesterfx.logger.Printer;
 import com.lsc.ctesterfx.persistence.Configuration;
+import com.lsc.ctesterfx.reader.Readers;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +31,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -64,6 +66,8 @@ public class FXMLMainController implements Initializable
     private VBox mTestListVBox;
     @FXML
     private VBox mSnackbarContainer;
+    @FXML
+    private VBox mReadersContainer;
     @FXML
     private ScrollPane mTestListScrollPane;
     @FXML
@@ -403,6 +407,43 @@ public class FXMLMainController implements Initializable
             testItemControllerList.get(currentTest).setState(FXMLTestItemController.TEST_STATE.STOPPED);
         }
     }
+
+    @FXML
+    private void onClickReaders(ActionEvent event)
+    {
+        if (mReadersContainer.isVisible())
+        {
+            mReadersContainer.setVisible(false);
+        }
+        else
+        {
+            List<String> readers = Readers.list();
+
+            try
+            {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ReaderItem.fxml"));
+                Parent readerItem = (Parent) loader.load();
+                FXMLReaderItemController controller = (FXMLReaderItemController) loader.getController();
+                controller.setAttributes(readers.get(0));
+
+                mReadersContainer.getChildren().clear();
+                mReadersContainer.getChildren().add(readerItem);
+                //testItemControllerList.add(controller);
+
+                mReadersContainer.setVisible(true);
+
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    @FXML
+    private void onMouseClickedReadersContainer(MouseEvent event)
+    {
+        System.out.println("Click");
+    }
+
 
     @FXML
     private void onClickSettings(ActionEvent event)

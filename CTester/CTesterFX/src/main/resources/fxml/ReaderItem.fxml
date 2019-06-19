@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane style="-fx-background-color: #00000000;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lsc.ctesterfx.controllers.FXMLReaderItemController">
+   <children>
+      <JFXButton fx:id="mReaderButton" buttonType="RAISED" prefHeight="32.0" style="-fx-background-color: #333333; -fx-border-radius: 24; -fx-background-radius: 24;" text="HID Smartcard reader CL 0" textAlignment="CENTER" textFill="#cccccc" StackPane.alignment="CENTER_LEFT">
+         <font>
+            <Font name="Microsoft JhengHei UI Light" size="10.0" />
+         </font>
+         <StackPane.margin>
+            <Insets />
+         </StackPane.margin>
+         <padding>
+            <Insets left="32.0" right="32.0" />
+         </padding>
+      </JFXButton>
+   </children>
+</StackPane>
