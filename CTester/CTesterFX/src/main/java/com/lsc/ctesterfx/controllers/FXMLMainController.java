@@ -277,7 +277,6 @@ public class FXMLMainController implements Initializable
         mGetProductCodeButton.setDisable(true);
         mBootloaderButton.setDisable(true);
         mFABButton.setDisable(true);
-        mStopTestsButton.setDisable(true);
         testItemControllerList.forEach((controller) ->
         {
             controller.disableButtons();
@@ -301,7 +300,6 @@ public class FXMLMainController implements Initializable
         mGetProductCodeButton.setDisable(false);
         mBootloaderButton.setDisable(false);
         mFABButton.setDisable(false);
-        mStopTestsButton.setDisable(false);
         testItemControllerList.forEach((controller) ->
         {
             controller.enableButtons();
