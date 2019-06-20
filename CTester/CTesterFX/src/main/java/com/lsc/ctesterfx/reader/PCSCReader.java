@@ -24,6 +24,9 @@ public class PCSCReader extends Reader
     // Reference to the terminal.
     private CardTerminal reader;
 
+    /**
+     * Builder class to build a PCSCReader instance.
+     */
     public static class Builder
     {
         private CardTerminal reader;
@@ -58,7 +61,7 @@ public class PCSCReader extends Reader
     private PCSCReader() {}
 
     @Override
-    public void connect() throws CardException
+    public void connect()
     {
         channel = card.getBasicChannel();
 
@@ -92,7 +95,7 @@ public class PCSCReader extends Reader
     }
 
     @Override
-    public ApduResponse transmit(ApduCommand command) throws CardException
+    public ApduResponse transmit(ApduCommand apdu) throws CardException
     {
         return new ApduResponse();
     }

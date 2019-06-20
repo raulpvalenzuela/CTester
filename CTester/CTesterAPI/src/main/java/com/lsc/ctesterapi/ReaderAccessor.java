@@ -13,14 +13,27 @@ import javax.smartcardio.CardException;
  */
 public class ReaderAccessor implements IReader
 {
+    /**
+     * Resets the card and returns the ATR.
+     *
+     * @return ATR of the card.
+     * @throws CardException
+     */
     @Override
     public byte[] reset() throws CardException
     {
         return Readers.getSelected().reset();
     }
 
+    /**
+     * Transmits the APDU and returns the response.
+     *
+     * @param apdu: apdu to be transmitted.
+     * @return response from the card.
+     * @throws CardException
+     */
     @Override
-    public ApduResponse transmit(ApduCommand command)
+    public ApduResponse transmit(ApduCommand apdu) throws CardException
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

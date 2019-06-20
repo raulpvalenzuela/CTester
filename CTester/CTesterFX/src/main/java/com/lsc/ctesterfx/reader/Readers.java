@@ -9,6 +9,7 @@ import javax.smartcardio.CardTerminal;
 import javax.smartcardio.TerminalFactory;
 
 /**
+ * Class that manages the readers connected to the computer.
  *
  * @author dma@logossmartard.com
  */

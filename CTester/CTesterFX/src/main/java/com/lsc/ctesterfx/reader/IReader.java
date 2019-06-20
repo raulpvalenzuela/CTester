@@ -11,7 +11,20 @@ import javax.smartcardio.CardException;
  */
 public interface IReader
 {
+    /**
+     * Resets the card and returns the ATR.
+     *
+     * @return ATR of the card.
+     * @throws CardException if the card is not available or accessible.
+     */
     public byte[] reset() throws CardException;
 
-    public ApduResponse transmit(ApduCommand command) throws CardException;
+    /**
+     * Transmits the APDU and returns the response.
+     *
+     * @param apdu: apdu to be transmitted.
+     * @return response from the card.
+     * @throws CardException if there's an error transmitting the command.
+     */
+    public ApduResponse transmit(ApduCommand apdu) throws CardException;
 }
