@@ -45,8 +45,6 @@ public class ApplicationLogger extends AbstractLogger
     @Override
     public void log(String text)
     {
-        text = text + "\n";
-
         printer.log(text);
         fileLogger.log(text);
     }
@@ -54,8 +52,6 @@ public class ApplicationLogger extends AbstractLogger
     @Override
     public void logComment(String text)
     {
-        text = COMMENT_HEADER + text + "\n";
-
         printer.logComment(text);
         fileLogger.logComment(text);
     }
@@ -63,8 +59,6 @@ public class ApplicationLogger extends AbstractLogger
     @Override
     public void logError(String text)
     {
-        text = ERROR_HEADER + text + "\n";
-
         printer.logError(text);
         fileLogger.logError(text);
     }
@@ -72,8 +66,6 @@ public class ApplicationLogger extends AbstractLogger
     @Override
     public void logWarning(String text)
     {
-        text = WARNING_HEADER + text + "\n";
-
         printer.logWarning(text);
         fileLogger.logWarning(text);
     }
@@ -81,8 +73,6 @@ public class ApplicationLogger extends AbstractLogger
     @Override
     public void logDebug(String text)
     {
-        text = DEBUG_HEADER + text + "\n";
-
         printer.logDebug(text);
         fileLogger.logDebug(text);
     }
@@ -90,8 +80,6 @@ public class ApplicationLogger extends AbstractLogger
     @Override
     public void logSuccess(String text)
     {
-        text = SUCCESS_HEADER + text + "\n";
-
         printer.logSuccess(text);
         fileLogger.logSuccess(text);
     }

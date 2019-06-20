@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<HBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lsc.ctesterfx.controllers.FXMLReaderItemController">
+   <children>
+      <Pane fx:id="mReaderBarSelected" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="4.0" style="-fx-background-color: #333333;" HBox.hgrow="NEVER" />
+      <JFXButton fx:id="mReaderButton" alignment="BASELINE_LEFT" contentDisplay="TEXT_ONLY" focusTraversable="false" maxHeight="-Infinity" minHeight="-Infinity" onAction="#onClickButton" prefHeight="32.0" prefWidth="368.0" style="-fx-background-color: #333333; -fx-border-radius: 0 16 16 0; -fx-background-radius: 0 16 16 0;" text="HID Smartcard reader CL 0" textFill="#eeeeee" HBox.hgrow="NEVER">
+         <font>
+            <Font name="Microsoft JhengHei UI Light" size="12.0" />
+         </font>
+         <padding>
+            <Insets left="12.0" />
+         </padding>
+      </JFXButton>
+   </children>
+</HBox>

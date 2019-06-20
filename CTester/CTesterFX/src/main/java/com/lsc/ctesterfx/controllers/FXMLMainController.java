@@ -6,9 +6,12 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
 import com.lsc.ctesterfx.constants.Animations;
+import com.lsc.ctesterfx.constants.Strings;
 import com.lsc.ctesterfx.constants.Tooltips;
 import com.lsc.ctesterfx.logger.Printer;
 import com.lsc.ctesterfx.persistence.Configuration;
+import com.lsc.ctesterfx.reader.Reader;
+import com.lsc.ctesterfx.reader.ReaderController;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +33,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -37,6 +41,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.apache.commons.codec.binary.Hex;
 
 /**
  * FXML Controller class of the main window.
@@ -47,6 +52,8 @@ public class FXMLMainController implements Initializable
 {
     // List with all the test controllers.
     private List<FXMLTestItemController> testItemControllerList;
+    // List with all the reader controllers.
+    private List<FXMLReaderItemController> readerItemControllerList;
 
     // Reference to the window.
     private Stage stage;
@@ -64,6 +71,8 @@ public class FXMLMainController implements Initializable
     private VBox mTestListVBox;
     @FXML
     private VBox mSnackbarContainer;
+    @FXML
+    private VBox mReadersContainer;
     @FXML
     private ScrollPane mTestListScrollPane;
     @FXML
@@ -136,10 +145,11 @@ public class FXMLMainController implements Initializable
      */
     private void _initialize()
     {
-        currentTest            = -1;
-        commandsListVisible    = true;
-        numOfTestsInExecution  = new AtomicInteger(0);
-        testItemControllerList = new ArrayList<>();
+        currentTest              = -1;
+        commandsListVisible      = true;
+        numOfTestsInExecution    = new AtomicInteger(0);
+        testItemControllerList   = new ArrayList<>();
+        readerItemControllerList = new ArrayList<>();
 
         // It's needed to set the Java Home to the one inside the JDK (~/../Java/jdk1.8.xxx/jre)
         // to be able to compile the tests. When running the .jar by default
@@ -256,7 +266,7 @@ public class FXMLMainController implements Initializable
             mVersionLabel.setText("v" + properties.getProperty("version"));
 
         } catch (IOException | NullPointerException ex) {
-            Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, ex.getMessage(), (Object) null);
         }
     }
 
@@ -277,7 +287,6 @@ public class FXMLMainController implements Initializable
         mGetProductCodeButton.setDisable(true);
         mBootloaderButton.setDisable(true);
         mFABButton.setDisable(true);
-        mStopTestsButton.setDisable(true);
         testItemControllerList.forEach((controller) ->
         {
             controller.disableButtons();
@@ -301,7 +310,6 @@ public class FXMLMainController implements Initializable
         mGetProductCodeButton.setDisable(false);
         mBootloaderButton.setDisable(false);
         mFABButton.setDisable(false);
-        mStopTestsButton.setDisable(false);
         testItemControllerList.forEach((controller) ->
         {
             controller.enableButtons();
@@ -332,7 +340,7 @@ public class FXMLMainController implements Initializable
                     testItemControllerList.add(controller);
 
                 } catch (IOException ex) {
-                    Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, ex.getMessage(), (Object) null);
                 }
             }
         }
@@ -407,6 +415,52 @@ public class FXMLMainController implements Initializable
     }
 
     @FXML
+    private void onClickReaders(ActionEvent event)
+    {
+        if (mReadersContainer.isVisible())
+        {
+            mReadersContainer.setVisible(false);
+        }
+        else
+        {
+            // Clear the list
+            mReadersContainer.getChildren().clear();
+            // Retrieve the readers again
+            List<String> readers = ReaderController.list();
+
+            for (int i = 0; i < readers.size(); ++i)
+            {
+                try
+                {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ReaderItem.fxml"));
+                    Parent readerItem = (Parent) loader.load();
+                    FXMLReaderItemController controller = (FXMLReaderItemController) loader.getController();
+
+                    controller.setAttributes(this
+                            , readers.get(i)
+                            , i
+                            , (ReaderController.getSelected() != null) && ReaderController.getSelected().getName().equals(readers.get(i)));
+
+                    mReadersContainer.getChildren().add(readerItem);
+                    readerItemControllerList.add(controller);
+
+                    mReadersContainer.setVisible(true);
+
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, ex.getMessage(), (Object) null);
+                }
+            }
+        }
+    }
+
+    @FXML
+    private void onMouseClickedReadersContainer(MouseEvent event)
+    {
+        // If clicked outside, hide the readers.
+        mReadersContainer.setVisible(false);
+    }
+
+    @FXML
     private void onClickSettings(ActionEvent event)
     {
         // TODO
@@ -449,6 +503,47 @@ public class FXMLMainController implements Initializable
     }
 
     @FXML
+    private void onClickSend(ActionEvent event)
+    {
+        // TODO
+    }
+
+    @FXML
+    private void onClickReset(ActionEvent event)
+    {
+        try
+        {
+            byte[] atr;
+            Reader reader = ReaderController.getSelected();
+
+            if (reader != null)
+            {
+                atr = reader.reset();
+                if (atr != null)
+                {
+                    String atrStr = Hex.encodeHexString(atr)
+                        .toUpperCase().replaceAll("(.{" + 2 + "})", "$1 ").trim();
+
+                    printer.log(Strings.RESET_CARD);
+                    printer.logComment(Strings.ATR_HEADER + atrStr + "\n");
+                }
+                else
+                {
+                    printer.logError(Strings.NO_ATR);
+                }
+            }
+            else
+            {
+                printer.logWarning(Strings.NO_READER_SELECTED);
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, ex.getMessage(), (Object) null);
+            printer.logError(ex.getMessage());
+        }
+    }
+
+    @FXML
     private void onClickBootloaderButton(ActionEvent event)
     {
         // TODO
@@ -475,7 +570,8 @@ public class FXMLMainController implements Initializable
     @FXML
     private void onStateChangedSelectAll(ActionEvent event)
     {
-        testItemControllerList.forEach((controller) -> {
+        testItemControllerList.forEach((controller) ->
+        {
             controller.select(mSelectAllCheckbox.isSelected());
         });
     }
@@ -546,6 +642,28 @@ public class FXMLMainController implements Initializable
         {
             _enableButtons();
         }
+    }
+
+    /**
+     * When a reader is selected, this method will be called by the corresponding FXMLReaderItemController.
+     *
+     * @param readerName: name of the selected reader.
+     * @param index: index of the reader in the list.
+     */
+    public void notifyReaderSelected(String readerName, int index)
+    {
+        ReaderController.select(index);
+
+        readerItemControllerList.stream().filter((controller)
+                -> (!controller.getName().equals(readerName))).forEachOrdered((controller) ->
+        {
+            controller.selectReader(false);
+        });
+
+        // Update the reader label.
+        mReaderSelectedLabel.setText(readerName);
+        // Hide the list.
+        mReadersContainer.setVisible(false);
     }
 
     /**
