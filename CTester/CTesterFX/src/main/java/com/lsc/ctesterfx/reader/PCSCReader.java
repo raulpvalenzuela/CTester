@@ -2,6 +2,8 @@ package com.lsc.ctesterfx.reader;
 
 import com.lsc.ctesterfx.iso7816.ApduResponse;
 import com.lsc.ctesterfx.iso7816.ApduCommand;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.smartcardio.Card;
 import javax.smartcardio.CardChannel;
 import javax.smartcardio.CardException;
@@ -76,6 +78,7 @@ public class PCSCReader extends Reader
             try
             {
                 channel.close();
+                card.disconnect(false);
 
             } catch (CardException | IllegalStateException ex) {
                 // This exception is triggered if the card has been removed.
@@ -87,22 +90,30 @@ public class PCSCReader extends Reader
     }
 
     @Override
-    public byte[] reset() throws CardException
+    public byte[] reset()
     {
-        // Establishes a connection to the card. If a connection has previously established using the
-        // specified protocol, this method returns the same Card object as the previous call.
-        card = reader.connect("*");
-
-        if (!isConnected)
+        try
         {
-            connect();
-        }
+            // Establishes a connection to the card. If a connection has previously established using the
+            // specified protocol, this method returns the same Card object as the previous call.
+            card = reader.connect("*");
 
-        return card.getATR().getBytes();
+            if (!isConnected)
+            {
+                connect();
+            }
+
+            return card.getATR().getBytes();
+
+        } catch (CardException ex) {
+            Logger.getLogger(PCSCReader.class.getName()).log(Level.SEVERE, null, ex);
+
+            return null;
+        }
     }
 
     @Override
-    public ApduResponse transmit(ApduCommand apdu) throws CardException
+    public ApduResponse transmit(ApduCommand apdu)
     {
         return new ApduResponse();
     }

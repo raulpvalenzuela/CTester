@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
 import com.lsc.ctesterfx.constants.Animations;
+import com.lsc.ctesterfx.constants.Strings;
 import com.lsc.ctesterfx.constants.Tooltips;
 import com.lsc.ctesterfx.logger.Printer;
 import com.lsc.ctesterfx.persistence.Configuration;
@@ -40,7 +41,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javax.smartcardio.CardException;
 import org.apache.commons.codec.binary.Hex;
 
 /**
@@ -511,22 +511,34 @@ public class FXMLMainController implements Initializable
     @FXML
     private void onClickReset(ActionEvent event)
     {
-        Reader reader;
-
         try
         {
-            reader = ReaderController.getSelected();
+            byte[] atr;
+            Reader reader = ReaderController.getSelected();
 
             if (reader != null)
             {
-                String atr = Hex.encodeHexString(reader.reset()).toUpperCase().replaceAll("(.{" + 2 + "})", "$1 ").trim();
+                atr = reader.reset();
+                if (atr != null)
+                {
+                    String atrStr = Hex.encodeHexString(atr)
+                        .toUpperCase().replaceAll("(.{" + 2 + "})", "$1 ").trim();
 
-                printer.log("ResetCard");
-                printer.logComment("ATR = " + atr + "\n");
+                    printer.log(Strings.RESET_CARD);
+                    printer.logComment(Strings.ATR_HEADER + atrStr + "\n");
+                }
+                else
+                {
+                    printer.logError(Strings.NO_ATR);
+                }
+            }
+            else
+            {
+                printer.logWarning(Strings.NO_READER_SELECTED);
             }
 
-        } catch (CardException ex) {
-            Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            printer.logError(ex.getMessage());
         }
     }
 

@@ -1,10 +1,13 @@
 package com.lsc.ctesterapi;
 
+import com.lsc.ctesterfx.constants.Strings;
 import com.lsc.ctesterfx.reader.IReader;
 import com.lsc.ctesterfx.iso7816.ApduCommand;
 import com.lsc.ctesterfx.iso7816.ApduResponse;
+import com.lsc.ctesterfx.logger.ApplicationLogger;
+import com.lsc.ctesterfx.reader.Reader;
 import com.lsc.ctesterfx.reader.ReaderController;
-import javax.smartcardio.CardException;
+import org.apache.commons.codec.binary.Hex;
 
 /**
  * Class that provides an API to communicate with the card.
@@ -13,16 +16,43 @@ import javax.smartcardio.CardException;
  */
 public class ReaderAccessor implements IReader
 {
+    private static final ApplicationLogger logger = ApplicationLogger.newInstance();
+
     /**
      * Resets the card and returns the ATR.
      *
      * @return ATR of the card.
-     * @throws CardException
      */
     @Override
-    public byte[] reset() throws CardException
+    public byte[] reset()
     {
-        return ReaderController.getSelected().reset();
+        byte[] atr = null;
+        Reader reader;
+
+        reader = ReaderController.getSelected();
+
+        if (reader != null)
+        {
+            atr = reader.reset();
+            if (atr != null)
+            {
+                String atrStr = Hex.encodeHexString(atr)
+                    .toUpperCase().replaceAll("(.{" + 2 + "})", "$1 ").trim();
+
+                logger.log(Strings.RESET_CARD);
+                logger.logComment(Strings.ATR_HEADER + atrStr + "\n");
+            }
+            else
+            {
+                logger.logError(Strings.NO_ATR);
+            }
+        }
+        else
+        {
+            logger.logWarning(Strings.NO_READER_SELECTED);
+        }
+
+        return atr;
     }
 
     /**
@@ -30,10 +60,9 @@ public class ReaderAccessor implements IReader
      *
      * @param apdu: apdu to be transmitted.
      * @return response from the card.
-     * @throws CardException
      */
     @Override
-    public ApduResponse transmit(ApduCommand apdu) throws CardException
+    public ApduResponse transmit(ApduCommand apdu)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

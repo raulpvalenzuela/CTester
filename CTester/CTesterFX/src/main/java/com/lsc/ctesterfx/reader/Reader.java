@@ -2,7 +2,6 @@ package com.lsc.ctesterfx.reader;
 
 import com.lsc.ctesterfx.iso7816.ApduCommand;
 import com.lsc.ctesterfx.iso7816.ApduResponse;
-import javax.smartcardio.CardException;
 
 /**
  * Abstract class that every reader should extend. It will contain
@@ -13,10 +12,10 @@ import javax.smartcardio.CardException;
 public abstract class Reader implements IReader
 {
     @Override
-    public abstract byte[] reset() throws CardException;
+    public abstract byte[] reset();
 
     @Override
-    public abstract ApduResponse transmit(ApduCommand command) throws CardException;
+    public abstract ApduResponse transmit(ApduCommand command);
 
     /**
      * Creates a new connection with the card.
