@@ -19,3 +19,4 @@ CTester/*/.settings/
 */target/
 
 */nbproject/private/
+*.log
