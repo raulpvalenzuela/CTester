@@ -9,7 +9,8 @@ import com.lsc.ctesterfx.constants.Animations;
 import com.lsc.ctesterfx.constants.Tooltips;
 import com.lsc.ctesterfx.logger.Printer;
 import com.lsc.ctesterfx.persistence.Configuration;
-import com.lsc.ctesterfx.reader.Readers;
+import com.lsc.ctesterfx.reader.Reader;
+import com.lsc.ctesterfx.reader.ReaderController;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -39,6 +40,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javax.smartcardio.CardException;
+import org.apache.commons.codec.binary.Hex;
 
 /**
  * FXML Controller class of the main window.
@@ -423,7 +426,7 @@ public class FXMLMainController implements Initializable
             // Clear the list
             mReadersContainer.getChildren().clear();
             // Retrieve the readers again
-            List<String> readers = Readers.list();
+            List<String> readers = ReaderController.list();
 
             for (int i = 0; i < readers.size(); ++i)
             {
@@ -433,11 +436,10 @@ public class FXMLMainController implements Initializable
                     Parent readerItem = (Parent) loader.load();
                     FXMLReaderItemController controller = (FXMLReaderItemController) loader.getController();
 
-                    controller.setAttributes(
-                              this
+                    controller.setAttributes(this
                             , readers.get(i)
                             , i
-                            , (Readers.getSelected() != null) && Readers.getSelected().getName().equals(readers.get(i)));
+                            , (ReaderController.getSelected() != null) && ReaderController.getSelected().getName().equals(readers.get(i)));
 
                     mReadersContainer.getChildren().add(readerItem);
                     readerItemControllerList.add(controller);
@@ -501,6 +503,34 @@ public class FXMLMainController implements Initializable
     }
 
     @FXML
+    private void onClickSend(ActionEvent event)
+    {
+        // TODO
+    }
+
+    @FXML
+    private void onClickReset(ActionEvent event)
+    {
+        Reader reader;
+
+        try
+        {
+            reader = ReaderController.getSelected();
+
+            if (reader != null)
+            {
+                String atr = Hex.encodeHexString(reader.reset()).toUpperCase().replaceAll("(.{" + 2 + "})", "$1 ").trim();
+
+                printer.log("ResetCard");
+                printer.logComment("ATR = " + atr + "\n");
+            }
+
+        } catch (CardException ex) {
+            Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
     private void onClickBootloaderButton(ActionEvent event)
     {
         // TODO
@@ -527,7 +557,8 @@ public class FXMLMainController implements Initializable
     @FXML
     private void onStateChangedSelectAll(ActionEvent event)
     {
-        testItemControllerList.forEach((controller) -> {
+        testItemControllerList.forEach((controller) ->
+        {
             controller.select(mSelectAllCheckbox.isSelected());
         });
     }
@@ -608,7 +639,7 @@ public class FXMLMainController implements Initializable
      */
     public void notifyReaderSelected(String readerName, int index)
     {
-        Readers.select(index);
+        ReaderController.select(index);
 
         readerItemControllerList.stream().filter((controller)
                 -> (!controller.getName().equals(readerName))).forEachOrdered((controller) ->

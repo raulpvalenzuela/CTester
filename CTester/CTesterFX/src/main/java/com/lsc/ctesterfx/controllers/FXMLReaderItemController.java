@@ -11,7 +11,7 @@ import javafx.scene.layout.Pane;
 /**
  * FXML Controller class that manages a specific reader item in the list.
  *
- * @author danim
+ * @author dma@logossmartcard.com
  */
 public class FXMLReaderItemController implements Initializable
 {

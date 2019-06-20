@@ -3,7 +3,7 @@ package com.lsc.ctesterapi;
 import com.lsc.ctesterfx.reader.IReader;
 import com.lsc.ctesterfx.iso7816.ApduCommand;
 import com.lsc.ctesterfx.iso7816.ApduResponse;
-import com.lsc.ctesterfx.reader.Readers;
+import com.lsc.ctesterfx.reader.ReaderController;
 import javax.smartcardio.CardException;
 
 /**
@@ -22,7 +22,7 @@ public class ReaderAccessor implements IReader
     @Override
     public byte[] reset() throws CardException
     {
-        return Readers.getSelected().reset();
+        return ReaderController.getSelected().reset();
     }
 
     /**

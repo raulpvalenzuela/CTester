@@ -146,7 +146,7 @@
                                  <children>
                                     <HBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="66.0" prefWidth="562.0" spacing="16.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <JFXButton fx:id="mSendButton" buttonType="RAISED" focusTraversable="false" minWidth="-Infinity" prefHeight="32.0" prefWidth="155.0" ripplerFill="WHITE" style="-fx-background-color: #53DBB6;" text="Send" textAlignment="CENTER">
+                                          <JFXButton fx:id="mSendButton" buttonType="RAISED" focusTraversable="false" minWidth="-Infinity" onAction="#onClickSend" prefHeight="32.0" prefWidth="155.0" ripplerFill="WHITE" style="-fx-background-color: #53DBB6;" text="Send" textAlignment="CENTER">
                                              <font>
                                                 <Font name="Microsoft JhengHei UI Light" size="12.0" />
                                              </font>
@@ -163,7 +163,7 @@
                                     </HBox>
                                     <HBox alignment="CENTER_RIGHT" minHeight="-Infinity" prefHeight="66.0" prefWidth="283.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <JFXButton fx:id="mResetButton" buttonType="RAISED" focusTraversable="false" minWidth="-Infinity" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Reset" textAlignment="CENTER" textFill="#cccccc">
+                                          <JFXButton fx:id="mResetButton" buttonType="RAISED" focusTraversable="false" minWidth="-Infinity" onAction="#onClickReset" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Reset" textAlignment="CENTER" textFill="#cccccc">
                                              <font>
                                                 <Font name="Microsoft JhengHei UI Light" size="12.0" />
                                              </font>

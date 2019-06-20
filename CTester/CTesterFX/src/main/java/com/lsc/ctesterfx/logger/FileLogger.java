@@ -106,36 +106,48 @@ public class FileLogger extends AbstractLogger
     @Override
     public void log(String text)
     {
+        text = text + "\n";
+
         _append(text);
     }
 
     @Override
     public void logComment(String text)
     {
+        text = COMMENT_HEADER + text + "\n";
+
         _append(text);
     }
 
     @Override
     public void logError(String text)
     {
+        text = ERROR_HEADER + text + "\n";
+
         _append(text);
     }
 
     @Override
     public void logWarning(String text)
     {
+        text = WARNING_HEADER + text + "\n";
+
         _append(text);
     }
 
     @Override
     public void logDebug(String text)
     {
+        text = DEBUG_HEADER + text + "\n";
+
         _append(text);
     }
 
     @Override
     public void logSuccess(String text)
     {
+        text = SUCCESS_HEADER + text + "\n";
+        
         _append(text);
     }
 

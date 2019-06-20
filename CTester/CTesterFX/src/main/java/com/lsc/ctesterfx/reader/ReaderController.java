@@ -13,7 +13,7 @@ import javax.smartcardio.TerminalFactory;
  *
  * @author dma@logossmartard.com
  */
-public class Readers
+public class ReaderController
 {
     private static Reader currentReader;
 
@@ -34,7 +34,7 @@ public class Readers
             }
 
         } catch (CardException ex) {
-            Logger.getLogger(Readers.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReaderController.class.getName()).log(Level.SEVERE, null, ex);
 
             return new ArrayList<>();
         }
@@ -49,22 +49,20 @@ public class Readers
      */
     public static void select(int index)
     {
+        // Release the previous one
+        if (currentReader != null)
+        {
+            currentReader.release();
+        }
+
         try
         {
-            // Release the previous one
-            if (currentReader != null)
-            {
-                currentReader.release();
-            }
-
             currentReader = new PCSCReader.Builder()
                     .fromCardTerminal(TerminalFactory.getDefault().terminals().list().get(index))
                     .build();
 
         } catch (CardException ex) {
-            Logger.getLogger(Readers.class.getName()).log(Level.SEVERE, null, ex);
-
-            currentReader = null;
+            Logger.getLogger(ReaderController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

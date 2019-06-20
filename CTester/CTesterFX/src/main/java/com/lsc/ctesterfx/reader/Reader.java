@@ -25,10 +25,8 @@ public abstract class Reader implements IReader
 
     /**
      * Releases the connection with the card.
-     *
-     * @throws CardException if the connection has already been disposed.
      */
-    public abstract void release() throws CardException;
+    public abstract void release();
 
     /**
      * Returns the name of the reader.

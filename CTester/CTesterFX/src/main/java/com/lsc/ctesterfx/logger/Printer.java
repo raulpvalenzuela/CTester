@@ -91,36 +91,48 @@ public class Printer extends AbstractLogger
     @Override
     public void log(String text)
     {
+        text = text + "\n";
+
         _logWithFormat(text, Colors.createAsString(Colors.Color.GRAY));
     }
 
     @Override
     public void logComment(String text)
     {
+        text = COMMENT_HEADER + text + "\n";
+
         _logWithFormat(text, Colors.createAsString(Colors.Color.DARK_GRAY));
     }
 
     @Override
     public void logError(String text)
     {
+        text = ERROR_HEADER + text + "\n";
+
         _logWithFormat(text, Colors.createAsString(Colors.Color.RED));
     }
 
     @Override
     public void logWarning(String text)
     {
+        text = WARNING_HEADER + text + "\n";
+
         _logWithFormat(text, Colors.createAsString(Colors.Color.YELLOW));
     }
 
     @Override
     public void logDebug(String text)
     {
+        text = DEBUG_HEADER + text + "\n";
+
         _logWithFormat(text, Colors.createAsString(Colors.Color.BLUE));
     }
 
     @Override
     public void logSuccess(String text)
     {
+        text = SUCCESS_HEADER + text + "\n";
+        
         _logWithFormat(text, Colors.createAsString(Colors.Color.GREEN));
     }
 

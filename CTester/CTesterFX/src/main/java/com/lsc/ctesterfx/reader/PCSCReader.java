@@ -69,13 +69,20 @@ public class PCSCReader extends Reader
     }
 
     @Override
-    public void release() throws CardException
+    public void release()
     {
         if (isConnected && (channel != null))
         {
-            channel.close();
+            try
+            {
+                channel.close();
 
-            isConnected = false;
+            } catch (CardException | IllegalStateException ex) {
+                // This exception is triggered if the card has been removed.
+
+            } finally {
+                isConnected = false;
+            }
         }
     }
 
