@@ -151,7 +151,7 @@
                                                 <Font name="Microsoft JhengHei UI Light" size="12.0" />
                                              </font>
                                           </JFXButton>
-                                          <JFXTextField fx:id="mCommandTextfield" focusColor="#53dbb6" focusTraversable="false" prefHeight="32.0" prefWidth="280.0" promptText="Command" unFocusColor="#cccccc">
+                                          <JFXTextField fx:id="mCommandTextfield" focusColor="#53dbb6" focusTraversable="false" prefHeight="32.0" prefWidth="280.0" promptText="Command" unFocusColor="#cccccc" HBox.hgrow="ALWAYS">
                                              <font>
                                                 <Font name="Microsoft JhengHei UI Light" size="12.0" />
                                              </font>
@@ -161,7 +161,7 @@
                                           <Insets left="16.0" />
                                        </padding>
                                     </HBox>
-                                    <HBox alignment="CENTER_RIGHT" minHeight="-Infinity" prefHeight="66.0" prefWidth="283.0" HBox.hgrow="ALWAYS">
+                                    <HBox alignment="CENTER_RIGHT" minHeight="-Infinity" prefHeight="66.0" prefWidth="203.0" HBox.hgrow="NEVER">
                                        <children>
                                           <JFXButton fx:id="mResetButton" buttonType="RAISED" focusTraversable="false" minWidth="-Infinity" onAction="#onClickReset" prefHeight="32.0" prefWidth="155.0" ripplerFill="#53dbb6" style="-fx-background-color: transparent; -fx-border-color: #53DBB6; -fx-border-width: 2;" text="Reset" textAlignment="CENTER" textFill="#cccccc">
                                              <font>
@@ -184,7 +184,7 @@
                                  <children>
                                     <VBox prefHeight="639.0" prefWidth="606.0" spacing="16.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <HBox alignment="CENTER_LEFT" VBox.vgrow="ALWAYS">
+                                          <HBox alignment="CENTER_LEFT" VBox.vgrow="NEVER">
                                              <children>
                                                 <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="74.0" text="Output" textFill="#cccccc" HBox.hgrow="NEVER">
                                                    <font>
@@ -204,7 +204,7 @@
                                           <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
                                        </padding>
                                     </VBox>
-                                    <VBox alignment="BOTTOM_RIGHT" prefHeight="639.0" prefWidth="177.0" spacing="24.0" HBox.hgrow="ALWAYS">
+                                    <VBox alignment="BOTTOM_RIGHT" prefHeight="639.0" prefWidth="177.0" spacing="24.0" HBox.hgrow="NEVER">
                                        <children>
                                           <VBox alignment="BOTTOM_RIGHT" prefHeight="527.0" prefWidth="186.0" spacing="24.0">
                                              <children>
