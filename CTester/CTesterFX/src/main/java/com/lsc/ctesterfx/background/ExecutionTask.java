@@ -102,7 +102,7 @@ public class ExecutionTask extends Task
                         testController.getLogger().logError("'" + method.getName() + "' method failed\n");
                         testController.setState(FXMLTestItemController.TEST_STATE.EXECUTION_FAILED);
 
-                        testController.notifyFinishStart();
+                        testController.notifyFinishTest();
 
                         return false;
                     }
@@ -112,7 +112,7 @@ public class ExecutionTask extends Task
                     testController.getLogger().logError("Exception: " + ex.toString() + "\n");
                     testController.setState(FXMLTestItemController.TEST_STATE.EXECUTION_FAILED);
 
-                    testController.notifyFinishStart();
+                    testController.notifyFinishTest();
 
                     return false;
                 }
@@ -120,12 +120,12 @@ public class ExecutionTask extends Task
 
             testController.setState(FXMLTestItemController.TEST_STATE.EXECUTION_OK);
 
-            testController.notifyFinishStart();
+            testController.notifyFinishTest();
 
             return true;
         }
 
-        testController.notifyFinishStart();
+        testController.notifyFinishTest();
 
         return false;
     }

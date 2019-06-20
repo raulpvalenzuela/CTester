@@ -20,8 +20,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
@@ -42,6 +40,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.apache.commons.codec.binary.Hex;
+import org.apache.log4j.Logger;
 
 /**
  * FXML Controller class of the main window.
@@ -50,6 +49,8 @@ import org.apache.commons.codec.binary.Hex;
  */
 public class FXMLMainController implements Initializable
 {
+    private static final Logger LOGGER = Logger.getLogger(FXMLMainController.class);
+
     // List with all the test controllers.
     private List<FXMLTestItemController> testItemControllerList;
     // List with all the reader controllers.
@@ -156,9 +157,14 @@ public class FXMLMainController implements Initializable
         // it will run against the JRE located in ~/../Java/jre1.8.xxx.
         Configuration configuration = new Configuration();
         String javaHome = configuration.getValueAsString(Configuration.JAVA_HOME);
-        if (javaHome != null)
+        if (javaHome != null && !javaHome.isEmpty())
         {
+            LOGGER.info("Setting JAVA_HOME: " + javaHome);
             System.setProperty("java.home", javaHome);
+        }
+        else
+        {
+            LOGGER.warn("JAVA_HOME is not properly configured");
         }
 
         // Initialize the executors.
@@ -266,7 +272,8 @@ public class FXMLMainController implements Initializable
             mVersionLabel.setText("v" + properties.getProperty("version"));
 
         } catch (IOException | NullPointerException ex) {
-            Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, ex.getMessage(), (Object) null);
+            LOGGER.error("Exception reading version from application.properties");
+            LOGGER.error(ex);
         }
     }
 
@@ -319,16 +326,22 @@ public class FXMLMainController implements Initializable
     @FXML
     private void onClickAddTests(ActionEvent event)
     {
+        LOGGER.info("Adding new tests");
+
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Resource File");
+        fileChooser.setTitle("Add Test");
         fileChooser.getExtensionFilters().add(new ExtensionFilter("Java Files", "*.java"));
         List<File> selectedFiles = fileChooser.showOpenMultipleDialog(stage);
 
         if (selectedFiles != null)
         {
+            LOGGER.info("Files added:");
+
             int index = 0;
             for (File file : selectedFiles)
             {
+                LOGGER.info(" - " + file.getAbsolutePath());
+
                 try
                 {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TestItem.fxml"));
@@ -340,7 +353,8 @@ public class FXMLMainController implements Initializable
                     testItemControllerList.add(controller);
 
                 } catch (IOException ex) {
-                    Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, ex.getMessage(), (Object) null);
+                    LOGGER.error("Exception loading TestItem.fxml");
+                    LOGGER.error(ex);
                 }
             }
         }
@@ -349,6 +363,8 @@ public class FXMLMainController implements Initializable
     @FXML
     private void onClickCompileTests(ActionEvent event)
     {
+        LOGGER.info("Compiling tests");
+
         if (!testItemControllerList.isEmpty())
         {
             // Clear the output panel.
@@ -366,11 +382,17 @@ public class FXMLMainController implements Initializable
                 testItem.compile();
             });
         }
+        else
+        {
+            LOGGER.info("List is empty");
+        }
     }
 
     @FXML
     private void onClickRunTests(ActionEvent event)
     {
+        LOGGER.info("Running tests");
+
         if (!testItemControllerList.isEmpty())
         {
             // Clear the output panel.
@@ -388,11 +410,17 @@ public class FXMLMainController implements Initializable
                 testItem.run();
             });
         }
+        else
+        {
+            LOGGER.info("List is empty");
+        }
     }
 
     @FXML
     private void onClickStopTest(ActionEvent event)
     {
+        LOGGER.info("Stopping tests");
+
         // Shutdown the executors.
         MultithreadController.shutdown();
         // Restart them.
@@ -412,6 +440,8 @@ public class FXMLMainController implements Initializable
         {
             testItemControllerList.get(currentTest).setState(FXMLTestItemController.TEST_STATE.STOPPED);
         }
+
+        LOGGER.info("Tests stopped");
     }
 
     @FXML
@@ -419,10 +449,12 @@ public class FXMLMainController implements Initializable
     {
         if (mReadersContainer.isVisible())
         {
+            LOGGER.info("Hiding readers list");
             mReadersContainer.setVisible(false);
         }
         else
         {
+            LOGGER.info("Loading readers list:");
             // Clear the list
             mReadersContainer.getChildren().clear();
             // Retrieve the readers again
@@ -430,6 +462,8 @@ public class FXMLMainController implements Initializable
 
             for (int i = 0; i < readers.size(); ++i)
             {
+                LOGGER.info(" - " + readers.get(i));
+
                 try
                 {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ReaderItem.fxml"));
@@ -447,7 +481,8 @@ public class FXMLMainController implements Initializable
                     mReadersContainer.setVisible(true);
 
                 } catch (IOException ex) {
-                    Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, ex.getMessage(), (Object) null);
+                    LOGGER.error("Exception loading ReaderItem.fxml");
+                    LOGGER.error(ex);
                 }
             }
         }
@@ -538,8 +573,10 @@ public class FXMLMainController implements Initializable
             }
 
         } catch (Exception ex) {
-            Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, ex.getMessage(), (Object) null);
-            printer.logError(ex.getMessage());
+            LOGGER.error("Exception resetting the card");
+            LOGGER.error(ex);
+
+            printer.logError("Exception resetting the card");
         }
     }
 
@@ -602,6 +639,8 @@ public class FXMLMainController implements Initializable
      */
     public void removeTestAtIndex(int index)
     {
+        LOGGER.info("Removing test at index: " + index);
+
         // Remove the test and the controller from the lists.
         mTestListVBox.getChildren().remove(index);
         testItemControllerList.remove(index);
@@ -611,6 +650,8 @@ public class FXMLMainController implements Initializable
         {
             controller.setAttributes(index++);
         }
+
+        LOGGER.info("Test removed");
     }
 
     /**

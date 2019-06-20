@@ -4,6 +4,7 @@ import com.lsc.ctesterfx.controllers.FXMLTestItemController;
 import com.lsc.ctesterfx.dao.Test;
 import com.lsc.ctesterfx.logger.FileLogger;
 import com.lsc.ctesterfx.logger.ApplicationLogger;
+import org.apache.log4j.Logger;
 
 /**
  * Class containing all the stuff related to a specific test.
@@ -12,6 +13,8 @@ import com.lsc.ctesterfx.logger.ApplicationLogger;
  */
 public class TestController
 {
+    private static final Logger LOGGER = Logger.getLogger(TestController.class);
+
     private final FXMLTestItemController testItemController;
     private final Test test;
     private final ApplicationLogger logger;
@@ -19,7 +22,7 @@ public class TestController
 
     /**
      * Constructor.
-     * 
+     *
      * @param test: reference to the test object.
      * @param testItemController1: referente to the FXMLTestItemController.
      */
@@ -81,6 +84,8 @@ public class TestController
      */
     public void notifyStartTest()
     {
+        LOGGER.info("Setting new file logger");
+
         fileLogger.initialize();
 
         logger.setFileLogger(fileLogger);
@@ -90,8 +95,10 @@ public class TestController
      * Called from the outside to notify that the test is finished
      * so that the controller can free resources.
      */
-    public void notifyFinishStart()
+    public void notifyFinishTest()
     {
+        LOGGER.info("Closing file logger");
+
         fileLogger.close();
     }
 }

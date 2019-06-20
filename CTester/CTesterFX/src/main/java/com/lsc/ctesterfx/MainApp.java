@@ -13,11 +13,13 @@ import org.apache.log4j.Logger;
 
 public class MainApp extends Application
 {
-    private static final Logger logger = Logger.getLogger(MainApp.class);
+    private static final Logger LOGGER = Logger.getLogger(MainApp.class);
 
     @Override
     public void start(Stage stage) throws Exception
     {
+        LOGGER.info("Starting CTester");
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene.fxml"));
         Parent root = (Parent) loader.load();
         FXMLMainController controller = (FXMLMainController) loader.getController();
@@ -35,6 +37,8 @@ public class MainApp extends Application
     @Override
     public void stop() throws Exception
     {
+        LOGGER.info("Exiting CTester, releasing resources");
+
         MultithreadController.shutdown();
     }
 

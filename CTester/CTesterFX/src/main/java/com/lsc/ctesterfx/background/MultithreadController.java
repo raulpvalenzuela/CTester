@@ -1,5 +1,6 @@
 package com.lsc.ctesterfx.background;
 
+import com.sun.istack.internal.logging.Logger;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -11,6 +12,8 @@ import java.util.concurrent.Executors;
  */
 public class MultithreadController
 {
+    private static final Logger LOGGER = Logger.getLogger(MultithreadController.class);
+
     public enum TYPE
     {
         COMPILATION,
@@ -27,6 +30,8 @@ public class MultithreadController
      */
     public static void initialize()
     {
+        LOGGER.info("Executors initialized");
+
         compilationExecutor = Executors.newFixedThreadPool(1);
         executionExecutor   = Executors.newFixedThreadPool(1);
     }
@@ -36,8 +41,12 @@ public class MultithreadController
      */
     public static void shutdown()
     {
+        LOGGER.info("Shutting the executors down");
+
         compilationExecutor.shutdownNow();
         executionExecutor.shutdownNow();
+
+        LOGGER.info("Executors shut down");
     }
 
     /**
@@ -51,10 +60,12 @@ public class MultithreadController
         switch (type)
         {
             case COMPILATION:
+                LOGGER.info("New compilation task queued");
                 compilationExecutor.execute(task);
                 break;
 
             case EXECUTION:
+                LOGGER.info("New execution task queued");
                 executionExecutor.execute(task);
                 break;
         }
