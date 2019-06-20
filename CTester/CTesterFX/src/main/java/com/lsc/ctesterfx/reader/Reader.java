@@ -12,6 +12,7 @@ import javax.smartcardio.CardException;
  */
 public abstract class Reader implements IReader
 {
+
     @Override
     public abstract byte[] reset() throws CardException;
 
@@ -21,4 +22,6 @@ public abstract class Reader implements IReader
     public abstract void connect() throws CardException;
 
     public abstract void release() throws CardException;
+    
+    public abstract String getName();
 }

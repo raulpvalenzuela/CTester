@@ -49,6 +49,8 @@ public class FXMLMainController implements Initializable
 {
     // List with all the test controllers.
     private List<FXMLTestItemController> testItemControllerList;
+    // List with all the reader controllers.
+    private List<FXMLReaderItemController> readerItemControllerList;
 
     // Reference to the window.
     private Stage stage;
@@ -140,10 +142,11 @@ public class FXMLMainController implements Initializable
      */
     private void _initialize()
     {
-        currentTest            = -1;
-        commandsListVisible    = true;
-        numOfTestsInExecution  = new AtomicInteger(0);
-        testItemControllerList = new ArrayList<>();
+        currentTest              = -1;
+        commandsListVisible      = true;
+        numOfTestsInExecution    = new AtomicInteger(0);
+        testItemControllerList   = new ArrayList<>();
+        readerItemControllerList = new ArrayList<>();
 
         // It's needed to set the Java Home to the one inside the JDK (~/../Java/jdk1.8.xxx/jre)
         // to be able to compile the tests. When running the .jar by default
@@ -417,23 +420,33 @@ public class FXMLMainController implements Initializable
         }
         else
         {
+            // Clear the list
+            mReadersContainer.getChildren().clear();
+            // Retrieve the readers again
             List<String> readers = Readers.list();
 
-            try
+            for (int i = 0; i < readers.size(); ++i)
             {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ReaderItem.fxml"));
-                Parent readerItem = (Parent) loader.load();
-                FXMLReaderItemController controller = (FXMLReaderItemController) loader.getController();
-                controller.setAttributes(readers.get(0));
+                try
+                {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ReaderItem.fxml"));
+                    Parent readerItem = (Parent) loader.load();
+                    FXMLReaderItemController controller = (FXMLReaderItemController) loader.getController();
 
-                mReadersContainer.getChildren().clear();
-                mReadersContainer.getChildren().add(readerItem);
-                //testItemControllerList.add(controller);
+                    controller.setAttributes(
+                              this
+                            , readers.get(i)
+                            , i
+                            , (Readers.getSelected() != null) && Readers.getSelected().getName().equals(readers.get(i)));
 
-                mReadersContainer.setVisible(true);
+                    mReadersContainer.getChildren().add(readerItem);
+                    readerItemControllerList.add(controller);
 
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
+                    mReadersContainer.setVisible(true);
+
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
@@ -441,9 +454,9 @@ public class FXMLMainController implements Initializable
     @FXML
     private void onMouseClickedReadersContainer(MouseEvent event)
     {
-        System.out.println("Click");
+        // If clicked outside, hide the readers.
+        mReadersContainer.setVisible(false);
     }
-
 
     @FXML
     private void onClickSettings(ActionEvent event)
@@ -585,6 +598,28 @@ public class FXMLMainController implements Initializable
         {
             _enableButtons();
         }
+    }
+
+    /**
+     * When a reader is selected, this method will be called by the corresponding FXMLReaderItemController.
+     *
+     * @param readerName: name of the selected reader.
+     * @param index: index of the reader in the list.
+     */
+    public void notifyReaderSelected(String readerName, int index)
+    {
+        Readers.select(index);
+
+        readerItemControllerList.stream().filter((controller)
+                -> (!controller.getName().equals(readerName))).forEachOrdered((controller) ->
+        {
+            controller.selectReader(false);
+        });
+
+        // Update the reader label.
+        mReaderSelectedLabel.setText(readerName);
+        // Hide the list.
+        mReadersContainer.setVisible(false);
     }
 
     /**

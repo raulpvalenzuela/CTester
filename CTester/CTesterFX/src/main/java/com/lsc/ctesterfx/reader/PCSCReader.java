@@ -68,7 +68,7 @@ public class PCSCReader extends Reader
     @Override
     public void release() throws CardException
     {
-        if (isConnected)
+        if (isConnected && (channel != null))
         {
             channel.close();
 
@@ -82,7 +82,7 @@ public class PCSCReader extends Reader
         // Establishes a connection to the card. If a connection has previously established using the
         // specified protocol, this method returns the same Card object as the previous call.
         card = reader.connect("*");
-        
+
         if (!isConnected)
         {
             connect();
@@ -97,6 +97,7 @@ public class PCSCReader extends Reader
         return new ApduResponse();
     }
 
+    @Override
     public String getName()
     {
         return reader.getName();

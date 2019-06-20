@@ -268,12 +268,12 @@
                         </VBox>
                     </items>
                   </SplitPane>
-                  <VBox fx:id="mReadersContainer" alignment="BOTTOM_LEFT" onMouseClicked="#onMouseClickedReadersContainer" prefHeight="200.0" prefWidth="100.0" spacing="16.0" style="-fx-background-color: #00000000;" visible="false">
+                  <VBox fx:id="mReadersContainer" alignment="BOTTOM_LEFT" onMouseClicked="#onMouseClickedReadersContainer" prefHeight="200.0" prefWidth="100.0" spacing="4.0" style="-fx-background-color: #00000000;" visible="false">
                      <StackPane.margin>
                         <Insets />
                      </StackPane.margin>
                      <padding>
-                        <Insets bottom="88.0" left="8.0" />
+                        <Insets bottom="16.0" />
                      </padding>
                   </VBox>
                </children>
