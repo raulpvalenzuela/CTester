@@ -81,7 +81,7 @@ public class PCSCReader extends Reader
                 card.disconnect(false);
 
             } catch (CardException | IllegalStateException ex) {
-                // This exception is triggered if the card has been removed.
+                Logger.getLogger(PCSCReader.class.getName()).log(Level.INFO, ex.getMessage(), (Object) null);
 
             } finally {
                 isConnected = false;
@@ -97,17 +97,12 @@ public class PCSCReader extends Reader
             // Establishes a connection to the card. If a connection has previously established using the
             // specified protocol, this method returns the same Card object as the previous call.
             card = reader.connect("*");
-
-            if (!isConnected)
-            {
-                connect();
-            }
+            this.connect();
 
             return card.getATR().getBytes();
 
         } catch (CardException ex) {
-            Logger.getLogger(PCSCReader.class.getName()).log(Level.SEVERE, null, ex);
-
+            Logger.getLogger(PCSCReader.class.getName()).log(Level.INFO, ex.getMessage(), (Object) null);
             return null;
         }
     }

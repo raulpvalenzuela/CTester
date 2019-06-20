@@ -266,7 +266,7 @@ public class FXMLMainController implements Initializable
             mVersionLabel.setText("v" + properties.getProperty("version"));
 
         } catch (IOException | NullPointerException ex) {
-            Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, ex.getMessage(), (Object) null);
         }
     }
 
@@ -340,7 +340,7 @@ public class FXMLMainController implements Initializable
                     testItemControllerList.add(controller);
 
                 } catch (IOException ex) {
-                    Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, ex.getMessage(), (Object) null);
                 }
             }
         }
@@ -447,7 +447,7 @@ public class FXMLMainController implements Initializable
                     mReadersContainer.setVisible(true);
 
                 } catch (IOException ex) {
-                    Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, ex.getMessage(), (Object) null);
                 }
             }
         }
@@ -538,6 +538,7 @@ public class FXMLMainController implements Initializable
             }
 
         } catch (Exception ex) {
+            Logger.getLogger(FXMLMainController.class.getName()).log(Level.SEVERE, ex.getMessage(), (Object) null);
             printer.logError(ex.getMessage());
         }
     }
