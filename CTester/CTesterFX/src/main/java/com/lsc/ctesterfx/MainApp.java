@@ -9,9 +9,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 
 public class MainApp extends Application
 {
+    private static final Logger logger = Logger.getLogger(MainApp.class);
+
     @Override
     public void start(Stage stage) throws Exception
     {
