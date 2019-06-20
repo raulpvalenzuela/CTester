@@ -1,8 +1,8 @@
 package com.lsc.ctesterfx.background;
 
-import com.sun.istack.internal.logging.Logger;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import org.apache.log4j.Logger;
 
 /**
  * Class that handles the executors needed in the system. One will be used to

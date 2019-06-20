@@ -55,15 +55,24 @@ public class CompilationTask extends Task
             // Compile and load the test class.
             if (testLoader.compile(testController.getTest()))
             {
-                result = testLoader.load(testController.getTest());
-
                 LOGGER.info("Compilation of " + testController.getTestName() + " succesful");
-                testController.getLogger().logComment("Compilation of " + testController.getTestName() + " succesful!\n");
-                testController.setState(FXMLTestItemController.TEST_STATE.COMPILATION_OK);
+                
+                if ((result = testLoader.load(testController.getTest())) == null)
+                {
+                    LOGGER.error("Loading of " + testController.getTestName() + " failed");
+                }
+                else
+                {
+                    LOGGER.info("Loading of " + testController.getTestName() + " succesful");
+
+                    testController.getLogger().logComment("Compilation of " + testController.getTestName() + " succesful!\n");
+                    testController.setState(FXMLTestItemController.TEST_STATE.COMPILATION_OK);
+                }
             }
             else
             {
-                LOGGER.info("Compilation of " + testController.getTestName() + " failed");
+                LOGGER.error("Compilation of " + testController.getTestName() + " failed");
+
                 testController.getLogger().logError("Compilation of " + testController.getTestName() + " failed\n");
                 testController.setState(FXMLTestItemController.TEST_STATE.COMPILATION_FAILED);
             }

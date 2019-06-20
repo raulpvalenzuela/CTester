@@ -17,7 +17,7 @@ public class TestController
 
     private final FXMLTestItemController testItemController;
     private final Test test;
-    private final ApplicationLogger logger;
+    private final ApplicationLogger applicationLogger;
     private final FileLogger fileLogger;
 
     /**
@@ -30,7 +30,7 @@ public class TestController
     {
         this.test               = test;
         this.testItemController = testItemController1;
-        this.logger             = ApplicationLogger.newInstance();
+        this.applicationLogger  = ApplicationLogger.newInstance();
 
         this.fileLogger = new FileLogger.Builder()
                                 .withName(test.getName())
@@ -55,7 +55,7 @@ public class TestController
      */
     public ApplicationLogger getLogger()
     {
-        return logger;
+        return applicationLogger;
     }
 
     /**
@@ -88,7 +88,7 @@ public class TestController
 
         fileLogger.initialize();
 
-        logger.setFileLogger(fileLogger);
+        applicationLogger.setFileLogger(fileLogger);
     }
 
     /**
