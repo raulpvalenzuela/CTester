@@ -56,7 +56,7 @@ public class CompilationTask extends Task
             if (testLoader.compile(testController.getTest()))
             {
                 LOGGER.info("Compilation of " + testController.getTestName() + " succesful");
-                
+
                 if ((result = testLoader.load(testController.getTest())) == null)
                 {
                     LOGGER.error("Loading of " + testController.getTestName() + " failed");
@@ -78,7 +78,7 @@ public class CompilationTask extends Task
             }
 
         } catch (Exception ex) {
-            LOGGER.error("Exception compiling test");
+            LOGGER.error("Exception compiling test (JavaHome not configured in config.xml?)");
             LOGGER.error(ex);
 
             testController.getLogger().logError("Compilation of " + testController.getTestName() + " failed");

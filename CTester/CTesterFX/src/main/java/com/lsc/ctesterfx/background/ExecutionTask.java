@@ -141,7 +141,7 @@ public class ExecutionTask extends Task
                 }
             }
 
-            LOGGER.info("Execution of" + testController.getTestName() + " succesful");
+            LOGGER.info("Execution of " + testController.getTestName() + " succesful");
 
             testController.setState(FXMLTestItemController.TEST_STATE.EXECUTION_OK);
             testController.notifyFinishTest();

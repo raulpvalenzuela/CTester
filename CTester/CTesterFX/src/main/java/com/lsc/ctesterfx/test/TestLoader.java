@@ -20,6 +20,7 @@ import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
+import org.apache.log4j.Logger;
 
 /**
  * Class that manages the compilation and loading of the test files.
@@ -28,6 +29,8 @@ import javax.tools.ToolProvider;
  */
 public class TestLoader extends ClassLoader
 {
+    private static final Logger LOGGER = Logger.getLogger(TestLoader.class);
+
     private static final String SETUP_METHOD    = "setUp";
     private static final String RUN_METHOD      = "run";
     private static final String TEARDOWN_METHOD = "tearDown";
@@ -78,6 +81,9 @@ public class TestLoader extends ClassLoader
             options.add("-cp");
             options.add(System.getProperty("java.class.path"));
 
+            LOGGER.info("Destination folder = " + dest.toString());
+            LOGGER.info("Classpath = " + System.getProperty("java.class.path"));
+
             JavaCompiler.CompilationTask task =
                 compiler.getTask(null, fm, null, options, null, fileObjects);
 
@@ -97,6 +103,8 @@ public class TestLoader extends ClassLoader
         String pkg = null;
         try
         {
+            LOGGER.info("Reading package name");
+
             // Read the package name
             BufferedReader br = new BufferedReader(new FileReader(test.getFile()));
             while (!(pkg = br.readLine()).contains("package")) {}
@@ -104,14 +112,25 @@ public class TestLoader extends ClassLoader
             // Remove all the nonsense.
             pkg = pkg.replace("package", "").replace(";", ".").replace(" ", "").trim();
 
+            LOGGER.info("Package found = " + pkg);
+
         } catch (FileNotFoundException ex) {
+            LOGGER.error("Java file not found");
+            LOGGER.error(ex);
+
             return null;
+
         } catch (IOException ex) {
+            LOGGER.error("Exception reading the java file");
+            LOGGER.error(ex);
+
             return null;
         }
 
         try
         {
+            LOGGER.info("Loading and instantiating class");
+
             // create FileInputStream object
             File file = new File(test.getPath());
 
@@ -124,15 +143,23 @@ public class TestLoader extends ClassLoader
 
             // Load in the class; Test.class. Should be located in path + \package\
             Class cls  = cl.loadClass(pkg + test.getName());
+            LOGGER.info("Class loaded");
             Object obj = cls.newInstance();
+            LOGGER.info("New instance created");
 
             Method setupMethod    = cls.getDeclaredMethod(SETUP_METHOD);
+            LOGGER.info("'" + SETUP_METHOD + "' method found");
             Method runMethod      = cls.getDeclaredMethod(RUN_METHOD);
+            LOGGER.info("'" + RUN_METHOD + "' method found");
             Method teardownMethod = cls.getDeclaredMethod(TEARDOWN_METHOD);
+            LOGGER.info("'" + TEARDOWN_METHOD + "' method found");
 
             return new Pair<>(obj, Arrays.asList(new Method[] { setupMethod, runMethod, teardownMethod }));
 
         } catch (MalformedURLException | ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException ex) {
+            LOGGER.error("Exception loading the class");
+            LOGGER.error(ex);
+
             return null;
         }
     }
