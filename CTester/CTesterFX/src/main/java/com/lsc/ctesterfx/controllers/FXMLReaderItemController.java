@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
+import org.apache.log4j.Logger;
 
 /**
  * FXML Controller class that manages a specific reader item in the list.
@@ -15,6 +16,8 @@ import javafx.scene.layout.Pane;
  */
 public class FXMLReaderItemController implements Initializable
 {
+    private static final Logger LOGGER = Logger.getLogger(FXMLReaderItemController.class);
+
     // Reference to the Main controller.
     private FXMLMainController mainController;
     // Reader name.

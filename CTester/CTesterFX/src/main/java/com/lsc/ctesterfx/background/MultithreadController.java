@@ -2,6 +2,7 @@ package com.lsc.ctesterfx.background;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import org.apache.log4j.Logger;
 
 /**
  * Class that handles the executors needed in the system. One will be used to
@@ -11,6 +12,8 @@ import java.util.concurrent.Executors;
  */
 public class MultithreadController
 {
+    private static final Logger LOGGER = Logger.getLogger(MultithreadController.class);
+
     public enum TYPE
     {
         COMPILATION,
@@ -27,6 +30,8 @@ public class MultithreadController
      */
     public static void initialize()
     {
+        LOGGER.debug("Executors initialized");
+
         compilationExecutor = Executors.newFixedThreadPool(1);
         executionExecutor   = Executors.newFixedThreadPool(1);
     }
@@ -36,8 +41,12 @@ public class MultithreadController
      */
     public static void shutdown()
     {
+        LOGGER.debug("Shutting the executors down");
+
         compilationExecutor.shutdownNow();
         executionExecutor.shutdownNow();
+
+        LOGGER.debug("Executors shut down");
     }
 
     /**
@@ -51,10 +60,12 @@ public class MultithreadController
         switch (type)
         {
             case COMPILATION:
+                LOGGER.debug("New compilation task queued");
                 compilationExecutor.execute(task);
                 break;
 
             case EXECUTION:
+                LOGGER.debug("New execution task queued");
                 executionExecutor.execute(task);
                 break;
         }
