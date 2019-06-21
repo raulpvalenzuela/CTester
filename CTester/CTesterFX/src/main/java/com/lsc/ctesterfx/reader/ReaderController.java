@@ -2,11 +2,10 @@ package com.lsc.ctesterfx.reader;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.smartcardio.CardException;
 import javax.smartcardio.CardTerminal;
 import javax.smartcardio.TerminalFactory;
+import org.apache.log4j.Logger;
 
 /**
  * Class that manages the readers connected to the computer.
@@ -15,6 +14,8 @@ import javax.smartcardio.TerminalFactory;
  */
 public class ReaderController
 {
+    private static final Logger LOGGER = Logger.getLogger(ReaderController.class);
+
     private static Reader currentReader;
 
     /**
@@ -34,7 +35,8 @@ public class ReaderController
             }
 
         } catch (CardException ex) {
-            Logger.getLogger(ReaderController.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.error("Exception retrieving readers");
+            LOGGER.error(ex);
 
             return new ArrayList<>();
         }
@@ -62,7 +64,8 @@ public class ReaderController
                     .build();
 
         } catch (CardException ex) {
-            Logger.getLogger(ReaderController.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.error("Exception selecting reader");
+            LOGGER.error(ex);
         }
     }
 

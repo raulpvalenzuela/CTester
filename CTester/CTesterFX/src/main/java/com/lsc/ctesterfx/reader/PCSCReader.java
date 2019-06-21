@@ -2,12 +2,11 @@ package com.lsc.ctesterfx.reader;
 
 import com.lsc.ctesterfx.iso7816.ApduResponse;
 import com.lsc.ctesterfx.iso7816.ApduCommand;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.smartcardio.Card;
 import javax.smartcardio.CardChannel;
 import javax.smartcardio.CardException;
 import javax.smartcardio.CardTerminal;
+import org.apache.log4j.Logger;
 
 /**
  * Class that represents a PCSC reader.
@@ -16,6 +15,8 @@ import javax.smartcardio.CardTerminal;
  */
 public class PCSCReader extends Reader
 {
+    private static final Logger LOGGER = Logger.getLogger(PCSCReader.class);
+
     // Flag to indicate if a connection to the card has been estabished.
     private boolean isConnected;
 
@@ -75,13 +76,18 @@ public class PCSCReader extends Reader
     {
         if (isConnected && (channel != null))
         {
+            LOGGER.debug("Releasing reader '" + reader.getName() + "'");
+
             try
             {
                 channel.close();
                 card.disconnect(false);
 
+                LOGGER.debug("Reader released");
+
             } catch (CardException | IllegalStateException ex) {
-                Logger.getLogger(PCSCReader.class.getName()).log(Level.INFO, ex.getMessage(), (Object) null);
+                LOGGER.error("Exception releasing reader");
+                LOGGER.error(ex);
 
             } finally {
                 isConnected = false;
@@ -102,7 +108,9 @@ public class PCSCReader extends Reader
             return card.getATR().getBytes();
 
         } catch (CardException ex) {
-            Logger.getLogger(PCSCReader.class.getName()).log(Level.INFO, ex.getMessage(), (Object) null);
+            LOGGER.error("Exception resetting the card");
+            LOGGER.error(ex);
+
             return null;
         }
     }

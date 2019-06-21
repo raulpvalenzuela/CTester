@@ -693,6 +693,8 @@ public class FXMLMainController implements Initializable
      */
     public void notifyReaderSelected(String readerName, int index)
     {
+        LOGGER.info("'" + readerName + "' selected");
+
         ReaderController.select(index);
 
         readerItemControllerList.stream().filter((controller)
