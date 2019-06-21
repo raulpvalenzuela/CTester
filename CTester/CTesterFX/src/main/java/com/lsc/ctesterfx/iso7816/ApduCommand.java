@@ -28,10 +28,24 @@ public class ApduCommand
         this.p1   = p1;
         this.p2   = p2;
 
-        this.lc   = (byte) data.length;
-        this.le   = le;
+        this.lc   = (data.length == 0) ? 0 : (byte) data.length;
+        this.le   = (data.length == 0) ? le : 0;
 
         this.data = data;
+
+        // Create the command
+        command = new byte[5 + data.length];
+
+        command[0] = this.cla;
+        command[1] = this.ins;
+        command[2] = this.p1;
+        command[3] = this.p2;
+        command[4] = (this.data.length == 0) ? this.le : this.lc;
+
+        for (int i = 0; i < data.length; ++i)
+        {
+            command[i + 5] = data[i];
+        }
     }
 
     /**
@@ -47,9 +61,21 @@ public class ApduCommand
         this.ins = command[1];
         this.p1  = command[2];
         this.p2  = command[3];
-        this.lc  = command[4];
 
-        this.data = Arrays.copyOfRange(command, 4, this.lc + 5);
+        if (command.length > 5)
+        {
+            this.lc = command[4];
+            this.le = 0;
+
+            this.data = Arrays.copyOfRange(command, 4, this.lc + 5);
+        }
+        else
+        {
+            this.le = command[4];
+            this.lc = 0;
+
+            this.data = new byte[] {};
+        }
 
         this.command = command;
     }
@@ -219,18 +245,4 @@ public class ApduCommand
      * @param data command data to be set.
      */
     public void setData(byte[] data) { this.data  = data;  }
-
-    /**
-     * Returns the command formatted as a String.
-     *
-     * @return command formatted as a String.
-     */
-    public String getCommandAsString() { return Arrays.toString(this.command); }
-
-    /**
-     * Returns the command formatted as an array of bytes.
-     *
-     * @return command formatted as an array of bytes.
-     */
-    public byte[] getCommandAsArray() { return this.command; }
 }

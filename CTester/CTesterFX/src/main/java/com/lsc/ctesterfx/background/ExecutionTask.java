@@ -64,6 +64,7 @@ public class ExecutionTask extends Task
             {
                 LOGGER.info("Compilation of '" + testController.getTestName() + "' succesful");
 
+                // Load the class and get the methods.
                 if ((compilationResult = testLoader.load(testController.getTest())) == null)
                 {
                     LOGGER.error("Loading of '" + testController.getTestName() + "' failed");
@@ -98,7 +99,8 @@ public class ExecutionTask extends Task
         {
             LOGGER.info("Executing '" + testController.getTestName() + "'");
 
-            Object object = compilationResult.getKey();
+            // Get the test instance and the methods.
+            Object object        = compilationResult.getKey();
             List<Method> methods = compilationResult.getValue();
 
             testController.setState(FXMLTestItemController.TEST_STATE.RUNNING);
@@ -149,6 +151,7 @@ public class ExecutionTask extends Task
             return true;
         }
 
+        // Notify the controller that the task has finished.
         testController.notifyFinishTest();
 
         return false;
