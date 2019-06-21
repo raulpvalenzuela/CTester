@@ -159,7 +159,7 @@ public class FXMLMainController implements Initializable
         String javaHome = configuration.getValueAsString(Configuration.JAVA_HOME);
         if (javaHome != null && !javaHome.isEmpty())
         {
-            LOGGER.info("Setting JAVA_HOME: " + javaHome);
+            LOGGER.info("Setting JAVA_HOME read from config.xml: " + javaHome);
             System.setProperty("java.home", javaHome);
         }
         else
@@ -449,7 +449,7 @@ public class FXMLMainController implements Initializable
     {
         if (mReadersContainer.isVisible())
         {
-            LOGGER.info("Hiding readers list");
+            LOGGER.debug("Hiding readers list");
             mReadersContainer.setVisible(false);
         }
         else
@@ -639,7 +639,7 @@ public class FXMLMainController implements Initializable
      */
     public void removeTestAtIndex(int index)
     {
-        LOGGER.info("Removing test at index: " + index);
+        LOGGER.debug("Removing test at index: " + index);
 
         // Remove the test and the controller from the lists.
         mTestListVBox.getChildren().remove(index);
@@ -651,7 +651,7 @@ public class FXMLMainController implements Initializable
             controller.setAttributes(index++);
         }
 
-        LOGGER.info("Test removed");
+        LOGGER.debug("Test removed");
     }
 
     /**

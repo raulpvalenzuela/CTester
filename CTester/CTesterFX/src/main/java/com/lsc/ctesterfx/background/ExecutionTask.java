@@ -43,7 +43,7 @@ public class ExecutionTask extends Task
      */
     private boolean _runTest()
     {
-        LOGGER.info("Compiling " + testController.getTestName());
+        LOGGER.info("Compiling '" + testController.getTestName() + "'");
 
         Pair<Object, List<Method>> compilationResult = null;
 
@@ -62,15 +62,15 @@ public class ExecutionTask extends Task
             // Compile and load the test class.
             if (testLoader.compile(testController.getTest()))
             {
-                LOGGER.info("Compilation of " + testController.getTestName() + " succesful");
+                LOGGER.info("Compilation of '" + testController.getTestName() + "' succesful");
 
                 if ((compilationResult = testLoader.load(testController.getTest())) == null)
                 {
-                    LOGGER.error("Loading of " + testController.getTestName() + " failed");
+                    LOGGER.error("Loading of '" + testController.getTestName() + "' failed");
                 }
                 else
                 {
-                    LOGGER.info("Loading of " + testController.getTestName() + " succesful");
+                    LOGGER.info("Loading of '" + testController.getTestName() + "' succesful");
 
                     testController.getLogger().logComment("Compilation of " + testController.getTestName() + " succesful!\n");
                     testController.setState(FXMLTestItemController.TEST_STATE.COMPILATION_OK);
@@ -78,7 +78,7 @@ public class ExecutionTask extends Task
             }
             else
             {
-                LOGGER.error("Compilation of " + testController.getTestName() + " failed");
+                LOGGER.error("Compilation of '" + testController.getTestName() + "' failed");
 
                 testController.getLogger().logError("Compilation of " + testController.getTestName() + " failed\n");
                 testController.setState(FXMLTestItemController.TEST_STATE.COMPILATION_FAILED);
@@ -96,7 +96,7 @@ public class ExecutionTask extends Task
         // Execution starts here
         if (compilationResult != null)
         {
-            LOGGER.info("Executing " + testController.getTestName());
+            LOGGER.info("Executing '" + testController.getTestName() + "'");
 
             Object object = compilationResult.getKey();
             List<Method> methods = compilationResult.getValue();
@@ -104,7 +104,7 @@ public class ExecutionTask extends Task
             testController.setState(FXMLTestItemController.TEST_STATE.RUNNING);
             for (Method method : methods)
             {
-                LOGGER.info("Calling " + method.getName() + "' method");
+                LOGGER.info("Calling '" + method.getName() + "' method");
                 testController.getLogger().logComment("Calling '" + method.getName() + "' method\n");
 
                 try
@@ -131,7 +131,7 @@ public class ExecutionTask extends Task
                     LOGGER.error("Exception executing test");
                     LOGGER.error(ex);
 
-                    testController.getLogger().logError("Exception executing'" + method.getName() + "' method");
+                    testController.getLogger().logError("Exception executing '" + method.getName() + "' method");
                     testController.getLogger().logError("Exception: " + ex.toString() + "\n");
                     testController.setState(FXMLTestItemController.TEST_STATE.EXECUTION_FAILED);
 
@@ -141,7 +141,7 @@ public class ExecutionTask extends Task
                 }
             }
 
-            LOGGER.info("Execution of " + testController.getTestName() + " succesful");
+            LOGGER.info("Execution of '" + testController.getTestName() + "' succesful");
 
             testController.setState(FXMLTestItemController.TEST_STATE.EXECUTION_OK);
             testController.notifyFinishTest();

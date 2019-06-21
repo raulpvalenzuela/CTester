@@ -84,7 +84,7 @@ public class TestController
      */
     public void notifyStartTest()
     {
-        LOGGER.info("Setting new file logger");
+        LOGGER.debug("Setting new file logger");
 
         fileLogger.initialize();
 
@@ -97,7 +97,7 @@ public class TestController
      */
     public void notifyFinishTest()
     {
-        LOGGER.info("Closing file logger");
+        LOGGER.debug("Closing file logger");
 
         fileLogger.close();
     }

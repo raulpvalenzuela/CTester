@@ -81,8 +81,8 @@ public class TestLoader extends ClassLoader
             options.add("-cp");
             options.add(System.getProperty("java.class.path"));
 
-            LOGGER.info("Destination folder = " + dest.toString());
-            LOGGER.info("Classpath = " + System.getProperty("java.class.path"));
+            LOGGER.debug("Destination folder = " + dest.toString());
+            LOGGER.debug("Classpath = " + System.getProperty("java.class.path"));
 
             JavaCompiler.CompilationTask task =
                 compiler.getTask(null, fm, null, options, null, fileObjects);
@@ -103,7 +103,7 @@ public class TestLoader extends ClassLoader
         String pkg = null;
         try
         {
-            LOGGER.info("Reading package name");
+            LOGGER.debug("Reading package name");
 
             // Read the package name
             BufferedReader br = new BufferedReader(new FileReader(test.getFile()));
@@ -112,7 +112,7 @@ public class TestLoader extends ClassLoader
             // Remove all the nonsense.
             pkg = pkg.replace("package", "").replace(";", ".").replace(" ", "").trim();
 
-            LOGGER.info("Package found = " + pkg);
+            LOGGER.debug("Package found = " + pkg);
 
         } catch (FileNotFoundException ex) {
             LOGGER.error("Java file not found");
@@ -129,7 +129,7 @@ public class TestLoader extends ClassLoader
 
         try
         {
-            LOGGER.info("Loading and instantiating class");
+            LOGGER.debug("Loading and instantiating class");
 
             // create FileInputStream object
             File file = new File(test.getPath());
@@ -143,16 +143,16 @@ public class TestLoader extends ClassLoader
 
             // Load in the class; Test.class. Should be located in path + \package\
             Class cls  = cl.loadClass(pkg + test.getName());
-            LOGGER.info("Class loaded");
+            LOGGER.debug("Class loaded");
             Object obj = cls.newInstance();
-            LOGGER.info("New instance created");
+            LOGGER.debug("New instance created");
 
             Method setupMethod    = cls.getDeclaredMethod(SETUP_METHOD);
-            LOGGER.info("'" + SETUP_METHOD + "' method found");
+            LOGGER.debug("'" + SETUP_METHOD + "' method found");
             Method runMethod      = cls.getDeclaredMethod(RUN_METHOD);
-            LOGGER.info("'" + RUN_METHOD + "' method found");
+            LOGGER.debug("'" + RUN_METHOD + "' method found");
             Method teardownMethod = cls.getDeclaredMethod(TEARDOWN_METHOD);
-            LOGGER.info("'" + TEARDOWN_METHOD + "' method found");
+            LOGGER.debug("'" + TEARDOWN_METHOD + "' method found");
 
             return new Pair<>(obj, Arrays.asList(new Method[] { setupMethod, runMethod, teardownMethod }));
 
