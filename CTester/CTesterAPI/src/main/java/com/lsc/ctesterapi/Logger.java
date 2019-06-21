@@ -30,7 +30,8 @@ public class Logger extends AbstractLogger
     }
 
     /**
-     * Logs general information.
+     * Logs general information. The text will be printed as it is received
+     * plus a new line.
      *
      * @param text: text to be printed.
      */
@@ -41,9 +42,10 @@ public class Logger extends AbstractLogger
     }
 
     /**
-     * Logs comments.
+     * Logs comments. The text will be appended to the string "// " and
+     * a new line will be added.
      *
-     * @param text: text to be printed.
+     * @param text: text to be printed as a comment.
      */
     @Override
     public void logComment(String text)
@@ -52,9 +54,10 @@ public class Logger extends AbstractLogger
     }
 
     /**
-     * Logs errors.
+     * Logs errors. Special type of comment that gets printed in RED and
+     * with the label "[ERROR]" at the beginning.
      *
-     * @param text: text to be printed.
+     * @param text: text to be printed as an error.
      */
     @Override
     public void logError(String text)
@@ -63,9 +66,10 @@ public class Logger extends AbstractLogger
     }
 
     /**
-     * Logs warnings.
+     * Logs warnings. Special type of comment that gets printed in YELLOW and
+     * with the label "[ERROR]" at the beginning.
      *
-     * @param text: text to be printed.
+     * @param text: text to be printed as a warning.
      */
     @Override
     public void logWarning(String text)
@@ -74,7 +78,8 @@ public class Logger extends AbstractLogger
     }
 
     /**
-     * Logs debug information.
+     * Logs debug information. Meaning that it will only be printed
+     * in the screen and not in the file.
      *
      * @param text: text to be printed.
      */
@@ -85,7 +90,8 @@ public class Logger extends AbstractLogger
     }
 
     /**
-     * Logs a succesful message.
+     * Logs a succesful message. Special type of comment that gets printed in GREEN
+     * and with the label "[SUCCESS]" at the beginning.
      *
      * @param text: text to be printed.
      */

@@ -67,7 +67,6 @@ public class ApplicationLogger extends AbstractLogger
     public void logWarning(String text)
     {
         printer.logWarning(text);
-        fileLogger.logWarning(text);
     }
 
     @Override
