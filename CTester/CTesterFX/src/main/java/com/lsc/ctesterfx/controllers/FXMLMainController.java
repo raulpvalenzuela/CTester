@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
+import com.lsc.ctesterapi.utls.Formatter;
 import com.lsc.ctesterfx.constants.Animations;
 import com.lsc.ctesterfx.constants.Strings;
 import com.lsc.ctesterfx.constants.Tooltips;
@@ -39,7 +40,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
 
 /**
@@ -569,9 +569,7 @@ public class FXMLMainController implements Initializable
                 try
                 {
                     atr = reader.reset();
-
-                    String atrStr = Hex.encodeHexString(atr)
-                        .toUpperCase().replaceAll("(.{" + 2 + "})", "$1 ").trim();
+                    String atrStr = Formatter.fromByteArrayToString(atr);
 
                     printer.log(Strings.RESET_CARD);
                     printer.logComment(Strings.ATR_HEADER + atrStr + "\n");
