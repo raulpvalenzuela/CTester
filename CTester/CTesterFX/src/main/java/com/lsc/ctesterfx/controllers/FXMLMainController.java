@@ -60,6 +60,8 @@ public class FXMLMainController implements Initializable
     private Stage stage;
     // Reference to the printer.
     private Printer printer;
+    // Reference to the Reader controller
+    private ReaderController readerController;
 
     // Flag to indicate if the commands list is visible.
     private boolean commandsListVisible;
@@ -173,6 +175,9 @@ public class FXMLMainController implements Initializable
         // Printer setup
         printer = Printer.newInstance();
         printer.setup(mOutputContainer);
+
+        // Reader controller
+        readerController = ReaderController.newInstance();
     }
 
     /**
@@ -457,33 +462,41 @@ public class FXMLMainController implements Initializable
             LOGGER.info("Loading readers list:");
             // Clear the list
             mReadersContainer.getChildren().clear();
-            // Retrieve the readers again
-            List<String> readers = ReaderController.list().getValue();
 
-            for (int i = 0; i < readers.size(); ++i)
+            try
             {
-                LOGGER.info(" - " + readers.get(i));
+                // Retrieve the readers.
+                List<String> readers = readerController.list();
 
-                try
+                for (int i = 0; i < readers.size(); ++i)
                 {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ReaderItem.fxml"));
-                    Parent readerItem = (Parent) loader.load();
-                    FXMLReaderItemController controller = (FXMLReaderItemController) loader.getController();
+                    LOGGER.info(" - " + readers.get(i));
 
-                    controller.setAttributes(this
-                            , readers.get(i)
-                            , i
-                            , (ReaderController.getSelected() != null) && ReaderController.getSelected().getName().equals(readers.get(i)));
+                    try
+                    {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ReaderItem.fxml"));
+                        Parent readerItem = (Parent) loader.load();
+                        FXMLReaderItemController controller = (FXMLReaderItemController) loader.getController();
 
-                    mReadersContainer.getChildren().add(readerItem);
-                    readerItemControllerList.add(controller);
+                        controller.setAttributes(this
+                                , readers.get(i)
+                                , i
+                                , (readerController.getSelected() != null) && readerController.getSelected().getName().equals(readers.get(i)));
 
-                    mReadersContainer.setVisible(true);
+                        mReadersContainer.getChildren().add(readerItem);
+                        readerItemControllerList.add(controller);
 
-                } catch (IOException ex) {
-                    LOGGER.error("Exception loading ReaderItem.fxml");
-                    LOGGER.error(ex);
+                        mReadersContainer.setVisible(true);
+
+                    } catch (IOException ex) {
+                        LOGGER.error("Exception loading ReaderItem.fxml");
+                        LOGGER.error(ex);
+                    }
                 }
+
+            } catch (Exception ex) {
+                LOGGER.error("Exception retrieving readers");
+                LOGGER.error(ex);
             }
         }
     }
@@ -549,22 +562,22 @@ public class FXMLMainController implements Initializable
         try
         {
             byte[] atr;
-            Reader reader = ReaderController.getSelected();
+            Reader reader = readerController.getSelected();
 
             if (reader != null)
             {
-                atr = reader.reset();
-                if (atr != null)
+                try
                 {
+                    atr = reader.reset();
+
                     String atrStr = Hex.encodeHexString(atr)
                         .toUpperCase().replaceAll("(.{" + 2 + "})", "$1 ").trim();
 
                     printer.log(Strings.RESET_CARD);
                     printer.logComment(Strings.ATR_HEADER + atrStr + "\n");
-                }
-                else
-                {
-                    printer.logError(Strings.NO_ATR);
+
+                } catch (Exception e) {
+                    printer.logError(e.getMessage());
                 }
             }
             else
@@ -695,18 +708,25 @@ public class FXMLMainController implements Initializable
     {
         LOGGER.info("'" + readerName + "' selected");
 
-        ReaderController.select(index);
-
-        readerItemControllerList.stream().filter((controller)
-                -> (!controller.getName().equals(readerName))).forEachOrdered((controller) ->
+        try
         {
-            controller.selectReader(false);
-        });
+            readerController.select(index);
 
-        // Update the reader label.
-        mReaderSelectedLabel.setText(readerName);
-        // Hide the list.
-        mReadersContainer.setVisible(false);
+            readerItemControllerList.stream().filter((controller)
+                    -> (!controller.getName().equals(readerName))).forEachOrdered((controller) ->
+            {
+                controller.selectReader(false);
+            });
+
+            // Update the reader label.
+            mReaderSelectedLabel.setText(readerName);
+            // Hide the list.
+            mReadersContainer.setVisible(false);
+
+        } catch (Exception ex) {
+            LOGGER.error("Exception selecting reader '" + readerName + "'");
+            LOGGER.error(ex);
+        }
     }
 
     /**

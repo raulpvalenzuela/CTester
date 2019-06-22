@@ -96,7 +96,7 @@ public class PCSCReader extends Reader
     }
 
     @Override
-    public byte[] reset()
+    public byte[] reset() throws Exception
     {
         try
         {
@@ -111,12 +111,12 @@ public class PCSCReader extends Reader
             LOGGER.error("Exception resetting the card");
             LOGGER.error(ex);
 
-            return null;
+            throw ex;
         }
     }
 
     @Override
-    public ApduResponse transmit(ApduCommand apdu)
+    public ApduResponse transmit(ApduCommand apdu) throws Exception
     {
         return new ApduResponse();
     }

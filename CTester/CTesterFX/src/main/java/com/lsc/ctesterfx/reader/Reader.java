@@ -12,10 +12,10 @@ import com.lsc.ctesterfx.iso7816.ApduResponse;
 public abstract class Reader implements IReader
 {
     @Override
-    public abstract byte[] reset();
+    public abstract byte[] reset() throws Exception;
 
     @Override
-    public abstract ApduResponse transmit(ApduCommand command);
+    public abstract ApduResponse transmit(ApduCommand command) throws Exception;
 
     /**
      * Creates a new connection with the card.
