@@ -1,5 +1,6 @@
 package com.lsc.ctesterapi;
 
+import com.lsc.ctesterapi.utls.Formatter;
 import java.util.Arrays;
 
 /**
@@ -252,4 +253,10 @@ public class ApduCommand
      * @return command as a byte array.
      */
     public byte[] asByteArray() { return this.command; }
+
+    @Override
+    public String toString()
+    {
+        return Formatter.fromByteArrayToString(command);
+    }
 }

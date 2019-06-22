@@ -4,7 +4,7 @@ import com.lsc.ctesterapi.ApduResponse;
 import com.lsc.ctesterapi.ApduCommand;
 
 /**
- * Public interface with a reader.
+ * Interface with a reader.
  *
  * @author dma@logossmartcard.com
  */

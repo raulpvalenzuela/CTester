@@ -151,7 +151,7 @@
                                                 <Font name="Microsoft JhengHei UI Light" size="12.0" />
                                              </font>
                                           </JFXButton>
-                                          <JFXTextField fx:id="mCommandTextfield" focusColor="#53dbb6" focusTraversable="false" prefHeight="32.0" prefWidth="280.0" promptText="Command" unFocusColor="#cccccc" HBox.hgrow="ALWAYS">
+                                          <JFXTextField fx:id="mCommandTextfield" focusColor="#53dbb6" focusTraversable="false" onInputMethodTextChanged="#onCommandTextChange" prefHeight="32.0" prefWidth="280.0" promptText="Command" unFocusColor="#cccccc" HBox.hgrow="ALWAYS">
                                              <font>
                                                 <Font name="Microsoft JhengHei UI Light" size="12.0" />
                                              </font>

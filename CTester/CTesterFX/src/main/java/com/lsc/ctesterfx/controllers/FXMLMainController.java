@@ -5,6 +5,8 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
+import com.lsc.ctesterapi.ApduCommand;
+import com.lsc.ctesterapi.ApduResponse;
 import com.lsc.ctesterapi.utls.Formatter;
 import com.lsc.ctesterfx.constants.Animations;
 import com.lsc.ctesterfx.constants.Strings;
@@ -32,6 +34,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -40,6 +43,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
 
 /**
@@ -299,6 +304,7 @@ public class FXMLMainController implements Initializable
         mGetProductCodeButton.setDisable(true);
         mBootloaderButton.setDisable(true);
         mFABButton.setDisable(true);
+        mCommandTextfield.setDisable(true);
         testItemControllerList.forEach((controller) ->
         {
             controller.disableButtons();
@@ -322,6 +328,7 @@ public class FXMLMainController implements Initializable
         mGetProductCodeButton.setDisable(false);
         mBootloaderButton.setDisable(false);
         mFABButton.setDisable(false);
+        mCommandTextfield.setDisable(false);
         testItemControllerList.forEach((controller) ->
         {
             controller.enableButtons();
@@ -553,7 +560,33 @@ public class FXMLMainController implements Initializable
     @FXML
     private void onClickSend(ActionEvent event)
     {
-        String commandEntered = mCommandTextfield.getText();
+        if (readerController.getSelected() != null && !mCommandTextfield.getText().isEmpty())
+        {
+            String commandEntered = Formatter.separate(mCommandTextfield.getText(), 2);
+
+            LOGGER.info("Command to be sent: " + commandEntered);
+
+            try
+            {
+                ApduCommand apdu = new ApduCommand(
+                        Formatter.fromStringToByteArray(commandEntered));
+
+                printer.log(Strings.COMMAND_HEADER + apdu.toString());
+                ApduResponse response = readerController.getSelected().transmit(apdu);
+                printer.log(Strings.RESPONSE_HEADER + response.toString() + "\n");
+
+            } catch (DecoderException ex) {
+                LOGGER.error("Invalid command");
+
+                printer.logError("Invalid command");
+
+            } catch (Exception ex) {
+                LOGGER.error("Exception transmitting command");
+                LOGGER.error(ex);
+
+                printer.logError("Exception transmitting command: " + ex.getMessage());
+            }
+        }
     }
 
     @FXML
@@ -613,6 +646,13 @@ public class FXMLMainController implements Initializable
     private void onClickVirginizeButton(ActionEvent event)
     {
         // TODO
+    }
+
+    @FXML
+    private void onCommandTextChange(InputMethodEvent event)
+    {
+        String text = mCommandTextfield.getText().replaceAll(" ", "");
+
     }
 
     @FXML

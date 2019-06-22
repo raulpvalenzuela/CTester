@@ -1,5 +1,7 @@
 package com.lsc.ctesterapi;
 
+import com.lsc.ctesterapi.utls.Formatter;
+
 /**
  * Class that represents a response APDU.
  *
@@ -53,7 +55,7 @@ public class ApduResponse
         {
             ApduResponse apdu = new ApduResponse();
 
-            apdu.sw = this.sw;
+            apdu.sw   = this.sw;
             apdu.data = this.data;
 
             return apdu;
@@ -73,4 +75,18 @@ public class ApduResponse
      * @return body of the response. Null if there's none.
      */
     public byte[] getData() { return data; }
+
+    @Override
+    public String toString()
+    {
+        String swStr = Formatter.fromByteArrayToString(this.sw);
+        String dataStr = "";
+
+        if (this.data != null && this.data.length > 0)
+        {
+            dataStr = Formatter.fromByteArrayToString(this.data);
+        }
+
+        return dataStr + swStr;
+    }
 }
