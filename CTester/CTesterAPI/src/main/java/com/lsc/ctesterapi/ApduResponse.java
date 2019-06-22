@@ -1,4 +1,4 @@
-package com.lsc.ctesterfx.iso7816;
+package com.lsc.ctesterapi;
 
 /**
  * Class that represents a response APDU.

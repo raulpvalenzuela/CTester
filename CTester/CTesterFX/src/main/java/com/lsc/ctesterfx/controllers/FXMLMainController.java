@@ -553,7 +553,7 @@ public class FXMLMainController implements Initializable
     @FXML
     private void onClickSend(ActionEvent event)
     {
-        // TODO
+        String commandEntered = mCommandTextfield.getText();
     }
 
     @FXML

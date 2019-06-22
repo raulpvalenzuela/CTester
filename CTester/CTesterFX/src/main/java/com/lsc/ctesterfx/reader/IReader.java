@@ -1,7 +1,7 @@
 package com.lsc.ctesterfx.reader;
 
-import com.lsc.ctesterfx.iso7816.ApduResponse;
-import com.lsc.ctesterfx.iso7816.ApduCommand;
+import com.lsc.ctesterapi.ApduResponse;
+import com.lsc.ctesterapi.ApduCommand;
 
 /**
  * Public interface with a reader.
