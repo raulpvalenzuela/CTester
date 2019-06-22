@@ -6,6 +6,8 @@ import javax.smartcardio.Card;
 import javax.smartcardio.CardChannel;
 import javax.smartcardio.CardException;
 import javax.smartcardio.CardTerminal;
+import javax.smartcardio.CommandAPDU;
+import javax.smartcardio.ResponseAPDU;
 import org.apache.log4j.Logger;
 
 /**
@@ -118,7 +120,27 @@ public class PCSCReader implements IReader
     @Override
     public ApduResponse transmit(ApduCommand apdu) throws Exception
     {
-        return new ApduResponse();
+        ApduResponse apduResponse = null;
+
+        if (channel != null)
+        {
+            ResponseAPDU response = channel.transmit(
+                    new CommandAPDU(
+                            apdu.getCla()
+                          , apdu.getIns()
+                          , apdu.getP1()
+                          , apdu.getP2()
+                          , apdu.getData()
+                          , apdu.getLe()));
+
+            apduResponse = new ApduResponse.Builder()
+                    .withSw1((byte) response.getSW1())
+                    .withSw2((byte) response.getSW2())
+                    .withData(response.getData())
+                    .build();
+        }
+
+        return apduResponse;
     }
 
     @Override

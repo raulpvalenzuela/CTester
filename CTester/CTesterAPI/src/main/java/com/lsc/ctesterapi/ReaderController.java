@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class ReaderController implements IReaderController
 {
-    private final com.lsc.ctesterfx.reader.IReaderController readerController;
+    private final IReaderController readerController;
 
     public ReaderController()
     {

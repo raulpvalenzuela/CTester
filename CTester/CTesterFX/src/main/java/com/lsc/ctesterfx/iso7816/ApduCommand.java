@@ -167,35 +167,35 @@ public class ApduCommand
      *
      * @return P1 byte.
      */
-    public byte getP1() { return p1;  }
+    public byte getP1() { return p1; }
 
     /**
      * Returns P2 byte.
      *
      * @return P2 byte.
      */
-    public byte getP2() { return p2;  }
+    public byte getP2() { return p2; }
 
     /**
      * Returns Lc byte.
      *
      * @return Lc byte.
      */
-    public byte getLc() { return lc;  }
+    public byte getLc() { return lc; }
 
     /**
      * Returns Le byte.
      *
      * @return Le byte.
      */
-    public byte getLe() { return le;  }
+    public byte getLe() { return le; }
 
     /**
      * Returns the data.
      *
      * @return command data.
      */
-    public byte[] getData() { return data;  }
+    public byte[] getData() { return data; }
 
     /**
      * Sets the class byte.
@@ -216,33 +216,40 @@ public class ApduCommand
      *
      * @param p1 P1 byte to be set.
      */
-    public void setP1(byte p1) { this.p1  = p1;  }
+    public void setP1(byte p1) { this.p1  = p1; }
 
     /**
      * Sets the P2 byte.
      *
      * @param p2 P2 byte to be set.
      */
-    public void setP2(byte p2) { this.p2  = p2;  }
+    public void setP2(byte p2) { this.p2  = p2; }
 
     /**
      * Sets the Lc byte.
      *
      * @param lc Lc byte to be set.
      */
-    public void setLc(byte lc) { this.lc  = lc;  }
+    public void setLc(byte lc) { this.lc  = lc; }
 
     /**
      * Sets the Le byte.
      *
      * @param le Le byte to be set.
      */
-    public void setLe(byte le) { this.le  = le;  }
+    public void setLe(byte le) { this.le  = le; }
 
     /**
      * Sets the command data.
      *
      * @param data command data to be set.
      */
-    public void setData(byte[] data) { this.data  = data;  }
+    public void setData(byte[] data) { this.data  = data; }
+
+    /**
+     * Returns the command as a byte array.
+     *
+     * @return command as a byte array.
+     */
+    public byte[] asByteArray() { return this.command; }
 }
