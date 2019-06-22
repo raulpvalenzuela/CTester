@@ -13,12 +13,9 @@ import org.apache.log4j.Logger;
  *
  * @author dma@logossmartcard.com
  */
-public class PCSCReader extends Reader
+public class PCSCReader implements IReader
 {
     private static final Logger LOGGER = Logger.getLogger(PCSCReader.class);
-
-    // Flag to indicate if a connection to the card has been estabished.
-    private boolean isConnected;
 
     // Reference to the card.
     private Card card;
@@ -55,7 +52,6 @@ public class PCSCReader extends Reader
 
             cardReader.reader      = this.reader;
             cardReader.card        = null;
-            cardReader.isConnected = false;
 
             return cardReader;
         }
@@ -64,59 +60,63 @@ public class PCSCReader extends Reader
     private PCSCReader() {}
 
     @Override
-    public void connect()
+    public void connect() throws Exception
     {
+        LOGGER.debug("Connecting to reader '" + reader.getName() + "'");
+
+        // Establishes a connection to the card. If a connection has previously established using the
+        // specified protocol, this method returns the same Card object as the previous call.
+        card    = reader.connect("*");
         channel = card.getBasicChannel();
 
-        isConnected = true;
+        LOGGER.debug("Card retrieved and channel opened");
     }
 
     @Override
-    public void release()
+    public void release() throws Exception
     {
-        if (isConnected && (channel != null))
-        {
-            LOGGER.debug("Releasing reader '" + reader.getName() + "'");
+        LOGGER.debug("Releasing reader '" + reader.getName() + "'");
 
-            try
+        try
+        {
+            if (channel != null)
             {
                 channel.close();
                 card.disconnect(false);
-
-                LOGGER.debug("Reader released");
-
-            } catch (CardException | IllegalStateException ex) {
-                LOGGER.error("Exception releasing reader");
-                LOGGER.error(ex);
-
-            } finally {
-                isConnected = false;
             }
+
+            LOGGER.debug("Reader released");
+
+        } catch (CardException | IllegalStateException ex) {
+            LOGGER.error("Exception releasing reader");
+            LOGGER.error(ex);
+
+            throw ex;
         }
+
     }
 
     @Override
-    public byte[] reset()
+    public byte[] reset() throws Exception
     {
         try
         {
-            // Establishes a connection to the card. If a connection has previously established using the
-            // specified protocol, this method returns the same Card object as the previous call.
-            card = reader.connect("*");
-            this.connect();
+            // The reset method can be called from outside the test, so
+            // the connection has to be made automatically.
+            connect();
 
             return card.getATR().getBytes();
 
-        } catch (CardException ex) {
+        } catch (Exception ex) {
             LOGGER.error("Exception resetting the card");
             LOGGER.error(ex);
 
-            return null;
+            throw ex;
         }
     }
 
     @Override
-    public ApduResponse transmit(ApduCommand apdu)
+    public ApduResponse transmit(ApduCommand apdu) throws Exception
     {
         return new ApduResponse();
     }
