@@ -458,7 +458,7 @@ public class FXMLMainController implements Initializable
             // Clear the list
             mReadersContainer.getChildren().clear();
             // Retrieve the readers again
-            List<String> readers = ReaderController.list();
+            List<String> readers = ReaderController.list().getValue();
 
             for (int i = 0; i < readers.size(); ++i)
             {

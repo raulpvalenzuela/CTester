@@ -2,6 +2,7 @@ package com.lsc.ctesterfx.reader;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.util.Pair;
 import javax.smartcardio.CardException;
 import javax.smartcardio.CardTerminal;
 import javax.smartcardio.TerminalFactory;
@@ -14,16 +15,20 @@ import org.apache.log4j.Logger;
  */
 public class ReaderController
 {
-    private static final Logger LOGGER = Logger.getLogger(ReaderController.class);
+    // Message errors.
+    public static final String OK = "No errors";
 
+    // Internal logger.
+    private static final Logger LOGGER = Logger.getLogger(ReaderController.class);
+    // Reference to the current reader selected.
     private static Reader currentReader;
 
     /**
      * Returns a list containing all the readers' names.
      *
-     * @return list with all the readers' names.
+     * @return pair with the message error if any, and list with all the readers' names.
      */
-    public static List<String> list()
+    public static Pair<String, List<String>> list()
     {
         List<String> readers = new ArrayList<>();
 
@@ -38,10 +43,10 @@ public class ReaderController
             LOGGER.error("Exception retrieving readers");
             LOGGER.error(ex);
 
-            return new ArrayList<>();
+            return new Pair<>(ex.getMessage(), new ArrayList<>());
         }
 
-        return readers;
+        return new Pair<>(OK, readers);
     }
 
     /**
