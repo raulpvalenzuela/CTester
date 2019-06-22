@@ -14,7 +14,7 @@ public class ReaderController implements IReaderController
 {
     private static ReaderController readerController;
     // Reference to the current reader selected.
-    private static Reader currentReader;
+    private static IReader currentReader;
 
     private ReaderController() {}
 
@@ -55,7 +55,7 @@ public class ReaderController implements IReaderController
     }
 
     @Override
-    public Reader getSelected()
+    public IReader getSelected()
     {
         return currentReader;
     }

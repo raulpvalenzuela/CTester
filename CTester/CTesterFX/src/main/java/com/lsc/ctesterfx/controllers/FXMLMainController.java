@@ -10,7 +10,7 @@ import com.lsc.ctesterfx.constants.Strings;
 import com.lsc.ctesterfx.constants.Tooltips;
 import com.lsc.ctesterfx.logger.Printer;
 import com.lsc.ctesterfx.persistence.Configuration;
-import com.lsc.ctesterfx.reader.Reader;
+import com.lsc.ctesterfx.reader.IReader;
 import com.lsc.ctesterfx.reader.ReaderController;
 import java.io.File;
 import java.io.IOException;
@@ -562,7 +562,7 @@ public class FXMLMainController implements Initializable
         try
         {
             byte[] atr;
-            Reader reader = readerController.getSelected();
+            IReader reader = readerController.getSelected();
 
             if (reader != null)
             {
@@ -708,25 +708,32 @@ public class FXMLMainController implements Initializable
     {
         LOGGER.info("'" + readerName + "' selected");
 
-        try
+        if (readerController.getSelected() == null || !readerController.getSelected().getName().equals(readerName))
         {
-            readerController.select(index);
-
-            readerItemControllerList.stream().filter((controller)
-                    -> (!controller.getName().equals(readerName))).forEachOrdered((controller) ->
+            try
             {
-                controller.selectReader(false);
-            });
+                readerController.select(index);
 
-            // Update the reader label.
-            mReaderSelectedLabel.setText(readerName);
-            // Hide the list.
-            mReadersContainer.setVisible(false);
+                readerItemControllerList.stream().filter((controller)
+                        -> (!controller.getName().equals(readerName))).forEachOrdered((controller) ->
+                {
+                    controller.selectReader(false);
+                });
 
-        } catch (Exception ex) {
-            LOGGER.error("Exception selecting reader '" + readerName + "'");
-            LOGGER.error(ex);
+                // Update the reader label.
+                mReaderSelectedLabel.setText(readerName);
+
+            } catch (Exception ex) {
+                LOGGER.error("Exception selecting reader '" + readerName + "'");
+                LOGGER.error(ex);
+
+                // Hide the list.
+                mReadersContainer.setVisible(false);
+            }
         }
+
+        // Hide the list.
+        mReadersContainer.setVisible(false);
     }
 
     /**

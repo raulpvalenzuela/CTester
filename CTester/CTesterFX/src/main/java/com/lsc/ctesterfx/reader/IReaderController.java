@@ -31,5 +31,5 @@ public interface IReaderController
      *
      * @return the selected reader. Null if there is no reader selected.
      */
-    public Reader getSelected();
+    public IReader getSelected();
 }
