@@ -158,6 +158,16 @@ public class FXMLMainController implements Initializable
         testItemControllerList   = new ArrayList<>();
         readerItemControllerList = new ArrayList<>();
 
+        // Initialize the executors.
+        MultithreadController.initialize();
+
+        // Printer setup
+        printer = Printer.newInstance();
+        printer.setup(mOutputContainer);
+
+        // Reader controller
+        readerController = ReaderController.newInstance();
+
         // It's needed to set the Java Home to the one inside the JDK (~/../Java/jdk1.8.xxx/jre)
         // to be able to compile the tests. When running the .jar by default
         // it will run against the JRE located in ~/../Java/jre1.8.xxx.
@@ -173,15 +183,24 @@ public class FXMLMainController implements Initializable
             LOGGER.warn("JAVA_HOME is not properly configured");
         }
 
-        // Initialize the executors.
-        MultithreadController.initialize();
+        String lastReader = configuration.getValueAsString(Configuration.LAST_READER);
+        if ((lastReader != null) && !(lastReader.isEmpty()))
+        {
+            LOGGER.debug("Loading last session's reader '" + lastReader + "'");
 
-        // Printer setup
-        printer = Printer.newInstance();
-        printer.setup(mOutputContainer);
+            try
+            {
+                if (readerController.select(lastReader))
+                {
+                    // Update the reader label.
+                    mReaderSelectedLabel.setText(lastReader);
+                }
 
-        // Reader controller
-        readerController = ReaderController.newInstance();
+            } catch (Exception ex) {
+                LOGGER.error("Error selecting last session's reader");
+                LOGGER.error(ex);
+            }
+        }
     }
 
     /**

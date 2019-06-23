@@ -2,5 +2,7 @@
 <Configuration>
   <CTester>
     <JavaHome>C:\Program Files\Java\jdk1.8.0_201\jre</JavaHome>
+    <Reader></Reader>
+    <TestsPath/>
   </CTester>
 </Configuration>
