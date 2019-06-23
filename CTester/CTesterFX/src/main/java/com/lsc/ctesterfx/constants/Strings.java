@@ -13,5 +13,4 @@ public class Strings
 
     // Errors
     public static final String NO_READER_SELECTED = "No reader selected";
-    public static final String NO_ATR             = "Could not get ATR";
 }

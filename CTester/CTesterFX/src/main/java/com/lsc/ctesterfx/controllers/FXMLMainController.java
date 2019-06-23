@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
 import com.lsc.ctesterapi.ApduCommand;
 import com.lsc.ctesterapi.ApduResponse;
+import com.lsc.ctesterapi.utls.ApduValidator;
 import com.lsc.ctesterapi.utls.Formatter;
 import com.lsc.ctesterfx.constants.Animations;
 import com.lsc.ctesterfx.constants.Strings;
@@ -34,7 +35,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -44,7 +44,6 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
 
 /**
@@ -207,6 +206,14 @@ public class FXMLMainController implements Initializable
 
         mTestListScrollPane.setFitToHeight(true);
         mTestListScrollPane.setFitToWidth(true);
+
+        // Disable the send button.
+        mSendButton.setDisable(true);
+
+        mCommandTextfield.textProperty().addListener((observable, oldValue, newValue) ->
+        {
+            mSendButton.setDisable(!ApduValidator.isValid(newValue));
+        });
     }
 
     /**
@@ -321,7 +328,6 @@ public class FXMLMainController implements Initializable
         mRunTestsButton.setDisable(false);
         mReadersButton.setDisable(false);
         mSettingsButton.setDisable(false);
-        mSendButton.setDisable(false);
         mResetButton.setDisable(false);
         mVirginizeButton.setDisable(false);
         mSecurityHistoryButton.setDisable(false);
@@ -333,6 +339,12 @@ public class FXMLMainController implements Initializable
         {
             controller.enableButtons();
         });
+
+        // Check if the command is valid to enable the send button.
+        if (ApduValidator.isValid(mCommandTextfield.getText()))
+        {
+            mSendButton.setDisable(false);
+        }
     }
 
     @FXML
@@ -560,7 +572,7 @@ public class FXMLMainController implements Initializable
     @FXML
     private void onClickSend(ActionEvent event)
     {
-        if (readerController.getSelected() != null && !mCommandTextfield.getText().isEmpty())
+        if (readerController.getSelected() != null)
         {
             String commandEntered = Formatter.separate(mCommandTextfield.getText(), 2);
 
@@ -578,14 +590,18 @@ public class FXMLMainController implements Initializable
             } catch (DecoderException ex) {
                 LOGGER.error("Invalid command");
 
-                printer.logError("Invalid command");
+                printer.logError("Invalid command\n");
 
             } catch (Exception ex) {
                 LOGGER.error("Exception transmitting command");
                 LOGGER.error(ex);
 
-                printer.logError("Exception transmitting command: " + ex.getMessage());
+                printer.logError("Exception transmitting command: " + ex.getMessage() + "\n");
             }
+        }
+        else
+        {
+            printer.logWarning(Strings.NO_READER_SELECTED + "\n");
         }
     }
 
@@ -608,19 +624,19 @@ public class FXMLMainController implements Initializable
                     printer.logComment(Strings.ATR_HEADER + atrStr + "\n");
 
                 } catch (Exception e) {
-                    printer.logError(e.getMessage());
+                    printer.logError(e.getMessage() + "\n");
                 }
             }
             else
             {
-                printer.logWarning(Strings.NO_READER_SELECTED);
+                printer.logWarning(Strings.NO_READER_SELECTED + "\n");
             }
 
         } catch (Exception ex) {
             LOGGER.error("Exception resetting the card");
             LOGGER.error(ex);
 
-            printer.logError("Exception resetting the card");
+            printer.logError("Exception resetting the card\n");
         }
     }
 
@@ -646,13 +662,6 @@ public class FXMLMainController implements Initializable
     private void onClickVirginizeButton(ActionEvent event)
     {
         // TODO
-    }
-
-    @FXML
-    private void onCommandTextChange(InputMethodEvent event)
-    {
-        String text = mCommandTextfield.getText().replaceAll(" ", "");
-
     }
 
     @FXML
