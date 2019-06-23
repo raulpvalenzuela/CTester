@@ -2,6 +2,9 @@ package com.lsc.ctesterfx;
 
 import com.lsc.ctesterfx.controllers.FXMLMainController;
 import com.lsc.ctesterfx.background.MultithreadController;
+import com.lsc.ctesterfx.persistence.Configuration;
+import com.lsc.ctesterfx.reader.IReader;
+import com.lsc.ctesterfx.reader.ReaderController;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -39,7 +42,19 @@ public class MainApp extends Application
     {
         LOGGER.info("Exiting CTester, releasing resources");
 
+        // Shut executors down.
         MultithreadController.shutdown();
+
+        // Save last reader.
+        ReaderController readerController = ReaderController.newInstance();
+        Configuration.Editor editor = new Configuration().getEditor();
+
+        IReader lastReader = readerController.getSelected();
+        if (lastReader != null)
+        {
+            editor.edit(Configuration.LAST_READER, lastReader.getName());
+            editor.commit();
+        }
     }
 
     /**

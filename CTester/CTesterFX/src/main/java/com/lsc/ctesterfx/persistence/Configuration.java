@@ -4,8 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
@@ -18,9 +17,13 @@ import org.dom4j.io.XMLWriter;
  */
 public class Configuration
 {
+    private static final Logger LOGGER = Logger.getLogger(Configuration.class);
+
     // Public constants
     public static final String CTESTER = "CTester";
-        public static final String JAVA_HOME = "JavaHome";
+        public static final String JAVA_HOME   = "JavaHome";
+        public static final String LAST_READER = "Reader";
+        public static final String LAST_PATH   = "TestsPath";
 
     // Private constants
     private static final String CONFIG_PATH =
@@ -48,7 +51,8 @@ public class Configuration
                 document = reader.read(configurationFile);
 
             } catch (DocumentException ex) {
-                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
+                LOGGER.error("Exception opening config.xml'");
+                LOGGER.error(ex);
             }
         }
 
@@ -60,6 +64,8 @@ public class Configuration
          */
         public void edit(String key, String newValue)
         {
+            LOGGER.debug("Updating '" + newValue + "' into" + "'" + key + "'");
+
             document.selectSingleNode("//" + key).setText(newValue);
         }
 
@@ -72,14 +78,18 @@ public class Configuration
 
             try
             {
+                LOGGER.debug("Committing changes in config.xml");
                 writer = new XMLWriter(new FileWriter(configurationFile));
                 writer.write(document);
+                LOGGER.debug("Changes saved correctly");
 
             } catch (UnsupportedEncodingException ex) {
-                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
+                LOGGER.error("Exception writing config.xml'");
+                LOGGER.error(ex);
 
             } catch (IOException ex) {
-                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
+                LOGGER.error("Exception writing config.xml'");
+                LOGGER.error(ex);
 
             } finally {
                 if (writer != null)
@@ -89,7 +99,8 @@ public class Configuration
                         writer.close();
 
                     } catch (IOException ex) {
-                        Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
+                        LOGGER.error("Exception closing config.xml'");
+                        LOGGER.error(ex);
                     }
                 }
             }
@@ -106,7 +117,7 @@ public class Configuration
 
     /**
      * Creates and returns a new configuration editor.
-     * 
+     *
      * @return reference to a new configuration editor.
      */
     public Editor getEditor()
@@ -130,7 +141,8 @@ public class Configuration
             return document.selectSingleNode("//" + key).getStringValue();
 
         } catch (DocumentException ex) {
-            Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.error("Exception reading config.xml'");
+            LOGGER.error(ex);
         }
 
         return null;

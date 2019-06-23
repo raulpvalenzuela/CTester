@@ -41,7 +41,7 @@ public class ReaderController implements IReaderController
     }
 
     @Override
-    public void select(int index) throws Exception
+    public boolean select(int index) throws Exception
     {
         // Release the previous one
         if (currentReader != null)
@@ -52,6 +52,24 @@ public class ReaderController implements IReaderController
         currentReader = new PCSCReader.Builder()
                 .fromCardTerminal(TerminalFactory.getDefault().terminals().list().get(index))
                 .build();
+
+        return true;
+    }
+
+    @Override
+    public boolean select(String name) throws Exception
+    {
+        List<String> readers = list();
+
+        int index = readers.indexOf(name);
+        if (index != -1)
+        {
+            select(index);
+
+            return true;
+        }
+
+        return false;
     }
 
     @Override
