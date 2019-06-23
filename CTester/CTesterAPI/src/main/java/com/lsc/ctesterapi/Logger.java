@@ -11,7 +11,6 @@ import com.lsc.ctesterfx.logger.ApplicationLogger;
 public class Logger extends AbstractLogger
 {
     private static Logger logger;
-
     private final ApplicationLogger applicationLogger;
 
     private Logger()

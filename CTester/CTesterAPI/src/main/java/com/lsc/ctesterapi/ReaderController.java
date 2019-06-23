@@ -1,7 +1,6 @@
 package com.lsc.ctesterapi;
 
 import com.lsc.ctesterfx.reader.IReaderController;
-import com.lsc.ctesterfx.reader.IReader;
 import java.util.List;
 
 /**
@@ -11,11 +10,22 @@ import java.util.List;
  */
 public class ReaderController implements IReaderController
 {
-    private final IReaderController readerController;
+    private static ReaderController readerController;
+    private final IReaderController applicationReaderController;
 
-    public ReaderController()
+    private ReaderController()
     {
-        readerController = com.lsc.ctesterfx.reader.ReaderController.newInstance();
+        applicationReaderController = com.lsc.ctesterfx.reader.ReaderController.newInstance();
+    }
+
+    public static synchronized ReaderController newInstance()
+    {
+        if (readerController == null)
+        {
+            readerController = new ReaderController();
+        }
+
+        return readerController;
     }
 
     /**
@@ -27,7 +37,7 @@ public class ReaderController implements IReaderController
     @Override
     public List<String> list() throws Exception
     {
-        return readerController.list();
+        return applicationReaderController.list();
     }
 
     /**
@@ -41,7 +51,7 @@ public class ReaderController implements IReaderController
     @Override
     public boolean select(int index) throws Exception
     {
-        return readerController.select(index);
+        return applicationReaderController.select(index);
     }
 
     /**
@@ -55,7 +65,7 @@ public class ReaderController implements IReaderController
     @Override
     public boolean select(String name) throws Exception
     {
-        return readerController.select(name);
+        return applicationReaderController.select(name);
     }
 
     /**
@@ -66,6 +76,6 @@ public class ReaderController implements IReaderController
     @Override
     public IReader getSelected()
     {
-        return readerController.getSelected();
+        return applicationReaderController.getSelected();
     }
 }
