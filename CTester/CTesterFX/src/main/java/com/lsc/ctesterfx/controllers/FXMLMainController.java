@@ -64,8 +64,10 @@ public class FXMLMainController implements Initializable
     private Stage stage;
     // Reference to the printer.
     private Printer printer;
-    // Reference to the Reader controller
+    // Reference to the Reader controller.
     private ReaderController readerController;
+    // Reference to the configuration file.
+    private Configuration configuration;
 
     // Flag to indicate if the commands list is visible.
     private boolean commandsListVisible;
@@ -171,7 +173,7 @@ public class FXMLMainController implements Initializable
         // It's needed to set the Java Home to the one inside the JDK (~/../Java/jdk1.8.xxx/jre)
         // to be able to compile the tests. When running the .jar by default
         // it will run against the JRE located in ~/../Java/jre1.8.xxx.
-        Configuration configuration = new Configuration();
+        configuration = new Configuration();
         String javaHome = configuration.getValueAsString(Configuration.JAVA_HOME);
         if (javaHome != null && !javaHome.isEmpty())
         {
@@ -371,11 +373,18 @@ public class FXMLMainController implements Initializable
     {
         LOGGER.info("Adding new tests");
 
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Add Test");
-        fileChooser.getExtensionFilters().add(new ExtensionFilter("Java Files", "*.java"));
-        List<File> selectedFiles = fileChooser.showOpenMultipleDialog(stage);
+        // Read the last path.
+        String path = configuration.getValueAsString(Configuration.LAST_PATH);
 
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Add Tests");
+        fileChooser.getExtensionFilters().add(new ExtensionFilter("Java Files", "*.java"));
+        if ((path != null) && !(path.isEmpty()))
+        {
+            fileChooser.setInitialDirectory(new File(path));
+        }
+
+        List<File> selectedFiles = fileChooser.showOpenMultipleDialog(stage);
         if (selectedFiles != null)
         {
             LOGGER.info("Files added:");
@@ -400,6 +409,11 @@ public class FXMLMainController implements Initializable
                     LOGGER.error(ex);
                 }
             }
+
+            // Save the path for the next time.
+            Configuration.Editor editor = configuration.getEditor();
+            editor.edit(Configuration.LAST_PATH, selectedFiles.get(0).getParent());
+            editor.commit();
         }
     }
 

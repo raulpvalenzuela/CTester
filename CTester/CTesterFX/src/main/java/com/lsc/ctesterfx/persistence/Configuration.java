@@ -23,6 +23,7 @@ public class Configuration
     public static final String CTESTER = "CTester";
         public static final String JAVA_HOME   = "JavaHome";
         public static final String LAST_READER = "Reader";
+        public static final String LAST_PATH   = "TestsPath";
 
     // Private constants
     private static final String CONFIG_PATH =
@@ -63,6 +64,8 @@ public class Configuration
          */
         public void edit(String key, String newValue)
         {
+            LOGGER.debug("Updating '" + newValue + "' into" + "'" + key + "'");
+
             document.selectSingleNode("//" + key).setText(newValue);
         }
 
@@ -75,8 +78,10 @@ public class Configuration
 
             try
             {
+                LOGGER.debug("Committing changes in config.xml");
                 writer = new XMLWriter(new FileWriter(configurationFile));
                 writer.write(document);
+                LOGGER.debug("Changes saved correctly");
 
             } catch (UnsupportedEncodingException ex) {
                 LOGGER.error("Exception writing config.xml'");
