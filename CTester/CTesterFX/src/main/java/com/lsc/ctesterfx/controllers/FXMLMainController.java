@@ -79,8 +79,6 @@ public class FXMLMainController implements Initializable
     @FXML
     private VBox mTestListVBox;
     @FXML
-    private VBox mSnackbarContainer;
-    @FXML
     private VBox mReadersContainer;
     @FXML
     private ScrollPane mTestListScrollPane;
