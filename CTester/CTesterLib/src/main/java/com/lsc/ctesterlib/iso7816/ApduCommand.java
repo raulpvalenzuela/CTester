@@ -2,6 +2,8 @@ package com.lsc.ctesterlib.iso7816;
 
 import com.lsc.ctesterlib.utils.Formatter;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Class that represents a command APDU.
@@ -10,6 +12,52 @@ import java.util.Arrays;
  */
 public class ApduCommand
 {
+    private enum TYPE
+    {
+        UNKNOWN,
+        CASE_1,
+        CASE_2,
+        CASE_3,
+        CASE_4;
+    }
+
+    // Offsets.
+    private static final byte OFFSET_CLA   = 0;
+    private static final byte OFFSET_INS   = 1;
+    private static final byte OFFSET_P1    = 2;
+    private static final byte OFFSET_P2    = 3;
+    private static final byte OFFSET_LC    = 4;
+    private static final byte OFFSET_CDATA = 5;
+
+    // Commands
+    private static final byte SELECT   = (byte) 0xA4;
+    private static final byte GET_DATA = (byte) 0xCA;
+
+    // Case 1 commands.
+    private static final Byte[] CASE_ONE_COMMANDS = new Byte[] {
+
+    };
+    private static final Set<Byte> CASE_ONE_COMMANDS_SET = new HashSet<>(Arrays.asList(CASE_ONE_COMMANDS));
+
+    // Case 2 commands.
+    private static final Byte[] CASE_TWO_COMMANDS = new Byte[] {
+        GET_DATA
+    };
+    private static final Set<Byte> CASE_TWO_COMMANDS_SET = new HashSet<>(Arrays.asList(CASE_TWO_COMMANDS));
+
+    // Case 3 commands.
+    private static final Byte[] CASE_THREE_COMMANDS = new Byte[] {
+        SELECT
+    };
+    private static final Set<Byte> CASE_THREE_COMMANDS_SET = new HashSet<>(Arrays.asList(CASE_THREE_COMMANDS));
+
+    // Case 4 commands.
+    private static final Byte[] CASE_FOUR_COMMANDS = new Byte[] {
+
+    };
+    private static final Set<Byte> CASE_FOUR_COMMANDS_SET = new HashSet<>(Arrays.asList(CASE_FOUR_COMMANDS));
+
+    // Fields.
     private byte cla;
     private byte ins;
     private byte p1;
@@ -17,13 +65,16 @@ public class ApduCommand
     private byte lc;
     private byte le;
     private byte[] data;
-
+    // Raw bytes.
     private byte[] command;
+    // Type of the command.
+    private TYPE type;
 
     private ApduCommand() {}
 
     private ApduCommand(byte cla, byte ins, byte p1, byte p2, byte le, byte[] data)
     {
+        // Set all the bytes.
         this.cla  = cla;
         this.ins  = ins;
         this.p1   = p1;
@@ -37,15 +88,36 @@ public class ApduCommand
         // Create the command
         command = new byte[5 + data.length];
 
-        command[0] = this.cla;
-        command[1] = this.ins;
-        command[2] = this.p1;
-        command[3] = this.p2;
-        command[4] = (this.data.length == 0) ? this.le : this.lc;
-
+        command[OFFSET_CLA] = this.cla;
+        command[OFFSET_INS] = this.ins;
+        command[OFFSET_P1]  = this.p1;
+        command[OFFSET_P2]  = this.p2;
+        command[OFFSET_LC]  = (this.data.length == 0) ? this.le : this.lc;
         for (int i = 0; i < data.length; ++i)
         {
-            command[i + 5] = data[i];
+            command[i + OFFSET_CDATA] = data[i];
+        }
+
+        // Determine the type.
+        if (CASE_ONE_COMMANDS_SET.contains(this.cla))
+        {
+            this.type = TYPE.CASE_1;
+        }
+        else if (CASE_TWO_COMMANDS_SET.contains(this.cla))
+        {
+            this.type = TYPE.CASE_2;
+        }
+        else if (CASE_THREE_COMMANDS_SET.contains(this.cla))
+        {
+            this.type = TYPE.CASE_3;
+        }
+        else if (CASE_FOUR_COMMANDS_SET.contains(this.cla))
+        {
+            this.type = TYPE.CASE_4;
+        }
+        else
+        {
+            this.type = TYPE.UNKNOWN;
         }
     }
 
@@ -58,27 +130,45 @@ public class ApduCommand
     {
         assert(command.length >= 5);
 
-        this.cla = command[0];
-        this.ins = command[1];
-        this.p1  = command[2];
-        this.p2  = command[3];
+        this.cla = command[OFFSET_CLA];
+        this.ins = command[OFFSET_INS];
+        this.p1  = command[OFFSET_P1];
+        this.p2  = command[OFFSET_P2];
 
         if (command.length > 5)
         {
-            this.lc = command[4];
+            this.lc = command[OFFSET_LC];
             this.le = 0;
 
             this.data = Arrays.copyOfRange(command, 4, this.lc + 5);
         }
         else
         {
-            this.le = command[4];
+            this.le = command[OFFSET_LC];
             this.lc = 0;
 
             this.data = new byte[] {};
         }
 
         this.command = command;
+
+        // Determine the type.
+        if ((this.le == 0) && (this.lc == 0))
+        {
+            this.type = TYPE.CASE_1;
+        }
+        else if ((this.lc == 0) && (this.le > 0))
+        {
+            this.type = TYPE.CASE_2;
+        }
+        else if ((this.lc > 0) && (this.le == 0))
+        {
+            this.type = TYPE.CASE_3;
+        }
+        else
+        {
+            this.type = TYPE.CASE_4;
+        }
     }
 
     public static class Builder
@@ -199,60 +289,14 @@ public class ApduCommand
     public byte[] getData() { return data; }
 
     /**
-     * Sets the class byte.
-     *
-     * @param cla class byte to be set.
-     */
-    public void setCla(byte cla) { this.cla = cla; }
-
-    /**
-     * Sets the instruction byte.
-     *
-     * @param ins instruction byte to be set.
-     */
-    public void setIns(byte ins) { this.ins = ins; }
-
-    /**
-     * Sets the P1 byte.
-     *
-     * @param p1 P1 byte to be set.
-     */
-    public void setP1(byte p1) { this.p1  = p1; }
-
-    /**
-     * Sets the P2 byte.
-     *
-     * @param p2 P2 byte to be set.
-     */
-    public void setP2(byte p2) { this.p2  = p2; }
-
-    /**
-     * Sets the Lc byte.
-     *
-     * @param lc Lc byte to be set.
-     */
-    public void setLc(byte lc) { this.lc  = lc; }
-
-    /**
-     * Sets the Le byte.
-     *
-     * @param le Le byte to be set.
-     */
-    public void setLe(byte le) { this.le  = le; }
-
-    /**
-     * Sets the command data.
-     *
-     * @param data command data to be set.
-     */
-    public void setData(byte[] data) { this.data  = data; }
-
-    /**
      * Returns the command as a byte array.
      *
      * @return command as a byte array.
      */
-    public byte[] asByteArray() { return this.command; }
+    public byte[] asByteArray()
+    {
+        return this.command;
+    }
 
     @Override
     public String toString()
