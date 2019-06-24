@@ -87,6 +87,6 @@ public class ApduResponse
             dataStr = Formatter.fromByteArrayToString(this.data);
         }
 
-        return dataStr + swStr;
+        return dataStr + " " + swStr;
     }
 }

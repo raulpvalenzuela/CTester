@@ -2,14 +2,17 @@ package runnables;
 
 import com.lsc.ctesterapi.AbstractTest;
 import com.lsc.ctesterapi.Logger;
-import com.lsc.ctesterapi.ReaderAccessor;
+import com.lsc.ctesterapi.PCSCReaderAccessor;
+import com.lsc.ctesterapi.ReaderController;
 
 public class Test extends AbstractTest
 {
     // To log messages in the screen and in the log file.
     Logger logger = Logger.newInstance();
-    // To communicate with the card. 
-    ReaderAccessor readerAccessor = new ReaderAccessor();
+    // To manage the readers.
+    ReaderController readerController = ReaderController.newInstance();
+    // To communicate with the reader.
+    PCSCReaderAccessor reader;
 
     @Override
     public boolean setUp()

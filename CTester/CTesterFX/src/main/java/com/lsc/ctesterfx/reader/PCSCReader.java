@@ -125,13 +125,7 @@ public class PCSCReader implements IReader
         if (channel != null)
         {
             ResponseAPDU response = channel.transmit(
-                    new CommandAPDU(
-                            apdu.getCla()
-                          , apdu.getIns()
-                          , apdu.getP1()
-                          , apdu.getP2()
-                          , apdu.getData()
-                          , apdu.getLe()));
+                    new CommandAPDU(apdu.asByteArray()));
 
             apduResponse = new ApduResponse.Builder()
                     .withSw1((byte) response.getSW1())

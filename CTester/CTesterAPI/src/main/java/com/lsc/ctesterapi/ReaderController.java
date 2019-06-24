@@ -77,6 +77,6 @@ public class ReaderController implements IReaderController
     @Override
     public IReader getSelected()
     {
-        return applicationReaderController.getSelected();
+        return new PCSCReaderAccessor(applicationReaderController.getSelected());
     }
 }
