@@ -72,7 +72,11 @@ public class PCSCReaderAccessor implements IReader
     @Override
     public ApduResponse transmit(ApduCommand apdu) throws Exception
     {
-        return applicationReader.transmit(apdu);
+        logger.log(Strings.COMMAND_HEADER + apdu.toString());
+        ApduResponse response = applicationReader.transmit(apdu);
+        logger.log(Strings.RESPONSE_HEADER + response.toString() + "\n");
+
+        return response;
     }
 
     /**

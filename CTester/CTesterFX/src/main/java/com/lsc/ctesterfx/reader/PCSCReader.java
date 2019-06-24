@@ -94,7 +94,6 @@ public class PCSCReader implements IReader
 
             throw ex;
         }
-
     }
 
     @Override
