@@ -83,7 +83,6 @@ public class PCSCReader implements IReader
         {
             if (channel != null)
             {
-                channel.close();
                 card.disconnect(false);
             }
 
