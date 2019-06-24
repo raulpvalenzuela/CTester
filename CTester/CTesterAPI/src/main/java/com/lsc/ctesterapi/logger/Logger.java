@@ -1,4 +1,4 @@
-package com.lsc.ctesterapi;
+package com.lsc.ctesterapi.logger;
 
 import com.lsc.ctesterfx.logger.AbstractLogger;
 import com.lsc.ctesterfx.logger.ApplicationLogger;

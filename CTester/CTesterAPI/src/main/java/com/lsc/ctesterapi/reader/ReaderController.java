@@ -1,4 +1,4 @@
-package com.lsc.ctesterapi;
+package com.lsc.ctesterapi.reader;
 
 import com.lsc.ctesterfx.reader.IReader;
 import com.lsc.ctesterfx.reader.IReaderController;
