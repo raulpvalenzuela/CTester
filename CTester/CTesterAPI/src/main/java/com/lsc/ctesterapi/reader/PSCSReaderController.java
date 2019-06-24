@@ -1,6 +1,5 @@
 package com.lsc.ctesterapi.reader;
 
-import com.lsc.ctesterfx.reader.IReader;
 import com.lsc.ctesterfx.reader.IReaderController;
 import java.util.List;
 
@@ -9,21 +8,21 @@ import java.util.List;
  *
  * @author dma@logossmartcard.com
  */
-public class ReaderController implements IReaderController
+public class PSCSReaderController implements IReaderController
 {
-    private static ReaderController readerController;
+    private static PSCSReaderController readerController;
     private final IReaderController applicationReaderController;
 
-    private ReaderController()
+    private PSCSReaderController()
     {
         applicationReaderController = com.lsc.ctesterfx.reader.ReaderController.newInstance();
     }
 
-    public static synchronized ReaderController newInstance()
+    public static synchronized PSCSReaderController newInstance()
     {
         if (readerController == null)
         {
-            readerController = new ReaderController();
+            readerController = new PSCSReaderController();
         }
 
         return readerController;
@@ -75,7 +74,7 @@ public class ReaderController implements IReaderController
      * @return the selected reader. Null if there is no reader selected.
      */
     @Override
-    public IReader getSelected()
+    public PCSCReaderAccessor getSelected()
     {
         return new PCSCReaderAccessor(applicationReaderController.getSelected());
     }
