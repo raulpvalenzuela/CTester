@@ -1,8 +1,11 @@
 package com.lsc.ctesterapi.reader;
 
+import com.lsc.ctesterapi.logger.Logger;
 import com.lsc.ctesterfx.reader.IReader;
+import com.lsc.ctesterlib.constants.Strings;
 import com.lsc.ctesterlib.iso7816.ApduCommand;
 import com.lsc.ctesterlib.iso7816.ApduResponse;
+import com.lsc.ctesterlib.utils.Formatter;
 
 /**
  * Interface with a reader.
@@ -11,11 +14,13 @@ import com.lsc.ctesterlib.iso7816.ApduResponse;
  */
 public class PCSCReaderAccessor implements IReader
 {
+    private final Logger logger;
     private final IReader applicationReader;
 
     public PCSCReaderAccessor(IReader reader)
     {
         this.applicationReader = reader;
+        this.logger = Logger.newInstance();
     }
 
     /**
@@ -27,7 +32,7 @@ public class PCSCReaderAccessor implements IReader
     {
         applicationReader.connect();
     }
-    
+
     /**
      * Releases the connection with the card. After calling this method, either <code>connect</code>
      * or <code>reset</code> has to be called to communicate again with the card.
@@ -48,6 +53,12 @@ public class PCSCReaderAccessor implements IReader
     @Override
     public byte[] reset() throws Exception
     {
+        byte[] atr = applicationReader.reset();
+        String atrStr = Formatter.fromByteArrayToString(atr);
+
+        logger.log(Strings.RESET_CARD);
+        logger.logComment(Strings.ATR_HEADER + atrStr + "\n");
+
         return applicationReader.reset();
     }
 

@@ -10,7 +10,7 @@ import com.lsc.ctesterlib.iso7816.ApduResponse;
 import com.lsc.ctesterlib.utils.ApduValidator;
 import com.lsc.ctesterlib.utils.Formatter;
 import com.lsc.ctesterfx.constants.Animations;
-import com.lsc.ctesterfx.constants.Strings;
+import com.lsc.ctesterlib.constants.Strings;
 import com.lsc.ctesterfx.constants.Tooltips;
 import com.lsc.ctesterfx.logger.Printer;
 import com.lsc.ctesterfx.persistence.Configuration;

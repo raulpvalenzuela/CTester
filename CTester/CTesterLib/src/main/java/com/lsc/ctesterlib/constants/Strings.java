@@ -1,4 +1,4 @@
-package com.lsc.ctesterfx.constants;
+package com.lsc.ctesterlib.constants;
 
 /**
  *
