@@ -1,5 +1,6 @@
 package com.lsc.ctesterapi;
 
+import com.lsc.ctesterfx.reader.IReader;
 import com.lsc.ctesterfx.reader.IReaderController;
 import java.util.List;
 
