@@ -70,6 +70,12 @@
             <version>1.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.lsc</groupId>
+            <artifactId>CTesterLib</artifactId>
+            <version>1.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -226,6 +232,22 @@
                             <repositoryLayout>default</repositoryLayout>
                             <groupId>com.lsc</groupId>
                             <artifactId>CTesterAPI</artifactId>
+                            <version>1.0</version>
+                            <packaging>jar</packaging>
+                            <generatePom>true</generatePom>
+                        </configuration>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>install-external-2</id>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <file>${basedir}/libs/CTesterLib.jar</file>
+                            <repositoryLayout>default</repositoryLayout>
+                            <groupId>com.lsc</groupId>
+                            <artifactId>CTesterLib</artifactId>
                             <version>1.0</version>
                             <packaging>jar</packaging>
                             <generatePom>true</generatePom>

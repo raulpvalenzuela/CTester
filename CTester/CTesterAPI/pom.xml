@@ -18,7 +18,13 @@
             <artifactId>CTester</artifactId>
             <version>0.3.1</version>
         </dependency>
-        
+
+        <dependency>
+            <groupId>com.lsc</groupId>
+            <artifactId>CTesterLib</artifactId>
+            <version>1.0</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
         <dependency>
             <groupId>commons-codec</groupId>
@@ -69,7 +75,7 @@
                 <version>2.5.2</version>
                 <executions>
                     <execution>
-                        <id>install-external</id>
+                        <id>install-external-1</id>
                         <phase>process-resources</phase>
                         <configuration>
                             <file>${basedir}/../../Executable/CTester.jar</file>
@@ -77,6 +83,22 @@
                             <groupId>com.lsc</groupId>
                             <artifactId>CTester</artifactId>
                             <version>0.3.1</version>
+                            <packaging>jar</packaging>
+                            <generatePom>true</generatePom>
+                        </configuration>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>install-external-2</id>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <file>${basedir}/../CTesterFX/libs/CTesterLib.jar</file>
+                            <repositoryLayout>default</repositoryLayout>
+                            <groupId>com.lsc</groupId>
+                            <artifactId>CTesterLib</artifactId>
+                            <version>1.0</version>
                             <packaging>jar</packaging>
                             <generatePom>true</generatePom>
                         </configuration>

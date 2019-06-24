@@ -1,6 +1,8 @@
 package com.lsc.ctesterapi;
 
 import com.lsc.ctesterfx.reader.IReader;
+import com.lsc.ctesterlib.iso7816.ApduCommand;
+import com.lsc.ctesterlib.iso7816.ApduResponse;
 
 /**
  * Interface with a reader.
@@ -25,7 +27,7 @@ public class PCSCReaderAccessor implements IReader
     {
         applicationReader.connect();
     }
-
+    
     /**
      * Releases the connection with the card. After calling this method, either <code>connect</code>
      * or <code>reset</code> has to be called to communicate again with the card.

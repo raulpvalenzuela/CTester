@@ -1,7 +1,7 @@
 package com.lsc.ctesterfx.reader;
 
-import com.lsc.ctesterapi.ApduResponse;
-import com.lsc.ctesterapi.ApduCommand;
+import com.lsc.ctesterlib.iso7816.ApduResponse;
+import com.lsc.ctesterlib.iso7816.ApduCommand;
 import javax.smartcardio.Card;
 import javax.smartcardio.CardChannel;
 import javax.smartcardio.CardException;
