@@ -198,7 +198,7 @@
                                                 </HBox>
                                              </children>
                                           </HBox>
-                                          <BorderPane fx:id="mOutputContainer" prefHeight="568.0" prefWidth="583.0" />
+                                          <BorderPane fx:id="mOutputContainer" prefHeight="568.0" prefWidth="583.0" VBox.vgrow="ALWAYS" />
                                        </children>
                                        <padding>
                                           <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
