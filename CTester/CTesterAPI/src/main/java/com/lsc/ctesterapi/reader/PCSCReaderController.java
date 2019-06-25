@@ -8,21 +8,21 @@ import java.util.List;
  *
  * @author dma@logossmartcard.com
  */
-public class PSCSReaderController implements IReaderController
+public class PCSCReaderController implements IReaderController
 {
-    private static PSCSReaderController readerController;
+    private static PCSCReaderController readerController;
     private final IReaderController applicationReaderController;
 
-    private PSCSReaderController()
+    private PCSCReaderController()
     {
         applicationReaderController = com.lsc.ctesterfx.reader.ReaderController.newInstance();
     }
 
-    public static synchronized PSCSReaderController newInstance()
+    public static synchronized PCSCReaderController newInstance()
     {
         if (readerController == null)
         {
-            readerController = new PSCSReaderController();
+            readerController = new PCSCReaderController();
         }
 
         return readerController;
