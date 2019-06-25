@@ -1,5 +1,7 @@
 # CTester
 
+## Index
+
 - [Introduction](#Introduction)
 - [Characteristics](#Characteristics)
 - [Libraries](#Libraries)
@@ -26,6 +28,7 @@ The following libraries have been used for this project:
 - [RichTextFX](https://github.com/FXMisc/RichTextFX): memory-efficient text area for JavaFX.
 - [Smart Card I/O API](https://docs.oracle.com/javase/7/docs/jre/api/security/smartcardio/spec/): Java API for communication with Smart Cards using ISO/IEC 7816-4 APDUs.
 - [dom4j](https://dom4j.github.io/): Flexible XML framework for Java.
+- [log4j](https://logging.apache.org/log4j/1.2/): logging library for Java.
 
 ## Requirements
 
@@ -64,13 +67,15 @@ The following libraries have been used for this project:
 
 3. Open the project with NetBeans.
 
-4. Create a test inside that extends the class `AbstractTest`, located in the package `com.lsc.ctesterfx.test`.
+4. Create a test inside that extends the class `AbstractTest`, located in the package `com.lsc.ctesterapi`.
 
-5. Implement the logic inside the `run` method and return `true` or `false` if the execution is succesful or not.
+5. Implement the logic inside the `setUp`, `run` and `tearDown` methods and return `true` or `false` if the execution is succesful or not.
+
+Refer to this [README](/Tests&#32;Template/README.md) for more details about the `API` and the different `Libraries` that can be used from the test.
 
 ---
 
-Note: The tests can be located anywhere, there's no restrictions about package naming neither. However, do notice that a java file, in order to be compiled have to be inside the folder structure have to match the package name. Here's some examples:
+Note: The tests can be located anywhere, there are no restrictions about package naming either. However, do notice that a java file, in order to be compiled, has to be inside the folder structure and has to match the package name. Here's some examples:
 
 ```#comment
 package testing;
