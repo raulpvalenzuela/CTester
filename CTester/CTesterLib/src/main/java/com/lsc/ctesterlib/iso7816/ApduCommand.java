@@ -12,7 +12,7 @@ import java.util.Set;
  */
 public class ApduCommand
 {
-    private enum TYPE
+    public static enum TYPE
     {
         UNKNOWN,
         CASE_1,
@@ -22,16 +22,27 @@ public class ApduCommand
     }
 
     // Offsets.
-    private static final byte OFFSET_CLA   = 0;
-    private static final byte OFFSET_INS   = 1;
-    private static final byte OFFSET_P1    = 2;
-    private static final byte OFFSET_P2    = 3;
-    private static final byte OFFSET_LC    = 4;
-    private static final byte OFFSET_CDATA = 5;
+    public static final byte OFFSET_CLA   = 0;
+    public static final byte OFFSET_INS   = 1;
+    public static final byte OFFSET_P1    = 2;
+    public static final byte OFFSET_P2    = 3;
+    public static final byte OFFSET_LC    = 4;
+    public static final byte OFFSET_CDATA = 5;
 
     // Commands
-    private static final byte SELECT   = (byte) 0xA4;
-    private static final byte GET_DATA = (byte) 0xCA;
+    public static final byte VIRGINIZE             = (byte) 0x2E;
+    public static final byte VISA_GET_HISTORY      = (byte) 0x4E;
+    public static final byte INITIALIZE_UPDATE     = (byte) 0x50;
+    public static final byte BACK_TO_BOOTLOADER    = (byte) 0x55;
+    public static final byte EXTERNAL_AUTHENTICATE = (byte) 0x82;
+    public static final byte SELECT                = (byte) 0xA4;
+    public static final byte READ_BINARY           = (byte) 0xB0;
+    public static final byte GET_RESPONSE          = (byte) 0xC0;
+    public static final byte GET_DATA              = (byte) 0xCA;
+    public static final byte STORE_DATA            = (byte) 0xE2;
+    public static final byte INSTALL               = (byte) 0xE6;
+    public static final byte PUT_KEY               = (byte) 0xD8;
+    public static final byte PUT_DATA              = (byte) 0xDa;
 
     // Case 1 commands.
     private static final Byte[] CASE_ONE_COMMANDS = new Byte[] {
@@ -41,19 +52,28 @@ public class ApduCommand
 
     // Case 2 commands.
     private static final Byte[] CASE_TWO_COMMANDS = new Byte[] {
-        GET_DATA
+          GET_DATA
+        , READ_BINARY
+        , GET_RESPONSE
+        , STORE_DATA
+        , INSTALL
     };
     private static final Set<Byte> CASE_TWO_COMMANDS_SET = new HashSet<>(Arrays.asList(CASE_TWO_COMMANDS));
 
     // Case 3 commands.
     private static final Byte[] CASE_THREE_COMMANDS = new Byte[] {
-        SELECT
+          VIRGINIZE
+        , PUT_KEY
+        , EXTERNAL_AUTHENTICATE
+        , BACK_TO_BOOTLOADER
+        , PUT_DATA
     };
     private static final Set<Byte> CASE_THREE_COMMANDS_SET = new HashSet<>(Arrays.asList(CASE_THREE_COMMANDS));
 
     // Case 4 commands.
     private static final Byte[] CASE_FOUR_COMMANDS = new Byte[] {
-
+          INITIALIZE_UPDATE
+        , SELECT
     };
     private static final Set<Byte> CASE_FOUR_COMMANDS_SET = new HashSet<>(Arrays.asList(CASE_FOUR_COMMANDS));
 
@@ -65,8 +85,10 @@ public class ApduCommand
     private byte lc;
     private byte le;
     private byte[] data;
+
     // Raw bytes.
     private byte[] command;
+
     // Type of the command.
     private TYPE type;
 
@@ -153,21 +175,25 @@ public class ApduCommand
         this.command = command;
 
         // Determine the type.
-        if ((this.le == 0) && (this.lc == 0))
+        if (CASE_ONE_COMMANDS_SET.contains(this.cla))
         {
             this.type = TYPE.CASE_1;
         }
-        else if ((this.lc == 0) && (this.le > 0))
+        else if (CASE_TWO_COMMANDS_SET.contains(this.cla))
         {
             this.type = TYPE.CASE_2;
         }
-        else if ((this.lc > 0) && (this.le == 0))
+        else if (CASE_THREE_COMMANDS_SET.contains(this.cla))
         {
             this.type = TYPE.CASE_3;
         }
-        else
+        else if (CASE_FOUR_COMMANDS_SET.contains(this.cla))
         {
             this.type = TYPE.CASE_4;
+        }
+        else
+        {
+            this.type = TYPE.UNKNOWN;
         }
     }
 
@@ -282,11 +308,18 @@ public class ApduCommand
     public byte getLe() { return le; }
 
     /**
-     * Returns the data.
+     * Returns the command  data.
      *
      * @return command data.
      */
     public byte[] getData() { return data; }
+
+    /**
+     * Returns the type of command.
+     *
+     * @return the type of command.
+     */
+    public TYPE getCase() { return type; }
 
     /**
      * Returns the command as a byte array.

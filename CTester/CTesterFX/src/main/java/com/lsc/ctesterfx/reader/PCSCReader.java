@@ -122,8 +122,51 @@ public class PCSCReader implements IReader
 
         if (channel != null)
         {
-            ResponseAPDU response = channel.transmit(
-                    new CommandAPDU(apdu.asByteArray()));
+            CommandAPDU commandApdu;
+            switch (apdu.getCase())
+            {
+                case CASE_1:
+                    commandApdu = new CommandAPDU(
+                              apdu.getCla()
+                            , apdu.getIns()
+                            , apdu.getP1()
+                            , apdu.getP2());
+                    break;
+
+                case CASE_2:
+                    commandApdu = new CommandAPDU(
+                              apdu.getCla()
+                            , apdu.getIns()
+                            , apdu.getP1()
+                            , apdu.getP2()
+                            , apdu.getLe());
+                    break;
+
+                case CASE_3:
+                    commandApdu = new CommandAPDU(
+                              apdu.getCla()
+                            , apdu.getIns()
+                            , apdu.getP1()
+                            , apdu.getP2()
+                            , apdu.getData());
+                    break;
+
+                case CASE_4:
+                    commandApdu = new CommandAPDU(
+                              apdu.getCla()
+                            , apdu.getIns()
+                            , apdu.getP1()
+                            , apdu.getP2()
+                            , apdu.getData()
+                            , apdu.getLe());
+                    break;
+
+                default:
+                    commandApdu = new CommandAPDU(apdu.asByteArray());
+                    break;
+            }
+
+            ResponseAPDU response = channel.transmit(commandApdu);
 
             apduResponse = new ApduResponse.Builder()
                     .withSw1((byte) response.getSW1())

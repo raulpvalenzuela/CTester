@@ -84,9 +84,9 @@ public class ApduResponse
 
         if (this.data != null && this.data.length > 0)
         {
-            dataStr = Formatter.fromByteArrayToString(this.data);
+            dataStr = Formatter.fromByteArrayToString(this.data) + " ";
         }
 
-        return dataStr + " " + swStr;
+        return dataStr + swStr;
     }
 }
