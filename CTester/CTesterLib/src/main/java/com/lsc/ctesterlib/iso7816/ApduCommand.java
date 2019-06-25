@@ -89,6 +89,9 @@ public class ApduCommand
         }
     }
 
+    /**
+     * Builder class.
+     */
     public static class Builder
     {
         private byte cla;
@@ -109,14 +112,14 @@ public class ApduCommand
             this.data = new byte[] {};
         }
 
-        public Builder withClass(byte cla)
+        public Builder withCLA(byte cla)
         {
             this.cla = cla;
 
             return this;
         }
 
-        public Builder withInstruction(byte ins)
+        public Builder withINS(byte ins)
         {
             this.ins = ins;
 
@@ -162,14 +165,14 @@ public class ApduCommand
      *
      * @return class byte.
      */
-    public byte getCla() { return cla; }
+    public byte getCLA() { return cla; }
 
     /**
      * Returns instruction byte.
      *
      * @return instruction byte.
      */
-    public byte getIns() { return ins; }
+    public byte getINS() { return ins; }
 
     /**
      * Returns P1 byte.

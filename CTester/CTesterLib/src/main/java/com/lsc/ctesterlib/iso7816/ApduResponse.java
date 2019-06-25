@@ -1,6 +1,7 @@
 package com.lsc.ctesterlib.iso7816;
 
 import com.lsc.ctesterlib.utils.Formatter;
+import java.util.Arrays;
 
 /**
  * Class that represents a response APDU.
@@ -30,14 +31,14 @@ public class ApduResponse
             sw = new byte[2];
         }
 
-        public Builder withSw1(byte sw1)
+        public Builder withSW1(byte sw1)
         {
             sw[0] = sw1;
 
             return this;
         }
 
-        public Builder withSw2(byte sw2)
+        public Builder withSW2(byte sw2)
         {
             sw[1] = sw2;
 
@@ -67,7 +68,7 @@ public class ApduResponse
      *
      * @return status word.
      */
-    public byte[] getSw() { return sw; }
+    public byte[] getSW() { return sw; }
 
     /**
      * Returns the data, null if there's no data.
@@ -75,6 +76,48 @@ public class ApduResponse
      * @return body of the response. Null if there's none.
      */
     public byte[] getData() { return data; }
+
+    /**
+     * Compares the Status Word in the command received with
+     * the one received as parameter.
+     *
+     * @param sw: Status Word to be compared.
+     * @return true if both Stats Words are equal.
+     */
+    public boolean checkSW(byte[] sw)
+    {
+        if ((sw == null) || (sw.length != 0))
+        {
+            return false;
+        }
+
+        return ((this.sw[0] == sw[0]) && (this.sw[1] == sw[1]));
+    }
+
+    /**
+     * Compares the Status Word in the command received with
+     * the one received as parameter.
+     *
+     * @param sw1: first byte of the Status Word to be compared.
+     * @param sw2: second byte of the Status Word to be compared.
+     * @return true if both Stats Words are equal.
+     */
+    public boolean checkSW(byte sw1, byte sw2)
+    {
+        return ((this.sw[0] == sw1) && (this.sw[1] == sw2));
+    }
+
+    /**
+     * Compares the data received in the command with the
+     * one received as parameter.
+     *
+     * @param data: data to be compared.
+     * @return true if they are equal.
+     */
+    public boolean checkData(byte[] data)
+    {
+        return Arrays.equals(this.data, data);
+    }
 
     @Override
     public String toString()

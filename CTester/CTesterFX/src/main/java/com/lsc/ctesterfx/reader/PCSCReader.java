@@ -127,8 +127,8 @@ public class PCSCReader implements IReader
             ResponseAPDU response = channel.transmit(commandApdu);
 
             apduResponse = new ApduResponse.Builder()
-                    .withSw1((byte) response.getSW1())
-                    .withSw2((byte) response.getSW2())
+                    .withSW1((byte) response.getSW1())
+                    .withSW2((byte) response.getSW2())
                     .withData(response.getData())
                     .build();
         }
