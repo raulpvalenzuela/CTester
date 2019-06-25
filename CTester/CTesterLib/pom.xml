@@ -30,7 +30,7 @@
                     <execution>
                         <configuration>
                             <finalName>CTesterLib</finalName>
-                            <outputDirectory>${basedir}/../../Executable/Docs/Javadoc</outputDirectory>
+                            <outputDirectory>${basedir}/../../Executable/Docs/Javadoc/Lib</outputDirectory>
                             <jarOutputDirectory>../CTesterFX/libs</jarOutputDirectory>
                         </configuration>
                         <id>attach-javadocs</id>

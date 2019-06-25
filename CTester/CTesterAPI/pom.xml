@@ -48,7 +48,7 @@
                     <execution>
                         <configuration>
                             <finalName>CTesterAPI</finalName>
-                            <outputDirectory>${basedir}/../../Executable/Docs/Javadoc</outputDirectory>
+                            <outputDirectory>${basedir}/../../Executable/Docs/Javadoc/API</outputDirectory>
                             <jarOutputDirectory>../CTesterFX/libs</jarOutputDirectory>
                         </configuration>
                         <id>attach-javadocs</id>
