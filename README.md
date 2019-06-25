@@ -34,18 +34,18 @@ The following libraries have been used for this project:
 
 ### For just running tests
 
-- JDK 8.
+- [JDK 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
 ### For test developing
 
-- JDK 8.
-- NetBeans 8.2. (optional)
+- [JDK 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+- [NetBeans 8.2](https://netbeans.org/downloads/8.2/) (optional).
 
 ### For tool developing
 
-- JDK 8.
-- NetBeans 8.2.
-- Scene Builder (optional)
+- [JDK 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+- [NetBeans 8.2](https://netbeans.org/downloads/8.2/)
+- Scene Builder (optional).
 
 ## How to use
 
@@ -61,36 +61,4 @@ The following libraries have been used for this project:
 
 ## Developing a test
 
-1. Clone the following template located in: `git:XXX`
-
-2. Checkout `develop` branch.
-
-3. Open the project with NetBeans.
-
-4. Create a test inside that extends the class `AbstractTest`, located in the package `com.lsc.ctesterapi`.
-
-5. Implement the logic inside the `setUp`, `run` and `tearDown` methods and return `true` or `false` if the execution is succesful or not.
-
-Refer to this [README](/Tests&#32;Template/README.md) for more details about the `API` and the different `Libraries` that can be used from the test.
-
----
-
-Note: The tests can be located anywhere, there are no restrictions about package naming either. However, do notice that a java file, in order to be compiled, has to be inside the folder structure and has to match the package name. Here's some examples:
-
-```#comment
-package testing;
-
-Folder structure:
-    testing
-    |   test.java
-```
-
-```#comment
-package testing.performance;
-
-Folder structure:
-
-    |testing
-    |___performance
-    |      test.java
-```
+To create a new test, refer to this [README](Tests&#32;Template/README.md).
