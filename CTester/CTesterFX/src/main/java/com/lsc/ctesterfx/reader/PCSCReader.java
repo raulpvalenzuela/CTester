@@ -116,18 +116,19 @@ public class PCSCReader implements IReader
     }
 
     @Override
-    public ApduResponse transmit(ApduCommand apdu) throws Exception
+    public ApduResponse transmit(final ApduCommand apdu) throws Exception
     {
         ApduResponse apduResponse = null;
 
         if (channel != null)
         {
-            ResponseAPDU response = channel.transmit(
-                    new CommandAPDU(apdu.asByteArray()));
+            CommandAPDU commandApdu = new CommandAPDU(apdu.asByteArray());
+
+            ResponseAPDU response = channel.transmit(commandApdu);
 
             apduResponse = new ApduResponse.Builder()
-                    .withSw1((byte) response.getSW1())
-                    .withSw2((byte) response.getSW2())
+                    .withSW1((byte) response.getSW1())
+                    .withSW2((byte) response.getSW2())
                     .withData(response.getData())
                     .build();
         }

@@ -10,6 +10,15 @@ import java.util.Arrays;
  */
 public class ApduCommand
 {
+    // Offsets.
+    public static final byte OFFSET_CLA   = 0;
+    public static final byte OFFSET_INS   = 1;
+    public static final byte OFFSET_P1    = 2;
+    public static final byte OFFSET_P2    = 3;
+    public static final byte OFFSET_LC    = 4;
+    public static final byte OFFSET_CDATA = 5;
+
+    // Fields.
     private byte cla;
     private byte ins;
     private byte p1;
@@ -18,12 +27,14 @@ public class ApduCommand
     private byte le;
     private byte[] data;
 
+    // Raw bytes.
     private byte[] command;
 
     private ApduCommand() {}
 
     private ApduCommand(byte cla, byte ins, byte p1, byte p2, byte le, byte[] data)
     {
+        // Set all the bytes.
         this.cla  = cla;
         this.ins  = ins;
         this.p1   = p1;
@@ -37,15 +48,14 @@ public class ApduCommand
         // Create the command
         command = new byte[5 + data.length];
 
-        command[0] = this.cla;
-        command[1] = this.ins;
-        command[2] = this.p1;
-        command[3] = this.p2;
-        command[4] = (this.data.length == 0) ? this.le : this.lc;
-
+        command[OFFSET_CLA] = this.cla;
+        command[OFFSET_INS] = this.ins;
+        command[OFFSET_P1]  = this.p1;
+        command[OFFSET_P2]  = this.p2;
+        command[OFFSET_LC]  = (this.data.length == 0) ? this.le : this.lc;
         for (int i = 0; i < data.length; ++i)
         {
-            command[i + 5] = data[i];
+            command[i + OFFSET_CDATA] = data[i];
         }
     }
 
@@ -58,29 +68,30 @@ public class ApduCommand
     {
         assert(command.length >= 5);
 
-        this.cla = command[0];
-        this.ins = command[1];
-        this.p1  = command[2];
-        this.p2  = command[3];
+        this.cla = command[OFFSET_CLA];
+        this.ins = command[OFFSET_INS];
+        this.p1  = command[OFFSET_P1];
+        this.p2  = command[OFFSET_P2];
 
         if (command.length > 5)
         {
-            this.lc = command[4];
+            this.lc = command[OFFSET_LC];
             this.le = 0;
 
             this.data = Arrays.copyOfRange(command, 4, this.lc + 5);
         }
         else
         {
-            this.le = command[4];
+            this.le = command[OFFSET_LC];
             this.lc = 0;
 
             this.data = new byte[] {};
         }
-
-        this.command = command;
     }
 
+    /**
+     * Builder class.
+     */
     public static class Builder
     {
         private byte cla;
@@ -101,14 +112,14 @@ public class ApduCommand
             this.data = new byte[] {};
         }
 
-        public Builder withClass(byte cla)
+        public Builder withCLA(byte cla)
         {
             this.cla = cla;
 
             return this;
         }
 
-        public Builder withInstruction(byte ins)
+        public Builder withINS(byte ins)
         {
             this.ins = ins;
 
@@ -154,14 +165,14 @@ public class ApduCommand
      *
      * @return class byte.
      */
-    public byte getCla() { return cla; }
+    public byte getCLA() { return cla; }
 
     /**
      * Returns instruction byte.
      *
      * @return instruction byte.
      */
-    public byte getIns() { return ins; }
+    public byte getINS() { return ins; }
 
     /**
      * Returns P1 byte.
@@ -192,67 +203,21 @@ public class ApduCommand
     public byte getLe() { return le; }
 
     /**
-     * Returns the data.
+     * Returns the command  data.
      *
      * @return command data.
      */
     public byte[] getData() { return data; }
 
     /**
-     * Sets the class byte.
-     *
-     * @param cla class byte to be set.
-     */
-    public void setCla(byte cla) { this.cla = cla; }
-
-    /**
-     * Sets the instruction byte.
-     *
-     * @param ins instruction byte to be set.
-     */
-    public void setIns(byte ins) { this.ins = ins; }
-
-    /**
-     * Sets the P1 byte.
-     *
-     * @param p1 P1 byte to be set.
-     */
-    public void setP1(byte p1) { this.p1  = p1; }
-
-    /**
-     * Sets the P2 byte.
-     *
-     * @param p2 P2 byte to be set.
-     */
-    public void setP2(byte p2) { this.p2  = p2; }
-
-    /**
-     * Sets the Lc byte.
-     *
-     * @param lc Lc byte to be set.
-     */
-    public void setLc(byte lc) { this.lc  = lc; }
-
-    /**
-     * Sets the Le byte.
-     *
-     * @param le Le byte to be set.
-     */
-    public void setLe(byte le) { this.le  = le; }
-
-    /**
-     * Sets the command data.
-     *
-     * @param data command data to be set.
-     */
-    public void setData(byte[] data) { this.data  = data; }
-
-    /**
      * Returns the command as a byte array.
      *
      * @return command as a byte array.
      */
-    public byte[] asByteArray() { return this.command; }
+    public byte[] asByteArray()
+    {
+        return this.command;
+    }
 
     @Override
     public String toString()
