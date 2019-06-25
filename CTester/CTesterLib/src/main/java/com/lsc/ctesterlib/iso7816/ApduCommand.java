@@ -1,10 +1,7 @@
 package com.lsc.ctesterlib.iso7816;
 
-import static com.lsc.ctesterlib.constants.Commands.*;
 import com.lsc.ctesterlib.utils.Formatter;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Class that represents a command APDU.
@@ -13,15 +10,6 @@ import java.util.Set;
  */
 public class ApduCommand
 {
-    public static enum TYPE
-    {
-        UNKNOWN,
-        CASE_1,
-        CASE_2,
-        CASE_3,
-        CASE_4;
-    }
-
     // Offsets.
     public static final byte OFFSET_CLA   = 0;
     public static final byte OFFSET_INS   = 1;
@@ -29,39 +17,6 @@ public class ApduCommand
     public static final byte OFFSET_P2    = 3;
     public static final byte OFFSET_LC    = 4;
     public static final byte OFFSET_CDATA = 5;
-
-    // Case 1 commands.
-    private static final Byte[] CASE_ONE_COMMANDS = new Byte[] {
-
-    };
-    private static final Set<Byte> CASE_ONE_COMMANDS_SET = new HashSet<>(Arrays.asList(CASE_ONE_COMMANDS));
-
-    // Case 2 commands.
-    private static final Byte[] CASE_TWO_COMMANDS = new Byte[] {
-          GET_DATA
-        , READ_BINARY
-        , GET_RESPONSE
-        , STORE_DATA
-        , INSTALL
-    };
-    private static final Set<Byte> CASE_TWO_COMMANDS_SET = new HashSet<>(Arrays.asList(CASE_TWO_COMMANDS));
-
-    // Case 3 commands.
-    private static final Byte[] CASE_THREE_COMMANDS = new Byte[] {
-          VIRGINIZE
-        , PUT_KEY
-        , EXTERNAL_AUTHENTICATE
-        , BACK_TO_BOOTLOADER
-        , PUT_DATA
-    };
-    private static final Set<Byte> CASE_THREE_COMMANDS_SET = new HashSet<>(Arrays.asList(CASE_THREE_COMMANDS));
-
-    // Case 4 commands.
-    private static final Byte[] CASE_FOUR_COMMANDS = new Byte[] {
-          INITIALIZE_UPDATE
-        , SELECT
-    };
-    private static final Set<Byte> CASE_FOUR_COMMANDS_SET = new HashSet<>(Arrays.asList(CASE_FOUR_COMMANDS));
 
     // Fields.
     private byte cla;
@@ -74,9 +29,6 @@ public class ApduCommand
 
     // Raw bytes.
     private byte[] command;
-
-    // Type of the command.
-    private TYPE type;
 
     private ApduCommand() {}
 
@@ -104,28 +56,6 @@ public class ApduCommand
         for (int i = 0; i < data.length; ++i)
         {
             command[i + OFFSET_CDATA] = data[i];
-        }
-
-        // Determine the type.
-        if (CASE_ONE_COMMANDS_SET.contains(this.cla))
-        {
-            this.type = TYPE.CASE_1;
-        }
-        else if (CASE_TWO_COMMANDS_SET.contains(this.cla))
-        {
-            this.type = TYPE.CASE_2;
-        }
-        else if (CASE_THREE_COMMANDS_SET.contains(this.cla))
-        {
-            this.type = TYPE.CASE_3;
-        }
-        else if (CASE_FOUR_COMMANDS_SET.contains(this.cla))
-        {
-            this.type = TYPE.CASE_4;
-        }
-        else
-        {
-            this.type = TYPE.UNKNOWN;
         }
     }
 
@@ -156,30 +86,6 @@ public class ApduCommand
             this.lc = 0;
 
             this.data = new byte[] {};
-        }
-
-        this.command = command;
-
-        // Determine the type.
-        if (CASE_ONE_COMMANDS_SET.contains(this.cla))
-        {
-            this.type = TYPE.CASE_1;
-        }
-        else if (CASE_TWO_COMMANDS_SET.contains(this.cla))
-        {
-            this.type = TYPE.CASE_2;
-        }
-        else if (CASE_THREE_COMMANDS_SET.contains(this.cla))
-        {
-            this.type = TYPE.CASE_3;
-        }
-        else if (CASE_FOUR_COMMANDS_SET.contains(this.cla))
-        {
-            this.type = TYPE.CASE_4;
-        }
-        else
-        {
-            this.type = TYPE.UNKNOWN;
         }
     }
 
@@ -299,13 +205,6 @@ public class ApduCommand
      * @return command data.
      */
     public byte[] getData() { return data; }
-
-    /**
-     * Returns the type of command.
-     *
-     * @return the type of command.
-     */
-    public TYPE getCase() { return type; }
 
     /**
      * Returns the command as a byte array.
