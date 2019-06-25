@@ -116,7 +116,7 @@ public class PCSCReader implements IReader
     }
 
     @Override
-    public ApduResponse transmit(ApduCommand apdu) throws Exception
+    public ApduResponse transmit(final ApduCommand apdu) throws Exception
     {
         ApduResponse apduResponse = null;
 
