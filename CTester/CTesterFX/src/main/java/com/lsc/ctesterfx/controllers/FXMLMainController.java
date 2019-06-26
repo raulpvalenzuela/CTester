@@ -12,6 +12,7 @@ import com.lsc.ctesterlib.utils.Formatter;
 import com.lsc.ctesterfx.constants.Animations;
 import com.lsc.ctesterlib.constants.Strings;
 import com.lsc.ctesterfx.constants.Tooltips;
+import com.lsc.ctesterfx.gui.GUIController;
 import com.lsc.ctesterfx.logger.Printer;
 import com.lsc.ctesterfx.persistence.Configuration;
 import com.lsc.ctesterfx.reader.IReader;
@@ -167,6 +168,10 @@ public class FXMLMainController implements Initializable
 
         // Reader controller
         readerController = ReaderController.newInstance();
+
+        // Set up the GUI controller.
+        GUIController.newInstance()
+                .setAttributes(mReaderSelectedLabel);
 
         // It's needed to set the Java Home to the one inside the JDK (~/../Java/jdk1.8.xxx/jre)
         // to be able to compile the tests. When running the .jar by default

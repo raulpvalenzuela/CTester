@@ -1,5 +1,6 @@
 package com.lsc.ctesterapi.reader;
 
+import com.lsc.ctesterfx.gui.GUIController;
 import com.lsc.ctesterfx.reader.IReaderController;
 import java.util.List;
 
@@ -12,10 +13,12 @@ public class PCSCReaderController implements IReaderController
 {
     private static PCSCReaderController readerController;
     private final IReaderController applicationReaderController;
+    private final GUIController guiController;
 
     private PCSCReaderController()
     {
         applicationReaderController = com.lsc.ctesterfx.reader.ReaderController.newInstance();
+        guiController               = GUIController.newInstance();
     }
 
     public static synchronized PCSCReaderController newInstance()
@@ -51,7 +54,14 @@ public class PCSCReaderController implements IReaderController
     @Override
     public boolean select(int index) throws Exception
     {
-        return applicationReaderController.select(index);
+        if (applicationReaderController.select(index))
+        {
+            guiController.updateReader(applicationReaderController.getSelected().getName());
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -65,7 +75,14 @@ public class PCSCReaderController implements IReaderController
     @Override
     public boolean select(String name) throws Exception
     {
-        return applicationReaderController.select(name);
+        if (applicationReaderController.select(name))
+        {
+            guiController.updateReader(name);
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
