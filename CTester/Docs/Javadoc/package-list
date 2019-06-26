@@ -3,6 +3,7 @@ com.lsc.ctesterfx.background
 com.lsc.ctesterfx.constants
 com.lsc.ctesterfx.controllers
 com.lsc.ctesterfx.dao
+com.lsc.ctesterfx.gui
 com.lsc.ctesterfx.logger
 com.lsc.ctesterfx.persistence
 com.lsc.ctesterfx.reader
