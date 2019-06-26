@@ -57,7 +57,7 @@ public class Printer extends AbstractLogger
         // Transparent background
         outputTextArea.setBackground(Background.EMPTY);
         // No wrapping.
-        outputTextArea.setWrapText(false);
+        outputTextArea.setWrapText(true);
 
         // Container of the output text area. The virtualized container will only render the text visible.
         VirtualizedScrollPane<InlineCssTextArea> vsPane = new VirtualizedScrollPane<>(outputTextArea);
@@ -132,7 +132,7 @@ public class Printer extends AbstractLogger
     public void logSuccess(String text)
     {
         text = SUCCESS_HEADER + text + "\n";
-        
+
         _logWithFormat(text, Colors.createAsString(Colors.Color.GREEN));
     }
 
