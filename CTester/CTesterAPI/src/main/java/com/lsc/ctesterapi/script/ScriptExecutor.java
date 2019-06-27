@@ -52,7 +52,6 @@ public class ScriptExecutor implements IScriptExecutor
 
             String line;
             String command = null;
-            byte[] responseReceived;
             while ((line = br.readLine()) != null)
             {
                 // If it's a comment.
@@ -107,8 +106,8 @@ public class ScriptExecutor implements IScriptExecutor
                             if (!apduResponse.checkSW(Formatter.fromStringToByteArray(swExpected)))
                             {
                                 logger.logError("Status Word incorrect:");
-                                logger.logError("- SW Expected: " + Formatter.separate(swExpected, 2));
-                                logger.logError("- SW Received: " + Formatter.fromByteArrayToString(swReceived));
+                                logger.logError(" - SW Expected: " + Formatter.separate(swExpected, 2));
+                                logger.logError(" - SW Received: " + Formatter.fromByteArrayToString(swReceived));
 
                                 return false;
                             }
@@ -120,8 +119,8 @@ public class ScriptExecutor implements IScriptExecutor
                                 if (!apduResponse.checkData(dataExpected))
                                 {
                                     logger.logError("Data incorrect:");
-                                    logger.logError("- Data Expected: " + Formatter.separate(dataExpected, 2));
-                                    logger.logError("- Data Received: " + Formatter.fromByteArrayToString(dataReceived));
+                                    logger.logError(" - Data Expected: " + Formatter.separate(dataExpected, 2));
+                                    logger.logError(" - Data Received: " + Formatter.fromByteArrayToString(dataReceived));
 
                                     return false;
                                 }
@@ -130,7 +129,7 @@ public class ScriptExecutor implements IScriptExecutor
 
                     } catch (Exception ex) {
                         logger.logError("Exception transmitting command");
-                        logger.logError("Exception: " + ex.getMessage());
+                        logger.logError(" - Ex: " + ex.getMessage());
 
                         return false;
                     }
