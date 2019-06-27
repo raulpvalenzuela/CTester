@@ -114,9 +114,7 @@ public class ScriptExecutor implements IScriptExecutor
                 // If it's a reset.
                 else if (line.startsWith(RESET_HEADER))
                 {
-                    logger.log(line);
-                    byte[] atr = reader.reset();
-                    logger.logComment(Formatter.fromByteArrayToString(atr) + "\n");
+                    reader.reset();
                 }
             }
         }
