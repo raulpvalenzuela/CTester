@@ -2,7 +2,7 @@
 <Configuration>
   <CTester>
     <JavaHome>C:\Program Files\Java\jdk1.8.0_201\jre</JavaHome>
-    <Reader></Reader>
-    <TestsPath></TestsPath>
+    <Reader>HID Global OMNIKEY 3x21 Smart Card Reader 0</Reader>
+    <TestsPath>F:\Coding\GitHub\CTester\Tests Template\src\runnables</TestsPath>
   </CTester>
 </Configuration>
