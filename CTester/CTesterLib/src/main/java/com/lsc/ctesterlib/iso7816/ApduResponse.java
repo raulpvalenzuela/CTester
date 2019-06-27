@@ -119,6 +119,24 @@ public class ApduResponse
         return Arrays.equals(this.data, data);
     }
 
+    /**
+     * Compares the data received in the command with the
+     * one received as parameter. This version receives a string that
+     * may contain "??" as a wildcard.
+     *
+     * @param data: data to be compared.
+     * @return true if they are equal.
+     */
+    public boolean checkData(String data)
+    {
+        String received = Formatter.fromByteArrayToString(this.data).replace(" ", "");
+
+        data = data.replace(" ", "").replace("?", "");
+        received = received.replace("?", "");
+
+        return data.equals(received);
+    }
+
     @Override
     public String toString()
     {
