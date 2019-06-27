@@ -87,6 +87,17 @@ public class ApduCommand
 
             this.data = new byte[] {};
         }
+
+        this.command = new byte[5 + lc];
+        this.command[OFFSET_CLA] = this.cla;
+        this.command[OFFSET_INS] = this.ins;
+        this.command[OFFSET_P1]  = this.p1;
+        this.command[OFFSET_P2]  = this.p2;
+        this.command[OFFSET_LC]  = (this.data.length == 0) ? this.le : this.lc;
+        for (int i = 0; i < data.length; ++i)
+        {
+            this.command[i + OFFSET_CDATA] = this.data[i];
+        }
     }
 
     /**
