@@ -22,6 +22,7 @@ public class ScriptExecutor implements IScriptExecutor
     private static final String COMMAND_HEADER  = "I: ";
     private static final String RESPONSE_HEADER = "O: ";
     private static final String RESET_HEADER    = "Reset";
+    private static final String WILDCARD        = "*";
 
     private final Logger logger;
     private final PCSCReaderAccessor reader;
@@ -45,7 +46,7 @@ public class ScriptExecutor implements IScriptExecutor
         // First, check that exists.
         if (script.exists())
         {
-            logger.logComment("Executing script: " + script.getName());
+            logger.logComment("Executing script: " + script.getName() + "\n");
 
             BufferedReader br = new BufferedReader(new FileReader(script));
 
@@ -62,13 +63,11 @@ public class ScriptExecutor implements IScriptExecutor
                 // If it's a command, we'll send it once we read the response.
                 else if (line.startsWith(COMMAND_HEADER))
                 {
-                    command = line.replace(COMMAND_HEADER, "");
+                    command = line.replace(COMMAND_HEADER, "").trim();
                 }
                 // If it's a response, send the command and check the response.
                 else if (line.startsWith(RESPONSE_HEADER))
                 {
-                    response = Formatter.fromStringToByteArray(line.replace(RESET_HEADER, ""));
-
                     // Create the APDU command.
                     ApduCommand apduCommand = new ApduCommand(
                             Formatter.fromStringToByteArray(command));
@@ -81,8 +80,10 @@ public class ScriptExecutor implements IScriptExecutor
                         byte[] sw   = apduResponse.getSW();
                         byte[] data = apduResponse.getData();
 
-                        if (!line.contains("*"))
+                        if (!line.contains(WILDCARD))
                         {
+                            response = Formatter.fromStringToByteArray(line.replace(RESET_HEADER, ""));
+
                             // If it's a case 1/3 command.
                             if (response.length == 2)
                             {
@@ -101,9 +102,6 @@ public class ScriptExecutor implements IScriptExecutor
                             }
                         }
 
-                        logger.log(COMMAND_HEADER + command);
-                        logger.log(RESPONSE_HEADER + apduResponse.toString() + "\n");
-
                     } catch (Exception ex) {
                         logger.logError("Exception transmitting command");
                         logger.logError("Exception: " + ex.getMessage());
@@ -117,6 +115,8 @@ public class ScriptExecutor implements IScriptExecutor
                     reader.reset();
                 }
             }
+
+            return true;
         }
         else
         {
