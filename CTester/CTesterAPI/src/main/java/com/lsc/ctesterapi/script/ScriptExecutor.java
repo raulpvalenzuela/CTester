@@ -52,7 +52,7 @@ public class ScriptExecutor implements IScriptExecutor
 
             String line;
             String command = null;
-            byte[] response;
+            byte[] responseReceived;
             while ((line = br.readLine()) != null)
             {
                 // If it's a comment.
@@ -77,33 +77,51 @@ public class ScriptExecutor implements IScriptExecutor
                         // Transmit the command and get the response.
                         ApduResponse apduResponse = reader.transmit(apduCommand);
 
-                        byte[] sw   = apduResponse.getSW();
-                        byte[] data = apduResponse.getData();
+                        byte[] swReceived   = apduResponse.getSW();
+                        byte[] dataReceived = apduResponse.getData();
 
+                        // If the response has to be checked.
                         if (!line.contains(WILDCARD))
                         {
-                            response = Formatter.fromStringToByteArray(line.replace(RESET_HEADER, ""));
-
-                            // If it's a case 1/3 command.
-                            if (response.length == 2)
+                            String lineClean = line.replace(RESPONSE_HEADER, "").replace(" ", "").trim();
+                            // Sanity checks.
+                            if (lineClean.length() < 4)
                             {
-                                if (!apduResponse.checkSW(sw))
-                                {
-                                    logger.logError("Status Word incorrect:");
-                                    logger.logError("- SW Expected: " + Formatter.fromByteArrayToString(sw));
-                                    logger.logError("- SW Received: " + Formatter.fromByteArrayToString(apduResponse.getSW()));
+                                logger.logWarning("Invalid response expected");
+                                logger.logWarning(" - " + line.replace(RESPONSE_HEADER, ""));
 
-                                    return false;
-                                }
+                                return false;
                             }
-                            // If it's a case 2/4 command.
-                            else
+                            // If the card responds with data, it has to be provived in the script to be compared.
+                            else if ((lineClean.length() < 6) && ((apduResponse.getData() != null) && (apduResponse.getData().length > 0)))
                             {
-                                if (!apduResponse.checkData(data))
+                                logger.logWarning("No data provided");
+                                logger.logWarning(" - " + line.replace(RESPONSE_HEADER, ""));
+
+                                return false;
+                            }
+
+                            String swExpected = lineClean.substring(lineClean.length() - 4);
+                            String dataExpected = lineClean.substring(0, lineClean.length() - 4);
+
+                            if (!apduResponse.checkSW(Formatter.fromStringToByteArray(swExpected)))
+                            {
+                                logger.logError("Status Word incorrect:");
+                                logger.logError("- SW Expected: " + Formatter.separate(swExpected, 2));
+                                logger.logError("- SW Received: " + Formatter.fromByteArrayToString(swReceived));
+
+                                return false;
+                            }
+
+                            // If it's a case 2/4 command.
+                            if ((apduResponse.getData() != null) && (apduResponse.getData().length > 0))
+                            {
+                                // Compare the data as an String in case some bytes have to be ignored.
+                                if (!apduResponse.checkData(dataExpected))
                                 {
                                     logger.logError("Data incorrect:");
-                                    logger.logError("- Data Expected: " + Formatter.fromByteArrayToString(data));
-                                    logger.logError("- Data Received: " + Formatter.fromByteArrayToString(apduResponse.getData()));
+                                    logger.logError("- Data Expected: " + Formatter.separate(dataExpected, 2));
+                                    logger.logError("- Data Received: " + Formatter.fromByteArrayToString(dataReceived));
 
                                     return false;
                                 }

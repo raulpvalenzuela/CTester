@@ -86,7 +86,7 @@ public class ApduResponse
      */
     public boolean checkSW(byte[] sw)
     {
-        if ((sw == null) || (sw.length != 0))
+        if ((sw == null) || (sw.length == 0))
         {
             return false;
         }
@@ -132,7 +132,6 @@ public class ApduResponse
         String received = Formatter.fromByteArrayToString(this.data).replace(" ", "");
 
         data = data.replace(" ", "").replace("?", "");
-        received = received.replace("?", "");
 
         return data.equals(received);
     }
