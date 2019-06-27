@@ -89,6 +89,10 @@ public class ScriptExecutor implements IScriptExecutor
                             {
                                 if (!apduResponse.checkSW(sw))
                                 {
+                                    logger.logError("Status Word incorrect:");
+                                    logger.logError("- SW Expected: " + Formatter.fromByteArrayToString(sw));
+                                    logger.logError("- SW Received: " + Formatter.fromByteArrayToString(apduResponse.getSW()));
+
                                     return false;
                                 }
                             }
@@ -97,6 +101,10 @@ public class ScriptExecutor implements IScriptExecutor
                             {
                                 if (!apduResponse.checkData(data))
                                 {
+                                    logger.logError("Data incorrect:");
+                                    logger.logError("- Data Expected: " + Formatter.fromByteArrayToString(data));
+                                    logger.logError("- Data Received: " + Formatter.fromByteArrayToString(apduResponse.getData()));
+
                                     return false;
                                 }
                             }
