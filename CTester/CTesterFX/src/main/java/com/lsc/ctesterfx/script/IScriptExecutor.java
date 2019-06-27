@@ -17,4 +17,13 @@ public interface IScriptExecutor
      * @throws Exception if there is some communication error.
      */
     public boolean execute(File script) throws Exception;
+
+    /**
+     * Executes the script given.
+     *
+     * @param script script file to be executed.
+     * @return true if the execution is succesful.
+     * @throws Exception if there is some communication error.
+     */
+    public boolean execute(String script) throws Exception;
 }

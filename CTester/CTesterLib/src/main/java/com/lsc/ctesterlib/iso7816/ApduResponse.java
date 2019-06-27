@@ -143,7 +143,7 @@ public class ApduResponse
         String swStr = Formatter.fromByteArrayToString(this.sw);
         String dataStr = "";
 
-        if (this.data != null && this.data.length > 0)
+        if ((this.data != null) && (this.data.length > 0))
         {
             dataStr = Formatter.fromByteArrayToString(this.data) + " ";
         }
