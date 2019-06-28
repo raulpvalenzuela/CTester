@@ -10,10 +10,13 @@
 
 <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="471.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lsc.ctesterfx.controllers.FXMLTestItemController">
    <children>
-      <JFXCheckBox fx:id="mTestNameCheckbox" checkedColor="#53dbb6" focusTraversable="false" minWidth="-Infinity" onAction="#onStateChangedSelect" prefHeight="24.0" prefWidth="248.0" text="Test" textFill="#cccccc" unCheckedColor="#cccccc" HBox.hgrow="ALWAYS">
+      <JFXCheckBox fx:id="mTestNameCheckbox" checkedColor="#53dbb6" focusTraversable="false" onAction="#onStateChangedSelect" prefHeight="24.0" prefWidth="248.0" text="Test" textFill="#cccccc" unCheckedColor="#cccccc" HBox.hgrow="ALWAYS">
          <font>
             <Font name="Microsoft YaHei UI Light" size="12.0" />
          </font>
+         <padding>
+            <Insets right="16.0" />
+         </padding>
       </JFXCheckBox>
       <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="159.0" HBox.hgrow="ALWAYS">
          <children>
