@@ -104,6 +104,15 @@ public class FXMLTestItemController implements Initializable
         mainController.removeTestAtIndex(index);
     }
 
+    @FXML
+    private void onStateChangedSelect(ActionEvent event)
+    {
+        if (!mTestNameCheckbox.isSelected())
+        {
+            mainController.notifyDeselection();
+        }
+    }
+
     /**
      * Method that updates the GUI with the new state.
      *

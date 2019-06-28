@@ -820,6 +820,15 @@ public class FXMLMainController implements Initializable
     }
 
     /**
+     * Gets called when a test gets deselected. If this happens the 'Select all'
+     * checkbox has to be unchecked.
+     */
+    public void notifyDeselection()
+    {
+        mSelectAllCheckbox.setSelected(false);
+    }
+
+    /**
      * Restart variables and clear the log. Called when a new test has started.
      */
     public void requestClear()
