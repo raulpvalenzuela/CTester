@@ -39,7 +39,7 @@ public class Formatter
     {
         return string
                 .toUpperCase()
-                .replaceAll(" ", "")
+                .replace(" ", "")
                 .replaceAll("(.{" + size + "})", "$1 ")
                 .trim();
     }
@@ -53,6 +53,6 @@ public class Formatter
      */
     public static byte[] fromStringToByteArray(String string) throws DecoderException
     {
-        return Hex.decodeHex(string.replaceAll(" ", "").toCharArray());
+        return Hex.decodeHex(string.replace(" ", "").toCharArray());
     }
 }

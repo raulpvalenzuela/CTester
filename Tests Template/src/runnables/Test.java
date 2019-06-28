@@ -4,6 +4,7 @@ import com.lsc.ctesterapi.AbstractTest;
 import com.lsc.ctesterapi.logger.Logger;
 import com.lsc.ctesterapi.reader.PCSCReaderAccessor;
 import com.lsc.ctesterapi.reader.PCSCReaderController;
+import com.lsc.ctesterapi.script.ScriptExecutor;
 
 public class Test extends AbstractTest
 {
@@ -36,7 +37,8 @@ public class Test extends AbstractTest
 
         try
         {
-            return (numErrors == 0);
+            ScriptExecutor scriptExecutor = new ScriptExecutor();
+            return scriptExecutor.execute("F:\\Coding\\GitHub\\CTester\\perso_visa.txt");
 
         } catch (Exception ex) {
             return false;

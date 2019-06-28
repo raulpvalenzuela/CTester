@@ -6,6 +6,8 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.lsc.ctesterfx.constants.Tooltips;
 import com.lsc.ctesterfx.background.CompilationTask;
 import com.lsc.ctesterfx.background.ExecutionTask;
+import com.lsc.ctesterfx.constants.Colors;
+import com.lsc.ctesterfx.constants.Colors.Color;
 import com.lsc.ctesterfx.dao.Test;
 import com.lsc.ctesterfx.test.TestController;
 import java.io.File;
@@ -231,7 +233,7 @@ public class FXMLTestItemController implements Initializable
 
                 case NOT_COMPILED:
                     mTestStatusButton.setStyle(
-                            "-fx-background-radius: 32; -fx-background-color: #dddddd; -fx-text-fill: black");
+                            "-fx-background-radius: 32; -fx-background-color: " + Colors.createAsString(Color.GRAY) + "; -fx-text-fill: black");
                     mTestStatusButton.setText(
                             "Not compiled");
                     break;
@@ -240,7 +242,7 @@ public class FXMLTestItemController implements Initializable
                     _notifyStartExecution();
 
                     mTestStatusButton.setStyle(
-                            "-fx-background-radius: 32; -fx-background-color: #eeeeee; -fx-text-fill: black");
+                            "-fx-background-radius: 32; -fx-background-color: " + Colors.createAsString(Color.GRAY) + "; -fx-text-fill: black");
                     mTestStatusButton.setText(
                             "Compiling");
                     break;
@@ -249,7 +251,7 @@ public class FXMLTestItemController implements Initializable
                     _notifyStartExecution();
 
                     mTestStatusButton.setStyle(
-                            "-fx-background-radius: 32; -fx-background-color: #eeeeee; -fx-text-fill: black");
+                            "-fx-background-radius: 32; -fx-background-color: " + Colors.createAsString(Color.GRAY) + "; -fx-text-fill: black");
                     mTestStatusButton.setText(
                             "Running");
                     break;
@@ -258,7 +260,7 @@ public class FXMLTestItemController implements Initializable
                     _notifyFinishedExecution();
 
                     mTestStatusButton.setStyle(
-                            "-fx-background-radius: 32; -fx-background-color: #aeffad; -fx-text-fill: black");
+                            "-fx-background-radius: 32; -fx-background-color: " + Colors.createAsString(Color.LIGHT_GREEN) + "; -fx-text-fill: black");
                     mTestStatusButton.setText(
                             "Compiled");
                     break;
@@ -267,7 +269,7 @@ public class FXMLTestItemController implements Initializable
                     _notifyFinishedExecution();
 
                     mTestStatusButton.setStyle(
-                            "-fx-background-radius: 32; -fx-background-color: red; -fx-text-fill: white");
+                            "-fx-background-radius: 32; -fx-background-color: " + Colors.createAsString(Color.RED) + "; -fx-text-fill: white");
                     mTestStatusButton.setText(
                             "Compilation error");
                     break;
@@ -276,7 +278,7 @@ public class FXMLTestItemController implements Initializable
                     _notifyFinishedExecution();
 
                     mTestStatusButton.setStyle(
-                            "-fx-background-radius: 32; -fx-background-color: #42ff3f; -fx-text-fill: black");
+                            "-fx-background-radius: 32; -fx-background-color: " + Colors.createAsString(Color.GREEN) + "; -fx-text-fill: black");
                     mTestStatusButton.setText(
                             "Succesful");
                     break;
@@ -285,14 +287,14 @@ public class FXMLTestItemController implements Initializable
                     _notifyFinishedExecution();
 
                     mTestStatusButton.setStyle(
-                            "-fx-background-radius: 32; -fx-background-color: red; -fx-text-fill: white");
+                            "-fx-background-radius: 32; -fx-background-color: " + Colors.createAsString(Color.RED) + "; -fx-text-fill: white");
                     mTestStatusButton.setText(
                             "Failed");
                     break;
 
                 case STOPPED:
                     mTestStatusButton.setStyle(
-                            "-fx-background-radius: 32; -fx-background-color: #eeeeee; -fx-text-fill: black");
+                            "-fx-background-radius: 32; -fx-background-color: " + Colors.createAsString(Color.GRAY) + "; -fx-text-fill: black");
                     mTestStatusButton.setText(
                             "Stopped");
                     break;

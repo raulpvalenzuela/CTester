@@ -86,7 +86,7 @@ public class ApduResponse
      */
     public boolean checkSW(byte[] sw)
     {
-        if ((sw == null) || (sw.length != 0))
+        if ((sw == null) || (sw.length == 0))
         {
             return false;
         }
@@ -119,13 +119,50 @@ public class ApduResponse
         return Arrays.equals(this.data, data);
     }
 
+    /**
+     * Compares the data received in the command with the
+     * one received as parameter. This version receives a string that
+     * may contain "??" as a wildcard.
+     *
+     * @param data: data to be compared.
+     * @return true if they are equal.
+     */
+    public boolean checkData(final String data)
+    {
+        String received = Formatter.fromByteArrayToString(this.data).replace(" ", "");
+        String expected = data.replace(" ", "");
+
+        if (expected.contains("?"))
+        {
+            if (received.length() != expected.length())
+            {
+                return false;
+            }
+
+            for (int i = 0; i < expected.length(); ++i)
+            {
+                if (expected.charAt(i) != '?')
+                {
+                    if (expected.charAt(i) != received.charAt(i))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        return data.equals(received);
+    }
+
     @Override
     public String toString()
     {
         String swStr = Formatter.fromByteArrayToString(this.sw);
         String dataStr = "";
 
-        if (this.data != null && this.data.length > 0)
+        if ((this.data != null) && (this.data.length > 0))
         {
             dataStr = Formatter.fromByteArrayToString(this.data) + " ";
         }

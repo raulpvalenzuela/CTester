@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
   <CTester>
-    <JavaHome>C:\Program Files\Java\jdk1.8.0_201\jre</JavaHome>
+    <JavaHome>C:\Program Files\Java\jdk1.8.0_211\jre</JavaHome>
     <Reader></Reader>
     <TestsPath></TestsPath>
   </CTester>
