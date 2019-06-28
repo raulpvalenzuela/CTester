@@ -10,6 +10,7 @@ import com.lsc.ctesterlib.utils.Formatter;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import javafx.util.Pair;
 
 /**
  * Interface to interact with a IO script file.
@@ -79,30 +80,13 @@ public class ScriptExecutor implements IScriptExecutor
                         byte[] swReceived   = apduResponse.getSW();
                         byte[] dataReceived = apduResponse.getData();
 
-                        // If the response has to be checked.
-                        if (!line.contains(WILDCARD))
+                        Pair<String, String> expectedResponse = parseExpectedResponse(line.replace(RESPONSE_HEADER, ""));
+                        String swExpected = expectedResponse.getKey();
+                        String dataExpected = expectedResponse.getValue();
+
+                        // Check the SW.
+                        if ((swExpected != null) && !swExpected.isEmpty())
                         {
-                            String lineClean = line.replace(RESPONSE_HEADER, "").replace(" ", "").trim();
-                            // Sanity checks.
-                            if (lineClean.length() < 4)
-                            {
-                                logger.logWarning("Invalid response expected");
-                                logger.logWarning(" - " + line.replace(RESPONSE_HEADER, ""));
-
-                                return false;
-                            }
-                            // If the card responds with data, it has to be provived in the script to be compared.
-                            else if ((lineClean.length() < 6) && ((apduResponse.getData() != null) && (apduResponse.getData().length > 0)))
-                            {
-                                logger.logWarning("No data provided");
-                                logger.logWarning(" - " + line.replace(RESPONSE_HEADER, ""));
-
-                                return false;
-                            }
-
-                            String swExpected = lineClean.substring(lineClean.length() - 4);
-                            String dataExpected = lineClean.substring(0, lineClean.length() - 4);
-
                             if (!apduResponse.checkSW(Formatter.fromStringToByteArray(swExpected)))
                             {
                                 logger.logError("Status Word incorrect:");
@@ -111,11 +95,23 @@ public class ScriptExecutor implements IScriptExecutor
 
                                 return false;
                             }
+                        }
 
-                            // If it's a case 2/4 command.
-                            if ((apduResponse.getData() != null) && (apduResponse.getData().length > 0))
+                        // Data received.
+                        if (dataReceived.length > 0)
+                        {
+                            // None expected
+                            if (dataExpected == null)
                             {
-                                // Compare the data as an String in case some bytes have to be ignored.
+                                logger.logError("Data received but none expected");
+                                logger.logError(" - " + line.replace(RESPONSE_HEADER, ""));
+
+                                return false;
+                            }
+
+                            // Data expected and has to be checked.
+                            if (!dataExpected.isEmpty())
+                            {
                                 if (!apduResponse.checkData(dataExpected))
                                 {
                                     logger.logError("Data incorrect:");
@@ -155,5 +151,44 @@ public class ScriptExecutor implements IScriptExecutor
     public boolean execute(String script) throws Exception
     {
         return execute(new File(script));
+    }
+
+    /**
+     * Parses the expected response int two strings containing the SW and the data.
+     * If no data is expected the string will be null. If data is expected but should
+     * not be checked, the string will be empty.
+     *
+     * @param line string containing the response.
+     * @return pair containing the SW and the response data.
+     */
+    private Pair<String, String> parseExpectedResponse(String line)
+    {
+        String response = line.replace(" ", "").trim();
+
+        // If it's empty or it only contains a star "*".
+        if (response.isEmpty() || response.equals(WILDCARD))
+        {
+            return new Pair<>("", "");
+        }
+
+        // If contains a star and SW.
+        if (response.contains(WILDCARD))
+        {
+            response = response.replace(WILDCARD, "");
+
+            return new Pair<>(response, "");
+        }
+
+        // If it contains only the SW.
+        if (response.length() == 4)
+        {
+            return new Pair<>(response, null);
+        }
+
+        // If we reach this point, SW and response is expected.
+        return new Pair<>(
+              response.substring(response.length() - 4)
+            , response.substring(0, response.length() - 4)
+        );
     }
 }

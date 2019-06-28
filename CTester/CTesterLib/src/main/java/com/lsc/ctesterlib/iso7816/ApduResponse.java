@@ -127,11 +127,31 @@ public class ApduResponse
      * @param data: data to be compared.
      * @return true if they are equal.
      */
-    public boolean checkData(String data)
+    public boolean checkData(final String data)
     {
         String received = Formatter.fromByteArrayToString(this.data).replace(" ", "");
+        String expected = data.replace(" ", "");
 
-        data = data.replace(" ", "").replace("?", "");
+        if (expected.contains("?"))
+        {
+            if (received.length() != expected.length())
+            {
+                return false;
+            }
+
+            for (int i = 0; i < expected.length(); ++i)
+            {
+                if (expected.charAt(i) != '?')
+                {
+                    if (expected.charAt(i) != received.charAt(i))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
 
         return data.equals(received);
     }
