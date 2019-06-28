@@ -78,7 +78,7 @@ public class ApduCommand
             this.lc = command[OFFSET_LC];
             this.le = 0;
 
-            this.data = Arrays.copyOfRange(command, 4, this.lc + 5);
+            this.data = Arrays.copyOfRange(command, 5, (this.lc & 0xFF) + 5);
         }
         else
         {
@@ -88,13 +88,14 @@ public class ApduCommand
             this.data = new byte[] {};
         }
 
-        this.command = new byte[5 + lc];
+        this.command = new byte[5 + (this.lc & 0xFF)];
         this.command[OFFSET_CLA] = this.cla;
         this.command[OFFSET_INS] = this.ins;
         this.command[OFFSET_P1]  = this.p1;
         this.command[OFFSET_P2]  = this.p2;
         this.command[OFFSET_LC]  = (this.data.length == 0) ? this.le : this.lc;
-        for (int i = 0; i < data.length; ++i)
+
+        for (int i = 0; i < this.data.length; ++i)
         {
             this.command[i + OFFSET_CDATA] = this.data[i];
         }

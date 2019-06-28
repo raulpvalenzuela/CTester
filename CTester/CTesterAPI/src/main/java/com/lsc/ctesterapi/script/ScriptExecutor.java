@@ -67,12 +67,12 @@ public class ScriptExecutor implements IScriptExecutor
                 // If it's a response, send the command and check the response.
                 else if (line.startsWith(RESPONSE_HEADER))
                 {
-                    // Create the APDU command.
-                    ApduCommand apduCommand = new ApduCommand(
-                            Formatter.fromStringToByteArray(command));
-
                     try
                     {
+                        // Create the APDU command.
+                        ApduCommand apduCommand = new ApduCommand(
+                                Formatter.fromStringToByteArray(command));
+
                         // Transmit the command and get the response.
                         ApduResponse apduResponse = reader.transmit(apduCommand);
 
