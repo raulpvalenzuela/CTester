@@ -40,11 +40,12 @@ public class CompilationTask extends Task
     private Pair<Object, List<Method>> _compileTest()
     {
         LOGGER.info("Compiling '" + testController.getTestName() + "'");
-        testController.getLogger().logComment("Compiling " + testController.getTestName() + "\n");
 
         // First we need to notify the controller that the task has started.
         testController.notifyStartTest();
-        // Update the state.
+        
+        // Compilation process starts here.
+        testController.getLogger().logComment("Compiling " + testController.getTestName() + "\n");
         testController.setState(FXMLTestItemController.TEST_STATE.COMPILING);
 
         Pair<Object, List<Method>> result = null;
