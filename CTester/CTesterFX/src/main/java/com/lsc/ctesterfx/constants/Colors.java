@@ -10,12 +10,13 @@ public class Colors
     public enum Color
     {
         ACCENT("#53DBB6"),
-        RED("#FF0000"),
+        RED("#FF4F4F"),
         YELLOW("#FFCC00"),
         BLUE("#00FFEA"),
-        GREEN("#aeffad"),
+        LIGHT_GREEN("#BEFFBD"),
+        GREEN("#AEFFAD"),
         DARK_GRAY("#888888"),
-        GRAY("#CCCCCC");
+        GRAY("#DDDDDD");
 
         public final String value;
 
