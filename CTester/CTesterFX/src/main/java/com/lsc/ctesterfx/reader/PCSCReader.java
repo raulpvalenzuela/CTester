@@ -2,6 +2,7 @@ package com.lsc.ctesterfx.reader;
 
 import com.lsc.ctesterlib.iso7816.ApduCommand;
 import com.lsc.ctesterlib.iso7816.ApduResponse;
+import javafx.util.Pair;
 import javax.smartcardio.Card;
 import javax.smartcardio.CardChannel;
 import javax.smartcardio.CardException;
@@ -116,15 +117,19 @@ public class PCSCReader implements IReader
     }
 
     @Override
-    public ApduResponse transmit(final ApduCommand apdu) throws Exception
+    public Pair<Float, ApduResponse> transmit(final ApduCommand apdu) throws Exception
     {
+        long start = 0;
+        long end = 0;
         ApduResponse apduResponse = null;
 
         if (channel != null)
         {
             CommandAPDU commandApdu = new CommandAPDU(apdu.asByteArray());
 
+            start = System.nanoTime();
             ResponseAPDU response = channel.transmit(commandApdu);
+            end = System.nanoTime();
 
             apduResponse = new ApduResponse.Builder()
                     .withSW1((byte) response.getSW1())
@@ -133,7 +138,7 @@ public class PCSCReader implements IReader
                     .build();
         }
 
-        return apduResponse;
+        return new Pair<>((float)(end - start) / (1000*1000), apduResponse);
     }
 
     @Override

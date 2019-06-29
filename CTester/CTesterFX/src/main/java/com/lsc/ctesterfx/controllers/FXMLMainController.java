@@ -45,6 +45,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.util.Pair;
 import org.apache.commons.codec.DecoderException;
 import org.apache.log4j.Logger;
 
@@ -623,8 +624,13 @@ public class FXMLMainController implements Initializable
                         Formatter.fromStringToByteArray(commandEntered));
 
                 printer.log(Strings.COMMAND_HEADER + apdu.toString());
-                ApduResponse response = readerController.getSelected().transmit(apdu);
-                printer.log(Strings.RESPONSE_HEADER + response.toString() + "\n");
+
+                Pair<Float, ApduResponse> response = readerController.getSelected().transmit(apdu);
+                float executionTime = response.getKey();
+                ApduResponse apduResponse = response.getValue();
+
+                printer.log(Strings.RESPONSE_HEADER + apduResponse.toString());
+                printer.logComment("Time: " + String.format("%.2f", executionTime) + "ms\n");
 
             } catch (DecoderException ex) {
                 LOGGER.error("Invalid command");

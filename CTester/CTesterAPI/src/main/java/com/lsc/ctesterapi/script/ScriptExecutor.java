@@ -76,7 +76,7 @@ public class ScriptExecutor implements IScriptExecutor
                                 Formatter.fromStringToByteArray(command));
 
                         // Transmit the command and get the response.
-                        ApduResponse apduResponse = reader.transmit(apduCommand);
+                        ApduResponse apduResponse = reader.transmit(apduCommand).getValue();
 
                         byte[] swReceived   = apduResponse.getSW();
                         byte[] dataReceived = apduResponse.getData();

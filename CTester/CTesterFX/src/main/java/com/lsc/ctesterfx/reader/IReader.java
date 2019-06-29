@@ -2,6 +2,7 @@ package com.lsc.ctesterfx.reader;
 
 import com.lsc.ctesterlib.iso7816.ApduResponse;
 import com.lsc.ctesterlib.iso7816.ApduCommand;
+import javafx.util.Pair;
 
 /**
  * Interface with a reader.
@@ -34,11 +35,11 @@ public interface IReader
     /**
      * Transmits the APDU and returns the response.
      *
-     * @param apdu: apdu to be transmitted.
+     * @param apdu: apdu to be transmitted along with the execution time in ms.
      * @return response from the card.
      * @throws java.lang.Exception if an error occurs sending an APDU.
      */
-    public ApduResponse transmit(ApduCommand apdu) throws Exception;
+    public Pair<Float, ApduResponse> transmit(ApduCommand apdu) throws Exception;
 
     /**
      * Returns the name of the reader.

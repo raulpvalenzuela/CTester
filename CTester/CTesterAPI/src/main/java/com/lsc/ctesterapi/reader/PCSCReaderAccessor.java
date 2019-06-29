@@ -6,6 +6,7 @@ import com.lsc.ctesterlib.constants.Strings;
 import com.lsc.ctesterlib.iso7816.ApduCommand;
 import com.lsc.ctesterlib.iso7816.ApduResponse;
 import com.lsc.ctesterlib.utils.Formatter;
+import javafx.util.Pair;
 
 /**
  * Interface with a reader.
@@ -70,11 +71,16 @@ public class PCSCReaderAccessor implements IReader
      * @throws java.lang.Exception if an error occurs sending an APDU.
      */
     @Override
-    public ApduResponse transmit(ApduCommand apdu) throws Exception
+    public Pair<Float, ApduResponse> transmit(ApduCommand apdu) throws Exception
     {
         logger.log(Strings.COMMAND_HEADER + apdu.toString());
-        ApduResponse response = applicationReader.transmit(apdu);
-        logger.log(Strings.RESPONSE_HEADER + response.toString() + "\n");
+
+        Pair<Float, ApduResponse> response = applicationReader.transmit(apdu);
+        float executionTime = response.getKey();
+        ApduResponse apduResponse = response.getValue();
+
+        logger.log(Strings.RESPONSE_HEADER + apduResponse.toString());
+        logger.logComment("Time: " + String.format("%.2f", executionTime) + "ms\n");
 
         return response;
     }
