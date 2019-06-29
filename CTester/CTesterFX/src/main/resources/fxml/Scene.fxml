@@ -102,7 +102,7 @@
                   </VBox>
                </children>
             </VBox>
-            <StackPane HBox.hgrow="ALWAYS">
+            <StackPane fx:id="mDialogContainer" HBox.hgrow="ALWAYS">
                <children>
                   <SplitPane dividerPositions="0.4" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="675.0" prefWidth="1043.0" style="-fx-padding: 0;">
                     <items>
