@@ -53,6 +53,7 @@ public class ScriptExecutor implements IScriptExecutor
 
             String line;
             String command = null;
+            int lineNumber = 0;
             while ((line = br.readLine()) != null)
             {
                 // If it's a comment.
@@ -89,7 +90,7 @@ public class ScriptExecutor implements IScriptExecutor
                         {
                             if (!apduResponse.checkSW(Formatter.fromStringToByteArray(swExpected)))
                             {
-                                logger.logError("Status Word incorrect:");
+                                logger.logError("Status Word incorrect at line " + lineNumber + ":");
                                 logger.logError(" - SW Expected: " + Formatter.separate(swExpected, 2));
                                 logger.logError(" - SW Received: " + Formatter.fromByteArrayToString(swReceived));
 
@@ -103,7 +104,7 @@ public class ScriptExecutor implements IScriptExecutor
                             // None expected
                             if (dataExpected == null)
                             {
-                                logger.logError("Data received but none expected");
+                                logger.logError("Data received but none expected at line " + lineNumber + ":");
                                 logger.logError(" - " + line.replace(RESPONSE_HEADER, ""));
 
                                 return false;
@@ -114,7 +115,7 @@ public class ScriptExecutor implements IScriptExecutor
                             {
                                 if (!apduResponse.checkData(dataExpected))
                                 {
-                                    logger.logError("Data incorrect:");
+                                    logger.logError("Data incorrect at line " + lineNumber + ":");
                                     logger.logError(" - Data Expected: " + Formatter.separate(dataExpected, 2));
                                     logger.logError(" - Data Received: " + Formatter.fromByteArrayToString(dataReceived));
 
@@ -124,7 +125,7 @@ public class ScriptExecutor implements IScriptExecutor
                         }
 
                     } catch (Exception ex) {
-                        logger.logError("Exception transmitting command");
+                        logger.logError("Exception transmitting command at line " + lineNumber + ":");
                         logger.logError(" - Ex: " + ex.getMessage());
 
                         return false;
@@ -135,6 +136,8 @@ public class ScriptExecutor implements IScriptExecutor
                 {
                     reader.reset();
                 }
+
+                lineNumber++;
             }
 
             return true;
