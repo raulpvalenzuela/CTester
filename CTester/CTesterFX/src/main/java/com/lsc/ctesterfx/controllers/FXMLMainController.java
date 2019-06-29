@@ -12,6 +12,7 @@ import com.lsc.ctesterlib.utils.Formatter;
 import com.lsc.ctesterfx.constants.Animations;
 import com.lsc.ctesterlib.constants.Strings;
 import com.lsc.ctesterfx.constants.Tooltips;
+import com.lsc.ctesterfx.gui.DialogCreator;
 import com.lsc.ctesterfx.gui.GUIController;
 import com.lsc.ctesterfx.logger.Printer;
 import com.lsc.ctesterfx.persistence.Configuration;
@@ -87,6 +88,8 @@ public class FXMLMainController implements Initializable
     private BorderPane mOutputContainer;
     @FXML
     private StackPane mFABIconsContainer;
+    @FXML
+    private StackPane mDialogContainer;
     @FXML
     private JFXButton mAddTestsButton;
     @FXML
@@ -633,6 +636,13 @@ public class FXMLMainController implements Initializable
                 LOGGER.error(ex);
 
                 printer.logError("Exception transmitting command: " + ex.getMessage() + "\n");
+
+                DialogCreator dialog = new DialogCreator(
+                          mDialogContainer
+                        , Strings.ERROR_TRANSMITTING
+                        , "Exception transmitting command: " + ex.getMessage());
+
+                dialog.show();
             }
         }
         else
@@ -644,35 +654,43 @@ public class FXMLMainController implements Initializable
     @FXML
     private void onClickReset(ActionEvent event)
     {
-        try
+        byte[] atr;
+        IReader reader = readerController.getSelected();
+
+        if (reader != null)
         {
-            byte[] atr;
-            IReader reader = readerController.getSelected();
-
-            if (reader != null)
+            try
             {
-                try
-                {
-                    atr = reader.reset();
-                    String atrStr = Formatter.fromByteArrayToString(atr);
+                atr = reader.reset();
+                String atrStr = Formatter.fromByteArrayToString(atr);
 
-                    printer.log(Strings.RESET_CARD);
-                    printer.logComment(Strings.ATR_HEADER + atrStr + "\n");
+                printer.log(Strings.RESET_CARD);
+                printer.logComment(Strings.ATR_HEADER + atrStr + "\n");
 
-                } catch (Exception e) {
-                    printer.logError(e.getMessage() + "\n");
-                }
+            } catch (Exception ex) {
+                LOGGER.error("Exception resetting the card");
+                LOGGER.error(" - Ex: " + ex);
+
+                printer.logError("Exception resetting the card\n");
+
+                DialogCreator dialog = new DialogCreator(
+                              mDialogContainer
+                            , Strings.ERROR_RESETTING
+                            , "Exception resetting the card: " + ex.getMessage());
+
+                dialog.show();
             }
-            else
-            {
-                printer.logWarning(Strings.NO_READER_SELECTED + "\n");
-            }
+        }
+        else
+        {
+            printer.logWarning(Strings.NO_READER_SELECTED + "\n");
 
-        } catch (Exception ex) {
-            LOGGER.error("Exception resetting the card");
-            LOGGER.error(ex);
+            DialogCreator dialog = new DialogCreator(
+                          mDialogContainer
+                        , Strings.NO_READER_SELECTED
+                        , "No reader selected, select one from the bottom left corner.");
 
-            printer.logError("Exception resetting the card\n");
+            dialog.show();
         }
     }
 

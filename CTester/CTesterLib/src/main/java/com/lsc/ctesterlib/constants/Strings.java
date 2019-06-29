@@ -13,4 +13,6 @@ public class Strings
 
     // Errors
     public static final String NO_READER_SELECTED = "No reader selected";
+    public static final String ERROR_TRANSMITTING = "Error transmitting";
+    public static final String ERROR_RESETTING    = "Error resetting";
 }
