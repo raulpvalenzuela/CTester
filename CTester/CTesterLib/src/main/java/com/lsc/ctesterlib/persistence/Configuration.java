@@ -19,11 +19,17 @@ public class Configuration
 {
     private static final Logger LOGGER = Logger.getLogger(Configuration.class);
 
-    // Public constants
+    // Config.xml fields
     public static final String CTESTER = "CTester";
         public static final String JAVA_HOME   = "JavaHome";
         public static final String LAST_READER = "Reader";
         public static final String LAST_PATH   = "TestsPath";
+
+    public static final String VIRGINIZE = "Virginize";
+        public static final String MODE = "Mode";
+            public static final String KEY        = "Key";
+            public static final String PARAMETERS = "Parameters";
+                public static final String PARAMETER  = "Parameter";
 
     // Private constants
     private static final String CONFIG_PATH =

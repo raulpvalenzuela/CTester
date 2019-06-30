@@ -1,6 +1,8 @@
 package com.lsc.ctesterlib.virginize;
 
 import org.jpos.tlv.TLVList;
+import org.jpos.tlv.TLVList.TLVListBuilder;
+import org.jpos.tlv.TLVMsg;
 
 /**
  * Small framework to generate a Virginize command.
@@ -15,8 +17,11 @@ public class Virginize
         UPDATE_ONLY
     }
 
+    // Virginize key
     private byte[] key;
+    // Virginize mode
     private MODE mode;
+    // Virginize parameters
     private TLVList parameters;
 
     private Virginize() {}
@@ -25,6 +30,7 @@ public class Virginize
     {
         private byte[] key;
         private MODE mode;
+        private TLVList parameters;
 
         public Builder() {}
 
@@ -38,6 +44,18 @@ public class Virginize
         public Builder inMode(MODE mode)
         {
             this.mode = mode;
+
+            return this;
+        }
+
+        public Builder withParameters(TLVMsg... parameters)
+        {
+            this.parameters = TLVListBuilder.createInstance().build();
+
+            for (TLVMsg parameter : parameters)
+            {
+                this.parameters.append(parameter);
+            }
 
             return this;
         }
