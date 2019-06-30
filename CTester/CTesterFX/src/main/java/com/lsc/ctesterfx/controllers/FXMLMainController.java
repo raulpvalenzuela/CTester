@@ -15,7 +15,7 @@ import com.lsc.ctesterfx.constants.Tooltips;
 import com.lsc.ctesterfx.gui.DialogCreator;
 import com.lsc.ctesterfx.gui.GUIController;
 import com.lsc.ctesterfx.logger.Printer;
-import com.lsc.ctesterfx.persistence.Configuration;
+import com.lsc.ctesterlib.persistence.Configuration;
 import com.lsc.ctesterfx.reader.IReader;
 import com.lsc.ctesterfx.reader.ReaderController;
 import java.io.File;

@@ -35,13 +35,6 @@
             <version>0.10.1</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/dom4j/dom4j -->
-        <dependency>
-            <groupId>dom4j</groupId>
-            <artifactId>dom4j</artifactId>
-            <version>1.6.1</version>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/jaxen/jaxen -->
         <dependency>
             <groupId>jaxen</groupId>

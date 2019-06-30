@@ -2,7 +2,7 @@ package com.lsc.ctesterfx;
 
 import com.lsc.ctesterfx.controllers.FXMLMainController;
 import com.lsc.ctesterfx.background.MultithreadController;
-import com.lsc.ctesterfx.persistence.Configuration;
+import com.lsc.ctesterlib.persistence.Configuration;
 import com.lsc.ctesterfx.reader.IReader;
 import com.lsc.ctesterfx.reader.ReaderController;
 import javafx.application.Application;
