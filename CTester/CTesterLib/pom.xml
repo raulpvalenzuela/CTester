@@ -59,7 +59,7 @@
                         <configuration>
                             <finalName>CTesterLib</finalName>
                             <outputDirectory>${basedir}/../../Executable/Docs/Javadoc/Lib</outputDirectory>
-                            <jarOutputDirectory>../CTesterFX/libs</jarOutputDirectory>
+                            <jarOutputDirectory>../CTesterFX/Libs</jarOutputDirectory>
                         </configuration>
                         <id>attach-javadocs</id>
                         <goals>
@@ -75,7 +75,7 @@
                 <version>3.1.2</version>
                 <configuration>
                     <finalName>CTesterLib</finalName>
-                    <outputDirectory>../CTesterFX/libs</outputDirectory>
+                    <outputDirectory>../CTesterFX/Libs</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>

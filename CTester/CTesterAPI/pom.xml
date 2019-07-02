@@ -49,7 +49,7 @@
                         <configuration>
                             <finalName>CTesterAPI</finalName>
                             <outputDirectory>${basedir}/../../Executable/Docs/Javadoc/API</outputDirectory>
-                            <jarOutputDirectory>../CTesterFX/libs</jarOutputDirectory>
+                            <jarOutputDirectory>../CTesterFX/Libs</jarOutputDirectory>
                         </configuration>
                         <id>attach-javadocs</id>
                         <goals>
@@ -65,7 +65,7 @@
                 <version>3.1.2</version>
                 <configuration>
                     <finalName>CTesterAPI</finalName>
-                    <outputDirectory>../CTesterFX/libs</outputDirectory>
+                    <outputDirectory>../CTesterFX/Libs</outputDirectory>
                 </configuration>
             </plugin>
 
@@ -94,7 +94,7 @@
                         <id>install-external-2</id>
                         <phase>process-resources</phase>
                         <configuration>
-                            <file>${basedir}/../CTesterFX/libs/CTesterLib.jar</file>
+                            <file>${basedir}/../CTesterFX/Libs/CTesterLib.jar</file>
                             <repositoryLayout>default</repositoryLayout>
                             <groupId>com.lsc</groupId>
                             <artifactId>CTesterLib</artifactId>
