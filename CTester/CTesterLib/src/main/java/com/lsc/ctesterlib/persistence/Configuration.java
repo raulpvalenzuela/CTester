@@ -26,10 +26,11 @@ public class Configuration
         public static final String LAST_PATH   = "TestsPath";
 
     public static final String VIRGINIZE = "Virginize";
-        public static final String MODE = "Mode";
-            public static final String KEY        = "Key";
-            public static final String PARAMETERS = "Parameters";
-                public static final String PARAMETER  = "Parameter";
+        public static final String MODES = "Modes";
+            public static final String MODE = "Mode";
+                public static final String KEY        = "Key";
+                public static final String PARAMETERS = "Parameters";
+                    public static final String PARAMETER  = "Parameter";
 
     // Private constants
     private static final String CONFIG_PATH =
@@ -134,17 +135,24 @@ public class Configuration
     /**
      * Returns a string of the specified key.
      *
-     * @param key: is the key te be searched of.
+     * @param keys list of keys to find the element.
      * @return the value pointed by key as a string.
      */
-    public String getValueAsString(String key)
+    public String getValueAsString(String... keys)
     {
+        StringBuilder xpath = new StringBuilder();
+        for (String key : keys)
+        {
+            xpath.append((xpath.length() == 0) ? "//" : "/");
+            xpath.append(key);
+        }
+
         try
         {
             SAXReader reader = new SAXReader();
             Document document = reader.read(configurationFile);
 
-            return document.selectSingleNode("//" + key).getStringValue();
+            return document.selectSingleNode(xpath.toString()).getStringValue();
 
         } catch (DocumentException ex) {
             LOGGER.error("Exception reading config.xml'");

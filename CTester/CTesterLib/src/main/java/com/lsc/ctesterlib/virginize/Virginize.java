@@ -11,6 +11,14 @@ import org.jpos.tlv.TLVMsg;
  */
 public class Virginize
 {
+    private static final byte ERASE_AND_CONFIGURE_P1 = 0x00;
+    private static final byte ERASE_AND_CONFIGURE_P2 = 0x00;
+    private static final byte UPDATE_ONLY_P1         = 0x01;
+    private static final byte UPDATE_ONLY_P2         = 0x00;
+
+    private static final String ERASE_AND_CONFIGURE_NAME  = "Erase and configure";
+    private static final String UPDATE_ONLY_NAME          = "Update only";
+
     public enum MODE
     {
         ERASE_AND_CONFIGURE,
