@@ -58,6 +58,8 @@ public class Virginize
         this.parametersTLV = parameters;
 
         this.parameters    = null;
+
+        // TODO construct command
     }
 
     private Virginize(byte[] key, MODE mode, List<VirginizeParameter> parameters)
@@ -67,6 +69,8 @@ public class Virginize
         this.parameters    = parameters;
 
         this.parametersTLV = null;
+
+        // TODO construct command
     }
 
     public static class Builder
@@ -121,6 +125,11 @@ public class Virginize
                           , modeName
                           , new String[] { Configuration.KEY });
 
+                if (virginizeKey == null)
+                {
+                    return null;
+                }
+
                 virginize.key = Formatter.fromStringToByteArray(virginizeKey);
 
             } catch (DecoderException ex) {
@@ -139,6 +148,11 @@ public class Virginize
                           , modeName
                           , new String[] { Configuration.PARAMETERS , Configuration.PARAMETER});
 
+                if (elements == null)
+                {
+                    return null;
+                }
+
                 // Populate the list creating VirginizeParameter objects.
                 parameters = new ArrayList<>();
                 for (Element parameter : elements)
@@ -147,11 +161,6 @@ public class Virginize
                     String name = parameter.attributeValue(Configuration.NAME);
                     boolean mac = parameter.attributeValue(Configuration.MAC).equalsIgnoreCase("true");
                     byte[] value = Formatter.fromStringToByteArray(parameter.getStringValue());
-
-                    System.out.println(tag);
-                    System.out.println(name);
-                    System.out.println(mac);
-                    System.out.println(parameter.getStringValue());
 
                     parameters.add(new VirginizeParameter(tag, name, mac, value));
                 }
