@@ -10,7 +10,7 @@
   <Virginize>
     <Modes>
       <Mode name="Erase and configure">
-        <Key/>
+        <Key></Key>
         <Parameters>
           <Parameter name="Java parameters" mac="true"/>
           <Parameter name="RF parameters" mac="true"/>
@@ -19,7 +19,7 @@
       </Mode>
 
       <Mode name="Update only">
-        <Key/>
+        <Key></Key>
         <Parameters>
           <Parameter name="RF parameters" mac="true"/>
           <Parameter name="MiFare type" mac="false"/>

@@ -4,6 +4,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -133,10 +137,10 @@ public class Configuration
     }
 
     /**
-     * Returns a string of the specified key.
+     * Finds the last element defined by the series of keys.
      *
      * @param keys list of keys to find the element.
-     * @return the value pointed by key as a string.
+     * @return the value pointed by keys as a string.
      */
     public String getValueAsString(String... keys)
     {
@@ -160,5 +164,28 @@ public class Configuration
         }
 
         return null;
+    }
+
+    /**
+     * Finds the last element defined by the series of keys. It is also
+     * used the name attribute of the parent.
+     *
+     * @param parent: parent from where to start the search.
+     * @param name: name attribute of the parent.
+     * @param keys: array of keys that will drive the search.
+     * @return the value pointed by keys as a string.
+     */
+    public String getValueAsString(String parent, String name, String... keys)
+    {
+        String key = parent + "[@name='" + name + "']";
+
+        String[] newKeys = new String[keys.length + 1];
+        newKeys[0] = key;
+        for (int i = 0; i < keys.length; ++i)
+        {
+            newKeys[i + 1] = keys[i];
+        }
+
+        return getValueAsString(newKeys);
     }
 }
