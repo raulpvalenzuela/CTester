@@ -12,17 +12,17 @@
       <Mode name="Erase and configure">
         <Key></Key>
         <Parameters>
-          <Parameter name="Java parameters" mac="true"/>
-          <Parameter name="RF parameters" mac="true"/>
-          <Parameter name="MiFare type" mac="false"/>
+          <Parameter name="Java parameters" tag="94" mac="true"></Parameter>
+          <Parameter name="RF parameters" tag="96" mac="true"></Parameter>
+          <Parameter name="MiFare type" tag="97" mac="false"></Parameter>
         </Parameters>
       </Mode>
 
       <Mode name="Update only">
         <Key></Key>
         <Parameters>
-          <Parameter name="RF parameters" mac="true"/>
-          <Parameter name="MiFare type" mac="false"/>
+          <Parameter name="RF parameters" tag="96" mac="true"></Parameter>
+          <Parameter name="MiFare type" tag="97" mac="false"></Parameter>
         </Parameters>
       </Mode>
     </Modes>

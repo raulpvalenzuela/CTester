@@ -2,8 +2,11 @@ package com.lsc.ctesterlib.virginize;
 
 import com.lsc.ctesterlib.persistence.Configuration;
 import com.lsc.ctesterlib.utils.Formatter;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.codec.DecoderException;
 import org.apache.log4j.Logger;
+import org.dom4j.Element;
 import org.jpos.tlv.TLVList;
 import org.jpos.tlv.TLVList.TLVListBuilder;
 import org.jpos.tlv.TLVMsg;
@@ -38,8 +41,10 @@ public class Virginize
     private byte[] key;
     // Virginize mode
     private MODE mode;
-    // Virginize parameters
-    private TLVList parameters;
+    // Virginize parameters as TLVs
+    private TLVList parametersTLV;
+    // Virginize parameters as an object
+    private List<VirginizeParameter> parameters;
 
     // Raw command
     private byte[] command;
@@ -48,16 +53,28 @@ public class Virginize
 
     private Virginize(byte[] key, MODE mode, TLVList parameters)
     {
-        this.key        = key;
-        this.mode       = mode;
-        this.parameters = parameters;
+        this.key           = key;
+        this.mode          = mode;
+        this.parametersTLV = parameters;
+
+        this.parameters    = null;
+    }
+
+    private Virginize(byte[] key, MODE mode, List<VirginizeParameter> parameters)
+    {
+        this.key           = key;
+        this.mode          = mode;
+        this.parameters    = parameters;
+
+        this.parametersTLV = null;
     }
 
     public static class Builder
     {
         private byte[] key;
         private MODE mode;
-        private TLVList parameters;
+        private TLVList parametersTLV;
+        private List<VirginizeParameter> parameters;
 
         public Builder() {}
 
@@ -77,43 +94,82 @@ public class Virginize
 
         public Builder withParameters(TLVMsg... parameters)
         {
-            this.parameters = TLVListBuilder.createInstance().build();
+            this.parametersTLV = TLVListBuilder.createInstance().build();
 
             for (TLVMsg parameter : parameters)
             {
-                this.parameters.append(parameter);
+                this.parametersTLV.append(parameter);
             }
 
             return this;
         }
 
-        public Virginize buildFromConfig()
+        public Virginize buildFromConfig(MODE virginizeMode)
         {
             Virginize virginize = new Virginize();
             Configuration config = new Configuration();
 
-            String field = null;
+            String virginizeKey = null;
 
+            String modeName = (virginizeMode == MODE.ERASE_AND_CONFIGURE) ? ERASE_AND_CONFIGURE_NAME : UPDATE_ONLY_NAME;
+
+            // Get the virginize key.
             try
             {
-                field = config.getValueAsString(
+                virginizeKey = config.getValueAsString(
                             Configuration.MODE
-                          , ERASE_AND_CONFIGURE_NAME
+                          , modeName
                           , new String[] { Configuration.KEY });
 
-                virginize.key = Formatter.fromStringToByteArray(field);
+                virginize.key = Formatter.fromStringToByteArray(virginizeKey);
 
             } catch (DecoderException ex) {
                 LOGGER.error("Exception parsing virginize key read from config.xml");
-                LOGGER.error(" - Key: " + field);
+                LOGGER.error(" - Key: " + virginizeKey);
+
+                return null;
             }
 
-            return virginize;
+            // Get the parameters.
+            try
+            {
+                // First, get the elements from config.xml
+                List<Element> elements = config.getValuesAsList(
+                            Configuration.MODE
+                          , modeName
+                          , new String[] { Configuration.PARAMETERS , Configuration.PARAMETER});
+
+                // Populate the list creating VirginizeParameter objects.
+                parameters = new ArrayList<>();
+                for (Element parameter : elements)
+                {
+                    byte tag = Formatter.stringToByte(parameter.attributeValue(Configuration.TAG));
+                    String name = parameter.attributeValue(Configuration.NAME);
+                    boolean mac = parameter.attributeValue(Configuration.MAC).equalsIgnoreCase("true");
+                    byte[] value = Formatter.fromStringToByteArray(parameter.getStringValue());
+
+                    System.out.println(tag);
+                    System.out.println(name);
+                    System.out.println(mac);
+                    System.out.println(parameter.getStringValue());
+
+                    parameters.add(new VirginizeParameter(tag, name, mac, value));
+                }
+
+                virginize.parameters = parameters;
+
+            } catch (DecoderException | NullPointerException ex) {
+                LOGGER.error("Exception parsing virginize parameter from config.xml");
+
+                return null;
+            }
+
+            return new Virginize();
         }
 
         public Virginize build()
         {
-            return new Virginize(key, mode, parameters);
+            return new Virginize(key, mode, parametersTLV);
         }
     }
 

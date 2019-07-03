@@ -5,12 +5,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
@@ -35,6 +35,11 @@ public class Configuration
                 public static final String KEY        = "Key";
                 public static final String PARAMETERS = "Parameters";
                     public static final String PARAMETER  = "Parameter";
+
+    // Config.xml attributes
+    public static final String TAG  = "tag";
+    public static final String NAME = "name";
+    public static final String MAC  = "mac";
 
     // Private constants
     private static final String CONFIG_PATH =
@@ -134,6 +139,68 @@ public class Configuration
     public Editor getEditor()
     {
         return new Editor();
+    }
+
+    /**
+     * Finds all the elements defined by the series of keys.
+     *
+     * @param keys list of keys to find the elements.
+     * @return all the elements defined by the series of keys.
+     */
+    public List<Element> getValuesAsList(String... keys)
+    {
+        StringBuilder xpath = new StringBuilder();
+        for (String key : keys)
+        {
+            xpath.append((xpath.length() == 0) ? "//" : "/");
+            xpath.append(key);
+        }
+
+        try
+        {
+            SAXReader reader = new SAXReader();
+            Document document = reader.read(configurationFile);
+
+            List<Element> elements = new ArrayList<>();
+            List<Node> nodes = document.selectNodes(xpath.toString());
+            if ((nodes != null) && !nodes.isEmpty())
+            {
+                nodes.forEach((node) ->
+                {
+                    elements.add((Element) node);
+                });
+            }
+
+            return elements;
+
+        } catch (DocumentException ex) {
+            LOGGER.error("Exception reading config.xml'");
+            LOGGER.error(ex);
+        }
+
+        return null;
+    }
+
+     /**
+     * Finds all the elements defined by the series of keys.
+     *
+     * @param parent: parent from where to start the search.
+     * @param name: name attribute of the parent.
+     * @param keys list of keys to find the elements.
+     * @return all the elements defined by the series of keys.
+     */
+    public List<Element> getValuesAsList(String parent, String name, String... keys)
+    {
+        String key = parent + "[@name='" + name + "']";
+
+        String[] newKeys = new String[keys.length + 1];
+        newKeys[0] = key;
+        for (int i = 0; i < keys.length; ++i)
+        {
+            newKeys[i + 1] = keys[i];
+        }
+
+        return getValuesAsList(newKeys);
     }
 
     /**
