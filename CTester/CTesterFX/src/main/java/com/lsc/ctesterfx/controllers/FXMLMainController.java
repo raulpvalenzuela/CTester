@@ -18,6 +18,7 @@ import com.lsc.ctesterfx.logger.Printer;
 import com.lsc.ctesterlib.persistence.Configuration;
 import com.lsc.ctesterfx.reader.IReader;
 import com.lsc.ctesterfx.reader.ReaderController;
+import com.lsc.ctesterlib.virginize.Virginize;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -721,7 +722,12 @@ public class FXMLMainController implements Initializable
     @FXML
     private void onClickVirginizeButton(ActionEvent event)
     {
-        // TODO
+        Virginize virginize = new Virginize.Builder().buildFromConfig(Virginize.MODE.ERASE_AND_CONFIGURE);
+
+        if ((virginize != null) & (virginize.getCommand() != null))
+        {
+            mCommandTextfield.setText(Formatter.fromByteArrayToString(virginize.getCommand()));
+        }
     }
 
     @FXML

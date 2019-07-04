@@ -59,7 +59,52 @@ public class Virginize
 
         this.parameters    = null;
 
-        // TODO construct command
+        // We don't know yet the total size we'll use a list that will be converted to an array.
+        List<Byte> temp = new ArrayList<>();
+
+        // Class and instruction bytes
+        temp.add(CLA);
+        temp.add(INS);
+
+        // P1 and P2 bytes
+        temp.add((mode == MODE.ERASE_AND_CONFIGURE) ? ERASE_AND_CONFIGURE_P1 : UPDATE_ONLY_P1);
+        temp.add((mode == MODE.UPDATE_ONLY)         ? ERASE_AND_CONFIGURE_P2 : UPDATE_ONLY_P2);
+
+        // Dummy length byte
+        temp.add((byte) 0);
+
+        // Virginize key
+        for (int i = 0; i < key.length; ++i)
+        {
+            temp.add(key[i]);
+        }
+
+        // Virginize parameters
+        TLVMsg parameter;
+        while ((parameter = parameters.findNextTLV()) != null)
+        {
+            byte tag = (byte) parameter.getTag();
+            byte[] length = parameter.getL();
+            byte[] value = parameter.getValue();
+
+            temp.add(tag);
+            for (int i = 0; i < length.length; ++i)
+            {
+                temp.add(length[i]);
+            }
+
+            for (int i = 0; i < value.length; ++i)
+            {
+                temp.add(value[i]);
+            }
+        }
+
+        // With the list populated, copy i
+        this.command = new byte[temp.size()];
+        for (int i = 0; i < temp.size(); ++i)
+        {
+            this.command[i] = temp.get(i);
+        }
     }
 
     private Virginize(byte[] key, MODE mode, List<VirginizeParameter> parameters)
