@@ -36,17 +36,17 @@ public class DialogCreator
         layout.setStyle("-fx-background-color: #333333");
 
         Label heading = new Label(title);
-        heading.setFont(Font.font("Microsoft JhengHei UI Light", FontWeight.BOLD, 20));
+        heading.setFont(Font.font("Microsoft JhengHei UI Light", FontWeight.BOLD, 18));
         heading.setTextFill(Color.web("#CCCCCC"));
 
         Label body = new Label(message);
-        body.setFont(Font.font("Microsoft JhengHei UI Light", 16));
+        body.setFont(Font.font("Microsoft JhengHei UI Light", 14));
         body.setTextFill(Color.web("#CCCCCC"));
 
         JFXButton button = new JFXButton("Close");
         button.setButtonType(JFXButton.ButtonType.FLAT);
         button.setBackground(Background.EMPTY);
-        button.setFont(Font.font("Microsoft JhengHei UI Light", 14));
+        button.setFont(Font.font("Microsoft JhengHei UI Light", 12));
         button.setTextFill(Color.web(Colors.createAsString(Colors.Color.ACCENT)));
         button.setOnAction((ActionEvent event) ->
         {

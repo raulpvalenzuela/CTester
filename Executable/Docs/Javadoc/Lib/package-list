@@ -1,3 +1,5 @@
 com.lsc.ctesterlib.constants
 com.lsc.ctesterlib.iso7816
+com.lsc.ctesterlib.persistence
 com.lsc.ctesterlib.utils
+com.lsc.ctesterlib.virginize

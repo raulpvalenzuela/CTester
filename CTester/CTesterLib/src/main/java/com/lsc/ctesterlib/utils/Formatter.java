@@ -55,4 +55,16 @@ public class Formatter
     {
         return Hex.decodeHex(string.replace(" ", "").toCharArray());
     }
+
+    /**
+     * Converts a string to a single byte.
+     *
+     * @param string: string to be converted to a byte.
+     * @return single byte from the string.
+     */
+    public static byte stringToByte(String string)
+    {
+        return (byte) ((Character.digit(string.charAt(0), 16) << 4) +
+                        Character.digit(string.charAt(1), 16));
+    }
 }

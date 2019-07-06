@@ -5,7 +5,6 @@ com.lsc.ctesterfx.controllers
 com.lsc.ctesterfx.dao
 com.lsc.ctesterfx.gui
 com.lsc.ctesterfx.logger
-com.lsc.ctesterfx.persistence
 com.lsc.ctesterfx.reader
 com.lsc.ctesterfx.script
 com.lsc.ctesterfx.test

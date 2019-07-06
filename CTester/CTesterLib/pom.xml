@@ -18,6 +18,34 @@
             <artifactId>commons-codec</artifactId>
             <version>1.9</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.jpos/jpos -->
+        <dependency>
+            <groupId>org.jpos</groupId>
+            <artifactId>jpos</artifactId>
+            <version>2.1.3</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/dom4j/dom4j -->
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/jaxen/jaxen -->
+        <dependency>
+            <groupId>jaxen</groupId>
+            <artifactId>jaxen</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/log4j/log4j -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -31,7 +59,7 @@
                         <configuration>
                             <finalName>CTesterLib</finalName>
                             <outputDirectory>${basedir}/../../Executable/Docs/Javadoc/Lib</outputDirectory>
-                            <jarOutputDirectory>../CTesterFX/libs</jarOutputDirectory>
+                            <jarOutputDirectory>../CTesterFX/Libs</jarOutputDirectory>
                         </configuration>
                         <id>attach-javadocs</id>
                         <goals>
@@ -47,7 +75,7 @@
                 <version>3.1.2</version>
                 <configuration>
                     <finalName>CTesterLib</finalName>
-                    <outputDirectory>../CTesterFX/libs</outputDirectory>
+                    <outputDirectory>../CTesterFX/Libs</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>
