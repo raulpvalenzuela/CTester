@@ -14,6 +14,11 @@ public class VirginizeParameter
     private boolean mac;
     private byte[] value;
 
+   public VirginizeParameter(byte tag, byte[] value)
+    {
+        this(tag, "Unnamed", false, value);
+    }
+
     public VirginizeParameter(byte tag, String name, byte[] value)
     {
         this(tag, name, false, value);

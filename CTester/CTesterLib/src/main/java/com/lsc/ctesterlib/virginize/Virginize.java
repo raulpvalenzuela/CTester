@@ -4,13 +4,11 @@ import com.lsc.ctesterlib.iso7816.ApduCommand;
 import com.lsc.ctesterlib.persistence.Configuration;
 import com.lsc.ctesterlib.utils.Formatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.codec.DecoderException;
 import org.apache.log4j.Logger;
 import org.dom4j.Element;
-import org.jpos.tlv.TLVList;
-import org.jpos.tlv.TLVList.TLVListBuilder;
-import org.jpos.tlv.TLVMsg;
 
 /**
  * Small framework to generate a Virginize command.
@@ -42,8 +40,6 @@ public class Virginize
     private byte[] key;
     // Virginize mode
     private MODE mode;
-    // Virginize parameters as TLVs
-    private TLVList parametersTLV;
     // Virginize parameters as an object
     private List<VirginizeParameter> parameters;
 
@@ -52,69 +48,11 @@ public class Virginize
 
     private Virginize() {}
 
-    private Virginize(byte[] key, MODE mode, TLVList parameters)
-    {
-        this.key           = key;
-        this.mode          = mode;
-        this.parametersTLV = parameters;
-
-        this.parameters    = null;
-
-        // We don't know yet the total size we'll use a list that will be converted to an array.
-        List<Byte> temp = new ArrayList<>();
-
-        // Class and instruction bytes
-        temp.add(CLA);
-        temp.add(INS);
-
-        // P1 and P2 bytes
-        temp.add((mode == MODE.ERASE_AND_CONFIGURE) ? ERASE_AND_CONFIGURE_P1 : UPDATE_ONLY_P1);
-        temp.add((mode == MODE.ERASE_AND_CONFIGURE) ? ERASE_AND_CONFIGURE_P2 : UPDATE_ONLY_P2);
-
-        // Dummy length byte
-        temp.add((byte) 0);
-
-        // Virginize key
-        for (int i = 0; i < key.length; ++i)
-        {
-            temp.add(key[i]);
-        }
-
-        // Virginize parameters
-        TLVMsg parameter;
-        while ((parameter = parameters.findNextTLV()) != null)
-        {
-            byte tag = (byte) parameter.getTag();
-            byte[] length = parameter.getL();
-            byte[] value = parameter.getValue();
-
-            temp.add(tag);
-            for (int i = 0; i < length.length; ++i)
-            {
-                temp.add(length[i]);
-            }
-
-            for (int i = 0; i < value.length; ++i)
-            {
-                temp.add(value[i]);
-            }
-        }
-
-        // With the list populated, copy it to the array.
-        this.command = new byte[temp.size()];
-        for (int i = 0; i < temp.size(); ++i)
-        {
-            this.command[i] = temp.get(i);
-        }
-    }
-
     private Virginize(byte[] key, MODE mode, List<VirginizeParameter> parameters)
     {
         this.key           = key;
         this.mode          = mode;
         this.parameters    = parameters;
-
-        this.parametersTLV = null;
 
         // We don't know yet the total size we'll use a list that will be converted to an array.
         List<Byte> temp = new ArrayList<>();
@@ -159,15 +97,23 @@ public class Virginize
         this.command[ApduCommand.OFFSET_LC] = (byte) (temp.size() - 5);
     }
 
+    /**
+     * Builder class.
+     */
     public static class Builder
     {
         private byte[] key;
         private MODE mode;
-        private TLVList parametersTLV;
         private List<VirginizeParameter> parameters;
 
         public Builder() {}
 
+        /**
+         * Sets the virginize key.
+         *
+         * @param key: virginize key.
+         * @return builder reference.
+         */
         public Builder withKey(byte[] key)
         {
             this.key = key;
@@ -175,6 +121,12 @@ public class Virginize
             return this;
         }
 
+        /**
+         * Sets the virginize mode.
+         *
+         * @param mode: virginize mode.
+         * @return buidler reference.
+         */
         public Builder inMode(MODE mode)
         {
             this.mode = mode;
@@ -182,18 +134,25 @@ public class Virginize
             return this;
         }
 
-        public Builder withParameters(TLVMsg... parameters)
+        /**
+         * Sets the virginize parameters.
+         *
+         * @param parameters: virginize parameters.
+         * @return builder reference.
+         */
+        public Builder withParameters(VirginizeParameter... parameters)
         {
-            this.parametersTLV = TLVListBuilder.createInstance().build();
-
-            for (TLVMsg parameter : parameters)
-            {
-                this.parametersTLV.append(parameter);
-            }
+            this.parameters = Arrays.asList(parameters);
 
             return this;
         }
 
+        /**
+         * Builds a virginize command from the config.xml file given the virginize mode.
+         *
+         * @param virginizeMode: virginize mode.
+         * @return virginize command instance. Null if there is an error constructing it.
+         */
         public Virginize buildFromConfig(MODE virginizeMode)
         {
             Configuration config = new Configuration();
@@ -264,7 +223,12 @@ public class Virginize
 
         public Virginize build()
         {
-            return new Virginize(key, mode, parametersTLV);
+            if ((key == null) || (parameters == null))
+            {
+                return null;
+            }
+
+            return new Virginize(key, mode, parameters);
         }
     }
 
