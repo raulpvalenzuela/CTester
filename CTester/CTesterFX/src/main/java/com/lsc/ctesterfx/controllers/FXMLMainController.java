@@ -389,7 +389,11 @@ public class FXMLMainController implements Initializable
         fileChooser.getExtensionFilters().add(new ExtensionFilter("Java Files", "*.java"));
         if ((path != null) && !(path.isEmpty()))
         {
-            fileChooser.setInitialDirectory(new File(path));
+            File initialDir = new File(path);
+            if (initialDir.exists() && initialDir.isDirectory())
+            {
+                fileChooser.setInitialDirectory(initialDir);
+            }
         }
 
         List<File> selectedFiles = fileChooser.showOpenMultipleDialog(stage);
