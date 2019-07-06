@@ -36,13 +36,6 @@ public class Virginize
         UPDATE_ONLY
     }
 
-    // Virginize key
-    private byte[] key;
-    // Virginize mode
-    private MODE mode;
-    // Virginize parameters as an object
-    private List<VirginizeParameter> parameters;
-
     // Raw command
     private byte[] command;
 
@@ -50,10 +43,6 @@ public class Virginize
 
     private Virginize(byte[] key, MODE mode, List<VirginizeParameter> parameters)
     {
-        this.key           = key;
-        this.mode          = mode;
-        this.parameters    = parameters;
-
         // We don't know yet the total size we'll use a list that will be converted to an array.
         List<Byte> temp = new ArrayList<>();
 
