@@ -1,5 +1,6 @@
 package com.lsc.ctesterlib.virginize;
 
+import com.lsc.ctesterlib.iso7816.ApduCommand;
 import com.lsc.ctesterlib.persistence.Configuration;
 import com.lsc.ctesterlib.utils.Formatter;
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class Virginize
 
         // P1 and P2 bytes
         temp.add((mode == MODE.ERASE_AND_CONFIGURE) ? ERASE_AND_CONFIGURE_P1 : UPDATE_ONLY_P1);
-        temp.add((mode == MODE.UPDATE_ONLY)         ? ERASE_AND_CONFIGURE_P2 : UPDATE_ONLY_P2);
+        temp.add((mode == MODE.ERASE_AND_CONFIGURE) ? ERASE_AND_CONFIGURE_P2 : UPDATE_ONLY_P2);
 
         // Dummy length byte
         temp.add((byte) 0);
@@ -99,7 +100,7 @@ public class Virginize
             }
         }
 
-        // With the list populated, copy i
+        // With the list populated, copy it to the array.
         this.command = new byte[temp.size()];
         for (int i = 0; i < temp.size(); ++i)
         {
@@ -115,7 +116,47 @@ public class Virginize
 
         this.parametersTLV = null;
 
-        // TODO construct command
+        // We don't know yet the total size we'll use a list that will be converted to an array.
+        List<Byte> temp = new ArrayList<>();
+
+        // Class and instruction bytes
+        temp.add(CLA);
+        temp.add(INS);
+
+        // P1 and P2 bytes
+        temp.add((mode == MODE.ERASE_AND_CONFIGURE) ? ERASE_AND_CONFIGURE_P1 : UPDATE_ONLY_P1);
+        temp.add((mode == MODE.ERASE_AND_CONFIGURE) ? ERASE_AND_CONFIGURE_P2 : UPDATE_ONLY_P2);
+
+        // Dummy length byte
+        temp.add((byte) 0);
+
+        // Virginize key
+        for (int i = 0; i < key.length; ++i)
+        {
+            temp.add(key[i]);
+        }
+
+        // Virginize parameters
+        parameters.forEach((parameter) ->
+        {
+            temp.add(parameter.getTag());
+            temp.add((byte) parameter.getValue().length);
+
+            for (int i = 0; i < parameter.getValue().length; ++i)
+            {
+                temp.add(parameter.getValue()[i]);
+            }
+        });
+
+        // With the list populated, copy it to the array.
+        this.command = new byte[temp.size()];
+        for (int i = 0; i < temp.size(); ++i)
+        {
+            this.command[i] = temp.get(i);
+        }
+
+        // Calculate the length
+        this.command[ApduCommand.OFFSET_LC] = (byte) (temp.size() - 5);
     }
 
     public static class Builder
@@ -155,10 +196,10 @@ public class Virginize
 
         public Virginize buildFromConfig(MODE virginizeMode)
         {
-            Virginize virginize = new Virginize();
             Configuration config = new Configuration();
-
             String virginizeKey = null;
+
+            mode = virginizeMode;
 
             String modeName = (virginizeMode == MODE.ERASE_AND_CONFIGURE) ? ERASE_AND_CONFIGURE_NAME : UPDATE_ONLY_NAME;
 
@@ -175,7 +216,7 @@ public class Virginize
                     return null;
                 }
 
-                virginize.key = Formatter.fromStringToByteArray(virginizeKey);
+                key = Formatter.fromStringToByteArray(virginizeKey);
 
             } catch (DecoderException ex) {
                 LOGGER.error("Exception parsing virginize key read from config.xml");
@@ -202,15 +243,15 @@ public class Virginize
                 parameters = new ArrayList<>();
                 for (Element parameter : elements)
                 {
-                    byte tag = Formatter.stringToByte(parameter.attributeValue(Configuration.TAG));
-                    String name = parameter.attributeValue(Configuration.NAME);
-                    boolean mac = parameter.attributeValue(Configuration.MAC).equalsIgnoreCase("true");
+                    byte tag     = Formatter.stringToByte(parameter.attributeValue(Configuration.TAG));
                     byte[] value = Formatter.fromStringToByteArray(parameter.getStringValue());
+                    boolean mac  = parameter.attributeValue(Configuration.MAC).equalsIgnoreCase("true");
+                    String name  = parameter.attributeValue(Configuration.NAME);
 
-                    parameters.add(new VirginizeParameter(tag, name, mac, value));
+                    VirginizeParameter virginizeParameter = new VirginizeParameter(tag, name, mac, value);
+
+                    parameters.add(virginizeParameter);
                 }
-
-                virginize.parameters = parameters;
 
             } catch (DecoderException | NullPointerException ex) {
                 LOGGER.error("Exception parsing virginize parameter from config.xml");
@@ -218,7 +259,7 @@ public class Virginize
                 return null;
             }
 
-            return new Virginize();
+            return new Virginize(key, mode, parameters);
         }
 
         public Virginize build()

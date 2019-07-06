@@ -1,5 +1,7 @@
 package com.lsc.ctesterlib.virginize;
 
+import com.lsc.ctesterlib.utils.Formatter;
+
 /**
  * Class that defines a virginize parameter.
  *
@@ -50,7 +52,7 @@ public class VirginizeParameter
      *
      * @return if the paramater requires a MAC.
      */
-    public boolean isMac()
+    public boolean getMAC()
     {
         return mac;
     }
@@ -63,5 +65,17 @@ public class VirginizeParameter
     public byte[] getValue()
     {
         return value;
+    }
+
+    @Override
+    public String toString()
+    {
+        String parameter = this.name
+                + "\n - Tag: " + Byte.toString(tag)
+                + "\n - Value: " + Formatter.fromByteArrayToString(value)
+                + "\n - " + ((mac) ? "MAC required" : "No MAC required")
+                + "\n";
+
+        return parameter;
     }
 }

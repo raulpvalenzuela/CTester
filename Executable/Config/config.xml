@@ -1,8 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
   <CTester>
-    <JavaHome>C:\Program Files\Java\jdk1.8.0_211\jre</JavaHome>
+    <JavaHome>C:\Program Files\Java\jdk1.8.0_201\jre</JavaHome>
     <Reader></Reader>
     <TestsPath></TestsPath>
   </CTester>
+  
+  <!-- Virginize configuration -->
+  <Virginize>
+    <EncKey></EncKey>
+    <Modes>
+      <Mode name="Erase and configure">
+        <Key></Key>
+        <Parameters>
+          <Parameter name="Java parameters" tag="94" mac="true"></Parameter>
+          <Parameter name="RF parameters" tag="96" mac="true"></Parameter>
+          <Parameter name="MiFare type" tag="97" mac="false"></Parameter>
+        </Parameters>
+      </Mode>
+
+      <Mode name="Update only">
+        <Key></Key>
+        <Parameters>
+          <Parameter name="RF parameters" tag="96" mac="true"></Parameter>
+          <Parameter name="MiFare type" tag="97" mac="false"></Parameter>
+        </Parameters>
+      </Mode>
+    </Modes>
+  </Virginize>
 </Configuration>

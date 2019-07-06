@@ -2,12 +2,13 @@
 <Configuration>
   <CTester>
     <JavaHome>C:\Program Files\Java\jdk1.8.0_201\jre</JavaHome>
-    <Reader/>
-    <TestsPath>F:\Coding\GitHub\CTester\Tests Template\src\runnables</TestsPath>
+    <Reader></Reader>
+    <TestsPath></TestsPath>
   </CTester>
   
   <!-- Virginize configuration -->
   <Virginize>
+    <EncKey></EncKey>
     <Modes>
       <Mode name="Erase and configure">
         <Key></Key>
