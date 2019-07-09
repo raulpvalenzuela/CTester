@@ -617,6 +617,73 @@ public class FXMLMainController implements Initializable
     @FXML
     private void onClickSend(ActionEvent event)
     {
+        _sendCommand();
+    }
+
+    @FXML
+    private void onClickReset(ActionEvent event)
+    {
+        _reset();
+    }
+
+    @FXML
+    private void onClickBootloaderButton(ActionEvent event)
+    {
+        // TODO
+    }
+
+    @FXML
+    private void onClickGetProductCodeButton(ActionEvent event)
+    {
+        // TODO
+    }
+
+    @FXML
+    private void onClickSecurityHistoryButton(ActionEvent event)
+    {
+        // TODO
+    }
+
+    @FXML
+    private void onClickVirginizeButton(ActionEvent event)
+    {
+        Virginize virginize = new Virginize.Builder().buildFromConfig(Virginize.MODE.ERASE_AND_CONFIGURE);
+
+        if ((virginize != null) & (virginize.getCommand() != null))
+        {
+            mCommandTextfield.setText(Formatter.fromByteArrayToString(virginize.getCommand()));
+        }
+    }
+
+    @FXML
+    private void onStateChangedSelectAll(ActionEvent event)
+    {
+        testItemControllerList.forEach((controller) ->
+        {
+            controller.select(mSelectAllCheckbox.isSelected());
+        });
+    }
+
+    @FXML
+    private void onAutoScrollChange(ActionEvent event)
+    {
+        printer.setAutoscroll(mAutoScrollToggleButton.isSelected());
+    }
+
+    @FXML
+    private void onEnterCommand(ActionEvent event)
+    {
+        if (!mSendButton.isDisable())
+        {
+            _sendCommand();
+        }
+    }
+
+    /**
+     * Send the command entered in the textfield.
+     */
+    private void _sendCommand()
+    {
         if (readerController.getSelected() != null)
         {
             String commandEntered = Formatter.separate(mCommandTextfield.getText(), 2);
@@ -662,8 +729,10 @@ public class FXMLMainController implements Initializable
         }
     }
 
-    @FXML
-    private void onClickReset(ActionEvent event)
+    /**
+     * Resets the card.
+     */
+    private void _reset()
     {
         byte[] atr;
         IReader reader = readerController.getSelected();
@@ -703,50 +772,6 @@ public class FXMLMainController implements Initializable
 
             dialog.show();
         }
-    }
-
-    @FXML
-    private void onClickBootloaderButton(ActionEvent event)
-    {
-        // TODO
-    }
-
-    @FXML
-    private void onClickGetProductCodeButton(ActionEvent event)
-    {
-        // TODO
-    }
-
-    @FXML
-    private void onClickSecurityHistoryButton(ActionEvent event)
-    {
-        // TODO
-    }
-
-    @FXML
-    private void onClickVirginizeButton(ActionEvent event)
-    {
-        Virginize virginize = new Virginize.Builder().buildFromConfig(Virginize.MODE.ERASE_AND_CONFIGURE);
-
-        if ((virginize != null) & (virginize.getCommand() != null))
-        {
-            mCommandTextfield.setText(Formatter.fromByteArrayToString(virginize.getCommand()));
-        }
-    }
-
-    @FXML
-    private void onStateChangedSelectAll(ActionEvent event)
-    {
-        testItemControllerList.forEach((controller) ->
-        {
-            controller.select(mSelectAllCheckbox.isSelected());
-        });
-    }
-
-    @FXML
-    private void onAutoScrollChange(ActionEvent event)
-    {
-        printer.setAutoscroll(mAutoScrollToggleButton.isSelected());
     }
 
     /**
