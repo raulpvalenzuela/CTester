@@ -15,5 +15,9 @@ public class ShellController
     public static void run(String lstPath, boolean verbose)
     {
         if (verbose) LOGGER.info("Executing tests from the lst file (" + lstPath + ")");
+
+        // Check and decode .lst
+
+        // Check reader selected.
     }
 }
