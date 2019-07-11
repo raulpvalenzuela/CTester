@@ -177,7 +177,6 @@ public class EntryPoint
             String selectedReader = config.getValueAsString(Configuration.SHELL, Configuration.READER);
 
             ReaderController readerController = ReaderController.newInstance();
-
             List<String> readers = readerController.list();
 
             System.out.println("\nReaders connected:");
