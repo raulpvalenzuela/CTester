@@ -1,0 +1,33 @@
+package com.lsc.ctesterfx.constants;
+
+/**
+ * Class containing all the constants related to the command used to
+ * run CTester through the command line.
+ *
+ * @author dma@logossmartcard.com
+ */
+public class ShellCommand
+{
+    // Options
+    public static final String VERSION = "v";
+    public static final String HELP    = "h";
+    public static final String LST     = "l";
+    public static final String VERBOSE = "v";
+
+    // Long options
+    public static final String LONG_VERSION = "version";
+    public static final String LONG_HELP    = "help";
+    public static final String LONG_LST     = "lst";
+    public static final String LONG_VERBOSE = "verbose";
+
+    // Descriptions
+    public static final String DESC_VERSION = "Print the version of the application";
+    public static final String DESC_HELP    = null;
+    public static final String DESC_LST     = "Path to the .lst file";
+    public static final String DESC_VERBOSE = "Verbose mode";
+
+    // Help
+    public static final String HELP_CMD    = "CTester";
+    public static final String HELP_HEADER = "Execute all the java tests specified in the lst file.";
+    public static final String HELP_FOOTER = "For more information, refer to the README.md file";
+}

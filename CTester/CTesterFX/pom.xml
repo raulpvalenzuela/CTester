@@ -11,7 +11,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mainClass>com.lsc.ctesterfx.MainApp</mainClass>
+        <mainClass>com.lsc.ctesterfx.EntryPoint</mainClass>
     </properties>
 
     <organization>
@@ -56,6 +56,13 @@
             <version>1.9</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/commons-cli/commons-cli -->
+        <dependency>
+            <groupId>commons-cli</groupId>
+            <artifactId>commons-cli</artifactId>
+            <version>1.4</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/log4j/log4j -->
         <dependency>
             <groupId>log4j</groupId>
@@ -87,6 +94,7 @@
         </resources>
 
         <plugins>
+            <!-- maven-dependency-plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -107,6 +115,7 @@
                 </executions>
             </plugin>
 
+            <!-- exec-maven-plugin -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -148,6 +157,7 @@
                 </executions>
             </plugin>
 
+            <!-- maven-compiler-plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -161,6 +171,7 @@
                 </configuration>
             </plugin>
 
+            <!-- maven-surefire-plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -172,6 +183,7 @@
                 </configuration>
             </plugin>
 
+            <!-- maven-javadoc-plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -191,6 +203,7 @@
                 </executions>
             </plugin>
 
+            <!-- maven-assembly-plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -202,7 +215,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.lsc.ctesterfx.MainApp</mainClass>
+                            <mainClass>com.lsc.ctesterfx.EntryPoint</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -219,6 +232,8 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- maven-install-plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-install-plugin</artifactId>
