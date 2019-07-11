@@ -32,7 +32,7 @@ public class ExecutionTask extends Task
     @Override
     protected Object call() throws Exception
     {
-        return _runTest();
+        return runTest();
     }
 
     /**
@@ -41,7 +41,7 @@ public class ExecutionTask extends Task
      *
      * @return true if the execution is succesful, false otherwise.
      */
-    private boolean _runTest()
+    private boolean runTest()
     {
         LOGGER.info("Compiling '" + testController.getTestName() + "'");
 

@@ -61,13 +61,13 @@ public class FXMLTestItemController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        _setupTooltips();
+        setupTooltips();
     }
 
     /**
      * Sets up all the buttons' tooltips.
      */
-    private void _setupTooltips()
+    private void setupTooltips()
     {
         mRunTestButton.setTooltip(Tooltips.create(Tooltips.RUN_TEST));
         mRemoveTestButton.setTooltip(Tooltips.create(Tooltips.REMOVE_TEST));
@@ -76,7 +76,7 @@ public class FXMLTestItemController implements Initializable
     /**
      * Notifies the main controller that a task has started.
      */
-    private void _notifyStartExecution()
+    private void notifyStartExecution()
     {
         mainController.notifyStartExecution(index);
     }
@@ -84,7 +84,7 @@ public class FXMLTestItemController implements Initializable
     /**
      * Notifies the main controller that a task has finished.
      */
-    private void _notifyFinishedExecution()
+    private void notifyFinishedExecution()
     {
         mainController.notifyFinishedExecution();
     }
@@ -248,7 +248,7 @@ public class FXMLTestItemController implements Initializable
                     break;
 
                 case COMPILING:
-                    _notifyStartExecution();
+                    notifyStartExecution();
 
                     mTestStatusButton.setStyle(
                             "-fx-background-radius: 32; -fx-background-color: " + Colors.createAsString(Color.GRAY) + "; -fx-text-fill: black");
@@ -257,7 +257,7 @@ public class FXMLTestItemController implements Initializable
                     break;
 
                 case RUNNING:
-                    _notifyStartExecution();
+                    notifyStartExecution();
 
                     mTestStatusButton.setStyle(
                             "-fx-background-radius: 32; -fx-background-color: " + Colors.createAsString(Color.GRAY) + "; -fx-text-fill: black");
@@ -266,7 +266,7 @@ public class FXMLTestItemController implements Initializable
                     break;
 
                 case COMPILATION_OK:
-                    _notifyFinishedExecution();
+                    notifyFinishedExecution();
 
                     mTestStatusButton.setStyle(
                             "-fx-background-radius: 32; -fx-background-color: " + Colors.createAsString(Color.LIGHT_GREEN) + "; -fx-text-fill: black");
@@ -275,7 +275,7 @@ public class FXMLTestItemController implements Initializable
                     break;
 
                 case COMPILATION_FAILED:
-                    _notifyFinishedExecution();
+                    notifyFinishedExecution();
 
                     mTestStatusButton.setStyle(
                             "-fx-background-radius: 32; -fx-background-color: " + Colors.createAsString(Color.RED) + "; -fx-text-fill: white");
@@ -284,7 +284,7 @@ public class FXMLTestItemController implements Initializable
                     break;
 
                 case EXECUTION_OK:
-                    _notifyFinishedExecution();
+                    notifyFinishedExecution();
 
                     mTestStatusButton.setStyle(
                             "-fx-background-radius: 32; -fx-background-color: " + Colors.createAsString(Color.GREEN) + "; -fx-text-fill: black");
@@ -293,7 +293,7 @@ public class FXMLTestItemController implements Initializable
                     break;
 
                 case EXECUTION_FAILED:
-                    _notifyFinishedExecution();
+                    notifyFinishedExecution();
 
                     mTestStatusButton.setStyle(
                             "-fx-background-radius: 32; -fx-background-color: " + Colors.createAsString(Color.RED) + "; -fx-text-fill: white");

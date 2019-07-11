@@ -93,7 +93,7 @@ public class Printer extends AbstractLogger
     {
         text = text + "\n";
 
-        _logWithFormat(text, Colors.createAsString(Colors.Color.GRAY));
+        logWithFormat(text, Colors.createAsString(Colors.Color.GRAY));
     }
 
     @Override
@@ -101,7 +101,7 @@ public class Printer extends AbstractLogger
     {
         text = COMMENT_HEADER + text + "\n";
 
-        _logWithFormat(text, Colors.createAsString(Colors.Color.DARK_GRAY));
+        logWithFormat(text, Colors.createAsString(Colors.Color.DARK_GRAY));
     }
 
     @Override
@@ -109,7 +109,7 @@ public class Printer extends AbstractLogger
     {
         text = ERROR_HEADER + text + "\n";
 
-        _logWithFormat(text, Colors.createAsString(Colors.Color.RED));
+        logWithFormat(text, Colors.createAsString(Colors.Color.RED));
     }
 
     @Override
@@ -117,7 +117,7 @@ public class Printer extends AbstractLogger
     {
         text = WARNING_HEADER + text + "\n";
 
-        _logWithFormat(text, Colors.createAsString(Colors.Color.YELLOW));
+        logWithFormat(text, Colors.createAsString(Colors.Color.YELLOW));
     }
 
     @Override
@@ -125,7 +125,7 @@ public class Printer extends AbstractLogger
     {
         text = DEBUG_HEADER + text + "\n";
 
-        _logWithFormat(text, Colors.createAsString(Colors.Color.BLUE));
+        logWithFormat(text, Colors.createAsString(Colors.Color.BLUE));
     }
 
     @Override
@@ -133,7 +133,7 @@ public class Printer extends AbstractLogger
     {
         text = SUCCESS_HEADER + text + "\n";
 
-        _logWithFormat(text, Colors.createAsString(Colors.Color.GREEN));
+        logWithFormat(text, Colors.createAsString(Colors.Color.GREEN));
     }
 
     /**
@@ -142,7 +142,7 @@ public class Printer extends AbstractLogger
      * @param text: text to be printed.
      * @param color: color to be used.
      */
-    private void _logWithFormat(String text, String color)
+    private void logWithFormat(String text, String color)
     {
         LogRunnable logRunnable = new LogRunnable(text, color);
 

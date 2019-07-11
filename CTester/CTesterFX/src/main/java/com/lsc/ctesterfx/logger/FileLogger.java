@@ -82,7 +82,7 @@ public class FileLogger extends AbstractLogger
     {
         try
         {
-            _createFile();
+            createFile();
 
         } catch (IOException ex) {
             System.err.println(ex.toString());
@@ -108,7 +108,7 @@ public class FileLogger extends AbstractLogger
     {
         text = text + "\n";
 
-        _append(text);
+        append(text);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class FileLogger extends AbstractLogger
     {
         text = COMMENT_HEADER + text + "\n";
 
-        _append(text);
+        append(text);
     }
 
     @Override
@@ -124,7 +124,7 @@ public class FileLogger extends AbstractLogger
     {
         text = ERROR_HEADER + text + "\n";
 
-        _append(text);
+        append(text);
     }
 
     @Override
@@ -132,7 +132,7 @@ public class FileLogger extends AbstractLogger
     {
         text = WARNING_HEADER + text + "\n";
 
-        _append(text);
+        append(text);
     }
 
     @Override
@@ -140,15 +140,15 @@ public class FileLogger extends AbstractLogger
     {
         text = DEBUG_HEADER + text + "\n";
 
-        _append(text);
+        append(text);
     }
 
     @Override
     public void logSuccess(String text)
     {
         text = SUCCESS_HEADER + text + "\n";
-        
-        _append(text);
+
+        append(text);
     }
 
     /**
@@ -156,7 +156,7 @@ public class FileLogger extends AbstractLogger
      *
      * @param text: text to be appended.
      */
-    private void _append(String text)
+    private void append(String text)
     {
         try
         {
@@ -173,7 +173,7 @@ public class FileLogger extends AbstractLogger
      *
      * @return: reference to the file.
      */
-    private void _createFile() throws IOException
+    private void createFile() throws IOException
     {
         logFile = new File(path + System.getProperty("file.separator") + fileName + LOG_EXTENSION);
         logFile.createNewFile();
