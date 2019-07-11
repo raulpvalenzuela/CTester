@@ -36,6 +36,9 @@ public class Configuration
                 public static final String PARAMETERS = "Parameters";
                     public static final String PARAMETER  = "Parameter";
 
+    public static final String SHELL = "Shell";
+        public static final String READER = "Reader";
+
     // Config.xml attributes
     public static final String TAG  = "tag";
     public static final String NAME = "name";
@@ -242,7 +245,7 @@ public class Configuration
      * @param keys: array of keys that will drive the search.
      * @return the value pointed by keys as a string.
      */
-    public String getValueAsString(String parent, String name, String... keys)
+    public String getValueAsString(String parent, String name, String[] keys)
     {
         String key = parent + "[@name='" + name + "']";
 

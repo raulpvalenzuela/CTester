@@ -1,8 +1,11 @@
 package com.lsc.ctesterfx;
 
 import com.lsc.ctesterfx.constants.ShellCommand;
+import com.lsc.ctesterfx.reader.ReaderController;
 import com.lsc.ctesterfx.shell.ShellController;
+import com.lsc.ctesterlib.persistence.Configuration;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -167,6 +170,31 @@ public class EntryPoint
      */
     private static void printReaders()
     {
-        // TODO
+        try
+        {
+            // Get the selected reader if there is any.
+            Configuration config = new Configuration();
+            String selectedReader = config.getValueAsString(Configuration.SHELL, Configuration.READER);
+
+            ReaderController readerController = ReaderController.newInstance();
+
+            List<String> readers = readerController.list();
+
+            System.out.println("\nReaders connected:");
+            readers.forEach(reader ->
+            {
+                if (reader.equals(selectedReader))
+                {
+                    System.out.println("  * " + reader);
+                }
+                else
+                {
+                    System.out.println("    " + reader);
+                }
+            });
+
+        } catch (Exception ex) {
+            LOGGER.error("Error retrieving readers");
+        }
     }
 }
