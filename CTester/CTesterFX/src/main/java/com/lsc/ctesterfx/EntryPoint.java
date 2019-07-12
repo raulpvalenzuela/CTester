@@ -44,7 +44,6 @@ public class EntryPoint
             options.addOption(ShellCommand.LST, ShellCommand.LONG_LST, true, ShellCommand.DESC_LST);
             options.addOption(ShellCommand.HELP, ShellCommand.LONG_HELP, false, ShellCommand.DESC_HELP);
             options.addOption(ShellCommand.VERSION, ShellCommand.LONG_VERSION, false, ShellCommand.DESC_VERSION);
-            options.addOption(ShellCommand.VERBOSE, ShellCommand.LONG_VERBOSE, false, ShellCommand.DESC_VERBOSE);
             options.addOption(ShellCommand.READERS, ShellCommand.LONG_READERS, false, ShellCommand.DESC_READERS);
 
             try
@@ -69,8 +68,7 @@ public class EntryPoint
                 // Run the lst file.
                 else if (isValidCommand(command))
                 {
-                    ShellController.run(
-                            command.getOptionValue(ShellCommand.LST), command.hasOption(ShellCommand.VERBOSE));
+                    ShellController.run(command.getOptionValue(ShellCommand.LST));
                 }
                 // Unknown command
                 else
@@ -119,15 +117,14 @@ public class EntryPoint
 
     /**
      * Analyzes the command and returns if it's a valid command (it contains
-     * the "-l" option and/or the "-v" option).
+     * the "-l" option).
      *
      * @param command command entered.
      * @return true if it's a valid command.
      */
     private static boolean isValidCommand(final CommandLine command)
     {
-        return (((command.getOptions().length == 2) && command.hasOption(ShellCommand.LST) && command.hasOption(ShellCommand.VERBOSE)) ||
-                ((command.getOptions().length == 1) && command.hasOption(ShellCommand.LST)));
+        return ((command.getOptions().length == 1) && command.hasOption(ShellCommand.LST));
     }
 
     /**
