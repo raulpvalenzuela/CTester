@@ -139,6 +139,52 @@ public class ShellController
                             logger.logError("Compilation of " + test.getName()+ " failed");
                             logger.logError("Exception: " + ex.toString() + "\n");
                         }
+
+                        // Execution starts here
+                        if (result != null)
+                        {
+                            LOGGER.info("Executing '" + test.getName()+ "'");
+
+                            // Get the test instance and the methods.
+                            Object object        = result.getKey();
+                            List<Method> methods = result.getValue();
+
+                            methods.stream().map((method) ->
+                            {
+                                LOGGER.info("Calling '" + method.getName() + "' method");
+                                logger.logComment("Calling '" + method.getName() + "' method\n");
+
+                                return method;
+
+                            }).forEach((method) ->
+                            {
+                                try
+                                {
+                                    // Call the method.
+                                    if (testExecutor.run(object, method))
+                                    {
+                                        LOGGER.info("'" + method.getName() + "' method passed succesfully");
+
+                                        logger.logSuccess("'" + method.getName() + "' method passed succesfully\n");
+                                    }
+                                    else
+                                    {
+                                        LOGGER.info("'" + method.getName() + "' method failed");
+
+                                        logger.logError("'" + method.getName() + "' method failed\n");
+                                    }
+
+                                } catch (Exception ex) {
+                                    LOGGER.error("Exception executing test");
+                                    LOGGER.error(ex);
+
+                                    logger.logError("Exception executing '" + method.getName() + "' method");
+                                    logger.logError("Exception: " + ex.toString() + "\n");
+                                }
+                            });
+
+                            LOGGER.info("Execution of '" + test.getName()+ "' succesful");
+                        }
                     });
                 }
             }
