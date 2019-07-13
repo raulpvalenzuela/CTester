@@ -104,9 +104,9 @@ public class ShellController
                         fileLogger.initialize();
                         logger.setFileLogger(fileLogger);
 
-                        logger.logComment("Compiling " + test.getName());
+                        logger.logComment("--- Compiling " + test.getName() + " ---");
 
-                        if (debug) LOGGER.info("Compiling '" + test.getName() + "'");
+                        if (debug) LOGGER.info("Compiling " + test.getName());
                         try
                         {
                             // Compile and load the test class.
@@ -122,14 +122,14 @@ public class ShellController
                                 {
                                     if (debug) LOGGER.info("Loading of '" + test.getName()+ "' succesful");
 
-                                    logger.logComment("Compilation of " + test.getName()+ " succesful!\n");
+                                    logger.logComment("--- Compilation of " + test.getName()+ " succesful ---\n");
                                 }
                             }
                             else
                             {
                                 LOGGER.error("Compilation of '" + test.getName()+ "' failed\n");
 
-                                logger.logError("Compilation of " + test.getName()+ " failed\n");
+                                logger.logError("--- Compilation of " + test.getName()+ " failed ---\n");
                             }
 
                         } catch (Exception ex) {
@@ -152,7 +152,7 @@ public class ShellController
                             methods.stream().map((method) ->
                             {
                                 if (debug) LOGGER.info("Calling '" + method.getName() + "' method");
-                                logger.logComment("Calling '" + method.getName() + "' method");
+                                logger.logComment("--- Calling '" + method.getName() + "' method ---");
 
                                 return method;
 
@@ -165,13 +165,13 @@ public class ShellController
                                     {
                                         if (debug) LOGGER.info("'" + method.getName() + "' method passed succesfully");
 
-                                        logger.logSuccess("'" + method.getName() + "' method passed succesfully\n");
+                                        logger.logComment("--- '" + method.getName() + "' method passed succesfully ---\n");
                                     }
                                     else
                                     {
                                         if (debug) LOGGER.info("'" + method.getName() + "' method failed");
 
-                                        logger.logError("'" + method.getName() + "' method failed\n");
+                                        logger.logError("--- '" + method.getName() + "' method failed ---\n");
                                     }
 
                                 } catch (Exception ex) {

@@ -22,3 +22,4 @@ CTester/*/.settings/
 *.log
 
 *.lst
+/CTester/CTesterLib/nbproject/
