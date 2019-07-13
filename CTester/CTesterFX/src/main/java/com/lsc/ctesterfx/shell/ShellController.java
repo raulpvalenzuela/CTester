@@ -35,7 +35,7 @@ public class ShellController
      */
     public static void run(String lstPath, boolean debug)
     {
-        if (debug) LOGGER.info("Executing tests from the lst file");
+        if (debug) LOGGER.info("Executing tests from the .lst file");
 
         // Check and decode .lst
         if (lstPath.endsWith(LST_EXTENSION))
@@ -58,14 +58,8 @@ public class ShellController
                     return;
                 }
 
-                // Read the .lst file.
-                List<String> fileNames = LstReader.getFiles(new File(lstPath));
-                List<File> testFiles = new ArrayList<>();
-                // Populate the files list.
-                fileNames.forEach((fileName) ->
-                {
-                    testFiles.add(new File(fileName));
-                });
+                // Read the .lst file and get the files in it.
+                List<File> testFiles = getFiles(lstPath);
 
                 // Check that the files are correct.
                 // - List not empty.
@@ -73,7 +67,7 @@ public class ShellController
                 // - All files are .java.
                 if (checkList(testFiles))
                 {
-                    // Set up the ApplicationLogger, there's no GUI so we should notify that.
+                    // Create a new ApplicationLogger and set the mode.
                     ApplicationLogger logger = ApplicationLogger.newInstance();
                     logger.setMode(ApplicationLogger.MODE.COMMAND_LINE_ONLY);
 
@@ -203,6 +197,25 @@ public class ShellController
         {
             LOGGER.error("The file containing the java test should be a .lst file\n");
         }
+    }
+
+    /**
+     * Reads the .lst file and returns the list of files included.
+     *
+     * @param lstPath: path to the .lst file.
+     * @return list of files included in the .lst file.
+     */
+    private static List<File> getFiles(String lstPath)
+    {
+        List<String> fileNames = LstReader.getFiles(new File(lstPath));
+        List<File> testFiles = new ArrayList<>();
+        // Populate the files list.
+        fileNames.forEach((fileName) ->
+        {
+            testFiles.add(new File(fileName));
+        });
+
+        return testFiles;
     }
 
     /**
