@@ -6,7 +6,6 @@ import com.lsc.ctesterlib.persistence.Configuration;
 import com.lsc.ctesterfx.reader.IReader;
 import com.lsc.ctesterfx.reader.ReaderController;
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -55,18 +54,5 @@ public class MainApp extends Application
             editor.edit(Configuration.LAST_READER, lastReader.getName());
             editor.commit();
         }
-    }
-
-    /**
-     * The main() method is ignored in correctly deployed JavaFX application.
-     * main() serves only as fallback in case the application can not be
-     * launched through deployment artifacts, e.g., in IDEs with limited FX
-     * support. NetBeans ignores main().
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args)
-    {
-        launch(args);
     }
 }

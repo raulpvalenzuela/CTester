@@ -147,16 +147,16 @@ public class FXMLMainController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        _initialize();
-        _setupViews();
-        _setupAnimations();
-        _setVersion();
+        initialize();
+        setupViews();
+        setupAnimations();
+        setVersion();
     }
 
     /**
      * Sets up different variables and components.
      */
-    private void _initialize()
+    private void initialize()
     {
         currentTest              = -1;
         commandsListVisible      = true;
@@ -216,7 +216,7 @@ public class FXMLMainController implements Initializable
     /**
      * Sets up the different views.
      */
-    private void _setupViews()
+    private void setupViews()
     {
         // Tooltips
         mAddTestsButton.setTooltip(Tooltips.create(Tooltips.ADD_TESTS));
@@ -248,7 +248,7 @@ public class FXMLMainController implements Initializable
     /**
      * Sets up all the animations in this window.
      */
-    private void _setupAnimations()
+    private void setupAnimations()
     {
         fadeInAnimationsList = new FadeTransition[] {
               new FadeTransition(Duration.millis(Animations.FADE_IN_DURATION), mVirginizeButton)
@@ -307,7 +307,7 @@ public class FXMLMainController implements Initializable
     /**
      * Updates the version label reading the pom.xml.
      */
-    private void _setVersion()
+    private void setVersion()
     {
         try
         {
@@ -326,7 +326,7 @@ public class FXMLMainController implements Initializable
     /**
      * Disables all the buttons.
      */
-    private void _disableButtons()
+    private void disableButtons()
     {
         mAddTestsButton.setDisable(true);
         mCompileTestsButton.setDisable(true);
@@ -350,7 +350,7 @@ public class FXMLMainController implements Initializable
     /**
      * Enables all the buttons.
      */
-    private void _enableButtons()
+    private void enableButtons()
     {
         mAddTestsButton.setDisable(false);
         mCompileTestsButton.setDisable(false);
@@ -617,13 +617,13 @@ public class FXMLMainController implements Initializable
     @FXML
     private void onClickSend(ActionEvent event)
     {
-        _sendCommand();
+        sendCommand();
     }
 
     @FXML
     private void onClickReset(ActionEvent event)
     {
-        _reset();
+        reset();
     }
 
     @FXML
@@ -675,14 +675,14 @@ public class FXMLMainController implements Initializable
     {
         if (!mSendButton.isDisable())
         {
-            _sendCommand();
+            sendCommand();
         }
     }
 
     /**
      * Send the command entered in the textfield.
      */
-    private void _sendCommand()
+    private void sendCommand()
     {
         if (readerController.getSelected() != null)
         {
@@ -732,7 +732,7 @@ public class FXMLMainController implements Initializable
     /**
      * Resets the card.
      */
-    private void _reset()
+    private void reset()
     {
         byte[] atr;
         IReader reader = readerController.getSelected();
@@ -821,7 +821,7 @@ public class FXMLMainController implements Initializable
 
         if (numOfTestsInExecution.getAndIncrement() == 0)
         {
-            _disableButtons();
+            disableButtons();
         }
     }
 
@@ -836,7 +836,7 @@ public class FXMLMainController implements Initializable
 
         if (numOfTestsInExecution.decrementAndGet() == 0)
         {
-            _enableButtons();
+            enableButtons();
         }
     }
 

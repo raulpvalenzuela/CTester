@@ -31,6 +31,7 @@ public class TestController
         this.test               = test;
         this.testItemController = testItemController1;
         this.applicationLogger  = ApplicationLogger.newInstance();
+        this.applicationLogger.setMode(ApplicationLogger.MODE.GUI);
 
         this.fileLogger = new FileLogger.Builder()
                                 .withName(test.getName())

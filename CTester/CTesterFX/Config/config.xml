@@ -28,4 +28,9 @@
       </Mode>
     </Modes>
   </Virginize>
+
+  <!-- Shell configuration -->
+  <Shell>
+    <Reader></Reader>
+  </Shell>
 </Configuration>

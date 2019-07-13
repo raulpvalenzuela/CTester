@@ -7,4 +7,5 @@ com.lsc.ctesterfx.gui
 com.lsc.ctesterfx.logger
 com.lsc.ctesterfx.reader
 com.lsc.ctesterfx.script
+com.lsc.ctesterfx.shell
 com.lsc.ctesterfx.test

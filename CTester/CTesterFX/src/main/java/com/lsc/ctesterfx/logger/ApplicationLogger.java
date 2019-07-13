@@ -14,13 +14,20 @@ public class ApplicationLogger extends AbstractLogger
 {
     private static ApplicationLogger applicationLogger;
     // Internal references to the different loggers.
-    private final Printer printer;
+    private Printer printer;
     private FileLogger fileLogger;
+    private ShellLogger shellLogger;
 
-    private ApplicationLogger()
+    // Mode
+    private MODE mode;
+
+    public enum MODE
     {
-        printer = Printer.newInstance();
+        GUI,
+        COMMAND_LINE_ONLY
     }
+
+    private ApplicationLogger() {}
 
     public static synchronized ApplicationLogger newInstance()
     {
@@ -30,6 +37,27 @@ public class ApplicationLogger extends AbstractLogger
         }
 
         return applicationLogger;
+    }
+
+    /**
+     * Establishes the mode of the logger. If the application has been
+     * launched through the command line, just the FileLogger and ShellLogger
+     * are needed, else, a Printer has to be constructed.
+     *
+     * @param mode GUI or CL_ONLY mode.
+     */
+    public void setMode(MODE mode)
+    {
+        if (mode == MODE.GUI)
+        {
+            printer = Printer.newInstance();
+        }
+        else
+        {
+            shellLogger = ShellLogger.newInstance();
+        }
+
+        this.mode = mode;
     }
 
     /**
@@ -45,42 +73,54 @@ public class ApplicationLogger extends AbstractLogger
     @Override
     public void log(String text)
     {
-        printer.log(text);
+        if (mode == MODE.GUI) printer.log(text);
+        else shellLogger.log(text);
+
         fileLogger.log(text);
     }
 
     @Override
     public void logComment(String text)
     {
-        printer.logComment(text);
+        if (mode == MODE.GUI) printer.logComment(text);
+        else shellLogger.logComment(text);
+
         fileLogger.logComment(text);
     }
 
     @Override
     public void logError(String text)
     {
-        printer.logError(text);
+        if (mode == MODE.GUI) printer.logError(text);
+        else shellLogger.logError(text);
+
         fileLogger.logError(text);
     }
 
     @Override
     public void logWarning(String text)
     {
-        printer.logWarning(text);
+        if (mode == MODE.GUI) printer.logWarning(text);
+        else shellLogger.logWarning(text);
+
         fileLogger.logWarning(text);
     }
 
     @Override
     public void logDebug(String text)
     {
-        printer.logDebug(text);
+        if (mode == MODE.GUI) printer.logDebug(text);
+        else shellLogger.logDebug(text);
+
         fileLogger.logDebug(text);
     }
 
     @Override
     public void logSuccess(String text)
     {
-        printer.logSuccess(text);
+        if (mode == MODE.GUI) printer.logSuccess(text);
+        else shellLogger.logSuccess(text);
+
         fileLogger.logSuccess(text);
     }
 }

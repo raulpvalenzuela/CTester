@@ -29,7 +29,7 @@ public class CompilationTask extends Task
     @Override
     protected Object call() throws Exception
     {
-        return _compileTest();
+        return compileTest();
     }
 
     /**
@@ -37,13 +37,13 @@ public class CompilationTask extends Task
      *
      * @return Pair containing the object and the methods to be invoked.
      */
-    private Pair<Object, List<Method>> _compileTest()
+    private Pair<Object, List<Method>> compileTest()
     {
         LOGGER.info("Compiling '" + testController.getTestName() + "'");
 
         // First we need to notify the controller that the task has started.
         testController.notifyStartTest();
-        
+
         // Compilation process starts here.
         testController.getLogger().logComment("Compiling " + testController.getTestName() + "\n");
         testController.setState(FXMLTestItemController.TEST_STATE.COMPILING);

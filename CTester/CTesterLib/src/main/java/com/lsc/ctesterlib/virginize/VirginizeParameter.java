@@ -14,16 +14,37 @@ public class VirginizeParameter
     private boolean mac;
     private byte[] value;
 
+    /**
+     * Constructor.
+     *
+     * @param tag tag byte of the TLV.
+     * @param value array of bytes conforming the value of the TLV.
+     */
    public VirginizeParameter(byte tag, byte[] value)
     {
         this(tag, "Unnamed", false, value);
     }
 
+    /**
+     * Constructor.
+     *
+     * @param tag tag byte of the TLV.
+     * @param name name of the TLV. It is just informative.
+     * @param value array of bytes conforming the value of the TLV.
+     */
     public VirginizeParameter(byte tag, String name, byte[] value)
     {
         this(tag, name, false, value);
     }
 
+    /**
+     * Constructor.
+     *
+     * @param tag tag byte of the TLV.
+     * @param name name of the TLV. It is just informative.
+     * @param mac true if a MAC has to be calculated.
+     * @param value array of bytes conforming the value of the TLV.
+     */
     public VirginizeParameter(byte tag, String name, boolean mac, byte[] value)
     {
         this.tag   = tag;
