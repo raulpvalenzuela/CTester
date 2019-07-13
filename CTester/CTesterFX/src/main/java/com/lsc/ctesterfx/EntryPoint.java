@@ -45,6 +45,7 @@ public class EntryPoint
             options.addOption(ShellCommand.HELP, ShellCommand.LONG_HELP, false, ShellCommand.DESC_HELP);
             options.addOption(ShellCommand.VERSION, ShellCommand.LONG_VERSION, false, ShellCommand.DESC_VERSION);
             options.addOption(ShellCommand.READERS, ShellCommand.LONG_READERS, false, ShellCommand.DESC_READERS);
+            options.addOption(ShellCommand.DEBUG, ShellCommand.LONG_DEBUG, false, ShellCommand.DESC_DEBUG);
 
             try
             {
@@ -68,7 +69,8 @@ public class EntryPoint
                 // Run the lst file.
                 else if (isValidCommand(command))
                 {
-                    ShellController.run(command.getOptionValue(ShellCommand.LST));
+                    ShellController.run(
+                            command.getOptionValue(ShellCommand.LST), command.hasOption(ShellCommand.DEBUG));
                 }
                 // Unknown command
                 else
@@ -124,7 +126,8 @@ public class EntryPoint
      */
     private static boolean isValidCommand(final CommandLine command)
     {
-        return ((command.getOptions().length == 1) && command.hasOption(ShellCommand.LST));
+        return (((command.getOptions().length == 2) && command.hasOption(ShellCommand.LST) && command.hasOption(ShellCommand.DEBUG)) ||
+                ((command.getOptions().length == 1) && command.hasOption(ShellCommand.LST)));
     }
 
     /**

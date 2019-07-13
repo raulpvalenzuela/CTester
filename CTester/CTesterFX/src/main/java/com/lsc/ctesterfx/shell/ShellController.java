@@ -27,9 +27,15 @@ public class ShellController
     // Constants
     private static final String LST_EXTENSION = ".lst";
 
-    public static void run(String lstPath)
+    /**
+     * Compiles and runs the java tests specified in the .lst file.
+     *
+     * @param lstPath path to the .lst file.
+     * @param debug flag to indicate if debug information has to be logged.
+     */
+    public static void run(String lstPath, boolean debug)
     {
-        LOGGER.info("Executing tests from the lst file");
+        if (debug) LOGGER.info("Executing tests from the lst file");
 
         // Check and decode .lst
         if (lstPath.endsWith(LST_EXTENSION))
@@ -69,7 +75,7 @@ public class ShellController
                 {
                     // Set up the ApplicationLogger, there's no GUI so we should notify that.
                     ApplicationLogger logger = ApplicationLogger.newInstance();
-                    logger.setMode(ApplicationLogger.MODE.CL_ONLY);
+                    logger.setMode(ApplicationLogger.MODE.COMMAND_LINE_ONLY);
 
                     // It's needed to set the Java Home to the one inside the JDK (~/../Java/jdk1.8.xxx/jre)
                     // to be able to compile the tests. When running the .jar by default
@@ -78,7 +84,7 @@ public class ShellController
                     String javaHome = configuration.getValueAsString(Configuration.JAVA_HOME);
                     if (javaHome != null && !javaHome.isEmpty())
                     {
-                        LOGGER.info("Setting JAVA_HOME read from config.xml: " + javaHome);
+                        if (debug) LOGGER.info("Setting JAVA_HOME read from config.xml: " + javaHome);
                         System.setProperty("java.home", javaHome);
                     }
                     else
@@ -104,15 +110,15 @@ public class ShellController
                         fileLogger.initialize();
                         logger.setFileLogger(fileLogger);
 
-                        logger.logComment("Compiling " + test.getName()+ "\n");
+                        logger.logComment("Compiling " + test.getName());
 
-                        LOGGER.info("Compiling '" + test.getName() + "'");
+                        if (debug) LOGGER.info("Compiling '" + test.getName() + "'");
                         try
                         {
                             // Compile and load the test class.
                             if (testLoader.compile(test))
                             {
-                                LOGGER.info("Compilation of '" + test.getName()+ "' succesful");
+                                if (debug) LOGGER.info("Compilation of '" + test.getName()+ "' succesful");
 
                                 if ((result = testLoader.load(test)) == null)
                                 {
@@ -120,21 +126,21 @@ public class ShellController
                                 }
                                 else
                                 {
-                                    LOGGER.info("Loading of '" + test.getName()+ "' succesful");
+                                    if (debug) LOGGER.info("Loading of '" + test.getName()+ "' succesful");
 
                                     logger.logComment("Compilation of " + test.getName()+ " succesful!\n");
                                 }
                             }
                             else
                             {
-                                LOGGER.error("Compilation of '" + test.getName()+ "' failed");
+                                LOGGER.error("Compilation of '" + test.getName()+ "' failed\n");
 
                                 logger.logError("Compilation of " + test.getName()+ " failed\n");
                             }
 
                         } catch (Exception ex) {
                             LOGGER.error("Exception compiling test (JavaHome not configured in config.xml?)");
-                            LOGGER.error(ex);
+                            LOGGER.error(ex + "\n");
 
                             logger.logError("Compilation of " + test.getName()+ " failed");
                             logger.logError("Exception: " + ex.toString() + "\n");
@@ -143,7 +149,7 @@ public class ShellController
                         // Execution starts here
                         if (result != null)
                         {
-                            LOGGER.info("Executing '" + test.getName()+ "'");
+                            if (debug) LOGGER.info("Executing '" + test.getName()+ "'");
 
                             // Get the test instance and the methods.
                             Object object        = result.getKey();
@@ -151,8 +157,8 @@ public class ShellController
 
                             methods.stream().map((method) ->
                             {
-                                LOGGER.info("Calling '" + method.getName() + "' method");
-                                logger.logComment("Calling '" + method.getName() + "' method\n");
+                                if (debug) LOGGER.info("Calling '" + method.getName() + "' method");
+                                logger.logComment("Calling '" + method.getName() + "' method");
 
                                 return method;
 
@@ -163,39 +169,39 @@ public class ShellController
                                     // Call the method.
                                     if (testExecutor.run(object, method))
                                     {
-                                        LOGGER.info("'" + method.getName() + "' method passed succesfully");
+                                        if (debug) LOGGER.info("'" + method.getName() + "' method passed succesfully");
 
                                         logger.logSuccess("'" + method.getName() + "' method passed succesfully\n");
                                     }
                                     else
                                     {
-                                        LOGGER.info("'" + method.getName() + "' method failed");
+                                        if (debug) LOGGER.info("'" + method.getName() + "' method failed");
 
                                         logger.logError("'" + method.getName() + "' method failed\n");
                                     }
 
                                 } catch (Exception ex) {
                                     LOGGER.error("Exception executing test");
-                                    LOGGER.error(ex);
+                                    LOGGER.error(ex + "\n");
 
                                     logger.logError("Exception executing '" + method.getName() + "' method");
                                     logger.logError("Exception: " + ex.toString() + "\n");
                                 }
                             });
 
-                            LOGGER.info("Execution of '" + test.getName()+ "' succesful");
+                            if (debug) LOGGER.info("Execution of '" + test.getName()+ "' succesful");
                         }
                     });
                 }
             }
             else
             {
-                LOGGER.error("No reader selected, set it in 'config.xml' and re-run");
+                LOGGER.error("No reader selected, set it in 'config.xml' and re-run\n");
             }
         }
         else
         {
-            LOGGER.error("The file containing the java test should be a .lst file");
+            LOGGER.error("The file containing the java test should be a .lst file\n");
         }
     }
 

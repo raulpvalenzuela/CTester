@@ -13,18 +13,21 @@ public class ShellCommand
     public static final String HELP    = "h";
     public static final String LST     = "l";
     public static final String READERS = "r";
+    public static final String DEBUG   = "d";
 
     // Long options
     public static final String LONG_VERSION = "version";
     public static final String LONG_HELP    = "help";
     public static final String LONG_LST     = "lst";
     public static final String LONG_READERS = "readers";
+    public static final String LONG_DEBUG   = "debug";
 
     // Descriptions
     public static final String DESC_VERSION = "Print the version of the application";
     public static final String DESC_HELP    = null;
     public static final String DESC_LST     = "Path to the .lst file";
     public static final String DESC_READERS = "Get the list of readers connected";
+    public static final String DESC_DEBUG   = "Print debug information";
 
     // Help
     public static final String HELP_CMD    = "CTester";
