@@ -20,3 +20,5 @@ CTester/*/.settings/
 
 */nbproject/private/
 *.log
+
+*.lst
