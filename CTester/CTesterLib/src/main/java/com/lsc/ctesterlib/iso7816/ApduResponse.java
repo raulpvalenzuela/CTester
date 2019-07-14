@@ -23,8 +23,8 @@ public class ApduResponse
      */
     public static class Builder
     {
-        byte[] sw;
-        byte[] data;
+        private byte[] sw;
+        private byte[] data;
 
         public Builder()
         {
@@ -153,7 +153,7 @@ public class ApduResponse
             return true;
         }
 
-        return data.equals(received);
+        return expected.equals(received);
     }
 
     @Override
