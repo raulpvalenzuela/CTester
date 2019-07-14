@@ -33,7 +33,6 @@ public class ApduCommandTest
     @Test
     public void testApduCreation()
     {
-        System.out.println("Creating of APDUs");
         System.out.println("Case 1 commands");
 
         ApduCommand instance;
