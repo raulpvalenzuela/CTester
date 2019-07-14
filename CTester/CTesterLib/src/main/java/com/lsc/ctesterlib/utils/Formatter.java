@@ -37,6 +37,11 @@ public class Formatter
      */
     public static String separate(String string, int size)
     {
+        if (size == 0)
+        {
+            return string;
+        }
+
         return string
                 .toUpperCase()
                 .replace(" ", "")
