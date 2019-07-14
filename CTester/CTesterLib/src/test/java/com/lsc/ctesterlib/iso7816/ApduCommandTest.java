@@ -91,6 +91,8 @@ public class ApduCommandTest
         assertEquals(instance.getLe(), 0x44);
         assertEquals(instance.getLc(), 0x00);
 
+        System.out.println("Case 3 commands");
+
         // --- Case 3 command #1 --- //
         instance = new ApduCommand.Builder()
                             .withCLA((byte) 0x00)
@@ -107,6 +109,8 @@ public class ApduCommandTest
         assertArrayEquals(instance.getData(), new byte[] { 0x55, 0x66 });
         assertEquals(instance.getLe(), 0x00);
         assertEquals(instance.getLc(), 0x02);
+
+        System.out.println("Case 4 commands");
 
         // --- Case 3 command #2 --- //
         instance = new ApduCommand(new byte[] { 0x00, 0x11, 0x22, 0x33, 0x02, 0x55, 0x66 });
