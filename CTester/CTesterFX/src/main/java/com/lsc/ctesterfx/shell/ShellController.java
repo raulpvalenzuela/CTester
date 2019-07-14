@@ -205,14 +205,16 @@ public class ShellController
      * @param lstPath: path to the .lst file.
      * @return list of files included in the .lst file.
      */
-    private static List<File> getFiles(String lstPath)
+    private static List<File> getFiles(final String lstPath)
     {
-        List<String> fileNames = LstReader.getFiles(new File(lstPath));
+        File lstFile = new File(lstPath);
+
+        List<String> fileNames = LstReader.getFiles(lstFile);
         List<File> testFiles = new ArrayList<>();
         // Populate the files list.
         fileNames.forEach((fileName) ->
         {
-            testFiles.add(new File(fileName));
+            testFiles.add(new File(lstFile.getParent() + System.getProperty("file.separator") + fileName));
         });
 
         return testFiles;
@@ -224,7 +226,7 @@ public class ShellController
      * @param files list of files to be checked.
      * @return true if the file list is correct.
      */
-    private static boolean checkList(List<File> files)
+    private static boolean checkList(final List<File> files)
     {
         // Check it contains something
         if (files.isEmpty())
