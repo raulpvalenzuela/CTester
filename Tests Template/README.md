@@ -9,7 +9,7 @@
 ## Requirements
 
 - [JDK 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-- [NetBeans 8.2](https://netbeans.org/downloads/8.2/) (Optional).
+- [NetBeans 8.2](https://netbeans.org/downloads/8.2/) (Recommended).
 
 ## Creating a new project
 
@@ -27,7 +27,7 @@ To implement a new tests, these steps have to be followed:
 
 1. Right-click in the package -> New Java file.
 2. This test has to extend the class `AbstractTest`, located in the package `com.lsc.ctesterapi`.
-3. Implement the logic inside the `setUp`, `run` and `tearDown` methods and return `true` or `false` if the execution is succesful or not.
+3. Implement the logic inside the `setUp`, `run` and `tearDown` methods and return `true` or `false` whether the execution is succesful or not.
 
 For reference, refer to the `Test.java` file in the template project.
 

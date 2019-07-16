@@ -11,7 +11,7 @@
 
 ## Introduction
 
-__CTester__ is Tool created for the __EMV__ group for testing the product in a clean and simpler way. The tool has been developed in __JavaFX__ to be cross-platform and can also be used through the command line so that the testing can be automated.
+__CTester__ is Tool created for the __EMV__ group for testing the different products and platforms. The tool has been developed in __JavaFX__ to be cross-platform and can also be used through the command line so that the testing can be automated.
 
 ## Characteristics
 
@@ -29,6 +29,7 @@ The following libraries have been used for this project:
 - [Smart Card I/O API](https://docs.oracle.com/javase/7/docs/jre/api/security/smartcardio/spec/): Java API for communication with Smart Cards using ISO/IEC 7816-4 APDUs.
 - [dom4j](https://dom4j.github.io/): Flexible XML framework for Java.
 - [log4j](https://logging.apache.org/log4j/1.2/): logging library for Java.
+- [JUnit](https://junit.org/junit4/): for internal testing of the tool.
 
 ## Requirements
 
@@ -39,13 +40,13 @@ The following libraries have been used for this project:
 ### For test developing
 
 - [JDK 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-- [NetBeans 8.2](https://netbeans.org/downloads/8.2/) (optional).
+- [NetBeans 8.2](https://netbeans.org/downloads/8.2/) (recommended).
 
 ### For tool developing
 
 - [JDK 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 - [NetBeans 8.2](https://netbeans.org/downloads/8.2/)
-- Scene Builder (optional).
+- Scene Builder (optional, used for the GUI design).
 
 ## How to use
 
@@ -58,6 +59,14 @@ The following libraries have been used for this project:
 3. Run'em!
 
 ### Command line
+
+1. Open a command line.
+
+2. Create an .lst file containing the tests.
+
+3. Execute the .jar file passing the .lst file.
+
+For more details, refer to this [README](Executable/README.md).
 
 ## Developing a test
 
