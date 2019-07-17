@@ -1,9 +1,10 @@
 package com.lsc.ctesterfx.test;
 
+import com.lsc.ctesterfx.background.MultithreadController.TYPE;
 import com.lsc.ctesterfx.controllers.FXMLTestItemController;
-import com.lsc.ctesterfx.dao.Test;
 import com.lsc.ctesterfx.logger.FileLogger;
 import com.lsc.ctesterfx.logger.ApplicationLogger;
+import com.lsc.ctesterfx.test.Test.TEST_STATE;
 import org.apache.log4j.Logger;
 
 /**
@@ -24,12 +25,12 @@ public class TestController
      * Constructor.
      *
      * @param test: reference to the test object.
-     * @param testItemController1: referente to the FXMLTestItemController.
+     * @param testItemController: referente to the FXMLTestItemController.
      */
-    public TestController(Test test, FXMLTestItemController testItemController1)
+    public TestController(Test test, FXMLTestItemController testItemController)
     {
         this.test               = test;
-        this.testItemController = testItemController1;
+        this.testItemController = testItemController;
         this.applicationLogger  = ApplicationLogger.newInstance();
         this.applicationLogger.setMode(ApplicationLogger.MODE.GUI);
 
@@ -74,32 +75,37 @@ public class TestController
      *
      * @param state: new test state to be set.
      */
-    public void setState(FXMLTestItemController.TEST_STATE state)
+    public void setState(TEST_STATE state)
     {
         testItemController.setState(state);
+        test.setState(state);
     }
 
     /**
      * Called from the outside to notify that the test is going
      * to start, so the controller can set everything up.
+     * @param type type of the task (compilation or execution)
      */
-    public void notifyStartTest()
+    public void notifyStartTest(TYPE type)
     {
         LOGGER.debug("Setting new file logger");
 
         fileLogger.initialize();
-
+        testItemController.notifyStartExecution(type);
         applicationLogger.setFileLogger(fileLogger);
     }
 
     /**
      * Called from the outside to notify that the test is finished
      * so that the controller can free resources.
+     * @param success true if the task was succesful.
+     * @param type type of the task (compilation or execution)
      */
-    public void notifyFinishTest()
+    public void notifyFinishTest(boolean success, TYPE type)
     {
         LOGGER.debug("Closing file logger");
 
+        testItemController.notifyFinishedExecution(success, type);
         fileLogger.close();
     }
 }

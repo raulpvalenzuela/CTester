@@ -1,6 +1,7 @@
 package com.lsc.ctesterfx.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.lsc.ctesterfx.Context;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -18,8 +19,6 @@ public class FXMLReaderItemController implements Initializable
 {
     private static final Logger LOGGER = Logger.getLogger(FXMLReaderItemController.class);
 
-    // Reference to the Main controller.
-    private FXMLMainController mainController;
     // Reader name.
     private String readerName;
     // Index of the reader in the list.
@@ -41,11 +40,17 @@ public class FXMLReaderItemController implements Initializable
         // TODO
     }
 
-    public void setAttributes(FXMLMainController mainController, String name, int index, boolean selected)
+    /**
+     * Sets the attributes of this controller.
+     *
+     * @param name: name of the reader.
+     * @param index: index of the reader.
+     * @param selected: true if the reader is selected.
+     */
+    public void setAttributes(String name, int index, boolean selected)
     {
         selectReader(selected);
 
-        this.mainController = mainController;
         this.readerName     = name;
         this.index          = index;
 
@@ -56,7 +61,8 @@ public class FXMLReaderItemController implements Initializable
     private void onClickButton(ActionEvent event)
     {
         selectReader(true);
-        mainController.notifyReaderSelected(readerName, index);
+        Context.newInstance()
+                .getMainController().notifyReaderSelected(readerName, index);
     }
 
     /**

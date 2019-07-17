@@ -1,6 +1,6 @@
 package com.lsc.ctesterfx.shell;
 
-import com.lsc.ctesterfx.dao.Test;
+import com.lsc.ctesterfx.test.Test;
 import com.lsc.ctesterfx.logger.ApplicationLogger;
 import com.lsc.ctesterfx.logger.FileLogger;
 import com.lsc.ctesterfx.reader.ReaderController;

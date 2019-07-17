@@ -3,14 +3,16 @@ package com.lsc.ctesterfx.controllers;
 import com.lsc.ctesterfx.background.MultithreadController;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import com.lsc.ctesterfx.Context;
 import com.lsc.ctesterfx.constants.Tooltips;
 import com.lsc.ctesterfx.background.CompilationTask;
 import com.lsc.ctesterfx.background.ExecutionTask;
+import com.lsc.ctesterfx.background.MultithreadController.TYPE;
 import com.lsc.ctesterfx.constants.Colors;
 import com.lsc.ctesterfx.constants.Colors.Color;
-import com.lsc.ctesterfx.dao.Test;
+import com.lsc.ctesterfx.test.Test;
+import com.lsc.ctesterfx.test.Test.TEST_STATE;
 import com.lsc.ctesterfx.test.TestController;
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -25,22 +27,9 @@ import javafx.fxml.Initializable;
  */
 public class FXMLTestItemController implements Initializable
 {
-    public enum TEST_STATE {
-        QUEUED,
-        NOT_COMPILED,
-        COMPILING,
-        COMPILATION_OK,
-        COMPILATION_FAILED,
-        RUNNING,
-        EXECUTION_OK,
-        EXECUTION_FAILED,
-        STOPPED
-    }
-
+    // Index of this test.
     private int index;
 
-    // Reference to the Main controller.
-    private FXMLMainController mainController;
     // Reference to the TestController.
     private TestController testController;
 
@@ -75,25 +64,31 @@ public class FXMLTestItemController implements Initializable
 
     /**
      * Notifies the main controller that a task has started.
+     * @param type type of the task (compilation or execution)
      */
-    private void notifyStartExecution()
+    public void notifyStartExecution(TYPE type)
     {
-        mainController.notifyStartExecution(index);
+        Context.newInstance()
+                .getMainController().notifyStartExecution(type, index);
     }
 
     /**
      * Notifies the main controller that a task has finished.
+     * @param success true if the task was succesful.
+     * @param type type of the task (compilation or execution)
      */
-    private void notifyFinishedExecution()
+    public void notifyFinishedExecution(boolean success, TYPE type)
     {
-        mainController.notifyFinishedExecution();
+        Context.newInstance().getMainController()
+                .notifyFinishedExecution(success, type);
     }
 
     @FXML
     private void onClickRunTestButton(ActionEvent event)
     {
         // Clear the output first and restart variables
-        mainController.requestClear();
+        Context.newInstance().getMainController()
+                .requestClear();
 
         run();
     }
@@ -101,7 +96,8 @@ public class FXMLTestItemController implements Initializable
     @FXML
     private void onClickRemoveTestButton(ActionEvent event)
     {
-        mainController.removeTestAtIndex(index);
+        Context.newInstance().getMainController()
+                .removeTestAtIndex(index);
     }
 
     @FXML
@@ -109,7 +105,8 @@ public class FXMLTestItemController implements Initializable
     {
         if (!mTestNameCheckbox.isSelected())
         {
-            mainController.notifyDeselection();
+            Context.newInstance().getMainController()
+                    .notifyDeselection();
         }
     }
 
@@ -138,16 +135,14 @@ public class FXMLTestItemController implements Initializable
     /**
      * Sets the different attributes needed to initialize the test item.
      *
-     * @param file: name of the test file.
-     * @param mainController: controller that has to be notified if something happens.
+     * @param test: reference to the test.
      * @param index: index in the list.
      */
-    public void setAttributes(File file, FXMLMainController mainController, int index)
+    public void setAttributes(Test test, int index)
     {
-        testController      = new TestController(new Test(file), this);
+        testController = new TestController(test, this);
 
-        this.mainController = mainController;
-        this.index          = index;
+        this.index     = index;
 
         mTestNameCheckbox.setMnemonicParsing(false);
         mTestNameCheckbox.setText(testController.getTestName());
@@ -248,8 +243,6 @@ public class FXMLTestItemController implements Initializable
                     break;
 
                 case COMPILING:
-                    notifyStartExecution();
-
                     mTestStatusButton.setStyle(
                             "-fx-background-radius: 32; -fx-background-color: " + Colors.createAsString(Color.GRAY) + "; -fx-text-fill: black");
                     mTestStatusButton.setText(
@@ -257,8 +250,6 @@ public class FXMLTestItemController implements Initializable
                     break;
 
                 case RUNNING:
-                    notifyStartExecution();
-
                     mTestStatusButton.setStyle(
                             "-fx-background-radius: 32; -fx-background-color: " + Colors.createAsString(Color.GRAY) + "; -fx-text-fill: black");
                     mTestStatusButton.setText(
@@ -266,8 +257,6 @@ public class FXMLTestItemController implements Initializable
                     break;
 
                 case COMPILATION_OK:
-                    notifyFinishedExecution();
-
                     mTestStatusButton.setStyle(
                             "-fx-background-radius: 32; -fx-background-color: " + Colors.createAsString(Color.LIGHT_GREEN) + "; -fx-text-fill: black");
                     mTestStatusButton.setText(
@@ -275,8 +264,6 @@ public class FXMLTestItemController implements Initializable
                     break;
 
                 case COMPILATION_FAILED:
-                    notifyFinishedExecution();
-
                     mTestStatusButton.setStyle(
                             "-fx-background-radius: 32; -fx-background-color: " + Colors.createAsString(Color.RED) + "; -fx-text-fill: white");
                     mTestStatusButton.setText(
@@ -284,8 +271,6 @@ public class FXMLTestItemController implements Initializable
                     break;
 
                 case EXECUTION_OK:
-                    notifyFinishedExecution();
-
                     mTestStatusButton.setStyle(
                             "-fx-background-radius: 32; -fx-background-color: " + Colors.createAsString(Color.GREEN) + "; -fx-text-fill: black");
                     mTestStatusButton.setText(
@@ -293,8 +278,6 @@ public class FXMLTestItemController implements Initializable
                     break;
 
                 case EXECUTION_FAILED:
-                    notifyFinishedExecution();
-
                     mTestStatusButton.setStyle(
                             "-fx-background-radius: 32; -fx-background-color: " + Colors.createAsString(Color.RED) + "; -fx-text-fill: white");
                     mTestStatusButton.setText(

@@ -1,6 +1,5 @@
 package com.lsc.ctesterfx.test;
 
-import com.lsc.ctesterfx.dao.Test;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;

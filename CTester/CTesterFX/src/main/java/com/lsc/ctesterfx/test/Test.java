@@ -1,16 +1,31 @@
-package com.lsc.ctesterfx.dao;
+package com.lsc.ctesterfx.test;
 
 import java.io.File;
 
 /**
- * Class that represents a test. It will contain basically a reference to the java file.
+ * Class that represents a test. It will contain basically a reference to the java file
+ * and the state of the test.
  *
  * @author dma@logossmartcard.com
  */
 public class Test
 {
+    public enum TEST_STATE
+    {
+        QUEUED,
+        NOT_COMPILED,
+        COMPILING,
+        COMPILATION_OK,
+        COMPILATION_FAILED,
+        RUNNING,
+        EXECUTION_OK,
+        EXECUTION_FAILED,
+        STOPPED
+    }
+
     // File containing the .java file.
     private final File file;
+    private TEST_STATE state;
 
     public Test(File file)
     {
@@ -45,5 +60,25 @@ public class Test
     public File getFile()
     {
         return file;
+    }
+
+    /**
+     * Sets a new state.
+     *
+     * @param newState new state of the test.
+     */
+    public void setState(TEST_STATE newState)
+    {
+        state = newState;
+    }
+
+    /**
+     * Returns the state of the test.
+     *
+     * @return the state of the test.
+     */
+    public TEST_STATE getState()
+    {
+        return state;
     }
 }
