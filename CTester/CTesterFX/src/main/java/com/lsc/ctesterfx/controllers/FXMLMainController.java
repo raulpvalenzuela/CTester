@@ -5,6 +5,8 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
+import com.lsc.ctesterfx.Context;
+import com.lsc.ctesterfx.background.MultithreadController.TYPE;
 import com.lsc.ctesterlib.iso7816.ApduCommand;
 import com.lsc.ctesterlib.iso7816.ApduResponse;
 import com.lsc.ctesterlib.utils.ApduValidator;
@@ -18,6 +20,8 @@ import com.lsc.ctesterfx.logger.Printer;
 import com.lsc.ctesterlib.persistence.Configuration;
 import com.lsc.ctesterfx.reader.IReader;
 import com.lsc.ctesterfx.reader.ReaderController;
+import com.lsc.ctesterfx.test.Test;
+import com.lsc.ctesterfx.test.Test.TEST_STATE;
 import com.lsc.ctesterlib.virginize.Virginize;
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicInteger;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
@@ -72,13 +75,25 @@ public class FXMLMainController implements Initializable
     private ReaderController readerController;
     // Reference to the configuration file.
     private Configuration configuration;
+    // Reference to the application context.
+    private Context context;
 
     // Flag to indicate if the commands list is visible.
     private boolean commandsListVisible;
     // Variable to keep track of the tests in execution.
-    private AtomicInteger numOfTestsInExecution;
+    private int numOfTestsInExecution;
+    // Variable to keep track of the tests in compilation process.
+    private int numOfTestsInCompilation;
     // Variable to keep track of the test being currently executed.
     private int currentTest;
+    // Flag to indicate if the test has been executed on its own.
+    private boolean singleRun;
+
+    // Stats related variables.
+    private int numTestsNok;
+    private int totalTests;
+    private long startTime;
+    private long endTime;
 
     @FXML
     private VBox mTestListVBox;
@@ -159,8 +174,12 @@ public class FXMLMainController implements Initializable
     private void initialize()
     {
         currentTest              = -1;
+        numTestsNok              = 0;
+        totalTests               = 0;
+        numOfTestsInExecution    = 0;
+        numOfTestsInCompilation  = 0;
+        singleRun                = true;
         commandsListVisible      = true;
-        numOfTestsInExecution    = new AtomicInteger(0);
         testItemControllerList   = new ArrayList<>();
         readerItemControllerList = new ArrayList<>();
 
@@ -173,6 +192,10 @@ public class FXMLMainController implements Initializable
 
         // Reader controller
         readerController = ReaderController.newInstance();
+
+        // Context
+        context = Context.newInstance();
+        context.setMainController(this);
 
         // Set up the GUI controller.
         GUIController.newInstance()
@@ -401,8 +424,7 @@ public class FXMLMainController implements Initializable
         {
             LOGGER.info("Files added:");
 
-            int index = 0;
-            for (File file : selectedFiles)
+            selectedFiles.stream().forEach((file) ->
             {
                 LOGGER.info(" - " + file.getAbsolutePath());
 
@@ -411,7 +433,7 @@ public class FXMLMainController implements Initializable
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TestItem.fxml"));
                     Parent testItem = (Parent) loader.load();
                     FXMLTestItemController controller = (FXMLTestItemController) loader.getController();
-                    controller.setAttributes(file, this, index++);
+                    controller.setAttributes(new Test(file), testItemControllerList.size());
 
                     mTestListVBox.getChildren().add(testItem);
                     testItemControllerList.add(controller);
@@ -420,7 +442,7 @@ public class FXMLMainController implements Initializable
                     LOGGER.error("Exception loading TestItem.fxml");
                     LOGGER.error(ex);
                 }
-            }
+            });
 
             // Save the path for the next time.
             Configuration.Editor editor = configuration.getEditor();
@@ -439,10 +461,14 @@ public class FXMLMainController implements Initializable
             // Clear the output panel.
             printer.clear();
 
+            numOfTestsInExecution   = 0;
+            numOfTestsInCompilation = 0;
+
             // First initialize the state of each test.
             testItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
             {
-                testItem.setState(FXMLTestItemController.TEST_STATE.QUEUED);
+                numOfTestsInCompilation++;
+                testItem.setState(TEST_STATE.QUEUED);
             });
 
             // Compile only the ones checked.
@@ -464,13 +490,24 @@ public class FXMLMainController implements Initializable
 
         if (!testItemControllerList.isEmpty())
         {
+            startTime = System.currentTimeMillis();
+
             // Clear the output panel.
             printer.clear();
+
+            numTestsNok             = 0;
+            totalTests              = 0;
+            numOfTestsInExecution   = 0;
+            numOfTestsInCompilation = 0;
+
+            // Notify that tests are run using the "Run all" button.
+            singleRun = false;
 
             // First initialize the state of each test.
             testItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
             {
-                testItem.setState(FXMLTestItemController.TEST_STATE.QUEUED);
+                numOfTestsInExecution++;
+                testItem.setState(TEST_STATE.QUEUED);
             });
 
             // Compile only the ones checked.
@@ -495,19 +532,28 @@ public class FXMLMainController implements Initializable
         // Restart them.
         MultithreadController.initialize();
 
+        startTime               = 0;
+        endTime                 = 0;
+        numOfTestsInExecution   = 0;
+        numOfTestsInCompilation = 0;
+        numTestsNok             = 0;
+        totalTests              = 0;
+
+        singleRun               = true;
+
         // Update only the tests that haven't started.
         for (int i = 0; i < testItemControllerList.size(); ++i)
         {
             if (testItemControllerList.get(i).isSelected() && i >= currentTest)
             {
-                testItemControllerList.get(i).setState(FXMLTestItemController.TEST_STATE.STOPPED);
+                testItemControllerList.get(i).setState(TEST_STATE.STOPPED);
             }
         }
 
         // In case the test has been started individually.
         if (currentTest > -1)
         {
-            testItemControllerList.get(currentTest).setState(FXMLTestItemController.TEST_STATE.STOPPED);
+            testItemControllerList.get(currentTest).setState(TEST_STATE.STOPPED);
         }
 
         LOGGER.info("Tests stopped");
@@ -542,8 +588,8 @@ public class FXMLMainController implements Initializable
                         Parent readerItem = (Parent) loader.load();
                         FXMLReaderItemController controller = (FXMLReaderItemController) loader.getController();
 
-                        controller.setAttributes(this
-                                , readers.get(i)
+                        controller.setAttributes(
+                                  readers.get(i)
                                 , i
                                 , (readerController.getSelected() != null) && readerController.getSelected().getName().equals(readers.get(i)));
 
@@ -812,31 +858,73 @@ public class FXMLMainController implements Initializable
     /**
      * Increments the number of tests in execution. This method is called from a
      * test controller to notify that a task has started. If it's the first task, disable all the buttons.
+     * @param type: type of the task (compilation or execution).
      * @param index: index of the test.
      */
-    public void notifyStartExecution(int index)
+    public void notifyStartExecution(TYPE type, int index)
     {
         // Save the index of the test.
         currentTest = index;
 
-        if (numOfTestsInExecution.getAndIncrement() == 0)
+        // Check if the test has been started individually.
+        if (type == TYPE.EXECUTION)
         {
-            disableButtons();
+            if (singleRun)
+            {
+                numOfTestsInExecution = 1;
+            }
         }
+
+        disableButtons();
     }
 
     /**
      * Decrements the number of tests in execution. This method is called from a
      * test controller to notify that a task has finished. If it's the last task, enable all the buttons.
+     * @param success true if the test was successful
+     * @param type type of the task (compilation or execution)
      */
-    public void notifyFinishedExecution()
+    public void notifyFinishedExecution(boolean success, TYPE type)
     {
         // Clear the flag.
         currentTest = -1;
 
-        if (numOfTestsInExecution.decrementAndGet() == 0)
+        if (type == TYPE.EXECUTION)
         {
-            enableButtons();
+            totalTests++;
+            if (!success)
+            {
+                numTestsNok++;
+            }
+
+            // All the tests have finished.
+            if (--numOfTestsInExecution == 0)
+            {
+                enableButtons();
+
+                if (!singleRun)
+                {
+                    endTime = System.currentTimeMillis();
+
+                    printer.logComment("--------------------------------------------- //");
+                    printer.logComment("Results:");
+                    printer.logComment("");
+                    printer.logComment("Tests run: " + totalTests + ", Failures: " + numTestsNok);
+                    printer.logComment("");
+                    printer.logComment("Time elapsed: " + Formatter.formatInterval(endTime - startTime));
+                    printer.logComment("--------------------------------------------- //");
+
+                    singleRun = true;
+                }
+            }
+        }
+        else
+        {
+            // All the tests have been compiled.
+            if (--numOfTestsInCompilation == 0)
+            {
+                enableButtons();
+            }
         }
     }
 
@@ -892,7 +980,14 @@ public class FXMLMainController implements Initializable
      */
     public void requestClear()
     {
-        numOfTestsInExecution.set(0);
+        numOfTestsInCompilation = 0;
+        numOfTestsInExecution   = 0;
+        totalTests              = 0;
+        numTestsNok             = 0;
+        startTime               = 0;
+        endTime                 = 0;
+
+        singleRun               = true;
 
         printer.clear();
     }

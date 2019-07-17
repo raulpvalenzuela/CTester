@@ -1,5 +1,6 @@
 package com.lsc.ctesterlib.utils;
 
+import java.util.concurrent.TimeUnit;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
@@ -17,7 +18,7 @@ public class Formatter
      * @param array array to be formatted.
      * @return string formatted in blocks of two digits.
      */
-    public static String fromByteArrayToString(byte[] array)
+    public static String fromByteArrayToString(final byte[] array)
     {
         return Hex.encodeHexString(array)
                 .toUpperCase()
@@ -35,7 +36,7 @@ public class Formatter
      * @param size: size of the block
      * @return string separated in blocks.
      */
-    public static String separate(String string, int size)
+    public static String separate(final String string, final int size)
     {
         if (size == 0)
         {
@@ -56,7 +57,7 @@ public class Formatter
      * @return array of bytes.
      * @throws org.apache.commons.codec.DecoderException if the string cannot be decoded.
      */
-    public static byte[] fromStringToByteArray(String string) throws DecoderException
+    public static byte[] fromStringToByteArray(final String string) throws DecoderException
     {
         return Hex.decodeHex(string.replace(" ", "").toCharArray());
     }
@@ -71,5 +72,25 @@ public class Formatter
     {
         return (byte) ((Character.digit(string.charAt(0), 16) << 4) +
                         Character.digit(string.charAt(1), 16));
+    }
+
+    /**
+     * Formats an interval in milliseconds to hh, mm, ss
+     *
+     * @param interval: interval to be formatted.
+     * @return String with the interval formatted as hh, mm, ss
+     */
+    public static String formatInterval(final long interval)
+    {
+        final long hr = TimeUnit.MILLISECONDS.toHours(
+                interval);
+        final long min = TimeUnit.MILLISECONDS.toMinutes(
+                interval - TimeUnit.HOURS.toMillis(hr));
+        final long sec = TimeUnit.MILLISECONDS.toSeconds(
+                interval - TimeUnit.HOURS.toMillis(hr) - TimeUnit.MINUTES.toMillis(min));
+        final long ms = TimeUnit.MILLISECONDS.toMillis(
+                interval - TimeUnit.HOURS.toMillis(hr) - TimeUnit.MINUTES.toMillis(min) - TimeUnit.SECONDS.toMillis(sec));
+
+        return String.format("%02d hours %02d minutes %02d.%03d seconds", hr, min, sec, ms);
     }
 }
