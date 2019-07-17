@@ -167,7 +167,6 @@ public class ExecutionTask extends Task
 
             LOGGER.info("Execution of '" + testController.getTestName() + "' succesful");
 
-            testController.getLogger().logComment("");
             testController.getLogger().logComment("Time elapsed: " + Formatter.formatInterval(endTime - startTime));
             testController.getLogger().logComment("--------------------------------------------- //");
             testController.getLogger().log("");
