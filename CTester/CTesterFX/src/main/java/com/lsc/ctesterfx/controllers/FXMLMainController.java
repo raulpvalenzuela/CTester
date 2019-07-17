@@ -86,9 +86,12 @@ public class FXMLMainController implements Initializable
     private int numOfTestsInCompilation;
     // Variable to keep track of the test being currently executed.
     private int currentTest;
-    // For statistics purposes.
+
+    // Stats related variables.
     private int numTestsNok;
     private int totalTests;
+    private long startTime;
+    private long endTime;
 
     @FXML
     private VBox mTestListVBox;
@@ -484,6 +487,8 @@ public class FXMLMainController implements Initializable
 
         if (!testItemControllerList.isEmpty())
         {
+            startTime = System.currentTimeMillis();
+
             // Clear the output panel.
             printer.clear();
 
@@ -521,6 +526,8 @@ public class FXMLMainController implements Initializable
         // Restart them.
         MultithreadController.initialize();
 
+        startTime               = 0;
+        endTime                 = 0;
         numOfTestsInExecution   = 0;
         numTestsNok             = 0;
         totalTests              = 0;
@@ -880,19 +887,24 @@ public class FXMLMainController implements Initializable
             if (!success)
             {
                 numTestsNok++;
-            }            
+            }
 
             // All the tests have finished.
             if (--numOfTestsInExecution == 0)
             {
+                endTime = System.currentTimeMillis();
+
                 enableButtons();
 
                 if (type == TYPE.EXECUTION)
                 {
-                    printer.log("");
+                    printer.logComment(" -------------------------------------------- //");
                     printer.logComment("Results:");
-                    printer.log("");
+                    printer.logComment("");
                     printer.logComment("Tests run: " + totalTests + ", Failures: " + numTestsNok);
+                    printer.logComment("");
+                    printer.logComment("Time elapsed: " + Formatter.formatInterval(endTime - startTime));
+                    printer.logComment(" -------------------------------------------- //");
                 }
             }
         }
