@@ -5,6 +5,7 @@ import com.lsc.ctesterfx.test.Test.TEST_STATE;
 import com.lsc.ctesterfx.test.TestController;
 import com.lsc.ctesterfx.test.TestExecutor;
 import com.lsc.ctesterfx.test.TestLoader;
+import com.lsc.ctesterlib.utils.Formatter;
 import java.lang.reflect.Method;
 import java.util.List;
 import javafx.concurrent.Task;
@@ -44,6 +45,8 @@ public class ExecutionTask extends Task
      */
     private boolean runTest()
     {
+        long startTime;
+        long endTime;
         boolean success = true;
 
         LOGGER.info("Compiling '" + testController.getTestName() + "'");
@@ -56,8 +59,12 @@ public class ExecutionTask extends Task
         // First we need to notify the controller that the task has started.
         testController.notifyStartTest(TYPE.EXECUTION);
 
+        startTime = System.currentTimeMillis();
+
         // Compilation process starts here
-        testController.getLogger().logComment("Compiling " + testController.getTestName() + "\n");
+        testController.getLogger().logComment(" -------------------------------------------- //");
+        testController.getLogger().logComment("Starting test: " + testController.getTestName() + "\n");
+        testController.getLogger().logComment("Compiling...\n");
         testController.setState(TEST_STATE.COMPILING);
 
         try
@@ -78,7 +85,7 @@ public class ExecutionTask extends Task
                 {
                     LOGGER.info("Loading of '" + testController.getTestName() + "' succesful");
 
-                    testController.getLogger().logComment("Compilation of " + testController.getTestName() + " succesful!\n");
+                    testController.getLogger().logComment("Compilation succesful\n");
                     testController.setState(TEST_STATE.COMPILATION_OK);
                 }
             }
@@ -88,7 +95,7 @@ public class ExecutionTask extends Task
 
                 success = false;
 
-                testController.getLogger().logError("Compilation of " + testController.getTestName() + " failed\n");
+                testController.getLogger().logError("Compilation failed\n");
                 testController.setState(TEST_STATE.COMPILATION_FAILED);
             }
 
@@ -98,7 +105,7 @@ public class ExecutionTask extends Task
 
             success = false;
 
-            testController.getLogger().logError("Compilation of " + testController.getTestName() + " failed");
+            testController.getLogger().logError("Compilation failed");
             testController.getLogger().logError("Exception: " + ex.toString() + "\n");
             testController.setState(TEST_STATE.COMPILATION_FAILED);
         }
@@ -156,7 +163,14 @@ public class ExecutionTask extends Task
                 }
             }
 
+            endTime = System.currentTimeMillis();
+
             LOGGER.info("Execution of '" + testController.getTestName() + "' succesful");
+
+            testController.getLogger().logComment("");
+            testController.getLogger().logComment("Time elapsed: " + Formatter.formatInterval(endTime - startTime));
+            testController.getLogger().logComment("--------------------------------------------- //");
+            testController.getLogger().log("");
 
             testController.setState(TEST_STATE.EXECUTION_OK);
             testController.notifyFinishTest(success, TYPE.EXECUTION);

@@ -86,6 +86,8 @@ public class FXMLMainController implements Initializable
     private int numOfTestsInCompilation;
     // Variable to keep track of the test being currently executed.
     private int currentTest;
+    // Flag to indicate if the test has been executed on its own.
+    private boolean singleRun;
 
     // Stats related variables.
     private int numTestsNok;
@@ -176,6 +178,7 @@ public class FXMLMainController implements Initializable
         totalTests               = 0;
         numOfTestsInExecution    = 0;
         numOfTestsInCompilation  = 0;
+        singleRun                = true;
         commandsListVisible      = true;
         testItemControllerList   = new ArrayList<>();
         readerItemControllerList = new ArrayList<>();
@@ -497,6 +500,9 @@ public class FXMLMainController implements Initializable
             numOfTestsInExecution   = 0;
             numOfTestsInCompilation = 0;
 
+            // Notify that tests are run using the "Run all" button.
+            singleRun = false;
+
             // First initialize the state of each test.
             testItemControllerList.stream().filter((testItem) -> (testItem.isSelected())).forEachOrdered((testItem) ->
             {
@@ -529,9 +535,11 @@ public class FXMLMainController implements Initializable
         startTime               = 0;
         endTime                 = 0;
         numOfTestsInExecution   = 0;
+        numOfTestsInCompilation = 0;
         numTestsNok             = 0;
         totalTests              = 0;
-        numOfTestsInCompilation = 0;
+
+        singleRun               = true;
 
         // Update only the tests that haven't started.
         for (int i = 0; i < testItemControllerList.size(); ++i)
@@ -861,7 +869,7 @@ public class FXMLMainController implements Initializable
         // Check if the test has been started individually.
         if (type == TYPE.EXECUTION)
         {
-            if (numOfTestsInExecution == 0)
+            if (singleRun)
             {
                 numOfTestsInExecution = 1;
             }
@@ -892,19 +900,21 @@ public class FXMLMainController implements Initializable
             // All the tests have finished.
             if (--numOfTestsInExecution == 0)
             {
-                endTime = System.currentTimeMillis();
-
                 enableButtons();
 
-                if (type == TYPE.EXECUTION)
+                if (!singleRun)
                 {
-                    printer.logComment(" -------------------------------------------- //");
+                    endTime = System.currentTimeMillis();
+
+                    printer.logComment("--------------------------------------------- //");
                     printer.logComment("Results:");
                     printer.logComment("");
                     printer.logComment("Tests run: " + totalTests + ", Failures: " + numTestsNok);
                     printer.logComment("");
                     printer.logComment("Time elapsed: " + Formatter.formatInterval(endTime - startTime));
-                    printer.logComment(" -------------------------------------------- //");
+                    printer.logComment("--------------------------------------------- //");
+
+                    singleRun = true;
                 }
             }
         }
@@ -970,9 +980,14 @@ public class FXMLMainController implements Initializable
      */
     public void requestClear()
     {
-        numOfTestsInExecution = 0;
-        totalTests            = 0;
-        numTestsNok           = 0;
+        numOfTestsInCompilation = 0;
+        numOfTestsInExecution   = 0;
+        totalTests              = 0;
+        numTestsNok             = 0;
+        startTime               = 0;
+        endTime                 = 0;
+
+        singleRun               = true;
 
         printer.clear();
     }
