@@ -45,27 +45,60 @@ public class ExecutionTask extends Task
      */
     private boolean runTest()
     {
-        long startTime;
+        boolean success = false;
+        long startTime = System.currentTimeMillis();
         long endTime;
-        boolean success = true;
 
-        LOGGER.info("Compiling '" + testController.getTestName() + "'");
-
-        Pair<Object, List<Method>> compilationResult = null;
-
-        TestLoader testLoader     = TestLoader.newInstance();
-        TestExecutor testExecutor = TestExecutor.newInstance();
+        Pair<Object, List<Method>> compilationResult;
 
         // First we need to notify the controller that the task has started.
+        // The file logger will be initialized here so it's safe to use it from now on.
         testController.notifyStartTest(TYPE.EXECUTION);
+        testController.setState(TEST_STATE.COMPILING);
 
-        startTime = System.currentTimeMillis();
-
-        // Compilation process starts here
         testController.getLogger().logComment(" -------------------------------------------- //");
         testController.getLogger().logComment("Starting test: " + testController.getTestName() + "\n");
+
+        compilationResult = compile();
+        if (compilationResult == null)
+        {
+            // Notify the controller that the task has finished.
+            testController.notifyFinishTest(false, TYPE.EXECUTION);
+            testController.setState(TEST_STATE.COMPILATION_FAILED);
+        }
+        // Execution starts here
+        else
+        {
+            if ((success = execute(compilationResult)))
+            {
+                endTime = System.currentTimeMillis();
+
+                testController.getLogger().logComment("Time elapsed: " + Formatter.formatInterval(endTime - startTime));
+                testController.getLogger().logComment("--------------------------------------------- //");
+                testController.getLogger().log("");
+            }
+
+            testController.setState((success) ? TEST_STATE.EXECUTION_OK : TEST_STATE.EXECUTION_FAILED);
+            testController.notifyFinishTest(success, TYPE.EXECUTION);
+        }
+
+        return success;
+    }
+
+    /**
+     * Helper method to compile the test.
+     *
+     * @return Pair containing the object and the
+     *         methods 'setup', 'run' and 'teardown'. Null if there's been an exception.
+     */
+    private Pair<Object, List<Method>> compile()
+    {
+        LOGGER.info("Compiling '" + testController.getTestName() + "'");
+
         testController.getLogger().logComment("Compiling...\n");
-        testController.setState(TEST_STATE.COMPILING);
+
+        Pair<Object, List<Method>> compilationResult = null;
+        TestLoader testLoader = TestLoader.newInstance();
 
         try
         {
@@ -78,108 +111,82 @@ public class ExecutionTask extends Task
                 if ((compilationResult = testLoader.load(testController.getTest())) == null)
                 {
                     LOGGER.error("Loading of '" + testController.getTestName() + "' failed");
-
-                    success = false;
                 }
                 else
                 {
                     LOGGER.info("Loading of '" + testController.getTestName() + "' succesful");
 
                     testController.getLogger().logComment("Compilation succesful\n");
-                    testController.setState(TEST_STATE.COMPILATION_OK);
                 }
             }
             else
             {
                 LOGGER.error("Compilation of '" + testController.getTestName() + "' failed");
 
-                success = false;
-
                 testController.getLogger().logError("Compilation failed\n");
-                testController.setState(TEST_STATE.COMPILATION_FAILED);
             }
 
         } catch (Exception ex) {
             LOGGER.error("Exception compiling test");
             LOGGER.error(ex);
 
-            success = false;
-
             testController.getLogger().logError("Compilation failed");
             testController.getLogger().logError("Exception: " + ex.toString() + "\n");
-            testController.setState(TEST_STATE.COMPILATION_FAILED);
         }
 
-        // Execution starts here
-        if (compilationResult != null)
+        return compilationResult;
+    }
+
+    /**
+     * Executes the test.
+     *
+     * @param compilationResult: pair containing the object and the list of methods.
+     * @return true if succesful.
+     */
+    private boolean execute(Pair<Object, List<Method>> compilationResult)
+    {
+        LOGGER.info("Executing '" + testController.getTestName() + "'");
+
+        TestExecutor testExecutor = TestExecutor.newInstance();
+
+        // Get the test instance and the methods.
+        Object object        = compilationResult.getKey();
+        List<Method> methods = compilationResult.getValue();
+
+        for (Method method : methods)
         {
-            LOGGER.info("Executing '" + testController.getTestName() + "'");
+            LOGGER.info("Calling '" + method.getName() + "' method");
+            testController.getLogger().logComment("Calling '" + method.getName() + "' method\n");
 
-            // Get the test instance and the methods.
-            Object object        = compilationResult.getKey();
-            List<Method> methods = compilationResult.getValue();
-
-            testController.setState(TEST_STATE.RUNNING);
-            for (Method method : methods)
+            try
             {
-                LOGGER.info("Calling '" + method.getName() + "' method");
-                testController.getLogger().logComment("Calling '" + method.getName() + "' method\n");
-
-                try
+                // Call the method.
+                if (testExecutor.run(object, method))
                 {
-                    // Call the method.
-                    if (testExecutor.run(object, method))
-                    {
-                        LOGGER.info("'" + method.getName() + "' method passed succesfully");
+                    LOGGER.info("'" + method.getName() + "' method passed succesfully");
 
-                        testController.getLogger().logSuccess("'" + method.getName() + "' method passed succesfully\n");
-                    }
-                    else
-                    {
-                        LOGGER.info("'" + method.getName() + "' method failed");
+                    testController.getLogger().logSuccess("'" + method.getName() + "' method passed succesfully\n");
+                }
+                else
+                {
+                    LOGGER.info("'" + method.getName() + "' method failed");
 
-                        success = false;
-
-                        testController.getLogger().logError("'" + method.getName() + "' method failed\n");
-                        testController.setState(TEST_STATE.EXECUTION_FAILED);
-                        testController.notifyFinishTest(success, TYPE.EXECUTION);
-
-                        return false;
-                    }
-
-                } catch (Exception ex) {
-                    LOGGER.error("Exception executing test");
-                    LOGGER.error(ex);
-
-                    success = false;
-
-                    testController.getLogger().logError("Exception executing '" + method.getName() + "' method");
-                    testController.getLogger().logError("Exception: " + ex.toString() + "\n");
-                    testController.setState(TEST_STATE.EXECUTION_FAILED);
-
-                    testController.notifyFinishTest(success, TYPE.EXECUTION);
+                    testController.getLogger().logError("'" + method.getName() + "' method failed\n");
 
                     return false;
                 }
+
+            } catch (Exception ex) {
+                LOGGER.error("Exception executing test");
+                LOGGER.error(ex);
+
+                testController.getLogger().logError("Exception executing '" + method.getName() + "' method");
+                testController.getLogger().logError("Exception: " + ex.toString() + "\n");
+
+                return false;
             }
-
-            endTime = System.currentTimeMillis();
-
-            LOGGER.info("Execution of '" + testController.getTestName() + "' succesful");
-
-            testController.getLogger().logComment("Time elapsed: " + Formatter.formatInterval(endTime - startTime));
-            testController.getLogger().logComment("--------------------------------------------- //");
-            testController.getLogger().log("");
-
-            testController.setState(TEST_STATE.EXECUTION_OK);
-            testController.notifyFinishTest(success, TYPE.EXECUTION);
-
-            return true;
         }
 
-        // Notify the controller that the task has finished.
-        testController.notifyFinishTest(success, TYPE.EXECUTION);
-
-        return false;
+        return true;
     }
 }
