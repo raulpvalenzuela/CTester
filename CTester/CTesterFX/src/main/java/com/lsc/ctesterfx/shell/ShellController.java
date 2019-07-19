@@ -104,7 +104,9 @@ public class ShellController
                         fileLogger.initialize();
                         logger.setFileLogger(fileLogger);
 
-                        logger.logComment("--- Compiling " + test.getName() + " ---");
+                        logger.logComment(" -------------------------------------------- //");
+                        logger.logComment("Starting test: " + test.getName()+ "\n");
+                        logger.logComment("Compiling");
 
                         if (debug) LOGGER.info("Compiling " + test.getName());
                         try
@@ -122,21 +124,21 @@ public class ShellController
                                 {
                                     if (debug) LOGGER.info("Loading of '" + test.getName()+ "' succesful");
 
-                                    logger.logComment("--- Compilation of " + test.getName()+ " succesful ---\n");
+                                    logger.logComment("Compilation succesful\n");
                                 }
                             }
                             else
                             {
                                 LOGGER.error("Compilation of '" + test.getName()+ "' failed\n");
 
-                                logger.logError("--- Compilation of " + test.getName()+ " failed ---\n");
+                                logger.logError("Compilation failed\n");
                             }
 
                         } catch (Exception ex) {
                             LOGGER.error("Exception compiling test (JavaHome not configured in config.xml?)");
                             LOGGER.error(ex + "\n");
 
-                            logger.logError("Compilation of " + test.getName()+ " failed");
+                            logger.logError("Compilation failed");
                             logger.logError("Exception: " + ex.toString() + "\n");
                         }
 
@@ -152,7 +154,7 @@ public class ShellController
                             methods.stream().map((method) ->
                             {
                                 if (debug) LOGGER.info("Calling '" + method.getName() + "' method");
-                                logger.logComment("--- Calling '" + method.getName() + "' method ---");
+                                logger.logComment("Calling '" + method.getName() + "' method");
 
                                 return method;
 
@@ -165,13 +167,13 @@ public class ShellController
                                     {
                                         if (debug) LOGGER.info("'" + method.getName() + "' method passed succesfully");
 
-                                        logger.logComment("--- '" + method.getName() + "' method passed succesfully ---\n");
+                                        logger.logComment("'" + method.getName() + "' method passed succesfully\n");
                                     }
                                     else
                                     {
                                         if (debug) LOGGER.info("'" + method.getName() + "' method failed");
 
-                                        logger.logError("--- '" + method.getName() + "' method failed ---\n");
+                                        logger.logError("'" + method.getName() + "' method failed\n");
                                     }
 
                                 } catch (Exception ex) {
