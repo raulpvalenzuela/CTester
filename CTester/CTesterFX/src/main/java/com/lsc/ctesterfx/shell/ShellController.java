@@ -25,9 +25,6 @@ public class ShellController
 {
     private static final Logger LOGGER = Logger.getLogger(ShellController.class);
 
-    // Constants
-    private static final String LST_EXTENSION = ".lst";
-
     // Application Logger
     private static ApplicationLogger logger;
 
@@ -41,8 +38,8 @@ public class ShellController
     {
         if (debug) LOGGER.info("Executing tests from the .lst file");
 
-        // Check and decode .lst
-        if (lstPath.endsWith(LST_EXTENSION))
+        // Check and decode the .lst file
+        if (LstReader.isLstFile(lstPath))
         {
             // Check reader selected.
             String reader = new Configuration().getValueAsString(
@@ -153,7 +150,7 @@ public class ShellController
         }
         else
         {
-            LOGGER.error("The file containing the java test should be a .lst file\n");
+            LOGGER.error("The file should be an .lst file\n");
         }
     }
 

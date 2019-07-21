@@ -18,7 +18,20 @@ public class LstReader
 {
     private static final Logger LOGGER = Logger.getLogger(LstReader.class);
 
+    // Constants
+    private static final String LST_EXTENSION = ".lst";
     private static final String COMMENT_HEADER = ";";
+
+    /**
+     * Returns true if the file is an .lst file.
+     *
+     * @param path path to the file.
+     * @return true if the file is an .lst file.
+     */
+    public static boolean isLstFile(final String path)
+    {
+        return path.endsWith(LST_EXTENSION);
+    }
 
     /**
      * Reads an lst and returns the list of lines with no comments.
@@ -26,7 +39,7 @@ public class LstReader
      * @param lstFile: lst file to be read.
      * @return list of strings with no comments.
      */
-    public static List<String> getFiles(File lstFile)
+    public static List<String> getFiles(final File lstFile)
     {
         List<String> lines = new ArrayList<>();
 
