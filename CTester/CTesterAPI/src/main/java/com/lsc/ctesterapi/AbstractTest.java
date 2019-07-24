@@ -35,7 +35,7 @@ public abstract class AbstractTest
     /**
      * Pause the current test. It will get resumed once the dialog is closed.
      */
-    public void pause()
+    protected void pause()
     {
         GUIController.newInstance()
                 .showPauseDialog(Strings.PAUSE_TITLE, Strings.PAUSE_BODY, Strings.PAUSE_CONTINUE);
