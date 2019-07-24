@@ -1,7 +1,11 @@
 package com.lsc.ctesterapi;
 
+import com.lsc.ctesterfx.Context;
+import com.lsc.ctesterfx.gui.GUIController;
+import com.lsc.ctesterlib.constants.Strings;
+
 /**
- * Abstract class that every test should extend.
+ * Abstract class that every test should extend from.
  *
  * @author dma@logossmartcard.com
  */
@@ -27,4 +31,18 @@ public abstract class AbstractTest
      * @return true if the execution of the teardown is succesful, false otherwise.
      */
     public abstract boolean tearDown();
+
+    /**
+     * Pause the current test. It will get resumed once the dialog is closed.
+     */
+    public void pause()
+    {
+        GUIController.newInstance()
+                .showPauseDialog(Strings.PAUSE_TITLE, Strings.PAUSE_BODY, Strings.PAUSE_CONTINUE);
+
+        Context context = Context.newInstance();
+        context.pause();
+
+        while (context.isPaused()) {}
+    }
 }

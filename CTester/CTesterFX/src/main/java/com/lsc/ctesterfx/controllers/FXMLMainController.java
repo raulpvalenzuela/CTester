@@ -47,6 +47,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.Pair;
@@ -198,8 +199,9 @@ public class FXMLMainController implements Initializable
         context.setMainController(this);
 
         // Set up the GUI controller.
-        GUIController.newInstance()
-                .setAttributes(mReaderSelectedLabel);
+        GUIController guiController = GUIController.newInstance();
+        guiController.setAttributes(mReaderSelectedLabel);
+        guiController.setDialogContainer(mDialogContainer);
 
         // It's needed to set the Java Home to the one inside the JDK (~/../Java/jdk1.8.xxx/jre)
         // to be able to compile the tests. When running the .jar by default
@@ -764,7 +766,9 @@ public class FXMLMainController implements Initializable
                 DialogCreator dialog = new DialogCreator(
                           mDialogContainer
                         , Strings.ERROR_TRANSMITTING
-                        , "Exception transmitting command: " + ex.getMessage());
+                        , "Exception transmitting command: " + ex.getMessage()
+                        , Strings.CLOSE
+                        , true);
 
                 dialog.show();
             }
@@ -802,7 +806,9 @@ public class FXMLMainController implements Initializable
                 DialogCreator dialog = new DialogCreator(
                               mDialogContainer
                             , Strings.ERROR_RESETTING
-                            , "Exception resetting the card: " + ex.getMessage());
+                            , "Exception resetting the card: " + ex.getMessage()
+                            , Strings.CLOSE
+                            , true);
 
                 dialog.show();
             }
@@ -814,7 +820,9 @@ public class FXMLMainController implements Initializable
             DialogCreator dialog = new DialogCreator(
                           mDialogContainer
                         , Strings.NO_READER_SELECTED
-                        , "No reader selected, select one from the bottom left corner.");
+                        , "No reader selected, select one from the bottom left corner."
+                        , Strings.CLOSE
+                        , true);
 
             dialog.show();
         }
