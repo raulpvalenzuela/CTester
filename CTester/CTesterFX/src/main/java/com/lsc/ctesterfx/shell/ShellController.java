@@ -12,6 +12,7 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import javafx.util.Pair;
 import org.apache.log4j.Logger;
 
@@ -70,7 +71,6 @@ public class ShellController
                 {
                     // Create a new ApplicationLogger and set the mode.
                     logger = ApplicationLogger.newInstance();
-                    logger.setMode(ApplicationLogger.MODE.COMMAND_LINE_ONLY);
 
                     // It's needed to set the Java Home to the one inside the JDK (~/../Java/jdk1.8.xxx/jre)
                     // to be able to compile the tests. When running the .jar by default
@@ -152,6 +152,14 @@ public class ShellController
         {
             LOGGER.error("The file should be an .lst file\n");
         }
+    }
+
+    public static void pause()
+    {
+        logger.logComment("Test paused, press ENTER to resume");
+
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
     }
 
     /**

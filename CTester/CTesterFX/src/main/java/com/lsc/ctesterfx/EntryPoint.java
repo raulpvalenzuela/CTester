@@ -69,6 +69,9 @@ public class EntryPoint
                 // Run the lst file.
                 else if (isValidCommand(command))
                 {
+                    Context context = Context.newInstance();
+                    context.setMode(Context.MODE.COMMAND_LINE_ONLY);
+
                     ShellController.run(
                             command.getOptionValue(ShellCommand.LST), command.hasOption(ShellCommand.DEBUG));
                 }

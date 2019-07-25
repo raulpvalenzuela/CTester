@@ -1,5 +1,8 @@
 package com.lsc.ctesterfx.logger;
 
+import com.lsc.ctesterfx.Context;
+import com.lsc.ctesterfx.Context.MODE;
+
 /**
  * This layer will manage the different loggers in the system. It will store
  * one instance of Printer (there can only be one in the system) and one instance
@@ -13,21 +16,26 @@ package com.lsc.ctesterfx.logger;
 public class ApplicationLogger extends AbstractLogger
 {
     private static ApplicationLogger applicationLogger;
+    // Reference to the context.
+    private final Context context;
     // Internal references to the different loggers.
     private Printer printer;
     private FileLogger fileLogger;
     private ShellLogger shellLogger;
 
-    // Mode
-    private MODE mode;
-
-    public enum MODE
+    private ApplicationLogger()
     {
-        GUI,
-        COMMAND_LINE_ONLY
-    }
+        context = Context.newInstance();
 
-    private ApplicationLogger() {}
+        if (context.getMode() == MODE.COMMAND_LINE_ONLY)
+        {
+            shellLogger = ShellLogger.newInstance();
+        }
+        else
+        {
+            printer = Printer.newInstance();
+        }
+    }
 
     public static synchronized ApplicationLogger newInstance()
     {
@@ -37,27 +45,6 @@ public class ApplicationLogger extends AbstractLogger
         }
 
         return applicationLogger;
-    }
-
-    /**
-     * Establishes the mode of the logger. If the application has been
-     * launched through the command line, just the FileLogger and ShellLogger
-     * are needed, else, a Printer has to be constructed.
-     *
-     * @param mode GUI or CL_ONLY mode.
-     */
-    public void setMode(MODE mode)
-    {
-        if (mode == MODE.GUI)
-        {
-            printer = Printer.newInstance();
-        }
-        else
-        {
-            shellLogger = ShellLogger.newInstance();
-        }
-
-        this.mode = mode;
     }
 
     /**
@@ -73,7 +60,7 @@ public class ApplicationLogger extends AbstractLogger
     @Override
     public void log(String text)
     {
-        if (mode == MODE.GUI) printer.log(text);
+        if (context.getMode() == MODE.GUI) printer.log(text);
         else shellLogger.log(text);
 
         fileLogger.log(text);
@@ -82,7 +69,7 @@ public class ApplicationLogger extends AbstractLogger
     @Override
     public void logComment(String text)
     {
-        if (mode == MODE.GUI) printer.logComment(text);
+        if (context.getMode() == MODE.GUI) printer.logComment(text);
         else shellLogger.logComment(text);
 
         fileLogger.logComment(text);
@@ -91,7 +78,7 @@ public class ApplicationLogger extends AbstractLogger
     @Override
     public void logError(String text)
     {
-        if (mode == MODE.GUI) printer.logError(text);
+        if (context.getMode() == MODE.GUI) printer.logError(text);
         else shellLogger.logError(text);
 
         fileLogger.logError(text);
@@ -100,7 +87,7 @@ public class ApplicationLogger extends AbstractLogger
     @Override
     public void logWarning(String text)
     {
-        if (mode == MODE.GUI) printer.logWarning(text);
+        if (context.getMode() == MODE.GUI) printer.logWarning(text);
         else shellLogger.logWarning(text);
 
         fileLogger.logWarning(text);
@@ -109,7 +96,7 @@ public class ApplicationLogger extends AbstractLogger
     @Override
     public void logDebug(String text)
     {
-        if (mode == MODE.GUI) printer.logDebug(text);
+        if (context.getMode() == MODE.GUI) printer.logDebug(text);
         else shellLogger.logDebug(text);
 
         fileLogger.logDebug(text);
@@ -118,7 +105,7 @@ public class ApplicationLogger extends AbstractLogger
     @Override
     public void logSuccess(String text)
     {
-        if (mode == MODE.GUI) printer.logSuccess(text);
+        if (context.getMode() == MODE.GUI) printer.logSuccess(text);
         else shellLogger.logSuccess(text);
 
         fileLogger.logSuccess(text);
