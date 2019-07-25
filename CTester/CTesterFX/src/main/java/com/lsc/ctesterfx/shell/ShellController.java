@@ -70,7 +70,6 @@ public class ShellController
                 {
                     // Create a new ApplicationLogger and set the mode.
                     logger = ApplicationLogger.newInstance();
-                    logger.setMode(ApplicationLogger.MODE.COMMAND_LINE_ONLY);
 
                     // It's needed to set the Java Home to the one inside the JDK (~/../Java/jdk1.8.xxx/jre)
                     // to be able to compile the tests. When running the .jar by default

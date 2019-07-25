@@ -11,12 +11,21 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class Context
 {
+    public enum MODE
+    {
+        GUI,
+        COMMAND_LINE_ONLY
+    }
+
     private static Context context;
 
     // Atomic flag to know if the test has been paused.
     private final AtomicBoolean paused;
     // Generic object used to make the methods thread-safe.
     private final Object object;
+
+    // Mode
+    private MODE mode;
 
     // Reference to the FXMLMainController
     private FXMLMainController mainController;
@@ -95,5 +104,15 @@ public class Context
         }
 
         return result;
+    }
+
+    public void setMode(MODE mode)
+    {
+        this.mode = mode;
+    }
+
+    public MODE getMode()
+    {
+        return mode;
     }
 }

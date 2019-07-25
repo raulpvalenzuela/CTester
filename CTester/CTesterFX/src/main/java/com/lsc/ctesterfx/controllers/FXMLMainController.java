@@ -47,7 +47,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.Pair;
@@ -183,6 +182,9 @@ public class FXMLMainController implements Initializable
         commandsListVisible      = true;
         testItemControllerList   = new ArrayList<>();
         readerItemControllerList = new ArrayList<>();
+
+        context = Context.newInstance();
+        context.setMode(Context.MODE.GUI);
 
         // Initialize the executors.
         MultithreadController.initialize();
