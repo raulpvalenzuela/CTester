@@ -2,6 +2,7 @@ package com.lsc.ctesterapi;
 
 import com.lsc.ctesterfx.Context;
 import com.lsc.ctesterfx.gui.GUIController;
+import com.lsc.ctesterfx.shell.ShellController;
 import com.lsc.ctesterlib.constants.Strings;
 
 /**
@@ -33,16 +34,30 @@ public abstract class AbstractTest
     public abstract boolean tearDown();
 
     /**
-     * Pause the current test. It will get resumed once the dialog is closed.
+     * Pause the current test. It will get resumed once the dialog is closed if in GUI mode
+     * or once the ENTER key is pressed if in COMMAND_LINE_ONLY mode.
      */
     protected void pause()
     {
-        GUIController.newInstance()
-                .showPauseDialog(Strings.PAUSE_TITLE, Strings.PAUSE_BODY, Strings.PAUSE_CONTINUE);
-
         Context context = Context.newInstance();
-        context.pause();
 
-        while (context.isPaused()) {}
+        if (context.getMode() == Context.MODE.GUI)
+        {
+            // Creating the dialog is not blocking, as all GUI changes have to be made
+            // in the background. The way to know when the user closed the dialog is by
+            // setting a flag.
+            GUIController.newInstance()
+                    .showPauseDialog(Strings.PAUSE_TITLE, Strings.PAUSE_BODY, Strings.PAUSE_CONTINUE);
+
+            context.pause();
+
+            while (context.isPaused()) {}
+        }
+        else
+        {
+            // When run through the command line, it will prompt for enter
+            // and it will block the execution. So there's no need to notify anyone.
+            ShellController.pause();
+        }
     }
 }

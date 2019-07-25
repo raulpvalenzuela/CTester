@@ -12,6 +12,7 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import javafx.util.Pair;
 import org.apache.log4j.Logger;
 
@@ -151,6 +152,14 @@ public class ShellController
         {
             LOGGER.error("The file should be an .lst file\n");
         }
+    }
+
+    public static void pause()
+    {
+        logger.logComment("Test paused, press ENTER to resume");
+
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
     }
 
     /**
