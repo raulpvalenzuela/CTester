@@ -21,9 +21,15 @@ import org.bouncycastle.crypto.engines.DESEngine;
 import org.bouncycastle.crypto.macs.ISO9797Alg3Mac;
 import org.bouncycastle.crypto.paddings.ISO7816d4Padding;
 import org.bouncycastle.crypto.params.KeyParameter;
+import org.bouncycastle.util.Arrays;
 
 /**
- * Static class with the DES algorithm implementation.
+ * Static class with the DES algorithm implementation. All this algorithms are supported:
+ *  - DES
+ *  - 3DES two keys.
+ *  - 3DES three keys.
+ *
+ *  - Retail MAC (ISO 9797 Algorithm 3 MAC)
  *
  * @author dma@logossmartcard.com
  */
@@ -56,6 +62,21 @@ public class DES
         TRIPLE_DES
     }
 
+    /**
+     * Encrypts data using DES or 3DES.
+     *
+     * @param key: 8-byte key if single DES, 16 or 24-byte key if 3DES.
+     * @param iv: initialization vector, if it's null and in CBC mode, zeroes will be used. Ignored argument if in ECB mode.
+     * @param data: data to be encrypted.
+     * @param type: Single or triple DES.
+     * @param mode: ECB or CBC.
+     * @param padding: type of padding, none if it's already padded.
+     * @return array containing the input data encrypted.
+     * @throws InvalidKeyException
+     *                    thrown if in single DES an 8-byte key is not specified. Also if in triple DES and the key is not 16 or 24 bytes.
+     * @throws BadPaddingException
+     *                    if no padding is specified and the data is not multiple of 8.
+     */
     public byte[] encrypt(byte[] key, byte[] iv, byte[] data, TYPE type, MODE mode, PADDING padding) throws InvalidKeyException, BadPaddingException
     {
         byte[] encryptedText = null;
@@ -74,12 +95,15 @@ public class DES
 
         try
         {
-            SecretKeyFactory factory = SecretKeyFactory.getInstance("DES");
+            SecretKeyFactory factory = SecretKeyFactory.getInstance((type == TYPE.SINGLE_DES) ? "DES" : "DESede");
             SecretKey secretKey = factory.generateSecret(new DESKeySpec(key));
 
             AlgorithmParameterSpec algParamSpec = new IvParameterSpec((iv == null) ? IV_ZEROS : iv);
 
-            String algorithm = "DES/" + ((mode == MODE.CBC) ? "CBC/" : "ECB/");
+            String algorithm =
+                    ((type == TYPE.SINGLE_DES) ? "DES/" : "DESede/") +
+                    ((mode == MODE.CBC)        ? "CBC/" : "ECB/");
+
             switch (padding)
             {
                 case NO_PADDING:
@@ -90,6 +114,11 @@ public class DES
                 case PKCS5:
                     algorithm += "PKCS5Padding";
                     break;
+            }
+
+            if (padding == PADDING.ISO9797_M2)
+            {
+                data = addPadding(data);
             }
 
             Cipher encrypter = Cipher.getInstance(algorithm);
@@ -105,6 +134,13 @@ public class DES
         return encryptedText;
     }
 
+    /**
+     * Implementation of the ISO-9797 Algorithm 3 MAC.
+     *
+     * @param key: key to be used.
+     * @param data: data to be signed.
+     * @return 8-byte MAC of the data.
+     */
     public static byte[] getRetailMAC(byte[] key, byte[] data)
     {
         BlockCipher cipher = new DESEngine();
@@ -121,22 +157,29 @@ public class DES
         return out;
     }
 
-    private static int addPadding(byte[] in, int inOff)
+    /**
+     * Adds padding to the input data.
+     *
+     * @param in: data to be padded.
+     * @return new array with the padded data.
+     */
+    private static byte[] addPadding(byte[] in)
     {
-        int added = (in.length - inOff);
+        int paddingBytes = 8 - (in.length % 8) + 1;
+        byte[] padding = new byte[paddingBytes];
 
-        in[inOff] = (byte) 0x80;
-        inOff++;
+        padding[0] = (byte) 0x80;
 
-        while (inOff < in.length)
-        {
-            in[inOff] = 0;
-            inOff++;
-        }
-
-        return added;
+        return Arrays.concatenate(in, padding);
     }
 
+    /**
+     * Returns the number of bytes of padding.
+     *
+     * @param in: padded data.
+     * @return the number of bytes of padding.
+     * @throws InvalidCipherTextException if the padding does not end with 0x80.
+     */
     private static int padCount(byte[] in) throws InvalidCipherTextException
     {
         int count = in.length - 1;
