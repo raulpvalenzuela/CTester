@@ -40,25 +40,38 @@ public class DESTest
     @Test
     public void testEncrypt()
     {
+        byte[] iv        = null;
+        byte[] key       = null;
+        byte[] data      = null;
+        byte[] expResult = null;
+        byte[] result    = null;
+
         try
         {
-            System.out.println("Encrypt - DES_ECB_NoPadding");
+            System.out.println("DES_ENC_ECB_NoPadding");
 
-            byte[] iv        = null;
-            byte[] key       = Formatter.fromStringToByteArray("0123456789ABCDEF");
-            byte[] data      = Formatter.fromStringToByteArray("00112233445566778880000000000000");
-            byte[] expResult = Formatter.fromStringToByteArray("CADB6782EE2B48239536CAFE22B9270E");
+            iv        = null;
+            key       = Formatter.fromStringToByteArray("0123456789ABCDEF");
+            data      = Formatter.fromStringToByteArray("00112233445566778880000000000000");
+            expResult = Formatter.fromStringToByteArray("CADB6782EE2B48239536CAFE22B9270E");
 
-            TYPE type       = TYPE.SINGLE_DES;
-            MODE mode       = MODE.ECB;
-            PADDING padding = PADDING.NO_PADDING;
+            result = DES.encrypt(key, null, data, TYPE.SINGLE_DES, MODE.ECB, PADDING.NO_PADDING);
 
-            byte[] result = DES.encrypt(key, iv, data, type, mode, padding);
+            assertArrayEquals(expResult, result);
+
+            System.out.println("DES_ENC_ECB_Padding_ISO9797_M2");
+
+            iv        = null;
+            key       = Formatter.fromStringToByteArray("0123456789ABCDEF");
+            data      = Formatter.fromStringToByteArray("001122334455667788");
+            expResult = Formatter.fromStringToByteArray("CADB6782EE2B48239536CAFE22B9270E");
+
+            result = DES.encrypt(key, null, data, TYPE.SINGLE_DES, MODE.ECB, PADDING.ISO9797_M2);
+
+            assertArrayEquals(expResult, result);
 
             System.out.println(Formatter.fromByteArrayToString(expResult));
             System.out.println(Formatter.fromByteArrayToString(result));
-
-            assertArrayEquals(expResult, result);
 
         } catch (InvalidKeyException | BadPaddingException | DecoderException ex) {
             fail("Exception occured when encrypting (" + ex.getMessage() + ")");

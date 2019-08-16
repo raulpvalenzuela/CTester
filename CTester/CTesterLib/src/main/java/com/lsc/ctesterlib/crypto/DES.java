@@ -1,5 +1,6 @@
 package com.lsc.ctesterlib.crypto;
 
+import com.lsc.ctesterlib.utils.Formatter;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -142,7 +143,6 @@ public class DES
 
         } catch (NoSuchAlgorithmException | InvalidKeySpecException | NoSuchPaddingException |
                  InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException ex) {
-            ex.printStackTrace();
             LOGGER.error("Exception encrypting (" + ex.getLocalizedMessage() +")");
         }
 
@@ -180,8 +180,8 @@ public class DES
      */
     private static byte[] addPadding(byte[] in)
     {
-        int paddingBytes = 8 - (in.length % 8) + 1;
-        byte[] padding = new byte[paddingBytes];
+        int paddingBytes = 8 - (in.length % 8);
+        byte[] padding = new byte[(paddingBytes == 0) ? 1 : paddingBytes];
 
         padding[0] = (byte) 0x80;
 
