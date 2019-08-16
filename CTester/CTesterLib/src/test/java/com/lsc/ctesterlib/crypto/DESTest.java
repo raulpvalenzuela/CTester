@@ -192,14 +192,72 @@ public class DESTest
 
         try
         {
-            // 3DES_ECB - No padding
-            System.out.println("3DES_ENC_ECB_NoPadding");
+            // 3DES_ECB - ISO9797_M2
+            System.out.println("3DES_ENC_ECB_Padding_ISO9797_M2");
 
             key       = Formatter.fromStringToByteArray("0123456789ABCDEF00112233445566770123456789ABCDEF");
             data      = Formatter.fromStringToByteArray("001122334455667788");
             expResult = Formatter.fromStringToByteArray("BD86704242F20EF50B2511B55DABD5C2");
 
             result = DES.encrypt(key, null, data, TYPE.TRIPLE_DES, MODE.ECB, PADDING.ISO9797_M2);
+
+            assertArrayEquals(expResult, result);
+
+        } catch (InvalidKeyException | BadPaddingException | DecoderException ex) {
+            fail("Exception occured when encrypting (" + ex.getMessage() + ")");
+        }
+    }
+
+    /**
+     * Test of encrypt method, of class DES.
+     */
+    @Test
+    public void test3DES_ENC_CBC_NoPadding()
+    {
+        byte[] key       = null;
+        byte[] data      = null;
+        byte[] expResult = null;
+        byte[] result    = null;
+
+        try
+        {
+            // 3DES_CBC - No padding
+            System.out.println("3DES_ENC_CBC_NoPadding");
+
+            key       = Formatter.fromStringToByteArray("0123456789ABCDEF00112233445566770123456789ABCDEF");
+            data      = Formatter.fromStringToByteArray("00112233445566778880000000000000");
+            expResult = Formatter.fromStringToByteArray("BD86704242F20EF57B08B24AF0A5A20C");
+
+            result = DES.encrypt(key, DES.IV_ZEROS, data, TYPE.TRIPLE_DES, MODE.CBC, PADDING.NO_PADDING);
+
+            assertArrayEquals(expResult, result);
+
+        } catch (InvalidKeyException | BadPaddingException | DecoderException ex) {
+            fail("Exception occured when encrypting (" + ex.getMessage() + ")");
+        }
+    }
+
+    /**
+     * Test of encrypt method, of class DES.
+     */
+    @Test
+    public void test3DES_ENC_CBC_ISO9797_M2()
+    {
+        byte[] key       = null;
+        byte[] data      = null;
+        byte[] expResult = null;
+        byte[] result    = null;
+
+        try
+        {
+            // 3DES_CBC - ISO9797_M2
+            System.out.println("3DES_ENC_CBC_Padding_ISO9797_M2");
+
+            key       = Formatter.fromStringToByteArray("0123456789ABCDEF00112233445566770123456789ABCDEF");
+            data      = Formatter.fromStringToByteArray("001122334455667788");
+            expResult = Formatter.fromStringToByteArray("BD86704242F20EF57B08B24AF0A5A20C");
+
+            result = DES.encrypt(key, DES.IV_ZEROS, data, TYPE.TRIPLE_DES, MODE.CBC, PADDING.ISO9797_M2);
 
             assertArrayEquals(expResult, result);
 
