@@ -48,6 +48,7 @@ public class DESTest
 
         try
         {
+            // Single DES_ECB - No padding
             System.out.println("DES_ENC_ECB_NoPadding");
 
             iv        = null;
@@ -59,6 +60,7 @@ public class DESTest
 
             assertArrayEquals(expResult, result);
 
+            // Single DES_ECB - ISO9797_M2
             System.out.println("DES_ENC_ECB_Padding_ISO9797_M2");
 
             iv        = null;
@@ -70,10 +72,64 @@ public class DESTest
 
             assertArrayEquals(expResult, result);
 
-            System.out.println(Formatter.fromByteArrayToString(expResult));
-            System.out.println(Formatter.fromByteArrayToString(result));
+            // Single DES_CBC - No padding
+            System.out.println("DES_ENC_CBC_NoPadding");
+
+            iv        = null;
+            key       = Formatter.fromStringToByteArray("0123456789ABCDEF");
+            data      = Formatter.fromStringToByteArray("00112233445566778880000000000000");
+            expResult = Formatter.fromStringToByteArray("CADB6782EE2B4823FE1B8D9BAB9C8F8E");
+
+            result = DES.encrypt(key, null, data, TYPE.SINGLE_DES, MODE.CBC, PADDING.NO_PADDING);
+
+            // Single DES_CBC - ISO9797_M2
+            System.out.println("DES_ENC_CBC_Padding_ISO9797_M2");
+
+            iv        = null;
+            key       = Formatter.fromStringToByteArray("0123456789ABCDEF");
+            data      = Formatter.fromStringToByteArray("001122334455667788");
+            expResult = Formatter.fromStringToByteArray("CADB6782EE2B4823FE1B8D9BAB9C8F8E");
+
+            result = DES.encrypt(key, null, data, TYPE.SINGLE_DES, MODE.CBC, PADDING.ISO9797_M2);
+
+            assertArrayEquals(expResult, result);
 
         } catch (InvalidKeyException | BadPaddingException | DecoderException ex) {
+            fail("Exception occured when encrypting (" + ex.getMessage() + ")");
+        }
+    }
+
+    /**
+     * Test of decrypt method, of class DES.
+     */
+    @Test
+    public void testDecrypt()
+    {
+        byte[] iv        = null;
+        byte[] key       = null;
+        byte[] data      = null;
+        byte[] expResult = null;
+        byte[] result    = null;
+
+        try {
+            System.out.println("decrypt");
+
+            key = null;
+            iv = null;
+            data = null;
+
+            TYPE type = null;
+            MODE mode = null;
+            PADDING padding = null;
+            expResult = null;
+
+            result = DES.decrypt(key, iv, data, type, mode, padding);
+            assertArrayEquals(expResult, result);
+
+            // TODO review the generated test code and remove the default call to fail.
+            fail("The test case is a prototype.");
+
+        } catch (InvalidKeyException | BadPaddingException ex) {
             fail("Exception occured when encrypting (" + ex.getMessage() + ")");
         }
     }
@@ -93,5 +149,4 @@ public class DESTest
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-
 }

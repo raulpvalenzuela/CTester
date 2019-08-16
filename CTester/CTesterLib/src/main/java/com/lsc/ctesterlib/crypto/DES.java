@@ -1,6 +1,5 @@
 package com.lsc.ctesterlib.crypto;
 
-import com.lsc.ctesterlib.utils.Formatter;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -104,31 +103,14 @@ public class DES
         {
             SecretKeyFactory factory = SecretKeyFactory.getInstance((type == TYPE.SINGLE_DES) ? "DES" : "DESede");
             SecretKey secretKey = factory.generateSecret(new DESKeySpec(key));
-
             AlgorithmParameterSpec algParamSpec = new IvParameterSpec((iv == null) ? IV_ZEROS : iv);
+            Cipher encrypter = getEngine(type, mode, padding);
 
-            String algorithm =
-                    ((type == TYPE.SINGLE_DES) ? "DES/" : "DESede/") +
-                    ((mode == MODE.CBC)        ? "CBC/" : "ECB/");
-
-            switch (padding)
-            {
-                case NO_PADDING:
-                case ISO9797_M2:
-                    algorithm += "NoPadding";
-                    break;
-
-                case PKCS5:
-                    algorithm += "PKCS5Padding";
-                    break;
-            }
-
+            // Add padding manually
             if (padding == PADDING.ISO9797_M2)
             {
-                data = addPadding(data);
+                data = pad(data);
             }
-
-            Cipher encrypter = Cipher.getInstance(algorithm);
 
             if (mode == MODE.ECB)
             {
@@ -147,6 +129,75 @@ public class DES
         }
 
         return encryptedText;
+    }
+
+    /**
+     * Decrypts data using DES or 3DES.
+     *
+     * @param key: 8-byte key if single DES, 16 or 24-byte key if 3DES.
+     * @param iv: initialization vector, if it's null and in CBC mode, zeroes will be used. Ignored argument if in ECB mode.
+     * @param data: data to be encrypted.
+     * @param type: Single or triple DES.
+     * @param mode: ECB or CBC.
+     * @param padding: type of padding.
+     * @return array containing the input data encrypted.
+     * @throws InvalidKeyException
+     *                    thrown if in single DES an 8-byte key is not specified. Also if in triple DES and the key is not 16 or 24 bytes.
+     * @throws BadPaddingException
+     *                    if no padding is specified and the data is not multiple of 8.
+     */
+    public static byte[] decrypt(
+              byte[] key
+            , byte[] iv
+            , byte[] data
+            , TYPE type
+            , MODE mode
+            , PADDING padding) throws InvalidKeyException, BadPaddingException
+    {
+        byte[] decryptedText = null;
+
+        // Sanity checks
+        if (padding == PADDING.NO_PADDING)
+        {
+            throw new BadPaddingException("No padding specified");
+        }
+
+        if (((type == TYPE.SINGLE_DES) && (key.length != 8)) ||
+            ((type == TYPE.TRIPLE_DES) && ((key.length != 16) && (key.length != 24))))
+        {
+            throw new InvalidKeyException("Incorrect key length");
+        }
+
+        try
+        {
+            SecretKeyFactory factory = SecretKeyFactory.getInstance((type == TYPE.SINGLE_DES) ? "DES" : "DESede");
+            SecretKey secretKey = factory.generateSecret(new DESKeySpec(key));
+            AlgorithmParameterSpec algParamSpec = new IvParameterSpec((iv == null) ? IV_ZEROS : iv);
+            Cipher encrypter = getEngine(type, mode, padding);
+
+            if (mode == MODE.ECB)
+            {
+                encrypter.init(Cipher.DECRYPT_MODE, secretKey);
+            }
+            else
+            {
+                encrypter.init(Cipher.DECRYPT_MODE, secretKey, algParamSpec);
+            }
+
+            decryptedText = encrypter.doFinal(data);
+
+            // Remove padding manually
+            if (padding == PADDING.ISO9797_M2)
+            {
+                data = unpad(data);
+            }
+
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException | NoSuchPaddingException |
+                 InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException | InvalidCipherTextException ex) {
+            LOGGER.error("Exception encrypting (" + ex.getLocalizedMessage() +")");
+        }
+
+        return decryptedText;
     }
 
     /**
@@ -173,12 +224,36 @@ public class DES
     }
 
     /**
-     * Adds padding to the input data.
-     *
-     * @param in: data to be padded.
-     * @return new array with the padded data.
+     * Returns
      */
-    private static byte[] addPadding(byte[] in)
+    private static Cipher getEngine(
+              TYPE type
+            , MODE mode
+            , PADDING padding) throws NoSuchAlgorithmException, NoSuchPaddingException
+    {
+        String algorithm =
+                ((type == TYPE.SINGLE_DES) ? "DES/" : "DESede/") +
+                ((mode == MODE.CBC)        ? "CBC/" : "ECB/");
+
+        switch (padding)
+        {
+            case NO_PADDING:
+            case ISO9797_M2:
+                algorithm += "NoPadding";
+                break;
+
+            case PKCS5:
+                algorithm += "PKCS5Padding";
+                break;
+        }
+
+        return Cipher.getInstance(algorithm);
+    }
+
+    /**
+     * Adds padding to the input data.
+     */
+    private static byte[] pad(byte[] in)
     {
         int paddingBytes = 8 - (in.length % 8);
         byte[] padding = new byte[(paddingBytes == 0) ? 1 : paddingBytes];
@@ -189,11 +264,17 @@ public class DES
     }
 
     /**
+     * Removes the padding.
+     */
+    private static byte[] unpad(byte[] in) throws InvalidCipherTextException
+    {
+        int count = padCount(in);
+
+        return Arrays.copyOfRange(in, 0, in.length - count);
+    }
+
+    /**
      * Returns the number of bytes of padding.
-     *
-     * @param in: padded data.
-     * @return the number of bytes of padding.
-     * @throws InvalidCipherTextException if the padding does not end with 0x80.
      */
     private static int padCount(byte[] in) throws InvalidCipherTextException
     {
