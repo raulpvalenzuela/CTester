@@ -122,12 +122,21 @@ public class DES
             }
 
             Cipher encrypter = Cipher.getInstance(algorithm);
-            encrypter.init(Cipher.ENCRYPT_MODE, secretKey, algParamSpec);
+
+            if (mode == MODE.ECB)
+            {
+                encrypter.init(Cipher.ENCRYPT_MODE, secretKey);
+            }
+            else
+            {
+                encrypter.init(Cipher.ENCRYPT_MODE, secretKey, algParamSpec);
+            }
 
             encryptedText = encrypter.doFinal(data);
 
         } catch (NoSuchAlgorithmException | InvalidKeySpecException | NoSuchPaddingException |
                  InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException ex) {
+            ex.printStackTrace();
             LOGGER.error("Exception encrypting (" + ex.getLocalizedMessage() +")");
         }
 
