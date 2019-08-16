@@ -77,7 +77,13 @@ public class DES
      * @throws BadPaddingException
      *                    if no padding is specified and the data is not multiple of 8.
      */
-    public byte[] encrypt(byte[] key, byte[] iv, byte[] data, TYPE type, MODE mode, PADDING padding) throws InvalidKeyException, BadPaddingException
+    public static byte[] encrypt(
+              byte[] key
+            , byte[] iv
+            , byte[] data
+            , TYPE type
+            , MODE mode
+            , PADDING padding) throws InvalidKeyException, BadPaddingException
     {
         byte[] encryptedText = null;
 

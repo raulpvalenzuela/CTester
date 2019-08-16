@@ -44,17 +44,16 @@ public class DESTest
         {
             System.out.println("Encrypt - DES_ECB_NoPadding");
 
-            byte[] iv = null;
-            byte[] key = Formatter.fromStringToByteArray("0123456789ABCDEF");
-            byte[] data = Formatter.fromStringToByteArray("00112233445566778880000000000000");
+            byte[] iv        = null;
+            byte[] key       = Formatter.fromStringToByteArray("0123456789ABCDEF");
+            byte[] data      = Formatter.fromStringToByteArray("00112233445566778880000000000000");
             byte[] expResult = Formatter.fromStringToByteArray("CADB6782EE2B48239536CAFE22B9270E");
 
-            TYPE type = TYPE.SINGLE_DES;
-            MODE mode = MODE.ECB;
+            TYPE type       = TYPE.SINGLE_DES;
+            MODE mode       = MODE.ECB;
             PADDING padding = PADDING.NO_PADDING;
-            DES instance = new DES();
 
-            byte[] result = instance.encrypt(key, iv, data, type, mode, padding);
+            byte[] result = DES.encrypt(key, iv, data, type, mode, padding);
 
             System.out.println(Formatter.fromByteArrayToString(expResult));
             System.out.println(Formatter.fromByteArrayToString(result));
