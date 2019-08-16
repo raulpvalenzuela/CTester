@@ -38,7 +38,7 @@ public class DES
     // Internal logger
     private static final Logger LOGGER = Logger.getLogger(DES.class);
 
-    private static final byte[] IV_ZEROS = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+    public static final byte[] IV_ZEROS = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
     // Types of padding
     public enum PADDING
