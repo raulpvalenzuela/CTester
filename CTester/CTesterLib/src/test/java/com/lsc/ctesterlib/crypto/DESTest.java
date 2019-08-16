@@ -180,6 +180,35 @@ public class DESTest
     }
 
     /**
+     * Test of encrypt method, of class DES.
+     */
+    @Test
+    public void test3DES_ENC_ECB_ISO9797_M2()
+    {
+        byte[] key       = null;
+        byte[] data      = null;
+        byte[] expResult = null;
+        byte[] result    = null;
+
+        try
+        {
+            // 3DES_ECB - No padding
+            System.out.println("3DES_ENC_ECB_NoPadding");
+
+            key       = Formatter.fromStringToByteArray("0123456789ABCDEF00112233445566770123456789ABCDEF");
+            data      = Formatter.fromStringToByteArray("001122334455667788");
+            expResult = Formatter.fromStringToByteArray("BD86704242F20EF50B2511B55DABD5C2");
+
+            result = DES.encrypt(key, null, data, TYPE.TRIPLE_DES, MODE.ECB, PADDING.ISO9797_M2);
+
+            assertArrayEquals(expResult, result);
+
+        } catch (InvalidKeyException | BadPaddingException | DecoderException ex) {
+            fail("Exception occured when encrypting (" + ex.getMessage() + ")");
+        }
+    }
+
+    /**
      * Test of decrypt method, of class DES.
      */
     @Test
