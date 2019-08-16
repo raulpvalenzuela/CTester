@@ -14,6 +14,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import org.bouncycastle.crypto.BlockCipher;
 import org.bouncycastle.crypto.InvalidCipherTextException;
 import org.bouncycastle.crypto.Mac;
@@ -94,15 +95,15 @@ public class DES
         }
 
         if (((type == TYPE.SINGLE_DES) && (key.length != 8)) ||
-            ((type == TYPE.TRIPLE_DES) && ((key.length != 16) && (key.length != 24))))
+            ((type == TYPE.TRIPLE_DES) && (key.length != 24)))
         {
-            throw new InvalidKeyException("Incorrect key length");
+            throw new InvalidKeyException("Incorrect key size");
         }
 
         try
         {
-            SecretKeyFactory factory = SecretKeyFactory.getInstance((type == TYPE.SINGLE_DES) ? "DES" : "DESede");
-            SecretKey secretKey = factory.generateSecret(new DESKeySpec(key));
+            SecretKey secretKey = new SecretKeySpec(key, (type == TYPE.SINGLE_DES) ? "DES" : "DESede");
+
             AlgorithmParameterSpec algParamSpec = new IvParameterSpec((iv == null) ? IV_ZEROS : iv);
             Cipher encrypter = getEngine(type, mode, padding);
 
@@ -123,7 +124,7 @@ public class DES
 
             encryptedText = encrypter.doFinal(data);
 
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException | NoSuchPaddingException |
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException |
                  InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException ex) {
             LOGGER.error("Exception encrypting (" + ex.getLocalizedMessage() +")");
         }
