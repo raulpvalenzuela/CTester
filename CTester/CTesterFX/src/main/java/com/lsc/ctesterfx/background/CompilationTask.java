@@ -40,65 +40,73 @@ public class CompilationTask extends Task
      */
     private Pair<Object, List<Method>> compileTest()
     {
-        boolean success = true;
-
-        LOGGER.info("Compiling '" + testController.getTestName() + "'");
-
-        // First we need to notify the controller that the task has started.
-        testController.notifyStartTest(TYPE.COMPILATION);
-
-        // Compilation process starts here.
-        testController.getLogger().logComment("Compiling " + testController.getTestName() + "\n");
-        testController.setState(TEST_STATE.COMPILING);
-
-        Pair<Object, List<Method>> result = null;
-        TestLoader testLoader = TestLoader.newInstance();
-
         try
         {
-            // Compile and load the test class.
-            if (testLoader.compile(testController.getTest()))
+            boolean success = true;
+
+            LOGGER.info("Compiling '" + testController.getTestName() + "'");
+
+            // First we need to notify the controller that the task has started.
+            testController.notifyStartTest(TYPE.COMPILATION);
+
+            // Compilation process starts here.
+            testController.getLogger().logComment("Compiling " + testController.getTestName() + "\n");
+            testController.setState(TEST_STATE.COMPILING);
+
+            Pair<Object, List<Method>> result = null;
+            TestLoader testLoader = TestLoader.newInstance();
+
+            try
             {
-                LOGGER.info("Compilation of '" + testController.getTestName() + "' succesful");
-
-                if ((result = testLoader.load(testController.getTest())) == null)
+                // Compile and load the test class.
+                if (testLoader.compile(testController.getTest()))
                 {
-                    LOGGER.error("Loading of '" + testController.getTestName() + "' failed");
+                    LOGGER.info("Compilation of '" + testController.getTestName() + "' succesful");
 
-                    success = false;
+                    if ((result = testLoader.load(testController.getTest())) == null)
+                    {
+                        LOGGER.error("Loading of '" + testController.getTestName() + "' failed");
+
+                        success = false;
+                    }
+                    else
+                    {
+                        LOGGER.info("Loading of '" + testController.getTestName() + "' succesful");
+
+                        testController.getLogger().logComment("Compilation of " + testController.getTestName() + " succesful!\n");
+                        testController.setState(TEST_STATE.COMPILATION_OK);
+                    }
                 }
                 else
                 {
-                    LOGGER.info("Loading of '" + testController.getTestName() + "' succesful");
+                    LOGGER.error("Compilation of '" + testController.getTestName() + "' failed");
 
-                    testController.getLogger().logComment("Compilation of " + testController.getTestName() + " succesful!\n");
-                    testController.setState(TEST_STATE.COMPILATION_OK);
+                    success = false;
+
+                    testController.getLogger().logError("Compilation of " + testController.getTestName() + " failed\n");
+                    testController.setState(TEST_STATE.COMPILATION_FAILED);
                 }
-            }
-            else
-            {
-                LOGGER.error("Compilation of '" + testController.getTestName() + "' failed");
+
+            } catch (Exception ex) {
+                LOGGER.error("Exception compiling test (JavaHome not configured in config.xml?)");
+                LOGGER.error(ex);
 
                 success = false;
 
-                testController.getLogger().logError("Compilation of " + testController.getTestName() + " failed\n");
+                testController.getLogger().logError("Compilation of " + testController.getTestName() + " failed");
+                testController.getLogger().logError("Exception: " + ex.toString() + "\n");
                 testController.setState(TEST_STATE.COMPILATION_FAILED);
+
+            } finally {
+                testController.notifyFinishTest(success, TYPE.COMPILATION);
             }
 
-        } catch (Exception ex) {
-            LOGGER.error("Exception compiling test (JavaHome not configured in config.xml?)");
-            LOGGER.error(ex);
+            return result;
 
-            success = false;
-
-            testController.getLogger().logError("Compilation of " + testController.getTestName() + " failed");
-            testController.getLogger().logError("Exception: " + ex.toString() + "\n");
-            testController.setState(TEST_STATE.COMPILATION_FAILED);
-
-        } finally {
-            testController.notifyFinishTest(success, TYPE.COMPILATION);
+        } catch (Exception e) {
+            LOGGER.error("Unexpected exception running test (" + e.getMessage() + ")");
         }
 
-        return result;
+        return null;
     }
 }

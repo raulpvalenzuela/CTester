@@ -46,40 +46,52 @@ public class ExecutionTask extends Task
     private boolean runTest()
     {
         boolean success = false;
-        long startTime = System.currentTimeMillis();
-        long endTime;
 
-        Pair<Object, List<Method>> compilationResult;
-
-        // First we need to notify the controller that the task has started.
-        // The file logger will be initialized here so it's safe to use it from now on.
-        testController.notifyStartTest(TYPE.EXECUTION);
-        testController.setState(TEST_STATE.COMPILING);
-
-        testController.getLogger().logComment(" -------------------------------------------- //");
-        testController.getLogger().logComment("Starting test: " + testController.getTestName() + "\n");
-
-        compilationResult = compile();
-        if (compilationResult == null)
+        try
         {
-            // Notify the controller that the task has finished.
-            testController.notifyFinishTest(false, TYPE.EXECUTION);
-            testController.setState(TEST_STATE.COMPILATION_FAILED);
-        }
-        // Execution starts here
-        else
-        {
-            if ((success = execute(compilationResult)))
+            long startTime = System.currentTimeMillis();
+            long endTime;
+
+            Pair<Object, List<Method>> compilationResult;
+
+            // First we need to notify the controller that the task has started.
+            // The file logger will be initialized here so it's safe to use it from now on.
+            testController.notifyStartTest(TYPE.EXECUTION);
+            testController.setState(TEST_STATE.COMPILING);
+
+            testController.getLogger().logComment(" -------------------------------------------- //");
+            testController.getLogger().logComment("Starting test: " + testController.getTestName() + "\n");
+
+            compilationResult = compile();
+            if (compilationResult == null)
             {
-                endTime = System.currentTimeMillis();
+                // Notify the controller that the task has finished.
+                testController.notifyFinishTest(false, TYPE.EXECUTION);
+                testController.setState(TEST_STATE.COMPILATION_FAILED);
+            }
+            // Execution starts here
+            else
+            {
+                if ((success = execute(compilationResult)))
+                {
+                    endTime = System.currentTimeMillis();
 
-                testController.getLogger().logComment("Time elapsed: " + Formatter.formatInterval(endTime - startTime));
-                testController.getLogger().logComment("--------------------------------------------- //");
-                testController.getLogger().log("");
+                    testController.getLogger().logComment("Time elapsed: " + Formatter.formatInterval(endTime - startTime));
+                    testController.getLogger().logComment("--------------------------------------------- //");
+                    testController.getLogger().log("");
+                }
+
+                testController.setState((success) ? TEST_STATE.EXECUTION_OK : TEST_STATE.EXECUTION_FAILED);
+                testController.notifyFinishTest(success, TYPE.EXECUTION);
             }
 
-            testController.setState((success) ? TEST_STATE.EXECUTION_OK : TEST_STATE.EXECUTION_FAILED);
-            testController.notifyFinishTest(success, TYPE.EXECUTION);
+        } catch (Exception e) {
+            LOGGER.error("Unexpected exception running test (" + e.getMessage() + ")");
+
+            testController.setState(TEST_STATE.EXECUTION_FAILED);
+            testController.notifyFinishTest(false, TYPE.EXECUTION);
+
+            success = false;
         }
 
         return success;
