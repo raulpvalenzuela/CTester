@@ -208,7 +208,7 @@ public class DES
      * @param data: data to be signed.
      * @return 8-byte MAC of the data.
      */
-    public static byte[] getRetailMAC(byte[] key, byte[] data)
+    public static byte[] calculateRetailMAC(byte[] key, byte[] data)
     {
         BlockCipher cipher = new DESEngine();
         Mac mac = new ISO9797Alg3Mac(cipher, 64, new ISO7816d4Padding());
