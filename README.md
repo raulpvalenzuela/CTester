@@ -46,7 +46,7 @@ The following libraries have been used for this project:
 
 - [JDK 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 - [NetBeans 8.2](https://netbeans.org/downloads/8.2/)
-- Scene Builder (optional, used for the GUI design).
+- [Scene Builder](https://gluonhq.com/products/scene-builder/) (optional, used for the GUI design).
 
 ## How to use
 

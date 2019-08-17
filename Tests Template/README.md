@@ -26,10 +26,16 @@ The template provides a NetBeans project already configured in which you can cre
 To implement a new tests, these steps have to be followed:
 
 1. Right-click in the package -> New Java file.
-2. This test has to extend the class `AbstractTest`, located in the package `com.lsc.ctesterapi`.
+2. This test has to extend the class `com.lsc.ctesterapi.AbstractTest`.
 3. Implement the logic inside the `setUp`, `run` and `tearDown` methods and return `true` or `false` whether the execution is succesful or not.
 
 For reference, refer to the `Test.java` file in the template project.
+
+### Stopping a test
+
+Tests are run in the background through [Tasks](https://docs.oracle.com/javafx/2/api/javafx/concurrent/Task.html). In Java, threads are not killed, the stopping of a thread is done in a __cooperative way__. The thread is asked to terminate and the thread can then shutdown gracefully.
+
+Thus, in order to be able to stop the test quickly, `Thread.currentThread().isInterrupted()` has to be used periodically. If this returns true, the test should terminate.
 
 ---
 
@@ -38,19 +44,18 @@ Note: The tests can be located anywhere and there are no restrictions about pack
 ```#comment
 package testing;
 
-Folder structure:
-    testing
-    |   test.java
+.
+├─testing
+└───test.java
 ```
 
 ```#comment
 package testing.performance;
 
-Folder structure:
-
-    |testing
-    |___performance
-    |      test.java
+.
+├─testing
+├───performance
+└─────test.java
 ```
 
 So, if you want to change the test location, you will have to copy those folders as well.

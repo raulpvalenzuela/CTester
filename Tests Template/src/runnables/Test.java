@@ -4,10 +4,6 @@ import com.lsc.ctesterapi.AbstractTest;
 import com.lsc.ctesterapi.logger.Logger;
 import com.lsc.ctesterapi.reader.PCSCReaderAccessor;
 import com.lsc.ctesterapi.reader.PCSCReaderController;
-import com.lsc.ctesterapi.script.ScriptExecutor;
-import com.lsc.ctesterlib.utils.Formatter;
-import com.lsc.ctesterlib.virginize.Virginize;
-import com.lsc.ctesterlib.virginize.VirginizeParameter;
 
 public class Test extends AbstractTest
 {
@@ -23,8 +19,7 @@ public class Test extends AbstractTest
     {
         try
         {
-            //reader = readerController.getSelected();
-            //reader.connect();
+            // Personalise
 
         } catch (Exception ex) {
             return false;
@@ -36,25 +31,17 @@ public class Test extends AbstractTest
     @Override
     public boolean run()
     {
-        int numErrors = 0;
+        boolean success = false;
 
         try
         {
-            //ScriptExecutor scriptExecutor = new ScriptExecutor();
-            //return scriptExecutor.execute("F:\\Coding\\GitHub\\CTester\\perso_visa.txt");
+            // Test logic goes here, remember to call `Thread.currentThread().isInterrupted()`
+            // from time to time to check if the test has been stopped.
 
-            Virginize virginize = new Virginize.Builder()
-                    .withKey(new byte[] {0x00, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11})
-                    .inMode(Virginize.MODE.ERASE_AND_CONFIGURE)
-                    .withParameters(new VirginizeParameter((byte) 0x95, "RF Parameters", new byte[] { 0x20, 0x04 }))
-                    .build();
-
-            logger.log(Formatter.fromByteArrayToString(virginize.getCommand()));
-
-            return true;
+            return success;
 
         } catch (Exception ex) {
-            return false;
+            return success;
         }
     }
 
@@ -63,7 +50,7 @@ public class Test extends AbstractTest
     {
         try
         {
-            //reader.release();
+            // Release resources, delete applets, etc.
 
         } catch (Exception ex) {
             return false;

@@ -23,7 +23,7 @@ CTester is organized in three different projects:
 
 - [JDK 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 - [NetBeans 8.2](https://netbeans.org/downloads/8.2/)
-- Scene Builder (optional).
+- [Scene Builder](https://gluonhq.com/products/scene-builder/) (optional).
 
 ## Building
 
@@ -75,6 +75,6 @@ Please, have in mind these notes when modifying the source code so that it remai
 
 - Every function should contain its correspondent __Javadoc__ header with its description and the parameters and return tags if applicable.
 
-- Consider making the new funcionality configurable through the __config.xml__ file to avoid hardcoded values.
+- Consider making the new funcionality configurable through the __config.xml__ file to avoid hardcoding frequently changing values.
 
-- Create Unit Tests if possible. Maven automatically run them as part of the build process.
+- Create Unit Tests if possible. Maven will automatically run them as part of the build process.
