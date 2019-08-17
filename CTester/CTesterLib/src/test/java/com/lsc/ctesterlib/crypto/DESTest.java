@@ -388,13 +388,6 @@ public class DESTest
     @Test
     public void testCalculateRetailMAC()
     {
-        System.out.println("ISO-9797 Algorithm 3 MAC");
-        byte[] key = null;
-        byte[] data = null;
-        byte[] expResult = null;
-        byte[] result = DES.calculateRetailMAC(key, data);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        // TODO
     }
 }

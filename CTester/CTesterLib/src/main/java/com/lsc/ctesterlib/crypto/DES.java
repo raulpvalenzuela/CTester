@@ -22,9 +22,8 @@ import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.util.Arrays;
 
 /**
- * Static class with the DES algorithm implementation. All this algorithms are supported:
+ * Static class with the DES algorithm implementation. All these algorithms are supported:
  *  - DES
- *  - 3DES two keys.
  *  - 3DES three keys.
  *
  *  - Retail MAC (ISO 9797 Algorithm 3 MAC)
