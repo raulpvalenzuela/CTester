@@ -190,7 +190,7 @@ public class DES
             // Remove padding manually
             if (padding == PADDING.ISO9797_M2)
             {
-                data = unpad(data);
+                decryptedText = unpad(decryptedText);
             }
 
         } catch (NoSuchAlgorithmException | InvalidKeySpecException | NoSuchPaddingException |

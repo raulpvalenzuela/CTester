@@ -270,33 +270,30 @@ public class DESTest
      * Test of decrypt method, of class DES.
      */
     @Test
-    public void testDecrypt()
+    public void testDES_DEC_ECB_ISO9797_M2()
     {
-        byte[] iv        = null;
         byte[] key       = null;
         byte[] data      = null;
         byte[] expResult = null;
         byte[] result    = null;
 
-        try {
-            System.out.println("decrypt");
+        try
+        {
+            // Single DES_ECB - No padding
+            System.out.println("DES_DEC_ECB_Padding_ISO9797_M2");
 
-            key = null;
-            iv = null;
-            data = null;
+            key       = Formatter.fromStringToByteArray("0123456789ABCDEF");
+            data      = Formatter.fromStringToByteArray("CADB6782EE2B48239536CAFE22B9270E");
+            expResult = Formatter.fromStringToByteArray("001122334455667788");
 
-            TYPE type = null;
-            MODE mode = null;
-            PADDING padding = null;
-            expResult = null;
+            result = DES.decrypt(key, null, data, TYPE.SINGLE_DES, MODE.ECB, PADDING.ISO9797_M2);
 
-            result = DES.decrypt(key, iv, data, type, mode, padding);
+            System.out.println(Formatter.fromByteArrayToString(expResult));
+            System.out.println(Formatter.fromByteArrayToString(result));
+
             assertArrayEquals(expResult, result);
 
-            // TODO review the generated test code and remove the default call to fail.
-            fail("The test case is a prototype.");
-
-        } catch (InvalidKeyException | BadPaddingException ex) {
+        } catch (InvalidKeyException | BadPaddingException | DecoderException ex) {
             fail("Exception occured when encrypting (" + ex.getMessage() + ")");
         }
     }
