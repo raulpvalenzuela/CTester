@@ -4,7 +4,7 @@
 
     <groupId>com.lsc</groupId>
     <artifactId>CTester</artifactId>
-    <version>0.3.1</version>
+    <version>0.7.2</version>
     <packaging>jar</packaging>
 
     <name>CTester</name>
