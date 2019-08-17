@@ -171,8 +171,8 @@ public class DES
 
         try
         {
-            SecretKeyFactory factory = SecretKeyFactory.getInstance((type == TYPE.SINGLE_DES) ? "DES" : "DESede");
-            SecretKey secretKey = factory.generateSecret(new DESKeySpec(key));
+            SecretKey secretKey = new SecretKeySpec(key, (type == TYPE.SINGLE_DES) ? "DES" : "DESede");
+
             AlgorithmParameterSpec algParamSpec = new IvParameterSpec((iv == null) ? IV_ZEROS : iv);
             Cipher encrypter = getEngine(type, mode, padding);
 
@@ -193,7 +193,7 @@ public class DES
                 decryptedText = unpad(decryptedText);
             }
 
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException | NoSuchPaddingException |
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException |
                  InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException | InvalidCipherTextException ex) {
             LOGGER.error("Exception encrypting (" + ex.getLocalizedMessage() +")");
         }
