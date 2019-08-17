@@ -354,6 +354,35 @@ public class DESTest
     }
 
     /**
+     * Test of decrypt method, of class DES.
+     */
+    @Test
+    public void test3DES_DEC_CBC_ISO9797_M2()
+    {
+        byte[] key       = null;
+        byte[] data      = null;
+        byte[] expResult = null;
+        byte[] result    = null;
+
+        try
+        {
+            // 3DES_CBC - ISO9797_M2
+            System.out.println("DES_3DEC_CBC_Padding_ISO9797_M2");
+
+            key       = Formatter.fromStringToByteArray("0123456789ABCDEF00112233445566770123456789ABCDEF");
+            data      = Formatter.fromStringToByteArray("BD86704242F20EF57B08B24AF0A5A20C");
+            expResult = Formatter.fromStringToByteArray("001122334455667788");
+
+            result = DES.decrypt(key, null, data, TYPE.TRIPLE_DES, MODE.CBC, PADDING.ISO9797_M2);
+
+            assertArrayEquals(expResult, result);
+
+        } catch (InvalidKeyException | BadPaddingException | DecoderException ex) {
+            fail("Exception occured when encrypting (" + ex.getMessage() + ")");
+        }
+    }
+
+    /**
      * Test of getRetailMAC method, of class DES.
      */
     @Test
