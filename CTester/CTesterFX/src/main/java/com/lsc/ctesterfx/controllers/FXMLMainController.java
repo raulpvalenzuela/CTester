@@ -560,6 +560,8 @@ public class FXMLMainController implements Initializable
             testItemControllerList.get(currentTest).setState(TEST_STATE.STOPPED);
         }
 
+        enableButtons();
+
         LOGGER.info("Tests stopped");
     }
 
