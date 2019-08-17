@@ -23,7 +23,7 @@ public class ApduResponse
      */
     public static class Builder
     {
-        private byte[] sw;
+        private final byte[] sw;
         private byte[] data;
 
         public Builder()

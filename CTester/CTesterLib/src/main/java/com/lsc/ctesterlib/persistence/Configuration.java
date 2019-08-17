@@ -70,8 +70,7 @@ public class Configuration
                 document = reader.read(configurationFile);
 
             } catch (DocumentException ex) {
-                LOGGER.error("Exception opening config.xml'");
-                LOGGER.error(ex);
+                LOGGER.error("Exception opening config.xml (" + ex + ")");
             }
         }
 
@@ -103,12 +102,10 @@ public class Configuration
                 LOGGER.debug("Changes saved correctly");
 
             } catch (UnsupportedEncodingException ex) {
-                LOGGER.error("Exception writing config.xml'");
-                LOGGER.error(ex);
+                LOGGER.error("Exception writing config.xml (" + ex + ")");
 
             } catch (IOException ex) {
-                LOGGER.error("Exception writing config.xml'");
-                LOGGER.error(ex);
+                LOGGER.error("Exception writing config.xml (" + ex + ")");
 
             } finally {
                 if (writer != null)
@@ -118,8 +115,7 @@ public class Configuration
                         writer.close();
 
                     } catch (IOException ex) {
-                        LOGGER.error("Exception closing config.xml'");
-                        LOGGER.error(ex);
+                        LOGGER.error("Exception closing config.xml (" + ex + ")");
                     }
                 }
             }
@@ -177,8 +173,7 @@ public class Configuration
             return elements;
 
         } catch (DocumentException ex) {
-            LOGGER.error("Exception reading config.xml'");
-            LOGGER.error(ex);
+            LOGGER.error("Exception reading config.xml (" + ex + ")");
         }
 
         return null;
@@ -229,8 +224,7 @@ public class Configuration
             return document.selectSingleNode(xpath.toString()).getStringValue();
 
         } catch (DocumentException ex) {
-            LOGGER.error("Exception reading config.xml'");
-            LOGGER.error(ex);
+            LOGGER.error("Exception reading config.xml (" + ex + ")");
         }
 
         return null;

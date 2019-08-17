@@ -167,7 +167,7 @@ public class Virginize
                 key = Formatter.fromStringToByteArray(virginizeKey);
 
             } catch (DecoderException ex) {
-                LOGGER.error("Exception parsing virginize key read from config.xml");
+                LOGGER.error("Exception parsing virginize key read from config.xml (" + ex + ")");
                 LOGGER.error(" - Key: " + virginizeKey);
 
                 return null;
@@ -202,7 +202,7 @@ public class Virginize
                 }
 
             } catch (DecoderException | NullPointerException ex) {
-                LOGGER.error("Exception parsing virginize parameter from config.xml");
+                LOGGER.error("Exception parsing virginize parameter from config.xml (" + ex + ")");
 
                 return null;
             }
