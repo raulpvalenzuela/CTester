@@ -54,5 +54,8 @@ public class MainApp extends Application
             editor.edit(Configuration.LAST_READER, lastReader.getName());
             editor.commit();
         }
+
+        // Make sure we kill all the threads.
+        System.exit(0);
     }
 }
