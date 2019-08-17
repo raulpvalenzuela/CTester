@@ -72,6 +72,8 @@ public class ExecutionTask extends Task
             // Execution starts here
             else
             {
+                testController.setState(TEST_STATE.RUNNING);
+
                 if ((success = execute(compilationResult)))
                 {
                     endTime = System.currentTimeMillis();
